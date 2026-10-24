@@ -15,3 +15,10 @@
 
 This entry records documentation changes. It does not announce a software release,
 live API deployment, token mint, financial transaction or completed launch gate.
+
+## 24 October 2026 · Public vision and whitepaper edition 0.5
+
+- Published the illustrated public whitepaper and a versioned text mirror.
+- Added a system map connecting the first specialization to the wider research vision.
+- Aligned post-launch quarter numbering and added measurable long-term development boundaries.
+- Preserved recorded case identities, restricted-alpha status and the prototype/production distinction.
