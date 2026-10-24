@@ -30,10 +30,10 @@ guarantees. Each requires capacity, source access and evidence of usefulness.
 
 | Window | Development direction | Measurable exit |
 |---|---|---|
-| Q1 · months 0–3 | Research workflow, clearer API onboarding, bounded follow-up research and service measurement. | A fixed supported-question bank shows improved completion or lower user effort/cost; unresolved work and billing remain visible. |
-| Q2 · months 3–6 | Temporal research graph, source comparison and selective network/subject expansion. | Added subjects answer the same declared questions with provenance and time controls; added coverage is explicit. |
-| Q3 · months 6–9 | Bounded market-integrity and anomaly research. | Predeclared event datasets report false alarms, missed events and uncertainty; causal or personal attribution requires separate evidence. |
-| Q4 · months 9–12 | Organizational workspaces, integration and permission-scoped reproducible reports. | Access isolation, recovery, versioned integration and report reproduction pass defined acceptance tests. |
+| Q1 · months 1–3 | Research workflow, clearer API onboarding, bounded follow-up research and service measurement. | A fixed supported-question bank shows improved completion or lower user effort/cost; unresolved work and billing remain visible. |
+| Q2 · months 4–6 | Temporal research graph, source comparison and selective network/subject expansion. | Added subjects answer the same declared questions with provenance and time controls; added coverage is explicit. |
+| Q3 · months 7–9 | Bounded market-integrity and anomaly research. | Predeclared event datasets report false alarms, missed events and uncertainty; causal or personal attribution requires separate evidence. |
+| Q4 · months 10–12 | Organizational workspaces, integration and permission-scoped reproducible reports. | Access isolation, recovery, versioned integration and report reproduction pass defined acceptance tests. |
 
 ## Expansion rule
 
@@ -43,3 +43,14 @@ enough to justify its operational burden. Revise or stop a method that does not.
 
 Research planning, monitoring and graph analysis are product capabilities to be
 earned with evidence. Neither a larger budget nor a token changes that standard.
+
+## Long-term direction beyond these planning windows
+
+Build a continuously operated research infrastructure connecting validated
+multi-network authority, event and observed fund relations to inspectable query
+plans, measured monitoring and machine-checkable permitted outputs. Stronger
+formal or cryptographic methods require their own bounded task, assumptions,
+baseline comparison and benefit. This is a direction, not a dated delivery claim.
+
+Read the [illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html)
+and [vision/mechanism guide](VISION.md) for the larger system.
