@@ -1,54 +1,85 @@
-# EXIT — evidence-backed blockchain control research
+<p align="center"><img src="research-flow.svg" alt="EXIT: a question connected to scope, evidence, time and an inspectable answer" width="100%"></p>
 
-**Who can do what, under which conditions, at what time — and what evidence supports that answer?**
+# EXIT · Blockchain Research & Monitoring
 
-[Research desk](https://exit-protocol.io/#start) · [Recorded cases](https://exit-protocol.io/#research) · [Developer access](https://exit-protocol.io/#developers) · [Delivery and next work](https://exit-protocol.io/#delivery) · [X](https://x.com/exitprotocolL)
+**Follow the evidence. Understand what changed.**
+
+EXIT is building evidence-based infrastructure for investigating blockchain activity.
+Our first specialization is **control and change analysis**: who can do what, under
+which conditions, at what time, and what evidence supports that conclusion.
+
+[Open the research desk](https://exit-protocol.io/#start) · [Read the product guide](PRODUCT.md) · [Explore the technical approach](TECHNOLOGY.md) · [See current status](STATUS.md)
+
+## Begin with a real question
+
+| Your question | What a supported EXIT investigation establishes |
+|---|---|
+| Who can issue, freeze or administer this asset? | The observed authority account, relevant control surface, source and observation time. |
+| Who controlled it at a particular date? | A time-bounded answer that separates when a fact applied from when EXIT could know it. |
+| What changed? | Observed control transitions, their evidence and the limits of the fetched history. |
+| Can I check the result? | Traceable source references and content identities; replayable material where access and redistribution rights permit. |
+
+An address, a program, a multisig member and a real-world principal are different
+things. EXIT preserves those distinctions instead of turning a wallet association
+into an accusation or an observed event into an invented motive.
 
 ## Use EXIT today
 
-1. Open the research desk and enter a question with its network.
-2. Inspect a related recorded case when coverage exists. This is not a newly computed live answer.
-3. Follow the answer to selected source observations, content identities, time boundaries and explicit unknowns.
-4. Download the public JSON note or the offline research edition.
-5. If the question is outside coverage, save a private research brief. Nothing is silently submitted or promised.
+1. Visit the [research desk](https://exit-protocol.io/#start).
+2. Explore a covered **recorded case** and inspect its answer, selected sources and time boundaries.
+3. Download the public authored case note or use the site's offline edition.
+4. For software integration, read [API access and delivery](PRODUCT.md#software-integration).
 
-Public examples cover selected Solana PYUSD and Ethereum USDC/PYUSD control observations. They are historical, EXIT-authored case notes. They are not the original API responses, all-wallet coverage, live trading data or complete raw-evidence archives.
+The public desk currently routes questions to selected recorded research; it does
+not compute a fresh answer for every arbitrary wallet or natural-language question.
+Public cases include Solana and Ethereum control observations. The examples are
+EXIT-authored summaries, with a narrower sharing scope than private replay archives.
 
 ```sh
 curl https://exit-protocol.io/solana-pyusd.json
 ```
 
-## One product, three delivery paths
+## One research foundation, three ways to use it
 
-| Path | Current status | Purpose |
-| --- | --- | --- |
-| Public research desk and case-note files | Available; no wallet or token required | Inspect selected completed research and its limits. |
-| Versioned engine API | Restricted authenticated alpha; public production plans not offered | Integrate supported control, historical and change queries. |
-| Reproducible evidence packages | Local technical reproduction exists; raw-data sharing clearance is separate | Re-examine a declared investigation with the trusted engine and exact data. |
+| Delivery | Present position | Intended use |
+|---|---|---|
+| **Research desk** | Public recorded cases and downloads are available. | Understand a supported question and inspect the evidence. |
+| **Versioned API** | Restricted authenticated alpha; general production onboarding is not yet offered. | Integrate control, historical and change queries into research or security workflows. |
+| **Evidence packages and reports** | Technical replay is implemented locally; access and sharing are individually scoped. | Re-examine a declared investigation against exact evidence and engine identities. |
 
-The engine keeps account/control facts, source-derived execution conditions and real-world principal identity separate. An address alone never identifies a person. A repeated request is not independent corroboration. Replay is evidence of faithful reproduction, not universal chain truth.
+### A service rule worth making explicit
 
-## Delivery policy
+**An unanswered primary question should not consume a service credit.** The private
+API Pass prototype now separates completed answers from unanswered or conflicting
+results and can retain a bounded follow-up request. A queued request is not a started
+investigation or a promised resolution. These prototype controls are not yet offered
+as a public paid service. See [service rights](TOKEN.md#service-rights).
 
-A finite, usable first release is followed by continuous development. Completion of a release does not mean every chain, market question or future feature is finished.
+## What is being delivered, and what comes next?
 
-The delivery sequence is: usable declared product scope and actual operating checks → implemented service rights and security tests → token/distribution/treasury/venue decisions → exact final disclosures → a separately authorized launch. Future market intelligence and network additions are not silently made prerequisites for every earlier release.
+A finite usable first release comes before future expansion. Operational validation,
+clear access conditions and final service integration remain part of that delivery.
+Broader research graphs, selective network coverage, measured anomaly research and
+organizational workspaces belong to subsequent development.
 
-No official EXIT mint or token sale is announced in this repository. A possible future API Pass would redeem for defined service credits only after that integration is implemented and tested. Holding a token would not grant an unlimited subscription, equity, a share of project income, influence over evidence or access to private investigations. No investment return is promised. Exact mint, rights, pricing, quotas and expiry are not yet finalized.
+**No official EXIT mint or token launch is announced here.** Token preparation has
+its own readiness conditions and follows the usable service. See [token design](TOKEN.md),
+[release status](STATUS.md) and the [growth roadmap](ROADMAP.md).
 
-## Roadmap
+## Explore the project
 
-- **Available:** recorded public cases, evidence inspection, two-time explanations, downloads, offline edition and question-to-coverage routing.
-- **Engineering follow-through:** current supported-source deployment, actual-host reliability/restore checks, clear API onboarding and measured service limits.
-- **Before API Pass:** wallet intent/challenge validation, exact finalized-receipt-to-credit binding, durable exactly-once redemption, quotas, recovery and separate security evaluation.
-- **Continuing development:** broader supported subjects, private workspaces, monitoring and integrations; bounded Pump.fun/PumpSwap market investigations; later chain-specific adapters including Robinhood Chain where justified.
+| Guide | What you will find |
+|---|---|
+| [Product](PRODUCT.md) | Who EXIT is for, useful questions and how access works. |
+| [Technology](TECHNOLOGY.md) | Research pipeline, two-time model, provenance and engineering invariants. |
+| [Status](STATUS.md) | Publicly available, privately tested and still-open delivery work. |
+| [Roadmap](ROADMAP.md) | First-service exit criteria and conditional post-launch quarters. |
+| [Token and service rights](TOKEN.md) | Proposed utility, delivery conditions and future official mint record. |
+| [Transparency](TRANSPARENCY.md) | Release reporting, finances, attribution and privacy boundaries. |
+| [Security](SECURITY.md) | Private vulnerability reporting and safe disclosure. |
+| [Support](SUPPORT.md) | Product questions, documentation issues and sensitive enquiries. |
+| [Changelog](CHANGELOG.md) | Public documentation changes. |
 
-Market movement does not establish manipulation. A proposed market-integrity module must distinguish transactions, liquidity and funding flows from attributed public claims and causal hypotheses. No price prediction or guarantee to detect every manipulation is offered.
-
-## Transparency and privacy
-
-This public repository contains product documentation. The private engineering mirror and private evidence archive remain separate. No original private Git history, credentials, personal contact details or unrestricted raw archive is published here. This is not a claim that the engine is open source or that its data can be redistributed without permission.
-
-Release status distinguishes delivered, tested, planned and unknown. Future operating reports must distinguish service receipts, actual creator fees, expenses and reserves. No revenue amount or allocation percentage is invented. Public pseudonymity does not guarantee that public wallet activity is unlinkable or waive applicable obligations.
-
-**Project contact:** [contact@exit-protocol.io](mailto:contact@exit-protocol.io). Business enquiries describe a use case; they are not an order or a promised response time. Never send private keys, seed phrases, bearer credentials or confidential investigations through public issues.
+This repository is the public documentation hub. Engine source, original private
+history, credentials and restricted raw evidence remain outside it. Public visibility
+does not grant redistribution rights over third-party data.
