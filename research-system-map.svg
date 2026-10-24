@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 500" role="img" aria-labelledby="maptitle mapdesc">
+<title id="maptitle">EXIT research infrastructure: foundation and planned expansion</title>
+<desc id="mapdesc">Source identity and time support control and change analysis. Planned extensions connect events and observed flows to research planning, measured monitoring and team workflows. Solid lines show the foundation; dashed lines show planned extensions. This is a conceptual map, not a measurement.</desc>
+<defs><pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 L 0 0 0 28" fill="none" stroke="#2e4943" stroke-width=".5"/></pattern></defs>
+<rect width="1120" height="500" rx="4" fill="#142b27"/><rect width="1120" height="500" fill="url(#grid)"/>
+<g fill="none" stroke="#81ddd7" stroke-width="2"><path d="M210 170H345V245H430M210 330H345V255H430"/>
+<path stroke-dasharray="7 6" stroke="#b8a181" d="M690 250H765V105H850M690 250H850M690 250H765V395H850M560 310V390"/></g>
+<g font-family="Arial,sans-serif"><g fill="#e5ede7" font-size="11" letter-spacing="2"><text x="42" y="42">01 / EVIDENCE FOUNDATION</text><text x="815" y="42">02 / PLANNED EXPANSION</text></g>
+<g fill="#1e3931" stroke="#6b9486"><rect x="40" y="125" width="230" height="90"/><rect x="40" y="285" width="230" height="90"/></g>
+<g fill="#eff4ee" font-size="19"><text x="60" y="160">Identified sources</text><text x="60" y="320">Two distinct times</text></g>
+<g fill="#b9ccc1" font-size="13"><text x="60" y="185">Content · coverage · conflicts</text><text x="60" y="345">Effective time · knowledge time</text></g>
+<rect x="430" y="185" width="260" height="125" fill="#e9efe6" stroke="#81ddd7"/>
+<g fill="#19342b"><text x="451" y="217" font-size="11" letter-spacing="1">FIRST SPECIALIZATION</text><text x="451" y="249" font-size="21">Control + change</text><text x="451" y="278" font-size="14">Question → evidence → result</text></g>
+<g fill="#142b27" stroke="#b8a181" stroke-dasharray="7 5"><rect x="850" y="65" width="230" height="80"/><rect x="850" y="210" width="230" height="80"/><rect x="850" y="355" width="230" height="80"/><rect x="405" y="390" width="310" height="64"/></g>
+<g fill="#eff4ee" font-size="17"><text x="870" y="96">Temporal research graph</text><text x="870" y="241">Inspectable query planning</text><text x="870" y="386">Measured monitoring</text><text x="425" y="416">People · software · organizations</text></g>
+<g fill="#bacdc1" font-size="12"><text x="870" y="119">Authority · events · observed flows</text><text x="870" y="264">Question · scope · evidence · cost</text><text x="870" y="409">Alerts · false positives · missed events</text><text x="425" y="438">Interface · API · permitted reports</text></g>
+<g fill="#c6d4cb" font-size="11"><text x="42" y="466">SOLID: existing bounded foundation</text><text x="42" y="485">DASHED: proposed capabilities, subject to validation</text></g></g></svg>
