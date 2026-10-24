@@ -96,3 +96,9 @@ The growth direction connects authority, events and funding relationships across
 time in a research graph. Inspectable question planning, measured monitoring,
 source comparison and organizational workflows extend this foundation when they
 improve supported-answer quality, completion or cost. See [roadmap](ROADMAP.md).
+
+## The wider research infrastructure
+
+The current foundation extends toward a temporal graph, inspectable planning and
+measured monitoring. See [the mechanism map](VISION.md) and [whitepaper](WHITEPAPER.md).
+Dashed extensions in the public diagrams are planned capabilities, not deployed services.
