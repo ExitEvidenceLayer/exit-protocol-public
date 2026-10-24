@@ -1,85 +1,86 @@
-<p align="center"><img src="research-flow.svg" alt="EXIT: a question connected to scope, evidence, time and an inspectable answer" width="100%"></p>
+<p align="center"><img src="research-system-map.svg" alt="EXIT: evidence and time support control/change analysis; dashed extensions describe the planned research graph, query planning and monitoring" width="100%"></p>
 
 # EXIT · Blockchain Research & Monitoring
 
-**Follow the evidence. Understand what changed.**
+**Blockchain research. Grounded in evidence.**
 
-EXIT is building evidence-based infrastructure for investigating blockchain activity.
-Our first specialization is **control and change analysis**: who can do what, under
-which conditions, at what time, and what evidence supports that conclusion.
+EXIT is building a connected research infrastructure for understanding blockchain
+activity: **what happened, who could act, what changed and what evidence supports
+the conclusion**.
 
-[Open the research desk](https://exit-protocol.io/#start) · [Read the product guide](PRODUCT.md) · [Explore the technical approach](TECHNOLOGY.md) · [See current status](STATUS.md)
+Our first specialization is control and change analysis. The larger direction is
+a research environment connecting authority, events and observed fund relationships
+across validated network coverage—usable by individuals, software and organizations.
 
-## Begin with a real question
+[Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
 
-| Your question | What a supported EXIT investigation establishes |
-|---|---|
-| Who can issue, freeze or administer this asset? | The observed authority account, relevant control surface, source and observation time. |
-| Who controlled it at a particular date? | A time-bounded answer that separates when a fact applied from when EXIT could know it. |
-| What changed? | Observed control transitions, their evidence and the limits of the fetched history. |
-| Can I check the result? | Traceable source references and content identities; replayable material where access and redistribution rights permit. |
+## Why this matters
 
-An address, a program, a multisig member and a real-world principal are different
-things. EXIT preserves those distinctions instead of turning a wallet association
-into an accusation or an observed event into an invented motive.
+A transaction is a record. An investigation needs more: the conditions that made
+an action possible, the evidence available at the time, competing explanations
+and a path back to the sources. EXIT is designed to preserve those connections.
 
-## Use EXIT today
+| From | Toward | How we intend to earn it |
+|---|---|---|
+| Isolated records | A temporal research graph | Typed relations with source identity, valid/known times and wrong-join controls. |
+| An open question | An inspectable investigation plan | Explicit subject, network, time, coverage, evidence requirements and cost. |
+| Unexplained signals | Measured monitoring and investigation | Declared event classes; held-out evaluation; false alerts and missed events. |
+| A single report | Reusable organizational research | Versioned API, permission-scoped workflows and reproducible permitted outputs. |
 
-1. Visit the [research desk](https://exit-protocol.io/#start).
-2. Explore a covered **recorded case** and inspect its answer, selected sources and time boundaries.
-3. Download the public authored case note or use the site's offline edition.
-4. For software integration, read [API access and delivery](PRODUCT.md#software-integration).
+These are development directions. Current delivery is stated separately below;
+the system map is a conceptual illustration, not an operational network map.
 
-The public desk currently routes questions to selected recorded research; it does
-not compute a fresh answer for every arbitrary wallet or natural-language question.
-Public cases include Solana and Ethereum control observations. The examples are
-EXIT-authored summaries, with a narrower sharing scope than private replay archives.
+## Start with the working foundation
+
+The public [research desk](https://exit-protocol.io/#research) provides three
+recorded authored case notes, source links, distinct event/knowledge times,
+downloads and an offline edition. No wallet is required to inspect them.
+
+The underlying research API is a **restricted alpha**. It supports declared
+control, historical and change questions over bounded coverage. The public desk
+does not compute a new answer for every arbitrary wallet or natural-language query.
 
 ```sh
 curl https://exit-protocol.io/solana-pyusd.json
 ```
 
-## One research foundation, three ways to use it
+The optional API Pass has a **private tested prototype**, not a deployed paid
+service. Its completed-answer boundary keeps unanswered primary questions free
+of credit charges. Bounded follow-up intake is not an executed research job.
+Production serving integration, actual chain/wallet rehearsal and final security
+acceptance remain open. See [current status](STATUS.md) and [service rights](TOKEN.md).
 
-| Delivery | Present position | Intended use |
-|---|---|---|
-| **Research desk** | Public recorded cases and downloads are available. | Understand a supported question and inspect the evidence. |
-| **Versioned API** | Restricted authenticated alpha; general production onboarding is not yet offered. | Integrate control, historical and change queries into research or security workflows. |
-| **Evidence packages and reports** | Technical replay is implemented locally; access and sharing are individually scoped. | Re-examine a declared investigation against exact evidence and engine identities. |
+## A first release. A continuing engineering program.
 
-### A service rule worth making explicit
+Complete the finite usable service and its operating evidence, implement real
+service rights and resolve launch decisions. Then grow through four relative
+post-launch planning windows: research workflow → temporal graph → measured
+monitoring → organizational workflows. Those future quarters do not delay
+acceptance of the first usable release.
 
-**An unanswered primary question should not consume a service credit.** The private
-API Pass prototype now separates completed answers from unanswered or conflicting
-results and can retain a bounded follow-up request. A queued request is not a started
-investigation or a promised resolution. These prototype controls are not yet offered
-as a public paid service. See [service rights](TOKEN.md#service-rights).
+New methods are compared with the existing baseline on the same tasks. Accuracy,
+completion, reproducibility, latency and cost are measured separately. Methods
+that add complexity without useful improvement are revised or stopped.
 
-## What is being delivered, and what comes next?
+**No official EXIT token mint or launch is announced.** Holding a proposed token
+is not presented as a profit share or a guarantee of returns. Token creation,
+wallet approvals and signatures remain the Owner's actions.
 
-A finite usable first release comes before future expansion. Operational validation,
-clear access conditions and final service integration remain part of that delivery.
-Broader research graphs, selective network coverage, measured anomaly research and
-organizational workspaces belong to subsequent development.
+## Project record
 
-**No official EXIT mint or token launch is announced here.** Token preparation has
-its own readiness conditions and follows the usable service. See [token design](TOKEN.md),
-[release status](STATUS.md) and the [growth roadmap](ROADMAP.md).
-
-## Explore the project
-
-| Guide | What you will find |
+| Guide | Purpose |
 |---|---|
-| [Product](PRODUCT.md) | Who EXIT is for, useful questions and how access works. |
-| [Technology](TECHNOLOGY.md) | Research pipeline, two-time model, provenance and engineering invariants. |
-| [Status](STATUS.md) | Publicly available, privately tested and still-open delivery work. |
-| [Roadmap](ROADMAP.md) | First-service exit criteria and conditional post-launch quarters. |
-| [Token and service rights](TOKEN.md) | Proposed utility, delivery conditions and future official mint record. |
-| [Transparency](TRANSPARENCY.md) | Release reporting, finances, attribution and privacy boundaries. |
-| [Security](SECURITY.md) | Private vulnerability reporting and safe disclosure. |
-| [Support](SUPPORT.md) | Product questions, documentation issues and sensitive enquiries. |
-| [Changelog](CHANGELOG.md) | Public documentation changes. |
+| [Whitepaper](WHITEPAPER.md) | Problem, mechanisms, diagrams, mathematics, rights and growth. |
+| [Vision](VISION.md) | The larger system, why each layer exists and how it is evaluated. |
+| [Product](PRODUCT.md) | Useful questions, audiences and access paths. |
+| [Technology](TECHNOLOGY.md) | Provenance, two-time reasoning and engineering invariants. |
+| [Status](STATUS.md) | Publicly available, privately tested and open work. |
+| [Roadmap](ROADMAP.md) | First-service criteria and conditional post-launch quarters. |
+| [Token](TOKEN.md) | Proposed usage right and future official identifiers. |
+| [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |
+| [Security](SECURITY.md) · [Support](SUPPORT.md) | Safe reporting and product enquiries. |
+| [Changelog](CHANGELOG.md) | Public revisions. |
 
-This repository is the public documentation hub. Engine source, original private
-history, credentials and restricted raw evidence remain outside it. Public visibility
-does not grant redistribution rights over third-party data.
+This is the public documentation hub. Private engine history, credentials,
+restricted raw evidence and sensitive operational details are not published here.
+Public summaries do not grant redistribution rights over their underlying sources.
