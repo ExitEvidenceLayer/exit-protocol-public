@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+<title id="title">EXIT — blockchain research grounded in evidence</title>
+<desc id="desc">A conceptual sequence from question and declared scope to identified sources, two kinds of time, and an inspectable answer. It is an architecture illustration, not a performance measurement.</desc>
+<defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#b2cdbf" stroke-opacity=".065"/></pattern><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 1L6 4L0 7" fill="none" stroke="#d3f272" stroke-width="1.5"/></marker></defs>
+<rect width="1280" height="440" rx="24" fill="#172822"/>
+<rect width="1280" height="440" rx="24" fill="url(#grid)"/>
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="58" y="65" fill="#d3f272" font-size="15" letter-spacing="3">EXIT / RESEARCH INFRASTRUCTURE</text>
+<text x="55" y="134" fill="#f7f6f0" font-size="61" font-weight="700">Follow the evidence.</text>
+<text x="58" y="179" fill="#c4d3ca" font-size="24">Control, change and context — with sources you can inspect.</text>
+<g fill="#203a2e" stroke="#68846f" stroke-width="1">
+<rect x="58" y="238" width="202" height="110" rx="12"/>
+<rect x="298" y="238" width="202" height="110" rx="12"/>
+<rect x="538" y="238" width="202" height="110" rx="12"/>
+<rect x="778" y="238" width="202" height="110" rx="12"/>
+<rect x="1018" y="238" width="202" height="110" rx="12" stroke="#d3f272"/>
+</g>
+<g fill="#d3f272" font-size="13" letter-spacing="2"><text x="78" y="264">01 / QUESTION</text><text x="318" y="264">02 / SCOPE</text><text x="558" y="264">03 / SOURCES</text><text x="798" y="264">04 / TIME</text><text x="1038" y="264">05 / RESULT</text></g>
+<g fill="#f7f6f0" font-size="20" font-weight="700"><text x="78" y="299">Who can do what?</text><text x="318" y="299">Declare the bounds</text><text x="558" y="299">Preserve identity</text><text x="798" y="299">Applied / known</text><text x="1038" y="299">Answer + evidence</text></g>
+<g fill="#b9cbbf" font-size="15"><text x="78" y="325">Ask a supported question</text><text x="318" y="325">Subject, network, period</text><text x="558" y="325">Context and provenance</text><text x="798" y="325">Keep both axes visible</text><text x="1038" y="325">Inspect the limits</text></g>
+<g stroke="#d3f272" fill="none" stroke-width="1.5" marker-end="url(#arrow)"><path d="M267 293H288"/><path d="M507 293H528"/><path d="M747 293H768"/><path d="M987 293H1008"/></g>
+<text x="58" y="399" fill="#99b3a3" font-size="14">Conceptual research pipeline · First specialization: control and change analysis · Not a measurement</text>
+</g></svg>
