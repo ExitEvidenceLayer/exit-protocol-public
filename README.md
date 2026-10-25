@@ -12,7 +12,7 @@ Our first specialization is control and change analysis. The larger direction is
 a research environment connecting authority, events and observed fund relationships
 across validated network coverage—usable by individuals, software and organizations.
 
-[Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
+[Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.5.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
 
 ## Why this matters
 
@@ -79,6 +79,7 @@ wallet approvals and signatures remain the Owner's actions.
 | [Token](TOKEN.md) | Proposed usage right and future official identifiers. |
 | [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |
 | [Security](SECURITY.md) · [Support](SUPPORT.md) | Safe reporting and product enquiries. |
+| [Contributing](CONTRIBUTING.md) | Reproducible public corrections, safe reports and contribution scope. |
 | [Changelog](CHANGELOG.md) | Public revisions. |
 
 This is the public documentation hub. Private engine history, credentials,
