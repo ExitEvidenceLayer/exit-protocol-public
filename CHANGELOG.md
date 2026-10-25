@@ -1,5 +1,16 @@
 # Public documentation changelog
 
+## 25 October 2026 · Current venue, free-first sequence and source corrections
+
+- Free API: private corrected candidate, not yet open; the month-end is not a token-creation gate. Historical R8 operating closure remains distinct from the new free-serving layer.
+- Website case presentation: five Solana signer observations, event versus observation block labels, event-window attribution, and explicit not-read versus unknown boundaries. Old evidence identities and dated paper v0.5 are preserved.
+- TOKEN.md: the Owner has decided to create the token through Jupiter Studio on the Meteora Dynamic Bonding Curve program after the free early-access API opens; the official mint address is published after creation. The earlier venue preference is withdrawn.
+- TRANSPARENCY.md: financial reporting names operator revenue from the service and, if any, from the token's trading venue, replacing the earlier fee wording.
+- WHITEPAPER.md: wording of the Owner's reserved launch actions simplified (the PDF edition is regenerated separately).
+- README.md: "Official identity" (non-affiliation) and "License" sections added; LICENSE file added (CC BY-ND 4.0 for the documentation; names and marks are not licensed; engine, datasets and API remain proprietary).
+
+This entry records documentation changes only. The creation venue is selected. No token mint address, launch date, sale or claim process is announced.
+
 ## 25 October 2026 · Public reading and correction workflow
 
 - Added the illustrated whitepaper as a downloadable, 14-page PDF.
