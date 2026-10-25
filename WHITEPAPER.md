@@ -1,4 +1,4 @@
-> **Current-status note · 25 October 2026:** the illustrated v0.5 edition is a dated draft. The Owner has selected Jupiter Studio / Meteora DBC on Solana after free API access opens, not after the 30-day period ends. Free access is not open yet; paid API Pass is a separate later release. This note supersedes older venue and sequence wording, without rewriting the archived v0.5 HTML/PDF. See [TOKEN.md](TOKEN.md) and [STATUS.md](STATUS.md).
+> **Current-status note · 25 October 2026, 12:38:20 UTC:** the 30-day quota-limited free API is now open at https://api.exit-protocol.io/. The Owner has created EXIT Protocol (EXITP), with official Solana mint `5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups`. Paid token-to-credit/API Pass redemption is not live. This note supersedes the archived v0.5 draft’s current-status, venue and sequence wording. The historical HTML/PDF is preserved; use [TOKEN.md](TOKEN.md), [STATUS.md](STATUS.md) and [API guide](docs/API.md) for current facts.
 
 # EXIT Whitepaper · Public Draft 0.5
 
