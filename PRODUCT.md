@@ -40,13 +40,17 @@ No wallet connection or EXIT token is required to inspect public cases.
 
 ## Software integration
 
-The engine supports structured `control_state`, `control_as_of` and `control_change`
-queries in a restricted authenticated alpha. Bearer credentials are access secrets;
-they are distinct from a future transferable crypto token.
+The free early-access service at [api.exit-protocol.io](https://api.exit-protocol.io/)
+supports structured `control_state`, `control_as_of` and `control_change` queries over
+three declared recorded Solana reference subjects. It is open 25 October–24 November
+2026, 12:38:20 UTC, with quotas and pseudonymous access. The older restricted alpha
+remains separate. Bearer credentials are access secrets, distinct from the EXITP
+blockchain token; no token, wallet or payment is required for free access.
 
-Production onboarding must identify supported scope, endpoint/version, credential
-handling, quotas, availability and usage conditions. An open website or a GitHub
-page is not a publicly available production API contract.
+The [API quick start](docs/API.md) declares supported scope, endpoints, credential
+handling, actual dates, quotas and usage conditions. This opening is a bounded
+first service, not unlimited capacity or arbitrary research. Paid EXITP redemption
+remains a separate future integration.
 
 ## Evidence packages and reports
 
