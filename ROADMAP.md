@@ -23,7 +23,9 @@ release does not require completion of the four growth quarters below.
 
 ## After launch: relative quarters
 
-**T0** for the first-service growth plan is 25 October 2026, the actual free-service opening date. Q1–Q4 mean successive
+**T0** is 25 October 2026: EXITP was created at 12:14:57 UTC and free service
+opened at 12:38:20 UTC. Q1–Q4 are conditional growth windows after this actual
+launch date, not prerequisites retroactively imposed on the first release. Q1–Q4 mean successive
 three-month planning windows after T0. They are conditional targets, not calendar
 guarantees. Each requires capacity, source access and evidence of usefulness.
 
@@ -51,5 +53,5 @@ plans, measured monitoring and machine-checkable permitted outputs. Stronger
 formal or cryptographic methods require their own bounded task, assumptions,
 baseline comparison and benefit. This is a direction, not a dated delivery claim.
 
-Read the [illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html)
+Read the [illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.6.html)
 and [vision/mechanism guide](VISION.md) for the larger system.
