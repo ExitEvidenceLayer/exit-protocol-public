@@ -1,6 +1,6 @@
 # Delivery status
 
-**Public documentation snapshot: 24 October 2026.** This page distinguishes available
+**Public documentation snapshot: 25 October 2026.** This page distinguishes available
 product surfaces, private engineering results and work still required for release.
 It is not an automatic live-monitoring feed.
 
@@ -12,7 +12,8 @@ It is not an automatic live-monitoring feed.
 | Evidence replay | **LOCALLY TESTED** | Exact material and engine identities; sharing remains permission-scoped. |
 | API Pass adapter | **PRIVATE PROTOTYPE TESTED** | Wallet intent, receipt, credits, retries, isolation and recovery controls; not a public paid product. |
 | Unanswered-query billing and intake | **PRIVATE PROTOTYPE TESTED** | No charge for an unanswered primary question; bounded durable intake, no execution worker. |
-| Current production release | **NOT YET DECLARED READY** | Final runtime alignment, actual-host operation results and service integration remain open. |
+| Historical R8 operating scope | **BOUNDED HOST CHECKS COMPLETE** | E1–E9 closed at canonical seq170; this does not deploy or accept the new free-serving layer. |
+| 30-day free first API | **PREPARED / NOT OPEN** | Corrected private candidate: 44 local tests and 44 isolated target-host tests passed; 17 reversion mutants caught. Synthetic host compatibility is not public activation. |
 | Real token payment rehearsal and final security acceptance | **OPEN** | Local synthetic transaction tests do not close actual chain or wallet acceptance. |
 | Official EXIT mint / token launch | **NOT ANNOUNCED** | No address, sale or claim process is published here. |
 
@@ -23,10 +24,10 @@ service access, required operating results and release-blocking corrections are
 complete. Optional future quarters, external user recruitment and an attempt to
 cover every blockchain are not technical completion gates.
 
-Token launch readiness is a later, separate decision: actual service rights,
-integration, security, venue configuration, distribution, treasury and disclosures
-must match the accepted package. A private prototype test does not by itself make
-that package ready.
+The Owner plans token creation through Jupiter Studio / Meteora DBC on Solana after
+the free API opens. The 30-day free period need not finish first. Creation and signing
+remain the Owner’s. A public paid API Pass remains a separate release with real
+receipt, wallet, security and service acceptance; local prototypes do not close it.
 
 ## How this page will evolve
 
