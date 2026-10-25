@@ -1,3 +1,5 @@
+> **Current-status note · 25 October 2026:** the illustrated v0.5 edition is a dated draft. The Owner has selected Jupiter Studio / Meteora DBC on Solana after free API access opens, not after the 30-day period ends. Free access is not open yet; paid API Pass is a separate later release. This note supersedes older venue and sequence wording, without rewriting the archived v0.5 HTML/PDF. See [TOKEN.md](TOKEN.md) and [STATUS.md](STATUS.md).
+
 # EXIT Whitepaper · Public Draft 0.5
 
 **24 October 2026** · [Illustrated web edition](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.5.pdf)
@@ -130,7 +132,7 @@ Figure 4. Proposed production integration, not deployed. Service entitlement is 
 
 For each eligible receipt ρ: number of credit grants(ρ) ≤ 1 Necessary invariant; insufficient by itself. An accepted finalized payment must also be recoverably credited under its quote. Network loss, restart and concurrency must not create duplicate or silently lost entitlements. 
 
-Token program, mint, distributions, treasury policy, pricing and venue conditions must be accepted on their actual configuration before launch. No supply allocation, token price or guaranteed fee income is invented here. The Human Owner retains token creation, wallet approvals, signatures and the final launch action.
+Token program, mint, distributions, treasury policy, pricing and venue conditions must be accepted on their actual configuration before launch. No supply allocation, token price or guaranteed fee income is invented here. Token creation, wallet approvals, signatures and the final launch action remain the Owner's.
 
 08A / CONFIGURATION & DISCLOSURE 
 
