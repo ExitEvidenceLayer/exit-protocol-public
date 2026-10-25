@@ -15,7 +15,8 @@ the original search covered every relevant event.
 ## Financial reporting after a real launch
 
 Where relevant, publish dated periods that separately identify actual service
-receipts, actual creator fees, operating expenses, reserves and treasury movements.
+receipts, actual operator revenue from the service and, if any, from the token's
+trading venue, operating expenses, reserves and treasury movements.
 Show planned budgets separately from realized spending. Explain material changes
 and attach suitable transaction references or records without exposing secrets.
 
