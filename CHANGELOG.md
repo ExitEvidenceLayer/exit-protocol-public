@@ -1,5 +1,14 @@
 # Public documentation changelog
 
+## 25 October 2026 · Public reading and correction workflow
+
+- Added the illustrated whitepaper as a downloadable, 14-page PDF.
+- Added public access and service FAQ, search metadata and a minimal sitemap.
+- Added contribution guidance, a pull request checklist and structured forms for public website problems and source-linked corrections.
+- Kept sensitive security reports outside public issues. These forms are not research orders, bounty offers or guaranteed service commitments.
+
+This update concerns public presentation and documentation. The API remains restricted and the API Pass remains a private prototype; operating and launch acceptance are separate.
+
 ## 2026-10-24 · Research and service documentation expanded
 
 - Broadened the project identity to evidence-based blockchain research and monitoring,
