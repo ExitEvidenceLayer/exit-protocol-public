@@ -52,8 +52,9 @@ acceptance remain open. See [current status](STATUS.md) and [service rights](TOK
 
 ## A first release. A continuing engineering program.
 
-Complete the finite usable service and its operating evidence, implement real
-service rights and resolve launch decisions. Then grow through four relative
+Open the finite, quota-limited 30-day free service after its serving and operating
+acceptance. Token creation follows that opening; paid API Pass redemption is a
+separate later integration. Free access is being prepared, not yet public. Then grow through four relative
 post-launch planning windows: research workflow → temporal graph → measured
 monitoring → organizational workflows. Those future quarters do not delay
 acceptance of the first usable release.
@@ -64,7 +65,17 @@ that add complexity without useful improvement are revised or stopped.
 
 **No official EXIT token mint or launch is announced.** Holding a proposed token
 is not presented as a profit share or a guarantee of returns. Token creation,
-wallet approvals and signatures remain the Owner's actions.
+wallet approvals and signatures remain the Owner's actions. EXIT is not a meme token;
+the Owner has decided to create it through Jupiter Studio on the Meteora Dynamic Bonding
+Curve program after the free early-access API opens, and publishes the single official
+mint address in [TOKEN.md](TOKEN.md) after creation.
+
+## Official identity
+
+EXIT Protocol (exit-protocol.io, github.com/ExitEvidenceLayer) is not affiliated with the
+$EXIT token or EXIT HOUSE (Ethereum), with the EXIT Designer Token (BNB Chain) or with
+exitprotocols.com (a forensic-accounting platform). Names and tickers never identify this
+project; only the addresses and hashes published here do.
 
 ## Project record
 
@@ -80,8 +91,15 @@ wallet approvals and signatures remain the Owner's actions.
 | [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |
 | [Security](SECURITY.md) · [Support](SUPPORT.md) | Safe reporting and product enquiries. |
 | [Contributing](CONTRIBUTING.md) | Reproducible public corrections, safe reports and contribution scope. |
-| [Changelog](CHANGELOG.md) | Public revisions. |
+| [API access](docs/API.md) · [Changelog](CHANGELOG.md) | Public revisions. |
 
 This is the public documentation hub. Private engine history, credentials,
 restricted raw evidence and sensitive operational details are not published here.
 Public summaries do not grant redistribution rights over their underlying sources.
+
+## License
+
+Documentation in this repository is © EXIT Protocol and licensed under
+[CC BY-ND 4.0](LICENSE) (Creative Commons Attribution-NoDerivatives 4.0 International).
+The EXIT Protocol name and marks are not licensed. The research engine, datasets and
+the API are proprietary and are not part of this repository.
