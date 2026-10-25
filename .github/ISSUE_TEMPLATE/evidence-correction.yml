@@ -1,0 +1,33 @@
+name: Evidence or documentation correction
+description: Propose a source-linked correction to an existing public case or explanation.
+title: "[Correction] "
+body:
+  - type: markdown
+    attributes:
+      value: "This is a correction form, not a public research order or bounty. Preserve the case's historical and knowledge-time boundaries."
+  - type: input
+    id: page
+    attributes:
+      label: Exact page, case or section
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: Claim that needs correction
+      description: State the observed difference without attributing a person's identity or intent from an address alone.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Primary source and relevant time
+      description: Provide a public source link, network, subject, chain position or acquisition time where relevant. Label inference and missing evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Smallest proposed correction
+    validations:
+      required: true
