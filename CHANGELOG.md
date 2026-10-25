@@ -1,5 +1,16 @@
 # Public documentation changelog
 
+## 25 October 2026 · actual free-service opening
+
+- Opened https://api.exit-protocol.io/ at 12:38:20 UTC for one quota-limited 30-day campaign.
+- Added anonymous key issuance, structured-query quick start, limits, expiry and no-payment boundary.
+- Verified actual public HTTPS answer/replay/restart/revocation and encrypted state restore in an isolated copy; historical alpha remains separate.
+- Published the Owner-supplied EXITP mint after two finalized read-backs; replaced obsolete “no mint” and “not open” current-status wording.
+- Recorded that token creation preceded API activation; preserved historical records and v0.5 paper.
+- Token-to-credit/paid API Pass redemption remains future integration, not an effect of buying or holding EXITP.
+
+### Earlier same-day documentation snapshots (historical)
+
 ## 25 October 2026 · Current venue, free-first sequence and source corrections
 
 - Free API: private corrected candidate, not yet open; the month-end is not a token-creation gate. Historical R8 operating closure remains distinct from the new free-serving layer.
