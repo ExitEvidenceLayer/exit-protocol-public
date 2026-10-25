@@ -14,8 +14,8 @@ what the evidence cannot establish.
 | Stage | Output | Exit condition |
 |---|---|---|
 | Supported research service | Finite control/history/change scope. | Source/time boundaries and required operating results verified; historical R8 closed at seq170. |
-| 30-day free API opening | Bounded access, quotas, retries, revocation and recovery; no wallet/payment. | Corrected serving layer accepted, actual public access verified and dates/limits published. Not open yet. |
-| Owner token creation | Jupiter Studio / Meteora DBC, Solana, after free access opens. | Owner chooses timing and performs wallet approval/signature/creation; publish verified identifiers. Month-end is not a prerequisite. |
+| 30-day free API opening | Bounded access, quotas, retries, revocation and recovery; no wallet/payment. | Corrected serving layer accepted, actual public access verified and dates/limits published. Opened 25 October 2026 at 12:38:20 UTC; ends 24 November at the same UTC time. |
+| Owner token creation | Owner-created EXITP on Jupiter Studio / Meteora DBC, Solana. | Created before API activation; official identity read back and published in TOKEN.md. Future financial/signing actions remain the Owner’s. |
 | Later paid API Pass | Exact usage right, commercial terms and receipt-to-credit integration. | Actual final-configuration chain/wallet rehearsal plus separate money/access security and operational acceptance. No automatic paid conversion. |
 
 Current delivery labels are in [STATUS.md](STATUS.md). Completion of the first
@@ -23,7 +23,7 @@ release does not require completion of the four growth quarters below.
 
 ## After launch: relative quarters
 
-**T0** is the actual launch date, which is not announced. Q1–Q4 mean successive
+**T0** for the first-service growth plan is 25 October 2026, the actual free-service opening date. Q1–Q4 mean successive
 three-month planning windows after T0. They are conditional targets, not calendar
 guarantees. Each requires capacity, source access and evidence of usefulness.
 
