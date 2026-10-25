@@ -9,15 +9,14 @@ what the evidence cannot establish.
 
 ![First-service sequence and conditional post-launch growth; conceptual plan, not a delivery measurement](growth-map.svg)
 
-## Before the launch decision
+## First service and token sequence
 
 | Stage | Output | Exit condition |
 |---|---|---|
-| Supported research service | Declared control/history/change scope and understandable research experience. | Supported answers, evidence/time boundaries and limitations verified; required actual-host operation checks complete. |
-| Service rights and integration | Bounded credits, access conditions, quotas, retries and recovery. | Accepted service rules match the implemented serving path; unanswered primary queries do not consume credit. |
-| Payment and security acceptance | Exact token program/configuration and permitted chain/wallet rehearsal. | Receipt/auth/replay/recovery controls pass on the final configuration; separate security assessment complete. |
-| Launch package | Final venue, mint settings, distribution, treasury, official identifiers and whitepaper. | Published descriptions match delivered rights; unresolved launch-blocking decisions are resolved. |
-| Owner launch decision | A concrete verified package for the Owner's action. | Owner chooses whether to launch and performs the wallet approval, signature and creation action. |
+| Supported research service | Finite control/history/change scope. | Source/time boundaries and required operating results verified; historical R8 closed at seq170. |
+| 30-day free API opening | Bounded access, quotas, retries, revocation and recovery; no wallet/payment. | Corrected serving layer accepted, actual public access verified and dates/limits published. Not open yet. |
+| Owner token creation | Jupiter Studio / Meteora DBC, Solana, after free access opens. | Owner chooses timing and performs wallet approval/signature/creation; publish verified identifiers. Month-end is not a prerequisite. |
+| Later paid API Pass | Exact usage right, commercial terms and receipt-to-credit integration. | Actual final-configuration chain/wallet rehearsal plus separate money/access security and operational acceptance. No automatic paid conversion. |
 
 Current delivery labels are in [STATUS.md](STATUS.md). Completion of the first
 release does not require completion of the four growth quarters below.
