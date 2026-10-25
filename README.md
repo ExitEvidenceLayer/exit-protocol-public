@@ -12,7 +12,7 @@ Our first specialization is control and change analysis. The larger direction is
 a research environment connecting authority, events and observed fund relationships
 across validated network coverage—usable by individuals, software and organizations.
 
-[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.5.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
+[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.6.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.6.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
 
 ## Why this matters
 
