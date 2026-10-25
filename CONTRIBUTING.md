@@ -12,6 +12,10 @@ For a website defect, give reproducible steps, browser/device, expected behavior
 
 Keep a change focused. Explain why it improves accuracy, clarity, reproducibility or accessibility. Preserve the distinction between delivered, privately tested, planned and unknown. New product claims require source-bound evidence; an AI answer or model consensus is insufficient. Do not add copied provider responses or third-party media without a verified sharing right.
 
+## Conduct
+
+Participation follows the [code of conduct](CODE_OF_CONDUCT.md).
+
 ## Security and commercial requests
 
 Sensitive findings belong in the [security process](SECURITY.md), never a public issue. See [support](SUPPORT.md) for private integration enquiries. A contribution, issue or research brief does not create a bounty, paid engagement, service entitlement or response deadline.
