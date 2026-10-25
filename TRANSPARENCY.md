@@ -16,7 +16,8 @@ the original search covered every relevant event.
 
 Where relevant, publish dated periods that separately identify actual service
 receipts, actual operator revenue from the service and, if any, from the token's
-trading venue, operating expenses, reserves and treasury movements.
+trading venue — EXIT's creator share of the Jupiter Studio trading fee (half of a 1% fee)
+and any launch anti-sniper fee — operating expenses, reserves and treasury movements.
 Show planned budgets separately from realized spending. Explain material changes
 and attach suitable transaction references or records without exposing secrets.
 
