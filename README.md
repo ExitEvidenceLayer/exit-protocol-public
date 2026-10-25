@@ -12,7 +12,7 @@ Our first specialization is control and change analysis. The larger direction is
 a research environment connecting authority, events and observed fund relationships
 across validated network coverage—usable by individuals, software and organizations.
 
-[Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.5.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
+[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.5.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
 
 ## Why this matters
 
@@ -36,9 +36,12 @@ The public [research desk](https://exit-protocol.io/#research) provides three
 recorded authored case notes, source links, distinct event/knowledge times,
 downloads and an offline edition. No wallet is required to inspect them.
 
-The underlying research API is a **restricted alpha**. It supports declared
-control, historical and change questions over bounded coverage. The public desk
-does not compute a new answer for every arbitrary wallet or natural-language query.
+The **30-day quota-limited free research API is open** at
+[api.exit-protocol.io](https://api.exit-protocol.io/). Generate pseudonymous access
+without an email, wallet, token or payment. It computes structured control, historical
+and change answers over three recorded Solana reference subjects. See the
+[quick start, live example and quotas](docs/API.md). The static public desk remains
+a separate recorded-case browser, not an arbitrary-wallet or prose investigator.
 
 ```sh
 curl https://exit-protocol.io/solana-pyusd.json
@@ -52,23 +55,24 @@ acceptance remain open. See [current status](STATUS.md) and [service rights](TOK
 
 ## A first release. A continuing engineering program.
 
-Open the finite, quota-limited 30-day free service after its serving and operating
-acceptance. Token creation follows that opening; paid API Pass redemption is a
-separate later integration. Free access is being prepared, not yet public. Then grow through four relative
-post-launch planning windows: research workflow → temporal graph → measured
-monitoring → organizational workflows. Those future quarters do not delay
-acceptance of the first usable release.
+The first free campaign opened **25 October 2026 at 12:38:20 UTC**, and ends
+**24 November 2026 at 12:38:20 UTC**. It does not convert automatically to payment.
+The Owner has also created **EXIT Protocol (EXITP)** on Solana. Its official mint is
+[`5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups`](https://studio.jup.ag/tokens/5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups).
+Token creation was reported before API activation; the actual sequence is preserved,
+not backdated to the previous plan. Token-to-credit redemption is **not live**.
+
+Development continues through conditional relative planning windows: research workflow
+→ temporal graph → measured monitoring → organizational workflows. These are future
+capabilities, not claims delivered by creating a token or opening this first service.
 
 New methods are compared with the existing baseline on the same tasks. Accuracy,
 completion, reproducibility, latency and cost are measured separately. Methods
 that add complexity without useful improvement are revised or stopped.
 
-**No official EXIT token mint or launch is announced.** Holding a proposed token
-is not presented as a profit share or a guarantee of returns. Token creation,
-wallet approvals and signatures remain the Owner's actions. EXIT is not a meme token;
-the Owner has decided to create it through Jupiter Studio on the Meteora Dynamic Bonding
-Curve program after the free early-access API opens, and publishes the single official
-mint address in [TOKEN.md](TOKEN.md) after creation.
+The verified token identity and present service-right limits are in [TOKEN.md](TOKEN.md).
+Buying or holding EXITP does not activate a paid API Pass. Free service access is
+independent of token ownership; payment never changes what the evidence supports.
 
 ## Official identity
 
@@ -87,7 +91,7 @@ project; only the addresses and hashes published here do.
 | [Technology](TECHNOLOGY.md) | Provenance, two-time reasoning and engineering invariants. |
 | [Status](STATUS.md) | Publicly available, privately tested and open work. |
 | [Roadmap](ROADMAP.md) | First-service criteria and conditional post-launch quarters. |
-| [Token](TOKEN.md) | Proposed usage right and future official identifiers. |
+| [Token](TOKEN.md) | Verified official mint and planned paid-usage integration. |
 | [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |
 | [Security](SECURITY.md) · [Support](SUPPORT.md) | Safe reporting and product enquiries. |
 | [Contributing](CONTRIBUTING.md) | Reproducible public corrections, safe reports and contribution scope. |
