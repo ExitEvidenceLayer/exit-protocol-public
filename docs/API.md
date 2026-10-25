@@ -23,3 +23,30 @@ Incomplete answers, technical failures and unsupported requests do not spend ans
 No general all-wallet analysis, price prediction, guaranteed manipulation detection or beneficial-owner identification is offered. Ethereum research references and free-serving supported subjects are separate declarations; do not assume every case is a live supported route.
 
 [Current status](../STATUS.md) · [Rights and selected venue](../TOKEN.md)
+
+## Executed response excerpt
+
+The following excerpt was captured from the tested service code in a local isolated run against the pinned `7ce62fe` reference runtime on 25 October 2026. The query uses the shown historical valid/known cutoffs. This is **not** a request to a public free endpoint, a claim about current chain state or a complete replay export. `controllers_excerpt` is an explicitly selected display field, not a field added to the core response schema.
+
+```json
+{
+  "schema_version": "0.1.0",
+  "query": {
+    "known_at": "2026-08-01T23:59:59+00:00",
+    "query_type": "control_state",
+    "subject_id": "usdc-mint-authorities",
+    "valid_at": "2026-08-01T00:00:00+00:00"
+  },
+  "response_content_hash": "sha256:3269a4d8f272e0346b6a88f17ddd2b73d5d533221221daa8ab5c7bcce0776985",
+  "controllers_excerpt": [
+    {
+      "authority_class": "freeze_authority",
+      "controller_status": "OBSERVED"
+    },
+    {
+      "authority_class": "mint_authority",
+      "controller_status": "OBSERVED"
+    }
+  ]
+}
+```
