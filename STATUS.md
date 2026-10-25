@@ -34,8 +34,11 @@ Free-serving v4 passed 44 source-bound tests as the actual target-host service u
 up encrypted and restored in an isolated directory: start time, usage and revoked
 keys were retained; a stale database was rejected against the current trusted marker.
 These are finite technical checks, not evidence of customer demand or total security.
-The separate reviewer’s v4 clock-delta acknowledgement remains pending; no such
-acknowledgement is claimed by this operational opening.
+The separate v4 clock-delta source review is now **ACCEPT / TECHNICAL_PASS**,
+bound to the deployed v4 source. On the actual host, successful chrony synchronization
+is now a required predecessor of the free service at boot; this was applied without
+restarting the live service or changing its campaign clock. Finite testing and
+separate source review are not a guarantee against every future defect.
 
 ## How this page will evolve
 
