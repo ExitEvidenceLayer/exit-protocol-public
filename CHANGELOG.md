@@ -1,5 +1,14 @@
 # Public documentation changelog
 
+## 25 October 2026 · reviewed successor
+
+- Published illustrated whitepaper 0.6 with actual token/free-access facts and an explicitly future paid-integration boundary; retained the historical 0.5 edition.
+- Corrected a Solana-case overstatement: an account’s owner program alone does not identify its deriving/signing program or prove runtime execution. Source observations remain unchanged, with a dated correction and all eight case locales updated.
+- Verified the deployed overview against all eight locale catalogs; added case-schema documentation and clearer contribution/transparency guidance.
+- Applied backed-up site security headers, www-to-apex redirect and a real 404 response while preserving the separate API/alpha blocks.
+- Recorded separate v4 source-review acceptance and actual-host time synchronization ordering. No campaign reset, token transaction, private engine publication or paid API Pass activation.
+
+
 ## 25 October 2026 · actual free-service opening
 
 - Opened https://api.exit-protocol.io/ at 12:38:20 UTC for one quota-limited 30-day campaign.
