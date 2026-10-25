@@ -65,7 +65,7 @@ to an unselected allocation or lock product.
 
 ## Venue documentation and remaining facts
 
-Jupiter’s [official Studio documentation](https://docs.jup.ag/user-docs/launch/studio/graduation-and-fees), checked 25 October 2026, describes a 1% buy/sell fee split equally between creator and Jupiter, plus a decaying launch anti-sniper fee. It describes graduation to Meteora DAMM v2 and permanent locking of the initial graduated LP. Those published mechanics are not a claim that an EXIT pool exists, all later-added liquidity is locked or a particular mint authority configuration has been verified.
+Jupiter’s [official Studio documentation](https://docs.jup.ag/user-docs/launch/studio/graduation-and-fees), checked 25 October 2026, describes a 1% buy/sell fee split equally between creator and Jupiter, plus an additional launch anti-sniper fee described as decaying from 99% to 0% during the first 15–60 seconds, allocated to the creator. It describes graduation to Meteora DAMM v2 and permanent locking of the initial graduated LP. Those published mechanics are not a claim that an EXIT pool exists, all later-added liquidity is locked or a particular mint authority configuration has been verified.
 
 The selected venue is known. The uncreated token’s exact mint, program, authorities, extensions and accepted configuration remain unverified. DBC supports different token-program configurations; do not infer one from the venue name. These technical disclosures do not transfer the Owner’s personal financial decisions to an agent.
 
