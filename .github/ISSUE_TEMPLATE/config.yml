@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Product access and integration scope
+    url: https://exit-protocol.io/#service
+    about: Check current public access, restricted API status and the project contact before making a service request.
+  - name: Sensitive security finding
+    url: https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/SECURITY.md
+    about: Follow the private reporting boundary. Do not post sensitive exploit details in a public issue.
