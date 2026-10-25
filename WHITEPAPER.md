@@ -1,6 +1,8 @@
 # EXIT Whitepaper · Public Draft 0.5
 
-**24 October 2026** · [Illustrated web edition](https://exit-protocol.io/WHITEPAPER-v0.5.html)
+**24 October 2026** · [Illustrated web edition](https://exit-protocol.io/WHITEPAPER-v0.5.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.5.pdf)
+
+The PDF contains the same public draft, formatted for reading and sharing. This text mirror preserves version history; it is not a separate product or token-readiness attestation.
 
 Blockchain research and monitoring infrastructure
 
