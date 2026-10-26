@@ -73,3 +73,11 @@ live API deployment, token mint, financial transaction or completed launch gate.
 - Added a system map connecting the first specialization to the wider research vision.
 - Aligned post-launch quarter numbering and added measurable long-term development boundaries.
 - Preserved recorded case identities, restricted-alpha status and the prototype/production distinction.
+
+## 2026-10-26 — research records, on-request watches and Ethereum contract reads
+
+- Records name the unresolved question and evidence gap. Supported transient Solana provider failures allow explicit bounded follow-ups; a recorded reason is not an answer.
+- Solana authority watches re-read only on request, at most every six hours.
+- Ethereum current-contract reads inspect declared proxy slots, owner() observations, code identities and named holder account types at a provider-reported finalized block.
+- Published client/MCP additions expose these same live routes. Transport and privacy safeguards remain in force.
+- Public-HTTPS operator acceptance: 21 checks passed, 4 attempts / 2 answered / 0 credits, replay exact, test access revoked and denied. Finite acceptance is not a universal coverage or security guarantee.
