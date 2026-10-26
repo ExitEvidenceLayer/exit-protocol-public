@@ -1,5 +1,16 @@
 # Public documentation changelog
 
+## 26 October 2026 · bounded live-token research and public adapters
+
+- Documented the live any-Solana-mint authority endpoint separately from recorded reference history and public Ethereum case notes.
+- Closed the one-shot authenticated own-mint acceptance, including replay, usage and access revocation.
+- Added a public standard-library Python client, stdio MCP wrapper, OpenAPI document and synthetic security regressions; HTTP redirects cannot forward bearer keys. Ethereum contract calls remain capability-gated and not live.
+- Linked the visual roadmap and preserved the conditional growth windows.
+- Applied API/alpha security headers with live checks, without widening research routes or changing campaign limits.
+- Research records and pull watches remain a private candidate under separate review; no public migration or continuous detection claim.
+- Removed internal role terminology from current public descriptions; historical dated delivery records remain historical.
+
+
 ## 25 October 2026 · reviewed successor
 
 - Published illustrated whitepaper 0.6 with actual token/free-access facts and an explicitly future paid-integration boundary; retained the historical 0.5 edition.
@@ -14,7 +25,7 @@
 - Opened https://api.exit-protocol.io/ at 12:38:20 UTC for one quota-limited 30-day campaign.
 - Added anonymous key issuance, structured-query quick start, limits, expiry and no-payment boundary.
 - Verified actual public HTTPS answer/replay/restart/revocation and encrypted state restore in an isolated copy; historical alpha remains separate.
-- Published the Owner-supplied EXITP mint after two finalized read-backs; replaced obsolete “no mint” and “not open” current-status wording.
+- Published the official EXITP mint after two finalized read-backs; replaced obsolete “no mint” and “not open” current-status wording.
 - Recorded that token creation preceded API activation; preserved historical records and v0.5 paper.
 - Token-to-credit/paid API Pass redemption remains future integration, not an effect of buying or holding EXITP.
 
@@ -24,9 +35,9 @@
 
 - Free API: private corrected candidate, not yet open; the month-end is not a token-creation gate. Historical R8 operating closure remains distinct from the new free-serving layer.
 - Website case presentation: five Solana signer observations, event versus observation block labels, event-window attribution, and explicit not-read versus unknown boundaries. Old evidence identities and dated paper v0.5 are preserved.
-- TOKEN.md: the Owner has decided to create the token through Jupiter Studio on the Meteora Dynamic Bonding Curve program after the free early-access API opens; the official mint address is published after creation. The earlier venue preference is withdrawn.
+- TOKEN.md: the token is to be created through Jupiter Studio on the Meteora Dynamic Bonding Curve program after the free early-access API opens; the official mint address is published after creation. The earlier venue preference is withdrawn.
 - TRANSPARENCY.md: financial reporting names operator revenue from the service and, if any, from the token's trading venue, replacing the earlier fee wording.
-- WHITEPAPER.md: wording of the Owner's reserved launch actions simplified (the PDF edition is regenerated separately).
+- WHITEPAPER.md: wording of the reserved launch actions simplified (the PDF edition is regenerated separately).
 - README.md: "Official identity" (non-affiliation) and "License" sections added; LICENSE file added (CC BY-ND 4.0 for the documentation; names and marks are not licensed; engine, datasets and API remain proprietary).
 
 This entry records documentation changes only. The creation venue is selected. No token mint address, launch date, sale or claim process is announced.
