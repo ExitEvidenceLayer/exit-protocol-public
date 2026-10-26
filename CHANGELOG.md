@@ -1,5 +1,13 @@
 # Public documentation changelog
 
+## 26 October 2026 · one research console
+
+- The browser interface at api.exit-protocol.io is now one research console in 16 languages: one address field that recognises a Solana token mint or an Ethereum contract, an evidence graph with times and limits, records and watches, a developer section and a limits and privacy section.
+- Live Ethereum contract reads, research records and on-request watches are open in the same free service; the earlier entry below records the state before they opened.
+- README and PRODUCT describe the live scope; the outdated sentence about a separate older alpha was removed.
+- OpenAPI: refusal codes are explained, including ENROLLMENT_NETWORK_LIMIT_REACHED (two new free keys per network per UTC day).
+- test_agent_records.py: an internal working label was removed from the module docstring.
+
 ## 26 October 2026 · bounded live-token research and public adapters
 
 - Documented the live any-Solana-mint authority endpoint separately from recorded reference history and public Ethereum case notes.

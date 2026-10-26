@@ -1,4 +1,4 @@
-"""ODA 1 agent interface v3 (2026-10-26): research-record and watch tools. Synthetic loopback traffic only; no campaign or real key."""
+"""Agent interface v3 (2026-10-26): research-record and watch tools. Synthetic loopback traffic only; no campaign or real key."""
 import http.server
 import json
 import threading

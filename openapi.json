@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "EXIT free research API (early access)",
-    "version": "2026-10-26",
-    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people."
+    "version": "2026-10-26.1",
+    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (a daily or campaign limit), ENROLLMENT_CAP_REACHED (no free key can be issued today), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key."
   },
   "servers": [
     {

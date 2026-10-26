@@ -36,11 +36,11 @@ The public [research desk](https://exit-protocol.io/#research) provides three
 recorded authored case notes, source links, distinct event/knowledge times,
 downloads and an offline edition. No wallet is required to inspect them.
 
-The **30-day quota-limited free research API is open** at
+The **30-day quota-limited free research console and API are open** at
 [api.exit-protocol.io](https://api.exit-protocol.io/). Generate pseudonymous access
-without an email, wallet, token or payment. It reads current mint/freeze and supported Token-2022 authority fields for any Solana token mint, with source identity and finalized slot/time bounds. It also computes historical
+without an email, wallet, token or payment. One key covers live control reads for any Solana token mint (mint/freeze and supported Token-2022 authority fields) and any Ethereum contract (proxy slots, the owner() getter as an observation, code presence), each at a finalized slot or block with its sources and limits; research records for questions that cannot be answered yet; watches you check on request; and historical
 and change answers over three recorded Solana reference subjects. See the
-[quick start, live example and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded token authority reads, not unrestricted wallet tracing or prose investigation.
+[quick start, live examples and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded control reads, not unrestricted wallet tracing or prose investigation.
 
 [Connect scripts and agents](AGENT-TOOLS.md) with the public Python client, stdio MCP adapter and [OpenAPI description](openapi.json). No private research-engine code is included.
 

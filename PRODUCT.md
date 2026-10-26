@@ -41,10 +41,9 @@ No wallet connection or EXIT token is required to inspect public cases.
 ## Software integration
 
 The free early-access service at [api.exit-protocol.io](https://api.exit-protocol.io/)
-reads any Solana token mint through `GET /v0/research/solana/mint?mint=...` for current observed authority fields and supported holder structures. It also supports structured `control_state`, `control_as_of` and `control_change` queries over
+reads any Solana token mint through `GET /v0/research/solana/mint?mint=...` (current observed authority fields and supported holder structures) and any Ethereum contract through `GET /v0/research/ethereum/contract?address=...` (proxy slots, the owner() getter as an observation, code presence). The same key opens research records, on-request watches and structured `control_state`, `control_as_of` and `control_change` queries over
 three declared recorded Solana reference subjects. It is open 25 October–24 November
-2026, 12:38:20 UTC, with quotas and pseudonymous access. The older restricted alpha
-remains separate. Bearer credentials are access secrets, distinct from the EXITP
+2026, 12:38:20 UTC, with quotas and pseudonymous access. Bearer credentials are access secrets, distinct from the EXITP
 blockchain token; no token, wallet or payment is required for free access.
 
 The public [script/agent adapters](AGENT-TOOLS.md) call the same API with your own access key; they do not embed a separate research engine.
