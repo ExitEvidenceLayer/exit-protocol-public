@@ -15,12 +15,13 @@ what the evidence cannot establish.
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
-  → NEXT: durable research records and explicit pull-change checks
-  → THEN: validated Ethereum contract reader
+  → LIVE: durable research records and explicit pull-change checks
+  → LIVE: bounded Ethereum current-contract reader
+  → NEXT: saved comparisons and measured workflow improvements
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
 ```
 
-The records/watch and Ethereum readers are private candidates. A successful local test is not a live deployment. The first-year graph, planning and anomaly program below remains a measured growth direction.
+Research records, on-request Solana authority watches and Ethereum current-contract reads are live in the SAME free service, with the same access key and quotas. A bounded public-HTTPS operator acceptance passed on 26 October. Automatic scheduled alerts remain future work; on-request checks do not establish continuous monitoring. The first-year graph, planning and anomaly program below remains a measured growth direction.
 
 ## First service and token sequence
 
