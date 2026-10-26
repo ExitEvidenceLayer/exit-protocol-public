@@ -322,9 +322,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[\\x21-\\x7e]{1,64}$"
+              "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -414,9 +414,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[\\x21-\\x7e]{1,64}$"
+              "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -506,9 +506,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[\\x21-\\x7e]{1,64}$"
+              "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -608,9 +608,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "pattern": "^[\\x21-\\x7e]{1,64}$"
+              "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -891,9 +891,393 @@
           }
         }
       }
+    },
+    "/v0/research/ethereum/contract": {
+      "get": {
+        "summary": "Any Ethereum contract: proxy implementation/admin slots, the owner() getter as an observation and whether each named address holds code, at one finalized block (at most eleven read-only calls). Provider failures are recorded as research records (X-EXIT-Research-Record).",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{40}$"
+            }
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[!-~]{1,64}$"
+            },
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "exit.ethereum-contract-research/1",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits. May carry X-EXIT-Research-Record / -State / -Gap.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/research/records": {
+      "get": {
+        "summary": "This key's research records (last 50): id, created, route, subject, state (OPEN / RESULT_READY / REASON_RECORDED), gap. Reading spends no research attempt.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "records list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/research/record": {
+      "get": {
+        "summary": "One record: state, gap, reason, follow-ups, next_check_at, result_available and (for 24 h) the verified result. Another key's id answers exactly like an unknown id (404).",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^rr-[0-9a-f]{24}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "record detail",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Explicit, quota-counted re-check of an OPEN record after a provider failure (at most three, at least an hour apart). Empty body + X-EXIT-Request-Id. Records without a follow-up path: 409 RESEARCH_CHECK_NOT_AVAILABLE.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^rr-[0-9a-f]{24}$"
+            }
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[!-~]{1,64}$"
+            },
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the research answer (header X-EXIT-Research-Record)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits. May carry X-EXIT-Research-Record / -State / -Gap.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/research/watch": {
+      "get": {
+        "summary": "This key's watched Solana mints with recorded semantic authority/holder changes (no reading happens).",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "watch list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "With ?mint=: create a watch (at most 3 per key, 300 total; ends after seven days; reads nothing). With ?id=: explicit re-read (at most every six hours, even after a failed attempt; one research attempt; empty body + X-EXIT-Request-Id). Not continuous monitoring.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "mint",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^watch-[0-9a-f]{24}$"
+            }
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[!-~]{1,64}$"
+            },
+            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "check: the research answer (header X-EXIT-Watch)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "created: {id}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits. May carry X-EXIT-Research-Record / -State / -Gap.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Stop a watch (stored changes are deleted). Unknown and other keys' ids answer the same STOPPED.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^watch-[0-9a-f]{24}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{status: STOPPED}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-  },
-  "x-planned-not-live": {
-    "ethereum-contract-route": "Private candidate; excluded from live paths until separately accepted and enabled."
   }
 }
