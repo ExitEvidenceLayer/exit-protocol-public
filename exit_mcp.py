@@ -3,7 +3,8 @@
 
 Run it from an agent's MCP configuration with EXIT_API_KEY in the environment (the key is obtained by a human in the browser at
 https://api.exit-protocol.io and is never printed). Tools: exit_mint_controls, exit_contract_controls, exit_control_state, exit_control_as_of,
-exit_control_change, exit_freshness, exit_usage, exit_service_status. Answers carry their evidence and limits; an unresolved answer is
+exit_control_change, exit_research_records, exit_research_record, exit_research_record_check, exit_watch_list, exit_watch_add, exit_watch_check,
+exit_watch_stop, exit_freshness, exit_usage, exit_service_status. Answers carry their evidence and limits; an unresolved answer is
 returned as unresolved, never as a verdict. No price, safety or identity claims.
 """
 import json
@@ -16,6 +17,8 @@ from exit_client import SUBJECTS, Client, ExitError  # noqa: E402
 VERSIONS = ("2025-06-18", "2025-03-26", "2024-11-05")
 INSTANT = {"type": "string", "description": "ISO-8601 instant with timezone, e.g. 2026-08-01T00:00:00+00:00"}
 SUBJECT = {"type": "string", "enum": list(SUBJECTS), "description": "a recorded subject"}
+RECORD = {"type": "string", "pattern": "^rr-[0-9a-f]{24}$", "description": "research record id"}
+WATCH = {"type": "string", "pattern": "^watch-[0-9a-f]{24}$", "description": "watch id"}
 SCOPE = (" Evidence-bound: the result keeps its sources, times and limits; an unresolved primary answer is reported as unresolved and is "
          "not a completed answer. Not a safety verdict, price prediction or identification of people. Free early access: 0 credits; "
          "research attempts count against the account's daily limits; status/usage/freshness reads do not spend research attempts.")
@@ -41,6 +44,27 @@ TOOLS = [
      "inputSchema": {"type": "object", "properties": {"subject_id": SUBJECT, "valid_at_from": INSTANT, "valid_at_to": INSTANT,
                      "known_at": INSTANT}, "required": ["subject_id", "valid_at_from", "valid_at_to", "known_at"],
                      "additionalProperties": False}},
+    {"name": "exit_research_records", "description": "This key's research records: questions EXIT could not answer with evidence "
+     "(0 credits), each with its state (OPEN, RESULT_READY, REASON_RECORDED) and gap. Reading spends no research attempt.",
+     "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False}},
+    {"name": "exit_research_record", "description": "One research record: state, gap, recorded reason, follow-ups used, next possible check "
+     "and (for 24 hours) a verified result. A recorded reason is not an answer.",
+     "inputSchema": {"type": "object", "properties": {"record_id": RECORD}, "required": ["record_id"], "additionalProperties": False}},
+    {"name": "exit_research_record_check", "description": "Explicitly re-check an OPEN record after a provider failure (at most three times, "
+     "at least an hour apart; one research attempt). Records without a follow-up path are refused." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"record_id": RECORD}, "required": ["record_id"], "additionalProperties": False}},
+    {"name": "exit_watch_list", "description": "This key's watched Solana mints and the authority changes recorded so far (no reading happens).",
+     "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False}},
+    {"name": "exit_watch_add", "description": "Watch a Solana token mint for authority changes: at most three per key, ends after seven days, "
+     "adding reads nothing. Pull model: nothing is read until exit_watch_check is called.",
+     "inputSchema": {"type": "object", "properties": {"mint": {"type": "string", "description": "Solana token mint address (base58)"}},
+                     "required": ["mint"], "additionalProperties": False}},
+    {"name": "exit_watch_check", "description": "Re-read a watched mint now (at most every six hours, even after a failed attempt; one research "
+     "attempt) and record semantic authority/holder changes with evidence; an incomplete read records no change. Not continuous "
+     "monitoring." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"watch_id": WATCH}, "required": ["watch_id"], "additionalProperties": False}},
+    {"name": "exit_watch_stop", "description": "Stop a watch and delete its stored changes.",
+     "inputSchema": {"type": "object", "properties": {"watch_id": WATCH}, "required": ["watch_id"], "additionalProperties": False}},
     {"name": "exit_freshness", "description": "How recent the recorded evidence is and which periods are not covered. Call this before "
      "relying on a recorded answer.", "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False}},
     {"name": "exit_usage", "description": "Today's attempts and answers for this key (0 credits charged).",
@@ -59,6 +83,20 @@ def call_tool(client, name, args):
         return client.control_state(args["subject_id"], args["valid_at"], args["known_at"], as_of=name == "exit_control_as_of")
     if name == "exit_control_change":
         return client.control_change(args["subject_id"], args["valid_at_from"], args["valid_at_to"], args["known_at"])
+    if name == "exit_research_records":
+        return client.research_records()
+    if name == "exit_research_record":
+        return client.research_record(args["record_id"])
+    if name == "exit_research_record_check":
+        return client.check_research_record(args["record_id"])
+    if name == "exit_watch_list":
+        return client.watches()
+    if name == "exit_watch_add":
+        return client.add_watch(args["mint"])
+    if name == "exit_watch_check":
+        return client.check_watch(args["watch_id"])
+    if name == "exit_watch_stop":
+        return client.stop_watch(args["watch_id"])
     if name == "exit_freshness":
         return client.freshness()
     if name == "exit_usage":
@@ -79,7 +117,7 @@ def handle(client, msg):
     if method == "initialize":
         asked = (msg.get("params") or {}).get("protocolVersion")
         result = {"protocolVersion": asked if asked in VERSIONS else VERSIONS[0], "capabilities": {"tools": {}},
-                  "serverInfo": {"name": "exit-research", "version": "1.0.0"}}
+                  "serverInfo": {"name": "exit-research", "version": "1.1.0"}}
     elif method == "ping":
         result = {}
     elif method == "tools/list":
@@ -99,6 +137,8 @@ def handle(client, msg):
             result = {"content": [{"type": "text", "text": json.dumps(out, ensure_ascii=False)}], "isError": False}
         except (ExitError, KeyError, TypeError, ValueError, OSError) as e:
             text = f"{e.status} {e.error}" if isinstance(e, ExitError) else type(e).__name__
+            if isinstance(e, ExitError) and e.research_record:
+                text += " · research record " + json.dumps(e.research_record)
             result = {"content": [{"type": "text", "text": "EXIT refused or failed: " + text}], "isError": True}
     else:
         return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32601, "message": "method not found"}}
