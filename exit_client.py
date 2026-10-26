@@ -26,14 +26,27 @@ SUBJECTS = ("usdc-mint-authorities", "pyusd-mint-authorities", "pump-fun-program
 _MINT = re.compile(r"[1-9A-HJ-NP-Za-km-z]{32,44}")
 _EVM = re.compile(r"0x[0-9a-fA-F]{40}")
 _KEY = re.compile(r"exit_free_[A-Za-z0-9_-]{43}")
+_RECORD = re.compile(r"rr-[0-9a-f]{24}")
+_WATCH = re.compile(r"watch-[0-9a-f]{24}")
+_CODE = re.compile(r"[A-Z][A-Z0-9_]{0,127}")
+_STATES = ("OPEN", "RESULT_READY", "REASON_RECORDED")
 
 
 class ExitError(Exception):
-    """A refusal or failure from the service (status 0 = refused locally before any request)."""
+    """A refusal or failure from the service (status 0 = refused locally before any request). research_record is the research
+    record the service opened for this unresolved request ({id, state, gap}), or None."""
 
-    def __init__(self, status, error):
+    def __init__(self, status, error, research_record=None):
         super().__init__(f"{status} {error}")
-        self.status, self.error = status, error
+        self.status, self.error, self.research_record = status, error, research_record
+
+
+def _record(h):
+    """The research-record headers of a response, accepted only in their documented shape."""
+    rid, state, gap = h.get("X-EXIT-Research-Record"), h.get("X-EXIT-Research-Record-State"), h.get("X-EXIT-Research-Gap")
+    if not (isinstance(rid, str) and _RECORD.fullmatch(rid)):
+        return None
+    return {"id": rid, "state": state if state in _STATES else None, "gap": gap if isinstance(gap, str) and _CODE.fullmatch(gap) else None}
 
 
 def _instant(name, value):
@@ -73,7 +86,7 @@ class Client:
         rid = str(uuid.uuid4()) if request_id else None
         if rid:
             headers["X-EXIT-Request-Id"] = rid
-        req = urllib.request.Request(url, headers=headers, method=method)
+        req = urllib.request.Request(url, data=b"" if method == "POST" else None, headers=headers, method=method)
         try:
             with self._opener.open(req, timeout=self.timeout) as r:
                 status, raw, h = r.status, r.read(MAX_RESPONSE + 1), r.headers
@@ -92,9 +105,10 @@ class Client:
             code = value.get("error", "ERROR") if isinstance(value, dict) else "ERROR"
             if not isinstance(code, str) or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,127}", code):
                 code = "SERVICE_ERROR"
-            raise ExitError(status, code)
+            raise ExitError(status, code, _record(h))
         return {"meta": {"http_status": status, "research_state": h.get("X-EXIT-Research-State"),
-                         "replayed": h.get("X-EXIT-Replayed") == "1", "request_id": rid}, "value": value}
+                         "replayed": h.get("X-EXIT-Replayed") == "1", "request_id": rid, "research_record": _record(h),
+                         "research_intake_full": h.get("X-EXIT-Research-Intake") == "FULL"}, "value": value}
 
     # --- service and account (read-only) ---
     def status(self):
@@ -121,6 +135,59 @@ class Client:
         if not self.status()["value"].get("live_contract_research", False):
             raise ExitError(0, "ETHEREUM_RESEARCH_NOT_ENABLED")
         return self._call("GET", "/v0/research/ethereum/contract", {"address": address}, request_id=True)
+
+    # --- research records and pull-model watches (where the service reports research_records) ---
+    def _records_enabled(self):
+        if not self.status()["value"].get("research_records", False):
+            raise ExitError(0, "RESEARCH_RECORDS_NOT_ENABLED")
+
+    def research_records(self):
+        """This key's research records (unanswered questions): id, state, gap, subject, times. Reading spends no research attempt."""
+        self._records_enabled()
+        return self._call("GET", "/v0/research/records")
+
+    def research_record(self, record_id):
+        """One record: state (OPEN, RESULT_READY, REASON_RECORDED), gap, recorded reason, follow-ups used, next possible check and,
+        for 24 hours, a verified result. Another key's record answers exactly like an unknown id."""
+        if not isinstance(record_id, str) or not _RECORD.fullmatch(record_id):
+            raise ExitError(0, "a research record id (rr- + 24 hex characters) is required")
+        self._records_enabled()
+        return self._call("GET", "/v0/research/record", {"id": record_id})
+
+    def check_research_record(self, record_id):
+        """Explicitly re-check an OPEN record (provider failures only: at most three times, at least an hour apart). It counts as one
+        research attempt; a record without a follow-up path is refused (409 RESEARCH_CHECK_NOT_AVAILABLE)."""
+        if not isinstance(record_id, str) or not _RECORD.fullmatch(record_id):
+            raise ExitError(0, "a research record id (rr- + 24 hex characters) is required")
+        self._records_enabled()
+        return self._call("POST", "/v0/research/record", {"id": record_id}, request_id=True)
+
+    def watches(self):
+        """This key's watched Solana mints with their recorded authority changes (no reading happens here)."""
+        self._records_enabled()
+        return self._call("GET", "/v0/research/watch")
+
+    def add_watch(self, mint):
+        """Watch a Solana token mint for authority changes (at most three per key; a watch ends after seven days). Adding reads nothing."""
+        if not isinstance(mint, str) or not _MINT.fullmatch(mint):
+            raise ExitError(0, "a Solana mint address (base58, 32-44 characters) is required")
+        self._records_enabled()
+        return self._call("POST", "/v0/research/watch", {"mint": mint})
+
+    def check_watch(self, watch_id):
+        """Explicitly re-read a watched mint now (at most every six hours, even after a failed attempt; counts as one research attempt).
+        Changes are semantic authority/holder changes with evidence; an incomplete read records no change. Not continuous monitoring."""
+        if not isinstance(watch_id, str) or not _WATCH.fullmatch(watch_id):
+            raise ExitError(0, "a watch id (watch- + 24 hex characters) is required")
+        self._records_enabled()
+        return self._call("POST", "/v0/research/watch", {"id": watch_id}, request_id=True)
+
+    def stop_watch(self, watch_id):
+        """Stop a watch (its stored changes are deleted)."""
+        if not isinstance(watch_id, str) or not _WATCH.fullmatch(watch_id):
+            raise ExitError(0, "a watch id (watch- + 24 hex characters) is required")
+        self._records_enabled()
+        return self._call("DELETE", "/v0/research/watch", {"id": watch_id})
 
     def control_state(self, subject_id, valid_at, known_at, as_of=False):
         """Recorded subjects only (SUBJECTS): who controlled it at valid_at, using only evidence known by known_at."""
