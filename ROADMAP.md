@@ -9,13 +9,26 @@ what the evidence cannot establish.
 
 ![First-service sequence and conditional post-launch growth; conceptual plan, not a delivery measurement](growth-map.svg)
 
+[Open the visual phase-by-phase roadmap](https://exit-protocol.io/ROADMAP.html).
+
+## Current engineering sequence · 26 October
+
+```text
+LIVE: recorded research + any-Solana-mint authority read + free API
+  → NEXT: durable research records and explicit pull-change checks
+  → THEN: validated Ethereum contract reader
+  → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
+```
+
+The records/watch and Ethereum readers are private candidates. A successful local test is not a live deployment. The first-year graph, planning and anomaly program below remains a measured growth direction.
+
 ## First service and token sequence
 
 | Stage | Output | Exit condition |
 |---|---|---|
 | Supported research service | Finite control/history/change scope. | Source/time boundaries and required operating results verified; historical R8 closed at seq170. |
 | 30-day free API opening | Bounded access, quotas, retries, revocation and recovery; no wallet/payment. | Corrected serving layer accepted, actual public access verified and dates/limits published. Opened 25 October 2026 at 12:38:20 UTC; ends 24 November at the same UTC time. |
-| Owner token creation | Owner-created EXITP on Jupiter Studio / Meteora DBC, Solana. | Created before API activation; official identity read back and published in TOKEN.md. Future financial/signing actions remain the Owner’s. |
+| Token creation | EXITP created on Jupiter Studio / Meteora DBC, Solana. | Created before API activation; official identity read back and published in TOKEN.md. Future financial and signing actions stay with the project's key holder. |
 | Later paid API Pass | Exact usage right, commercial terms and receipt-to-credit integration. | Actual final-configuration chain/wallet rehearsal plus separate money/access security and operational acceptance. No automatic paid conversion. |
 
 Current delivery labels are in [STATUS.md](STATUS.md). Completion of the first
