@@ -10,7 +10,7 @@ email, signature, payment or automatic paid conversion.
 Open the URL, read the supported scope and minimal-metrics notice, and select
 **Get free access**. Your bearer key stays in this browser tab’s session storage.
 Save it privately if you want to reuse it; losing it does not reset the campaign.
-The interface lets you inspect a Solana token mint, or choose a recorded subject, question type and UTC cutoffs,
+The interface lets you inspect a Solana token mint or Ethereum contract, read research records, manage on-request watches, or choose a recorded subject, question type and UTC cutoffs,
 inspect freshness, read evidence-linked answers and see usage. Do not enter secrets.
 
 ## 2. Integrate the API
@@ -70,6 +70,36 @@ Responses use `exit.solana-mint-research/1`, identify the source and finalized s
 
 For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
 
+## Research records (unanswered questions)
+
+When a supported question cannot be answered with evidence, the answer (or the provider-failure refusal) carries
+`X-EXIT-Research-Record`, `X-EXIT-Research-Record-State` and `X-EXIT-Research-Gap`. Nothing is charged. Only a supported transient provider failure on the Solana mint route stays `OPEN`, for at most three explicit re-checks at least an hour apart (each one research attempt); a gap without
+an executable path is recorded with its reason at once (`REASON_RECORDED`). A verified follow-up result is `RESULT_READY`
+and kept for 24 hours; record details are erased after seven days. A recorded reason is not an answer.
+
+```sh
+curl --fail --silent --show-error https://api.exit-protocol.io/v0/research/records \
+  -H "Authorization: Bearer $EXIT_ACCESS_KEY"
+curl --fail --silent --show-error -X POST 'https://api.exit-protocol.io/v0/research/record?id=rr-<24 hex>' \
+  -H "Authorization: Bearer $EXIT_ACCESS_KEY" -H 'X-EXIT-Request-Id: my-record-check-1'
+```
+
+## Pull-model watches
+
+`POST /v0/research/watch?mint=` watches a Solana token mint (at most three per key; a watch ends after seven days; adding reads
+nothing). Nothing is read until you ask: `POST /v0/research/watch?id=watch-<24 hex>` with a request id re-reads it (at most
+every six hours, even after a failed attempt; one research attempt) and records only semantic authority or holder changes
+with their evidence; an incomplete read records no change. `GET /v0/research/watch` lists watches and changes;
+`DELETE /v0/research/watch?id=` stops one. No e-mail, push delivery or continuous monitoring.
+
+## Ethereum own-contract research
+
+`GET /v0/research/ethereum/contract?address=0x…` (bearer + request id) reads, at one provider-reported finalized block and with
+at most eleven read-only calls, the proxy implementation and admin slots, the `owner()` getter as an observation and whether
+each named address holds code. An empty admin slot is unknown, not "no admin"; what an address may do is not established
+without the published source; an address without code or an EIP-7702 delegated account is refused (422) without spending the
+answer allowance. Responses use `exit.ethereum-contract-research/1`.
+
 ## Recorded reference scope
 
 | Supported subject | Question family |
@@ -80,8 +110,7 @@ For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py
 
 The Pump program subject is research coverage, **not the EXIT token creation venue**.
 These are recorded evidence subjects in pinned runtime `7ce62fe02b0f1684be9ecb9e71168423e3040c17`.
-Example dates above are historical. No arbitrary-wallet, price, prose-investigation or universal cross-chain service is implied. Current-chain authority reads use the separate mint endpoint above. Public Ethereum case
-notes are separate from this first free API scope.
+Example dates above are historical. No arbitrary-wallet, price, prose-investigation or universal cross-chain service is implied. Current-chain authority reads use the separate mint endpoint above. Public Ethereum historical case notes are separate from the live Ethereum current-contract reader described above.
 
 | Route | Access / inputs |
 |---|---|
@@ -89,6 +118,10 @@ notes are separate from this first free API scope.
 | `POST /early-access/enroll` | Exact two-boolean JSON above; returns one private key |
 | `GET /v0/subjects`, `/v0/contract`, `/v0/freshness`, `/v0/corroboration` | Bearer key; inspect scope and contract |
 | `GET /v0/research/solana/mint` | Bearer + request ID + mint; one bounded current authority read |
+| `GET /v0/research/ethereum/contract` | Bearer + request ID + address; one bounded finalized-block contract read |
+| `GET /v0/research/records`, `GET /v0/research/record?id=` | Bearer; your research records (reading spends no attempt) |
+| `POST /v0/research/record?id=` | Bearer + request ID; explicit re-check of an OPEN provider-failure record |
+| `GET`, `POST`, `DELETE /v0/research/watch` | Bearer; list / create (`?mint=`) or re-read (`?id=` + request ID) / stop (`?id=`) |
 | `GET /v0/control_state`, `/v0/control_as_of` | Bearer + request ID + subject_id, valid_at, known_at |
 | `GET /v0/control_change` | Bearer + request ID + subject_id, valid_at_from, valid_at_to, known_at |
 | `GET /v0/early-access/usage` | Own usage; credits_charged is 0 |
@@ -125,4 +158,8 @@ The full JSON response SHA-256 was
 These finite checks do not prove human usefulness, unlimited capacity or the absence
 of all security defects. [Current status](../STATUS.md) · [Privacy](https://exit-protocol.io/privacy.html).
 
-Research-record, pull-watch and arbitrary Ethereum-contract routes are not part of the live API yet. Their private candidates do not change this published scope.
+Research records, pull-model watches and Ethereum own-contract reads are live since 26 October 2026 (05:38:15 and 05:51:30
+UTC); they were host-verified at deployment. A bounded public-HTTPS operator acceptance passed on 26 October at 07:49:39 UTC (records, watch lifecycle, Ethereum answer/replay/refusals, 4 attempts / 2 answers / 0 credits, and revocation). They change no quota,
+limit or campaign date.
+
+The HTTP transport also has burst/rate limits independent of research allowances: up to 20 burst units per account, refilling at 20 units/minute. A `429` with `Retry-After` is a refusal before route work. Status/usage reads are free of research-attempt charges but still count toward transport limits. Do not automatically retry research after an ambiguous connection failure.
