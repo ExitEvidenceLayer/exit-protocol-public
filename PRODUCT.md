@@ -74,3 +74,9 @@ is no promise of unlimited free investigations, a universal answer or a hidden
 charge when new evidence eventually appears.
 
 [Research desk](https://exit-protocol.io/#start) · [Status](STATUS.md) · [Technology](TECHNOLOGY.md)
+
+## One free research workflow — 26 October update
+
+The browser interface and API at https://api.exit-protocol.io/ now combine live Solana token authority reads, live Ethereum current-contract reads, recorded historical questions, research records and explicit Solana watch checks. All use one free access account and the same protective quotas. The historical three-subject selector is one tool within this workflow; it does not limit the separate live-address readers.
+
+Free research records preserve a gap and reason; only supported transient Solana provider failures have an explicit re-check path. This is not an autonomous laboratory that guarantees an answer. The paid API Pass prototype remains separate and is not live. On-request watch checks are available now; scheduled automatic alerts remain planned.
