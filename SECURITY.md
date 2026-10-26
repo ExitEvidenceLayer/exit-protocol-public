@@ -1,6 +1,6 @@
 # Security reporting
 
-Report a suspected vulnerability privately to **exitprotocol.com@gmail.com** with
+Report a suspected vulnerability privately to **security@exit-protocol.io** with
 subject **EXIT security report**. The same contact is published in
 [security.txt](https://exit-protocol.io/.well-known/security.txt). Include the affected public surface/version,
 expected and observed behavior, and a minimal reproduction that uses your own
