@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "EXIT free research API (early access)",
-    "version": "2026-10-26.1",
+    "version": "2026-10-26.2",
     "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (a daily or campaign limit), ENROLLMENT_CAP_REACHED (no free key can be issued today), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key."
   },
   "servers": [
@@ -60,7 +60,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Public campaign status. phase OPEN permits existing-key use and does not alone mean registration available. enrollment.available, daily_remaining, campaign_remaining, daily_limit, reason, resets_at (Unix seconds), proof_required, network_daily_limit describe key-registration capacity."
       }
     },
     "/v0/early-access/usage": {
@@ -664,7 +665,8 @@
                 "type": "object",
                 "required": [
                   "accept_terms",
-                  "accept_minimal_metrics"
+                  "accept_minimal_metrics",
+                  "proof"
                 ],
                 "properties": {
                   "accept_terms": {
@@ -672,6 +674,24 @@
                   },
                   "accept_minimal_metrics": {
                     "const": true
+                  },
+                  "proof": {
+                    "type": "object",
+                    "required": [
+                      "challenge",
+                      "nonce"
+                    ],
+                    "properties": {
+                      "challenge": {
+                        "type": "string",
+                        "maxLength": 1024
+                      },
+                      "nonce": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]{0,9})$"
+                      }
+                    },
+                    "additionalProperties": false
                   }
                 },
                 "additionalProperties": false
@@ -680,16 +700,6 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "{access_key, keep_private, payment_required:false}",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
-                }
-              }
-            }
-          },
           "4XX": {
             "description": "Refused: JSON {error}. 0 credits.",
             "content": {
@@ -714,8 +724,19 @@
                 }
               }
             }
+          },
+          "201": {
+            "description": "{access_key, keep_private, payment_required:false}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
-        }
+        },
+        "description": "First fetch /early-access/challenge and solve its bounded SHA-256 proof of work. Signed challenge expires after 600 seconds, is network-bound and one use. Two new keys per network per UTC day; 40 daily and 600 campaign accounts. No email or wallet. Shared networks share the registration limit. Existing keys retain their quotas. 428 ENROLLMENT_PROOF_REQUIRED; 409 ENROLLMENT_PROOF_USED; 429 ENROLLMENT_CAP_REACHED or ENROLLMENT_NETWORK_LIMIT_REACHED; refusal consumes no research credit."
       }
     },
     "/early-access/rotate": {
@@ -1275,6 +1296,24 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/early-access/challenge": {
+      "get": {
+        "summary": "Get a stateless, signed enrollment proof-of-work challenge",
+        "security": [],
+        "description": "SHA256(UTF8(challenge + \":\" + decimal_nonce)) must begin with 16 zero bits. Solve locally, then submit challenge and canonical decimal nonce with enrollment consents. Expires in 600 seconds; bound to connecting network. Not a CAPTCHA or identity attestation. Public rate limit applies.",
+        "responses": {
+          "200": {
+            "description": "challenge, bits (16), expires_at (Unix seconds), algorithm (sha256), format"
+          },
+          "4XX": {
+            "description": "Campaign closed or transport rate limit"
+          },
+          "503": {
+            "description": "Registration protection unavailable"
           }
         }
       }
