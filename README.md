@@ -108,3 +108,9 @@ Documentation in this repository is © EXIT Protocol and licensed under
 [CC BY-ND 4.0](LICENSE) (Creative Commons Attribution-NoDerivatives 4.0 International).
 The EXIT Protocol name and marks are not licensed. Public client wrappers are distributed under the same [CC BY-ND 4.0](LICENSE) terms; the research engine, datasets and
 API service remain proprietary and are not part of this repository.
+
+## 26 October — wider live research workflow
+
+Inspect a Solana token mint or Ethereum contract, keep an unanswered query as an explicit research record, and re-check supported Solana authority changes on request. The free browser and [API](docs/API.md) share the same quota and evidence boundaries. [Agent tools](AGENT-TOOLS.md) expose the same workflow without a second research engine.
+
+A bounded public-HTTPS acceptance passed: record lifecycle, watch lifecycle and cadence, Ethereum answer and byte-identical replay, exact usage and key revocation. Watches are on request, not a continuous alert service. No wallet, token purchase or email is required for the free campaign.
