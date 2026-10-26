@@ -10,7 +10,7 @@ email, signature, payment or automatic paid conversion.
 Open the URL, read the supported scope and minimal-metrics notice, and select
 **Get free access**. Your bearer key stays in this browser tab’s session storage.
 Save it privately if you want to reuse it; losing it does not reset the campaign.
-The interface lets you choose a supported subject, question type and UTC cutoffs,
+The interface lets you inspect a Solana token mint, or choose a recorded subject, question type and UTC cutoffs,
 inspect freshness, read evidence-linked answers and see usage. Do not enter secrets.
 
 ## 2. Integrate the API
@@ -55,7 +55,22 @@ curl --fail --silent --show-error -X POST \
 unset EXIT_ACCESS_KEY
 ```
 
-## Declared first-free scope
+## Live token authority research
+
+`GET /v0/research/solana/mint` accepts a Solana token **mint address**, a bearer key and an `X-EXIT-Request-Id`. It makes a bounded finalized read of current mint/freeze and supported Token-2022 authority fields, then inspects supported holder-account structures. It does not scan all wallet activity or infer who owns a private key.
+
+```sh
+curl --fail --silent --show-error --get https://api.exit-protocol.io/v0/research/solana/mint \
+  -H "Authorization: Bearer $EXIT_ACCESS_KEY" \
+  -H 'X-EXIT-Request-Id: my-token-authority-check-1' \
+  --data-urlencode 'mint=5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups'
+```
+
+Responses use `exit.solana-mint-research/1`, identify the source and finalized slot/time, and preserve evidence and unsupported-field limits. `X-EXIT-Research-State` distinguishes a completed primary answer from an incomplete read. A null observed authority differs from a value the service could not read. The public chain-data provider sees requested mint addresses.
+
+For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
+
+## Recorded reference scope
 
 | Supported subject | Question family |
 |---|---|
@@ -65,8 +80,7 @@ unset EXIT_ACCESS_KEY
 
 The Pump program subject is research coverage, **not the EXIT token creation venue**.
 These are recorded evidence subjects in pinned runtime `7ce62fe02b0f1684be9ecb9e71168423e3040c17`.
-Example dates above are historical. No arbitrary-wallet, price, prose-investigation,
-current-chain or universal cross-chain service is implied. Public Ethereum case
+Example dates above are historical. No arbitrary-wallet, price, prose-investigation or universal cross-chain service is implied. Current-chain authority reads use the separate mint endpoint above. Public Ethereum case
 notes are separate from this first free API scope.
 
 | Route | Access / inputs |
@@ -74,6 +88,7 @@ notes are separate from this first free API scope.
 | `GET /v0/early-access` | Public campaign status, actual dates, caps and subjects |
 | `POST /early-access/enroll` | Exact two-boolean JSON above; returns one private key |
 | `GET /v0/subjects`, `/v0/contract`, `/v0/freshness`, `/v0/corroboration` | Bearer key; inspect scope and contract |
+| `GET /v0/research/solana/mint` | Bearer + request ID + mint; one bounded current authority read |
 | `GET /v0/control_state`, `/v0/control_as_of` | Bearer + request ID + subject_id, valid_at, known_at |
 | `GET /v0/control_change` | Bearer + request ID + subject_id, valid_at_from, valid_at_to, known_at |
 | `GET /v0/early-access/usage` | Own usage; credits_charged is 0 |
@@ -109,3 +124,5 @@ The full JSON response SHA-256 was
 `a69623eb7f77533c97d880a4a90b073d87de31a07394ef97e08fa838b376bbdd`.
 These finite checks do not prove human usefulness, unlimited capacity or the absence
 of all security defects. [Current status](../STATUS.md) · [Privacy](https://exit-protocol.io/privacy.html).
+
+Research-record, pull-watch and arbitrary Ethereum-contract routes are not part of the live API yet. Their private candidates do not change this published scope.
