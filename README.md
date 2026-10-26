@@ -82,6 +82,10 @@ $EXIT token or EXIT HOUSE (Ethereum), with the EXIT Designer Token (BNB Chain) o
 exitprotocols.com (a forensic-accounting platform). Names and tickers never identify this
 project; only the addresses and hashes published here do.
 
+A second token named EXIT Protocol / EXITP (`3ev5LvQN8weDndULdFwNwEgfJueaoGYLdBPtnHhnjups`) was created
+by the same launch wallet 28 seconds before the official mint, during the launch flow. It is not EXITP;
+see [TOKEN.md](TOKEN.md).
+
 ## Project record
 
 | Guide | Purpose |

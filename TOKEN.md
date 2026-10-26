@@ -7,7 +7,7 @@
 | Name / symbol | EXIT Protocol / EXITP |
 | Network | Solana mainnet |
 | Official mint | `5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups` |
-| Studio page supplied by the Owner | https://studio.jup.ag/tokens/5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups |
+| Studio page | https://studio.jup.ag/tokens/5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups |
 | Token program | Standard SPL Token: `TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA` |
 | Decimals | 6 |
 | Observed supply | 1,000,000,000 tokens; atomic supply `1000000000000000` |
@@ -16,8 +16,14 @@
 | Free research access | Open; no token or payment required |
 | Token-to-credit / paid API Pass redemption | **NOT LIVE** |
 
-The Owner created the token through Jupiter Studio / Meteora DBC and supplied the
-identifier before the API opened at 12:38:20 UTC. The actual sequence supersedes the
+**Duplicate token — not EXITP.** A second token with the same name and symbol,
+`3ev5LvQN8weDndULdFwNwEgfJueaoGYLdBPtnHhnjups`, was created by the same launch wallet 28 seconds
+before the official mint (12:14:29 UTC, slot 461,253,427) during the launch flow. Its metadata cannot
+be changed, and when re-checked on 26 October 2026 at 12:32 UTC it had no transaction other than its
+creation. Always check the mint address.
+
+EXIT Protocol created the token through Jupiter Studio / Meteora DBC at 12:14:57 UTC on
+25 October 2026, before the API opened at 12:38:20 UTC. The actual sequence supersedes the
 earlier plan; it is not backdated. Matching names or tickers do not identify this asset.
 Authority revocation is a narrow token-program fact, not a guarantee about price,
 liquidity, distribution, beneficial ownership or investment safety.
@@ -50,14 +56,14 @@ would need a new concrete design, review, decision and disclosure.
 
 ## Venue selection
 
-The Owner created the token through Jupiter Studio on the Meteora
+EXIT Protocol created the token through Jupiter Studio on the Meteora
 Dynamic Bonding Curve program on Solana.
 The token program, decimals
 and authorities above were read back from the chain after creation;
 the earlier venue preference is withdrawn. The choice of venue does not bias EXIT's
 research toward or against any platform.
 
-Creation and wallet signing remain Owner actions. No launch date, token price,
+The research service never signs wallet transactions. No launch date, token price,
 guaranteed distribution outcome or investment return is announced here.
 
 ## What the final official record must contain
@@ -79,6 +85,6 @@ to an unselected allocation or lock product.
 
 Jupiter’s [official Studio documentation](https://docs.jup.ag/user-docs/launch/studio/graduation-and-fees), checked 25 October 2026, describes a 1% buy/sell fee split equally between creator and Jupiter, plus an additional launch anti-sniper fee described as decaying from 99% to 0% during the first 15–60 seconds, allocated to the creator. It describes graduation to Meteora DAMM v2 and permanent locking of the initial graduated LP. Those published generic mechanics do not verify the actual EXIT pool configuration, every later-added liquidity position or personal purchases. The mint fields above were verified separately.
 
-The selected venue and created mint identity are known. Actual pool fees, liquidity positions, distribution and any personal financial actions require their own read-back and dated disclosures. DBC supports different token-program configurations; do not infer one from the venue name. These technical disclosures do not transfer the Owner’s personal financial decisions to an agent.
+The selected venue and created mint identity are known. Actual pool fees, liquidity positions, distribution and any personal financial actions require their own read-back and dated disclosures. DBC supports different token-program configurations; do not infer one from the venue name.
 
 The [reviewed DBC SPL initializer](https://github.com/MeteoraAg/dynamic-bonding-curve/blob/91e696eef6a3764157220f6c104f079b7830fc04/programs/dynamic-bonding-curve/src/instructions/initialize_pool/ix_initialize_virtual_pool_with_spl_token.rs#L227-L254) issues the initial configured supply and revokes mint authority. The [standard Token-2022 initializer path](https://github.com/MeteoraAg/dynamic-bonding-curve/blob/91e696eef6a3764157220f6c104f079b7830fc04/programs/dynamic-bonding-curve/src/instructions/initialize_pool/process_initialize_virtual_pool_with_token2022.rs#L127-L166) likewise revokes mint authority for a configuration without a retained-mint option; the non-transfer-hook entry rejects that option. This is source-level evidence for the expected mechanism, not a source-to-deployed-binary match. The actual EXIT mint authorities were observed separately above. Read-back still establishes the actual asset state.
