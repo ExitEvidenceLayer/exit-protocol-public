@@ -1,0 +1,899 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EXIT free research API (early access)",
+    "version": "2026-10-26",
+    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people."
+  },
+  "servers": [
+    {
+      "url": "https://api.exit-protocol.io"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "exit_free_ + 43 characters"
+      }
+    }
+  },
+  "paths": {
+    "/v0/early-access": {
+      "get": {
+        "summary": "Campaign phase, window and limits",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/early-access/usage": {
+      "get": {
+        "summary": "Today's attempts and answers for this key",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "usage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/subjects": {
+      "get": {
+        "summary": "Recorded subjects in scope",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "coverage",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/freshness": {
+      "get": {
+        "summary": "How recent the recorded evidence is; uncovered periods",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "freshness",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/corroboration": {
+      "get": {
+        "summary": "Corroboration status of the recorded evidence",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "corroboration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/contract": {
+      "get": {
+        "summary": "The service contract (fields, states, limits)",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "contract",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/research/solana/mint": {
+      "get": {
+        "summary": "Any Solana token mint: mint/freeze/supported Token-2022 authorities and holder accounts (one finalized read, at most three read-only RPC calls). Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "mint",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$"
+            }
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            },
+            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "exit.solana-mint-research/1",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/control_state": {
+      "get": {
+        "summary": "Recorded subject: who controls it in the recorded view. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "usdc-mint-authorities",
+                "pyusd-mint-authorities",
+                "pump-fun-program-upgrade-authority"
+              ]
+            }
+          },
+          {
+            "name": "valid_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "the time asked about (ISO-8601 with timezone)"
+          },
+          {
+            "name": "known_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "only evidence known by then is used (ISO-8601 with timezone)"
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            },
+            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "control state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/control_as_of": {
+      "get": {
+        "summary": "Recorded subject: who controlled it at a past time. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "usdc-mint-authorities",
+                "pyusd-mint-authorities",
+                "pump-fun-program-upgrade-authority"
+              ]
+            }
+          },
+          {
+            "name": "valid_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "the time asked about (ISO-8601 with timezone)"
+          },
+          {
+            "name": "known_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "only evidence known by then is used (ISO-8601 with timezone)"
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            },
+            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "control as of",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/control_change": {
+      "get": {
+        "summary": "Recorded subject: what changed between two views. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "usdc-mint-authorities",
+                "pyusd-mint-authorities",
+                "pump-fun-program-upgrade-authority"
+              ]
+            }
+          },
+          {
+            "name": "valid_at_from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "start (ISO-8601 with timezone)"
+          },
+          {
+            "name": "valid_at_to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "end (ISO-8601 with timezone)"
+          },
+          {
+            "name": "known_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "only evidence known by then is used (ISO-8601 with timezone)"
+          },
+          {
+            "name": "X-EXIT-Request-Id",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            },
+            "description": "Your idempotency id (printable ASCII, 1-64). Repeating it with the same query replays the stored answer (X-EXIT-Replayed: 1)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "control change",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/early-access/enroll": {
+      "post": {
+        "summary": "Create a free key (done by a person in the browser; explicit consent)",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "accept_terms",
+                  "accept_minimal_metrics"
+                ],
+                "properties": {
+                  "accept_terms": {
+                    "const": true
+                  },
+                  "accept_minimal_metrics": {
+                    "const": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "{access_key, keep_private, payment_required:false}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/early-access/rotate": {
+      "post": {
+        "summary": "New key for the same account; the old key stops working; limits unchanged (no body)",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{access_key, quota_reset:false}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/early-access/revoke": {
+      "post": {
+        "summary": "Revoke this key (no body)",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "{status: REVOKED}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/early-access/feedback": {
+      "post": {
+        "summary": "Private feedback on one of your completed requests (no free text)",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "request_id",
+                  "helpful",
+                  "reason"
+                ],
+                "properties": {
+                  "request_id": {
+                    "type": "string"
+                  },
+                  "helpful": {
+                    "type": "boolean"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "enum": [
+                      "answered",
+                      "missing_scope",
+                      "unclear",
+                      "evidence_problem",
+                      "technical_problem"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "{status: RECORDED}",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Service or provider failure: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-planned-not-live": {
+    "ethereum-contract-route": "Private candidate; excluded from live paths until separately accepted and enabled."
+  }
+}
