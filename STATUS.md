@@ -1,6 +1,6 @@
 # Delivery status
 
-**Public documentation snapshot: 25 October 2026.** This page distinguishes available
+**Public documentation snapshot: 26 October 2026.** This page distinguishes available
 product surfaces, private engineering results and work still required for release.
 It is not an automatic live-monitoring feed.
 
@@ -8,6 +8,10 @@ It is not an automatic live-monitoring feed.
 |---|---|---|
 | Official website | **PUBLIC** | Recorded research desk, selected cases, authored notes and offline edition. |
 | Control/history/change research | **IMPLEMENTED / BOUNDED FREE ACCESS OPEN** | A finite supported reference scope; not all-wallet or all-network coverage. |
+| Any Solana token mint | **LIVE / ACCEPTANCE CHECK COMPLETE** | One finalized read of mint/freeze and supported Token-2022 authorities plus holder-account structure. Not a trading-risk score, person attribution or proof of executable control. |
+| Public script/agent client | **PUBLISHED / LOCALLY TESTED** | HTTP wrapper, stdio MCP and API description. No engine source or access key included; no autonomous worker. |
+| Research records + pull watches | **PRIVATE CANDIDATE / SEPARATE REVIEW PENDING** | Durable gaps, explicit quota-counted follow-up and selected-authority change checks. Not deployed; no continuous monitoring or contact delivery. |
+| Arbitrary Ethereum contract reader | **PRIVATE CANDIDATE** | Not enabled in the public service; recorded Ethereum case notes remain separate. |
 | Solana and selected Ethereum research | **TECHNICALLY IMPLEMENTED** | Specific reference investigations; not universal cross-chain tracing. |
 | Evidence replay | **LOCALLY TESTED** | Exact material and engine identities; sharing remains permission-scoped. |
 | API Pass adapter | **PRIVATE PROTOTYPE TESTED** | Wallet intent, receipt, credits, retries, isolation and recovery controls; not a public paid product. |
@@ -19,12 +23,12 @@ It is not an automatic live-monitoring feed.
 
 ## What completion means
 
-The first release is ready for Owner acceptance when its declared supported scope,
+The first release is ready for acceptance when its declared supported scope,
 service access, required operating results and release-blocking corrections are
 complete. Optional future quarters, external user recruitment and an attempt to
 cover every blockchain are not technical completion gates.
 
-The Owner created EXITP through Jupiter Studio / Meteora DBC and supplied the official
+EXITP was created through Jupiter Studio / Meteora DBC; the official
 mint before free API activation. The API opened at the actual timestamp above; the
 previous planned sequence is not rewritten as an executed sequence. Paid API Pass
 remains a separate release requiring actual receipt/wallet and security acceptance.
@@ -45,3 +49,7 @@ separate source review are not a guarantee against every future defect.
 Material delivery changes will be recorded with a dated status and a matching
 public changelog entry. Final mint details and accepted token rights belong in
 [TOKEN.md](TOKEN.md) only after they are verified and authorized for publication.
+
+## 26 October operating update
+
+The own-token endpoint passed actual authenticated answer, byte-identical replay, usage and revocation checks. Security headers were added with eight live HTTP checks, without widening routes or changing campaign limits. These checks do not establish universal parser coverage or continuous availability. Research-record and pull-watch routes remain private pending separate review and migration acceptance.
