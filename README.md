@@ -12,7 +12,7 @@ Our first specialization is control and change analysis. The larger direction is
 a research environment connecting authority, events and observed fund relationships
 across validated network coverage—usable by individuals, software and organizations.
 
-[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.6.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.6.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Growth roadmap](ROADMAP.md)
+[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.6.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.6.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Visual roadmap](https://exit-protocol.io/ROADMAP.html) · [Roadmap record](ROADMAP.md)
 
 ## Why this matters
 
@@ -38,10 +38,11 @@ downloads and an offline edition. No wallet is required to inspect them.
 
 The **30-day quota-limited free research API is open** at
 [api.exit-protocol.io](https://api.exit-protocol.io/). Generate pseudonymous access
-without an email, wallet, token or payment. It computes structured control, historical
+without an email, wallet, token or payment. It reads current mint/freeze and supported Token-2022 authority fields for any Solana token mint, with source identity and finalized slot/time bounds. It also computes historical
 and change answers over three recorded Solana reference subjects. See the
-[quick start, live example and quotas](docs/API.md). The static public desk remains
-a separate recorded-case browser, not an arbitrary-wallet or prose investigator.
+[quick start, live example and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded token authority reads, not unrestricted wallet tracing or prose investigation.
+
+[Connect scripts and agents](AGENT-TOOLS.md) with the public Python client, stdio MCP adapter and [OpenAPI description](openapi.json). No private research-engine code is included.
 
 ```sh
 curl https://exit-protocol.io/solana-pyusd.json
@@ -57,7 +58,7 @@ acceptance remain open. See [current status](STATUS.md) and [service rights](TOK
 
 The first free campaign opened **25 October 2026 at 12:38:20 UTC**, and ends
 **24 November 2026 at 12:38:20 UTC**. It does not convert automatically to payment.
-The Owner has also created **EXIT Protocol (EXITP)** on Solana. Its official mint is
+**EXIT Protocol (EXITP)** has also been created on Solana. Its official mint is
 [`5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups`](https://studio.jup.ag/tokens/5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups).
 Token creation was reported before API activation; the actual sequence is preserved,
 not backdated to the previous plan. Token-to-credit redemption is **not live**.
@@ -105,5 +106,5 @@ Public summaries do not grant redistribution rights over their underlying source
 
 Documentation in this repository is © EXIT Protocol and licensed under
 [CC BY-ND 4.0](LICENSE) (Creative Commons Attribution-NoDerivatives 4.0 International).
-The EXIT Protocol name and marks are not licensed. The research engine, datasets and
-the API are proprietary and are not part of this repository.
+The EXIT Protocol name and marks are not licensed. Public client wrappers are distributed under the same [CC BY-ND 4.0](LICENSE) terms; the research engine, datasets and
+API service remain proprietary and are not part of this repository.
