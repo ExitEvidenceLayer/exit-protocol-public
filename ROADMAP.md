@@ -3,6 +3,8 @@
 **North Star:** evidence-based blockchain research and monitoring infrastructure.
 **First specialization:** control and change analysis.
 
+One master roadmap: the operated first release is followed by measured, continuous development toward evidence-based blockchain research and monitoring infrastructure.
+
 The first release has a finite scope. Subsequent expansion is designed to improve
 the breadth, speed and reliability of supported investigations without hiding
 what the evidence cannot establish.
@@ -11,13 +13,14 @@ what the evidence cannot establish.
 
 [Open the visual phase-by-phase roadmap](https://exit-protocol.io/ROADMAP.html).
 
-## Current engineering sequence · 26 October
+## Current engineering sequence · 27 October
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: durable research records and explicit pull-change checks
   → LIVE: bounded Ethereum current-contract reader
-  → NEXT: saved comparisons and measured workflow improvements
+  → LIVE: saved comparisons and answer-to-source navigation
+  → NEXT: measured workflow improvements and reviewed authority-path expansion
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
 ```
 
@@ -34,6 +37,8 @@ Research records, on-request Solana authority watches and Ethereum current-contr
 
 Current delivery labels are in [STATUS.md](STATUS.md). Completion of the first
 release does not require completion of the four growth quarters below.
+
+The roadmap stages and the whitepaper describe the same direction. Document version numbers identify revisions, not competing product plans.
 
 ## After launch: relative quarters
 
