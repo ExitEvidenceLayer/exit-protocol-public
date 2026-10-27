@@ -86,6 +86,19 @@ A second token named EXIT Protocol / EXITP (`3ev5LvQN8weDndULdFwNwEgfJueaoGYLdBP
 by the same launch wallet 28 seconds before the official mint, during the launch flow. It is not EXITP;
 see [TOKEN.md](TOKEN.md).
 
+### Verify the client files
+
+Before running `exit_client.py` or `exit_mcp.py`, check that your copies match the files published here.
+
+| File | SHA-256 |
+|---|---|
+| `exit_client.py` | `30c92ac0f84f504bd9d54b1ed9a146664044706bf3e7424286d5c2029222aa38` |
+| `exit_mcp.py` | `39f0ea1fd3b66ba1c5861d4476e92cbd47604423e8890f7246100fc798ad6108` |
+
+On macOS or Linux, `shasum -a 256 exit_client.py exit_mcp.py` must print these values; on Windows PowerShell,
+`Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py`. A copy with any other value is not the published file. When
+the files change, these values change in the same commit.
+
 ## Project record
 
 | Guide | Purpose |
