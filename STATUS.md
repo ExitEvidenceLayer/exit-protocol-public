@@ -1,6 +1,6 @@
 # Delivery status
 
-**Public documentation snapshot: 26 October 2026.** This page distinguishes available
+**Public documentation snapshot: 27 October 2026.** This page distinguishes available
 product surfaces, private engineering results and work still required for release.
 It is not an automatic live-monitoring feed.
 
@@ -23,10 +23,7 @@ It is not an automatic live-monitoring feed.
 
 ## What completion means
 
-The first release is ready for acceptance when its declared supported scope,
-service access, required operating results and release-blocking corrections are
-complete. Optional future quarters, external user recruitment and an attempt to
-cover every blockchain are not technical completion gates.
+The finite EXIT 3.0 technical scope was accepted on 26 October with its stated source, coverage and operating-evidence limits. This is the first delivery milestone in one continuing development program. Future features and paid service rights require their own acceptance; technical completion is not a claim of universal coverage or demonstrated customer utility.
 
 EXITP was created through Jupiter Studio / Meteora DBC; the official
 mint before free API activation. The API opened at the actual timestamp above; the
@@ -43,6 +40,10 @@ bound to the deployed v4 source. On the actual host, successful chrony synchroni
 is now a required predecessor of the free service at boot; this was applied without
 restarting the live service or changing its campaign clock. Finite testing and
 separate source review are not a guarantee against every future defect.
+
+## 27 October engineering update
+
+Saved comparisons and answer-to-source navigation have been live since 26 October 17:52 UTC. They operate over the account's own cached answers and do not acquire new chain data. Authority-path expansion and a temporal graph have reviewed private candidates, but are not claimed live here. Scheduled notifications and pending-authority research are development work; pull checks remain the live monitoring scope.
 
 ## How this page will evolve
 
