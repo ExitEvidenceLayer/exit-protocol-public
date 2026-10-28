@@ -1,4 +1,4 @@
-<p align="center"><img src="research-system-map.svg" alt="EXIT: evidence and time support control/change analysis; dashed extensions describe the planned research graph, query planning and monitoring" width="100%"></p>
+<p align="center"><img src="research-system-map.svg" alt="EXIT: evidence and time support control/change analysis; dashed extensions describe research graph, query planning and monitoring work beyond the bounded parts that are live" width="100%"></p>
 
 # EXIT · Blockchain Research & Monitoring
 
@@ -38,9 +38,11 @@ downloads and an offline edition. No wallet is required to inspect them.
 
 The **30-day quota-limited free research console and API are open** at
 [api.exit-protocol.io](https://api.exit-protocol.io/). Generate pseudonymous access
-without an email, wallet, token or payment. One key covers live control reads for any Solana token mint (mint/freeze and supported Token-2022 authority fields) and any Ethereum contract (proxy slots, the owner() getter as an observation, code presence), each at a finalized slot or block with its sources and limits; research records for questions that cannot be answered yet; watches you check on request; and historical
+without an email, wallet, token or payment. One key covers live control reads for any Solana token mint (mint/freeze and supported Token-2022 authority fields, with one hop behind a multisig or program holder) and any Ethereum contract (proxy slots, the owner() getter as an observation, Safe owners and threshold, AccessControl default admins where readable, code presence), each at a finalized slot or block with its sources and limits; research records for questions that cannot be answered yet; a research graph over the key's own answers; Solana and Ethereum watches you check on request, with owned webhook receivers and hourly radar reads as a limited pilot; and historical
 and change answers over three recorded Solana reference subjects. See the
 [quick start, live examples and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded control reads, not unrestricted wallet tracing or prose investigation.
+
+EXIT's own records go into a public, append-only [evidence log](https://exit-protocol.io/log/), anchored on Solana once a day when it grows and checkable with a standalone verifier. The [Control Map](https://exit-protocol.io/control-map/) is a dated snapshot of which addresses hold the control roles of the largest tokens' Ethereum and Solana deployments.
 
 [Connect scripts and agents](AGENT-TOOLS.md) with the public Python client, stdio MCP adapter and [OpenAPI description](openapi.json). No private research-engine code is included.
 
@@ -64,7 +66,8 @@ Token creation was reported before API activation; the actual sequence is preser
 not backdated to the previous plan. Token-to-credit redemption is **not live**.
 
 Development continues through conditional relative planning windows: research workflow
-→ temporal graph → measured monitoring → organizational workflows. These are future
+→ temporal graph → measured monitoring → organizational workflows. Bounded first parts of
+the workflow, the graph and monitoring are live (see current status); the rest are future
 capabilities, not claims delivered by creating a token or opening this first service.
 
 New methods are compared with the existing baseline on the same tasks. Accuracy,

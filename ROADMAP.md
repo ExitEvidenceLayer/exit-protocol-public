@@ -13,18 +13,21 @@ what the evidence cannot establish.
 
 [Open the visual phase-by-phase roadmap](https://exit-protocol.io/ROADMAP.html).
 
-## Current engineering sequence · 27 October
+## Current engineering sequence · 28 October
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: durable research records and explicit pull-change checks
   → LIVE: bounded Ethereum current-contract reader
   → LIVE: saved comparisons and answer-to-source navigation
-  → NEXT: measured workflow improvements and reviewed authority-path expansion
+  → LIVE: one-hop authority reads, research graph, Solana and Ethereum watches (bounded)
+  → LIVE: public evidence log with a daily Solana anchor; Control Map snapshot
+  → LIVE (limited pilot): owned webhook receivers with hourly radar reads
+  → NEXT: research answers bound to the evidence log on request; holder-structure facts in mint answers
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
 ```
 
-Research records, on-request Solana authority watches and Ethereum current-contract reads are live in the SAME free service, with the same access key and quotas. A bounded public-HTTPS operator acceptance passed on 26 October. Automatic scheduled alerts remain future work; on-request checks do not establish continuous monitoring. The first-year graph, planning and anomaly program below remains a measured growth direction.
+Research records, on-request Solana authority watches and Ethereum current-contract reads are live in the SAME free service, with the same access key and quotas. A bounded public-HTTPS operator acceptance passed on 26 October. Since 27 October a limited radar pilot reads pending-authority scopes once an hour for watches that have an owned webhook receiver; it is not continuous monitoring, and pull checks remain the general monitoring scope. The first-year graph, planning and anomaly program below remains a measured growth direction.
 
 ## First service and token sequence
 
