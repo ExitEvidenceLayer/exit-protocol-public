@@ -1,0 +1,53 @@
+{
+ "checks": {
+  "anchor_within_26h": true,
+  "log_verified": true,
+  "run_within_26h": true
+ },
+ "commit": "6771758831fbc9b6b2cc0dda267f345faf4446fb",
+ "format": "exit.log-sentinel/1",
+ "log": "https://exit-protocol.io/log/",
+ "newest_anchor": {
+  "age_hours": 8.6,
+  "block_time_utc": "2026-10-28T00:30:07+00:00",
+  "signature": "ZrMT4j1SbNDfGoNm5u5YEqL4F9ZA5VqYALRPJMJfZ1g3mkQxyvtBLewAEWvDsuDu7QKR5iBwihd6Sw7GBVpJnaf",
+  "size": 200
+ },
+ "newest_run": {
+  "age_hours": 8.6,
+  "at": "2026-10-28T00:30:11.423957+00:00",
+  "outcome": "ANCHORED"
+ },
+ "ok": true,
+ "rpc": "https://api.mainnet-beta.solana.com",
+ "run_at": "2026-10-28T09:06:22.762027+00:00",
+ "verifier_sha256": "3f91e6ff40b9a7e18f7b753204401d587fe06dddd7fbe55b15909cfcdcf0f5a4",
+ "verify": {
+  "anchors_fetched": [
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 68 1659b21b319974c3906f966537f33b183f1ad70014c33e070991017630db5fd8 2026-10-27 66",
+    "size": 68,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 134 6aa122815eafc4f0eaef0e4d638b2c81fa31998741be6c609a8f58e0fec51def 2026-10-27 68",
+    "size": 134,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 200 54e5d8d4e5682a4d971a55865bd001e4a5818a56169ffef5599b90862ef7778b 2026-10-28 134",
+    "size": 200,
+    "why": null
+   }
+  ],
+  "anchors_listed": 3,
+  "leaves": 200,
+  "problems": [],
+  "proves": "Every published root is built from the published leaves, and each tree extends the previous one. Every anchor transaction carries its root.",
+  "roots_checked": 4,
+  "verified": true
+ }
+}
