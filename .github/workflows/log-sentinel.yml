@@ -1,0 +1,107 @@
+# Evidence log sentinel: an outside check of EXIT's public evidence log, run by GitHub, not by EXIT's server.
+# Every day at 00:45 UTC (15 minutes after EXIT's daily anchor run) it fetches the verifier from this repository at this commit,
+# verifies the published log at https://exit-protocol.io/log/ against Solana, checks that the newest anchor and the newest
+# daily run are less than 26 hours old, and writes the result to the `sentinel` branch of this repository
+# (results/<date>.json and latest.json). The job fails, visibly, when any check fails.
+# No secrets other than the job's own token; it writes only to the `sentinel` branch; no third-party actions.
+name: Evidence log sentinel
+
+on:
+  schedule:
+    - cron: '45 0 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: evidence-log-sentinel
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      LOG_URL: https://exit-protocol.io/log/
+    steps:
+      - name: Verify the published log from outside EXIT's server
+        shell: bash
+        run: |
+          set -uo pipefail
+          curl -fsSL --retry 3 "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/tools/exit_log_verify.py" -o exit_log_verify.py
+          used=""
+          for rpc in https://api.mainnet-beta.solana.com https://solana-rpc.publicnode.com; do
+            if python3 -I exit_log_verify.py log "$LOG_URL" --rpc "$rpc" > verify.json 2> verify.err; then used="$rpc"; break; fi
+            used="$rpc"
+          done
+          RPC_USED="$used" python3 -I - <<'PY'
+          import hashlib, json, os, sys, time, urllib.request
+          from datetime import datetime, timezone
+          base = os.environ['LOG_URL']
+          now = time.time()
+          def get(name):
+              req = urllib.request.Request(base + name, headers={'User-Agent': 'exit-log-sentinel/1'})
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)
+          out = {'format': 'exit.log-sentinel/1', 'run_at': datetime.fromtimestamp(now, timezone.utc).isoformat(), 'log': base,
+                 'verifier_sha256': hashlib.sha256(open('exit_log_verify.py', 'rb').read()).hexdigest(),
+                 'commit': os.environ.get('GITHUB_SHA'), 'rpc': os.environ.get('RPC_USED'), 'checks': {}}
+          try:
+              v = json.load(open('verify.json'))
+          except (OSError, ValueError):
+              v = {'verified': False, 'problems': ['the verifier gave no JSON result']}
+          out['verify'] = v
+          out['checks']['log_verified'] = v.get('verified') is True
+          try:
+              anchors = get('anchors.json')['anchors']
+              newest = max(anchors, key=lambda a: a['block_time'])
+              age = (now - newest['block_time']) / 3600
+              out['newest_anchor'] = {'size': newest['size'], 'signature': newest['signature'], 'block_time_utc': newest.get('block_time_utc'),
+                                      'age_hours': round(age, 2)}
+              out['checks']['anchor_within_26h'] = age <= 26
+          except Exception as e:
+              out['newest_anchor'] = {'error': type(e).__name__}
+              out['checks']['anchor_within_26h'] = False
+          try:
+              runs = get('runs.json')['runs']
+              last = runs[-1]
+              age = (now - datetime.fromisoformat(last['at']).timestamp()) / 3600
+              out['newest_run'] = {'at': last['at'], 'outcome': last['outcome'], 'age_hours': round(age, 2)}
+              out['checks']['run_within_26h'] = age <= 26
+          except Exception as e:
+              out['newest_run'] = {'error': type(e).__name__}
+              out['checks']['run_within_26h'] = False
+          out['ok'] = all(out['checks'].values())
+          json.dump(out, open('result.json', 'w'), indent=1, sort_keys=True)
+          print(json.dumps(out, indent=1, sort_keys=True))
+          sys.exit(0 if out['ok'] else 1)
+          PY
+
+      - name: Record the result on the sentinel branch
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -f result.json || exit 0
+          day=$(date -u +%Y-%m-%d)
+          auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
+          git init -q sentinel-branch
+          cd sentinel-branch
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          if git -c http.extraheader="$auth" fetch -q --depth 1 origin sentinel; then
+            git checkout -q -b sentinel FETCH_HEAD
+          else
+            git checkout -q --orphan sentinel
+          fi
+          mkdir -p results
+          cp ../result.json "results/${day}.json"
+          cp ../result.json latest.json
+          status=$(python3 -I -c 'import json; print("OK" if json.load(open("latest.json"))["ok"] else "FAILED")')
+          git add results latest.json
+          git commit -q -m "Sentinel ${day}: ${status}"
+          git -c http.extraheader="$auth" push -q origin HEAD:sentinel
