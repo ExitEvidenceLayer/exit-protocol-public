@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "EXIT free research API (early access)",
-    "version": "2026-10-27.13",
-    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (a daily or campaign limit), ENROLLMENT_CAP_REACHED (no free key can be issued today), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key. Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. Radar events keep a reserved share of each daily intake (the last 16 files), so watch changes can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Service admission limits: 128 files per run, 8 KiB per file, 1 MiB per run, 128 new private leaves per UTC day, 10000 in total, on a 32 MiB / 2048-inode drop. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes.",
+    "version": "2026-10-28.1",
+    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (a daily or campaign limit), ENROLLMENT_CAP_REACHED (no free key can be issued today), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key. Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. The notary takes radar events first, then watch changes; radar events keep a reserved share of each run's capacity, so a watch change can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Private bindings share one service-wide intake: at most 128 new private leaves per UTC day, within a fixed lifetime total. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes. Answer bindings (opt-in): a 200 ANSWERED response of /v0/research/solana/mint or /v0/research/ethereum/contract carries X-EXIT-Log-Binding only when its request sent X-EXIT-Log-Bind: 1 (never refusals, errors or NEEDS_RESEARCH; research-record re-checks, watch checks, the /v0/control_* routes and the evidence, compare and graph views are not bound). Each key can bind at most 5 answers per UTC day; reads and answers are not limited by this, and an answer over the limit is still delivered with NOT_BOUND {reason: ACCOUNT_DAILY_BINDING_LIMIT, limit, limit_scope, resets_at (Unix seconds)}. NOT_BOUND reasons: ACCOUNT_DAILY_BINDING_LIMIT, ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED, BINDING_TOO_LARGE, LOGBOX_UNAVAILABLE, ANSWER_NOT_BINDABLE, ANSWER_WITHOUT_EVIDENCE and the record checks RECORD_*, SALT and BINDING_INCONSISTENT; a NOT_BOUND answer is never bound later. A binding is usually admitted by the next 00:30 UTC run when it is at least 10 minutes old, but that is not guaranteed: within the shared intake, the notary takes radar events first, then watch changes, then answers; one not admitted within seven days is discarded. The public log shows each admitted answer's salted leaf, its known_at to the second, its position and the night it was appended; salting does not prevent correlation by time, and that timing is permanent. Verify: save the header value and the exact body bytes, then exit_log_verify.py leaf <header-value-file> --log https://exit-protocol.io/log/ --answer <body-file> --rpc <any Solana RPC> after the anchor that includes the leaf.",
     "x-exit-review-revision": "2026-10-27-r2"
   },
   "servers": [
@@ -326,7 +326,19 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+          },
+          {
+            "name": "X-EXIT-Log-Bind",
+            "in": "header",
+            "required": false,
+            "description": "Send 1 to bind a 200 ANSWERED response to the evidence log (opt-in; without it no binding is made and no public leaf appears). Any other value is refused with 400 LOG_BIND_VALUE_REFUSED before the request is counted. The choice is part of the request: the same X-EXIT-Request-Id with a different choice gives 409 REQUEST_ID_REUSED_FOR_DIFFERENT_WORK. Within 24 hours a replay with the same id and the same header returns the same header and the byte-identical body at no cost, while the body is still cached; otherwise it answers 409 REPLAY_BODY_UNAVAILABLE, and the binding stays available from GET /v0/research/log-binding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -336,6 +348,14 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            },
+            "headers": {
+              "X-EXIT-Log-Binding": {
+                "description": "Present only when the request sent X-EXIT-Log-Bind: 1 and the response is 200 ANSWERED. Base64url (no padding) of canonical JSON, about 1-3 KB: an exit.log-binding/1 object {format, leaf, record, salt, anchoring} whose record (kind service_answer) names the answer: subject (lowercase for Ethereum), observed_at (the latest finalized slot or block of its evidence), known_at (when the answer was recorded, at or after its evidence was read), evidence (sorted evidence_refs content hashes) and result_sha256 (SHA-256 of the exact response body bytes, final newline included). Or NOT_BOUND {status, reason} when no binding was made. Save it with the body. EXIT keeps the record and salt for at most seven days: with this request (GET /v0/research/log-binding) and in the private intake until the leaf is admitted, after which only the salted leaf remains. While the service is stopped, a file set aside in the intake can stay up to one day longer and is then removed without the zero overwrite.",
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -418,7 +438,7 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -510,7 +530,7 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -612,7 +632,7 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -940,7 +960,19 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+          },
+          {
+            "name": "X-EXIT-Log-Bind",
+            "in": "header",
+            "required": false,
+            "description": "Send 1 to bind a 200 ANSWERED response to the evidence log (opt-in; without it no binding is made and no public leaf appears). Any other value is refused with 400 LOG_BIND_VALUE_REFUSED before the request is counted. The choice is part of the request: the same X-EXIT-Request-Id with a different choice gives 409 REQUEST_ID_REUSED_FOR_DIFFERENT_WORK. Within 24 hours a replay with the same id and the same header returns the same header and the byte-identical body at no cost, while the body is still cached; otherwise it answers 409 REPLAY_BODY_UNAVAILABLE, and the binding stays available from GET /v0/research/log-binding.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -950,6 +982,14 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            },
+            "headers": {
+              "X-EXIT-Log-Binding": {
+                "description": "Present only when the request sent X-EXIT-Log-Bind: 1 and the response is 200 ANSWERED. Base64url (no padding) of canonical JSON, about 1-3 KB: an exit.log-binding/1 object {format, leaf, record, salt, anchoring} whose record (kind service_answer) names the answer: subject (lowercase for Ethereum), observed_at (the latest finalized slot or block of its evidence), known_at (when the answer was recorded, at or after its evidence was read), evidence (sorted evidence_refs content hashes) and result_sha256 (SHA-256 of the exact response body bytes, final newline included). Or NOT_BOUND {status, reason} when no binding was made. Save it with the body. EXIT keeps the record and salt for at most seven days: with this request (GET /v0/research/log-binding) and in the private intake until the leaf is admitted, after which only the salted leaf remains. While the service is stopped, a file set aside in the intake can stay up to one day longer and is then removed without the zero overwrite.",
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -1091,7 +1131,7 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -1213,7 +1253,7 @@
               "type": "string",
               "pattern": "^[!-~]{1,64}$"
             },
-            "description": "Printable ASCII, 1\u201364 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
+            "description": "Printable ASCII, 1–64 characters. On research queries, the same account/id/query replays a stored response when available. Explicit record/watch checks also enforce lifecycle and cadence guards; a repeat can be refused as not due."
           }
         ],
         "responses": {
@@ -1690,7 +1730,7 @@
       "get": {
         "summary": "EXIT evidence log: published files",
         "security": [],
-        "description": "The public evidence log, the same bytes as https://exit-protocol.io/log/: every leaf (leaves.json), every root with its RFC 9162 consistency proof (roots.json), every Solana anchor with its memo (anchors.json), the notary keys (notaries.json), which proof bundles are published for each anchored size (proofs.json), the specification (SPEC.txt), a standalone verifier that uses only the Python standard library (exit_log_verify.py) and SHA256SUMS. No key needed. A passing verification shows that EXIT held a record no later than the anchor's block time; it does not prove that the chain state a record describes is true.",
+        "description": "The public evidence log, the same bytes as https://exit-protocol.io/log/: every leaf (leaves.json), every root with its RFC 9162 consistency proof (roots.json), every Solana anchor with its memo (anchors.json), the notary keys (notaries.json), which proof bundles are published for each anchored size (proofs.json), the specification (SPEC.txt), each daily run with its outcome (runs.json; EXIT's own unsigned statement), a standalone verifier that uses only the Python standard library (exit_log_verify.py) and SHA256SUMS. No key needed. A passing verification shows that EXIT held a record no later than the anchor's block time; it does not prove that the chain state a record describes is true.",
         "parameters": [
           {
             "name": "file",
@@ -1704,6 +1744,7 @@
                 "anchors.json",
                 "notaries.json",
                 "proofs.json",
+                "runs.json",
                 "SPEC.txt",
                 "exit_log_verify.py",
                 "SHA256SUMS"
@@ -1763,6 +1804,115 @@
           }
         }
       }
+    },
+    "/v0/research/log-binding": {
+      "get": {
+        "summary": "The evidence-log binding of one of this key's own answered research requests (schema exit.answer-log-binding/1) and its current admission state. Kept for 7 days, or until the free period ends, whichever is first; the 24-hour body cache does not limit it. No log index is given before admission. Another key's request id answers exactly like an unknown id (404 ANSWER_NOT_FOUND). An answer whose request did not send X-EXIT-Log-Bind: 1 shows admission {status: NOT_BOUND, reason: NOT_REQUESTED}. Other codes: ANSWERED_RESULT_REQUIRED, BINDING_WINDOW_ENDED, WORKFLOW_ROUTE_NOT_SUPPORTED, REQUEST_ID_REQUIRED. No credits or quota are used.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "query",
+            "required": true,
+            "description": "The X-EXIT-Request-Id you sent with the original research request (percent-encode it).",
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "binding and admission state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "schema",
+                    "request_id",
+                    "route",
+                    "binding",
+                    "admission",
+                    "verify"
+                  ],
+                  "properties": {
+                    "schema": {
+                      "type": "string",
+                      "enum": [
+                        "exit.answer-log-binding/1"
+                      ]
+                    },
+                    "request_id": {
+                      "type": "string"
+                    },
+                    "route": {
+                      "type": "string",
+                      "enum": [
+                        "/v0/research/solana/mint",
+                        "/v0/research/ethereum/contract"
+                      ]
+                    },
+                    "binding": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "description": "The exit.log-binding/1 object of the header, or a NOT_BOUND object, or null when no binding was requested. exit_log_verify.py leaf accepts this object saved as JSON."
+                    },
+                    "admission": {
+                      "type": "object",
+                      "required": [
+                        "status"
+                      ],
+                      "properties": {
+                        "status": {
+                          "type": "string"
+                        },
+                        "reason": {
+                          "type": "string"
+                        },
+                        "leaf_index": {
+                          "type": "integer"
+                        },
+                        "scope": {
+                          "type": "string",
+                          "enum": [
+                            "service"
+                          ],
+                          "description": "present when the state is the drop's state for every pending binding, not this leaf's own"
+                        }
+                      }
+                    },
+                    "verify": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "x-exit-delivery-semantics": {
@@ -1777,6 +1927,6 @@
     "timestamp_tolerance_seconds": 300,
     "exactly_once": false,
     "no_live_guarantee_from_test": true,
-    "evidence_log_binding": "Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. Radar events keep a reserved share of each daily intake (the last 16 files), so watch changes can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Service admission limits: 128 files per run, 8 KiB per file, 1 MiB per run, 128 new private leaves per UTC day, 10000 in total, on a 32 MiB / 2048-inode drop. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes."
+    "evidence_log_binding": "Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. The notary takes radar events first, then watch changes; radar events keep a reserved share of each run's capacity, so a watch change can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Private bindings share one service-wide intake: at most 128 new private leaves per UTC day, within a fixed lifetime total. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes."
   }
 }

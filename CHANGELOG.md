@@ -1,5 +1,46 @@
 # Public documentation changelog
 
+## 28 October 2026 (later) · answer bindings on request, a daily anchor from 29 October, an off-server sentinel, and two cases
+
+All times UTC.
+
+**Release with API document 2026-10-28.1** (09:03:05 to 09:03:11)
+- Research answers can be bound to the evidence log on request. A 200 ANSWERED response of `/v0/research/solana/mint` or
+  `/v0/research/ethereum/contract` carries `X-EXIT-Log-Binding` only when the request sends `X-EXIT-Log-Bind: 1`.
+- Each key can bind at most 5 answers per UTC day; reads and answers themselves are not limited by this.
+- `GET /v0/research/log-binding` returns a key's own binding and admission state for 7 days, or until the free period ends if
+  that is sooner.
+- When this entry was written, no answer binding had been admitted; the earliest possible admission is the 29 October 00:30 run,
+  and it is not guaranteed.
+- The private intake takes radar events first, then watch changes, then answers.
+- From the 29 October run, the daily job is set to anchor the current root again on a day without new records. Each day the job
+  runs successfully is then meant to leave one anchor, at most one per UTC day. This has not been observed yet.
+- The log publishes `runs.json` with each run that recorded an outcome. It is EXIT's own unsigned statement; the anchors are what
+  can be checked on chain.
+- Log specification 1.3 adds a plain-words summary and rewrites the section on private records.
+
+**Repository documents**
+- openapi.json is now a copy of the live API document 2026-10-28.1.
+- NOTARIES.md names the DNS copy of the notary keys.
+- tools/exit_log_verify.py is the published verifier (the same SHA-256 as on the log), used by the sentinel.
+
+**Another copy of the notary keys and an off-server check of the log**
+- 07:40: the notary keys were published as the DNS TXT record `_exit-notary.exit-protocol.io`, a third copy apart from the log
+  and this repository (see NOTARIES.md).
+- 09:06: an outside sentinel started. It is a GitHub Actions job in this repository (`.github/workflows/log-sentinel.yml`). Every
+  day at 00:45 it runs the verifier in `tools/` against the published log and Solana, and checks that the newest anchor and the
+  newest run are at most 26 hours old. It writes the result to the `sentinel` branch; the job fails visibly when a check
+  fails. Its first run passed.
+
+**Control Map**
+- The USDC and USDG Solana rows were not answered on 27 October (RPC_RESPONSE_INVALID: the provider's replies were not usable).
+  Both were read again at 06:55; their records are due to enter the log with the next nightly root (29 October, 00:30). The page
+  will be updated after that anchor.
+
+**Cases**
+- Two case notes: [BonkDAO, 6 July 2026](cases/bonkdao-2026-07-06.md) and
+  [Kelp DAO rsETH, 18 April 2026](cases/kelpdao-rseth-2026-04-18.md) (chain data and times only; not an accusation).
+
 ## 28 October 2026 · anchor at tree size 200, bounded private log bindings and a notary-key rule
 
 All times UTC.
@@ -18,9 +59,10 @@ All times UTC.
   ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_ADMITTED_EXPIRED, or NOT_BOUND with a reason; the API document lists all values).
   The bound changes and the delivery bodies never change. ADMITTED_ANCHORED is EXIT's status note; only an inclusion
   proof checked against the anchor transaction establishes anchoring.
-- Intake limits: 128 files and 1 MiB per run, 8 KiB per file, 128 new private leaves per UTC day and 10,000 in total. Radar events
-  keep a reserved share of each daily intake (the last 16 files), so a watch change can be NOT_BOUND (ADMISSION_CAPACITY) while
-  radar events are still bound. A private submission that is not admitted within seven days expires (NOT_ADMITTED_EXPIRED).
+- Intake limits: at most 128 new private leaves per UTC day, within a fixed lifetime total. Radar events keep a reserved share of
+  each run's capacity, so a watch change can be NOT_BOUND (ADMISSION_CAPACITY) while radar events are still bound. (Later on 28
+  October, internal per-run figures and the lifetime total were removed from this entry, and "each daily intake" was corrected to
+  "each run's capacity"; they are not part of the public contract.) A private submission that is not admitted within seven days expires (NOT_ADMITTED_EXPIRED).
 - Roots made after this release carry ordering=append-sequence/2 (the size-200 root above predates it): a late stated known_at does not backdate insertion or prove earlier knowledge.
 - When this entry was written, no private binding had been admitted; inclusion in the next nightly root is not guaranteed.
 - Alerts: EXIT's own end-to-end test took the pilot's single watch slot at 04:56; its receiver accepted signed deliveries from the
