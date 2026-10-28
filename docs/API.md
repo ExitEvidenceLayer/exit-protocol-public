@@ -84,7 +84,7 @@ curl --fail --silent --show-error --get https://api.exit-protocol.io/v0/research
 
 Responses use `exit.solana-mint-research/2` (a replay of an earlier request returns its stored body, which can be `/1`), identify the source and finalized slot/time, and preserve evidence and unsupported-field limits. `X-EXIT-Research-State` distinguishes a completed primary answer from an incomplete read. A null observed authority differs from a value the service could not read. The public chain-data provider sees requested mint addresses.
 
-For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-10-27.13 (28 October 2026); exit_client.py and exit_mcp.py were not checked against the routes added after version 2026-10-26.2. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
+For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-10-28.1 (28 October 2026, 09:03 UTC); exit_client.py and exit_mcp.py were not checked against the routes added after version 2026-10-26.2. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
 
 ## Research records (unanswered questions)
 
@@ -186,18 +186,23 @@ EXIT keeps an append-only Merkle log of its own records. It is public at https:/
 and no key, through the API:
 
 - `GET /v0/log/{file}`: `leaves.json` (every leaf with its known_at), `roots.json` (every root, each after the first with its
-  RFC 9162 consistency proof from the previous root), `anchors.json`, `notaries.json`, `proofs.json`, `SPEC.txt`,
-  `exit_log_verify.py` (a standalone verifier that uses only the Python standard library) and `SHA256SUMS`.
+  RFC 9162 consistency proof from the previous root), `anchors.json`, `notaries.json`, `proofs.json`, `runs.json` (each daily
+  run that recorded an outcome; EXIT's own unsigned statement), `SPEC.txt`, `exit_log_verify.py` (a standalone verifier that
+  uses only the Python standard library) and `SHA256SUMS`.
 - `GET /v0/log/proofs/{size}/{leaf}.json`: one `exit.evidence-proof/1` bundle (8-digit leaf index) for each published leaf at
   each anchored size. Public record kinds only; service answers and records held until their own publication are not published
   (`proofs.json` lists which are).
 
-A daily job at 00:30 UTC sends one Solana memo transaction (`EXIT-ROOT-v1`) signed by the server notary key when the log has
-grown, at most one per UTC day. The 28 October 00:30 UTC run anchored tree size 200 in slot 462273926 (block time
+A daily job at 00:30 UTC sends at most one Solana memo transaction (`EXIT-ROOT-v1`) per UTC day, signed by the server notary key.
+It anchors the new root when the log has grown. From the 29 October run it is set to anchor the current root again on a day
+without new records; this has not been observed yet. The 28 October 00:30 UTC run anchored tree size 200 in slot 462273926 (block time
 00:30:07 UTC). The whole log (200 leaves; roots at sizes 66, 68, 134 and 200; anchors at 68, 134 and 200) was then verified
-from outside with the published verifier on two Solana providers.
+from outside with the published verifier on two Solana providers. Since 28 October 09:06 UTC an outside sentinel, a GitHub
+Actions job in the public repository, runs the same verifier every day at 00:45 UTC and writes its result to the repository's
+`sentinel` branch (`latest.json` and one file per day).
 
-Notary keys are listed in `notaries.json` and, as a separate copy, in [NOTARIES.md](../NOTARIES.md) in this repository. A key is
+Notary keys are listed in `notaries.json` and, as separate copies, in [NOTARIES.md](../NOTARIES.md) in this repository and in
+the DNS TXT record `_exit-notary.exit-protocol.io`. A key is
 added or retired only by these steps, in this order: a commit to NOTARIES.md, then an anchored `EXIT-NOTARY-ADD-v1` or `EXIT-NOTARY-RETIRE-v1` memo signed by
 a key that is already listed and not retired, plus the updated notaries.json. An anchor signed by a key outside this chain is not
 an EXIT anchor; retiring a key does not invalidate the anchors it signed while it was listed. The verifier's notaries.json check
@@ -214,7 +219,8 @@ python3 exit_log_verify.py proof 'https://api.exit-protocol.io/v0/log/proofs/<si
 A passing check shows that EXIT held a record no later than the anchor's block time. It does not prove that the chain state a
 record describes is true, that EXIT knew it earlier, or that nothing was left out.
 
-**Log bindings.** Account-private bindings of watch changes and radar events into the log are switched on as a bounded intake.
+**Log bindings.** Account-private bindings of watch changes and radar events into the log are switched on as a bounded intake,
+and, on request, of research answers (below).
 A binding is a timestamp commitment, not operator-authored public research: it does not authenticate the content, and admission
 does not show that the content is correct. A binding's record and salt go only to your account; the log publishes a salted leaf
 and its known_at. Watch rows carry `log_admissions` and radar event metadata carries `log_admission`, as side metadata only; the
@@ -227,10 +233,11 @@ bound change and the delivery body never change. Admission states:
   `BINDING_TOO_LARGE`)
 
 `ADMITTED_ANCHORED` is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring.
-Limits: 128 files and 1 MiB per run, 8 KiB per file, 128 new private leaves per UTC day and 10,000 in total. A deferral is not
-inclusion: writes newer than 600 seconds at the daily scan wait for a later batch, so inclusion in the next daily root is not
-guaranteed. Radar events keep a reserved share of each daily intake (the last 16 files), so a watch change can be `NOT_BOUND`
-with `ADMISSION_CAPACITY` while radar events are still bound. A private submission not admitted within seven days is discarded.
+Private bindings share one service-wide intake of at most 128 new private leaves per UTC day, within a fixed lifetime total. A
+deferral is not inclusion: writes newer than 600 seconds at the daily scan wait for a later batch, so inclusion in the next daily
+root is not guaranteed. The notary takes radar events first, then watch changes, then answers, and radar events keep a reserved
+share of each run's capacity, so a watch change or an answer can be `NOT_BOUND` with `ADMISSION_CAPACITY` while radar events are
+still bound. A private submission not admitted within seven days is discarded.
 Roots made after the 28 October 2026 00:49 UTC release carry `ordering=append-sequence/2`: a late stated known_at does not backdate insertion or prove earlier knowledge. As of 28 October 2026 no private binding has been
 admitted; inclusion in the next nightly root is not guaranteed (files written less than 10 minutes before the scan wait for a later run).
 
@@ -247,8 +254,31 @@ python3 exit_log_verify.py leaf binding.json --log https://exit-protocol.io/log/
 it and, with `--rpc`, that anchor's transaction and signer. Add `--event EVENT` with the full radar event (all parts) to check the
 event against the binding. Without `--event`, a pass proves only that the record is included, not that it matches an event shown
 separately. A watch change made by radar polling (`log_binding_scope=RADAR_EVENT`) binds the complete CHANGED event, not the watch
-row; check it with `--event`. Research answers are not bound to the log yet. The published verifier already accepts `leaf --answer BODY`, but it has nothing
-to check until a later release binds answers. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes.
+row; check it with `--event`. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes.
+
+**Answer bindings (on request).** Since 28 October 2026 09:03 UTC, a 200 ANSWERED response of `/v0/research/solana/mint` or
+`/v0/research/ethereum/contract` carries `X-EXIT-Log-Binding` when the request sends `X-EXIT-Log-Bind: 1`. Without that header
+nothing is bound and no public leaf appears. Any other header value is refused with `400 LOG_BIND_VALUE_REFUSED` before the
+request is counted. The choice is part of the request: the same `X-EXIT-Request-Id` with a different choice gives
+`409 REQUEST_ID_REUSED_FOR_DIFFERENT_WORK`.
+- The header value is base64url of the binding object. Its record names the answer, and its `result_sha256` is the SHA-256 of
+  the exact response body bytes.
+- Each key can bind at most 5 answers per UTC day. Reads and answers are not limited by this: an answer over the limit is still
+  delivered, with `NOT_BOUND` reason `ACCOUNT_DAILY_BINDING_LIMIT`, `limit`, `limit_scope` and `resets_at` (Unix seconds).
+- `GET /v0/research/log-binding?request_id=ID` returns your own binding and its admission state for 7 days, or until the free
+  period ends if that is sooner. A replay with the same request id returns the same header and body only while the body is
+  cached (at most 24 hours); after that it gives `409 REPLAY_BODY_UNAVAILABLE`. Save the header value and the body bytes from the
+  first response.
+- The public log shows each admitted answer's salted leaf, its known_at to the second, its position and the night it was
+  appended. That timing is permanent.
+
+```sh
+curl -sS -D headers.txt -o body.json -H "Authorization: Bearer $EXIT_ACCESS_KEY" -H 'X-EXIT-Request-Id: my-receipt-1' \
+  -H 'X-EXIT-Log-Bind: 1' 'https://api.exit-protocol.io/v0/research/solana/mint?mint=<mint>'
+grep -i '^x-exit-log-binding:' headers.txt | cut -d' ' -f2 | tr -d '\r' > binding.txt
+# after the nightly anchor that includes the leaf:
+python3 exit_log_verify.py leaf binding.txt --log https://exit-protocol.io/log/ --answer body.json --rpc "$SOLANA_RPC"
+```
 
 ## Recorded reference scope
 
@@ -280,6 +310,7 @@ Example dates above are historical. No arbitrary-wallet, price, prose-investigat
 | `GET /v0/early-access/usage` | Own usage; credits_charged is 0 |
 | `POST /early-access/rotate`, `/early-access/revoke` | Bearer key; empty body; old key ceases to work |
 | `POST /early-access/feedback` | Bearer; own request_id, helpful boolean and reason enum shown by UI |
+| `GET /v0/research/log-binding` | Bearer + `request_id` (percent-encoded); your own answer's binding and admission state (no attempt spent) |
 | `GET /v0/log/{file}`, `GET /v0/log/proofs/{size}/{leaf}.json` | Public, no key; evidence-log files and proof bundles |
 
 Unsupported routes are not research orders. The paid API Pass routes are not exposed.
