@@ -178,8 +178,7 @@ receiver until you resume it with a new challenge.
 
 Pilot limits: one watch across the whole service can have a receiver (once it is taken, registration is refused with `429`);
 at most two receivers per account; a bounded daily read budget. Refusals charge nothing, and the routes answer `503` when the
-radar is not enabled. No wallet, payment or paid credit. No end-to-end delivery from the live radar to any receiver is claimed
-yet. Since 28 Oct 04:56 UTC the single slot is used by EXIT's own rehearsal (a PYUSD watch with a test receiver on EXIT's server).
+radar is not enabled. No wallet, payment or paid credit. Since 28 Oct 04:56 UTC the single slot is used by EXIT's own end-to-end test; its receiver accepted signed deliveries from the live radar from 04:59 UTC.
 
 ## Evidence log and log bindings
 
