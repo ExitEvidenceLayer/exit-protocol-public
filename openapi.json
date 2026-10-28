@@ -2,8 +2,9 @@
   "openapi": "3.1.0",
   "info": {
     "title": "EXIT free research API (early access)",
-    "version": "2026-10-26.2",
-    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (a daily or campaign limit), ENROLLMENT_CAP_REACHED (no free key can be issued today), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key."
+    "version": "2026-10-27.13",
+    "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. Free early access (30 days): no payment, no wallet. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (a daily or campaign limit), ENROLLMENT_CAP_REACHED (no free key can be issued today), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key. Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. Radar events keep a reserved share of each daily intake (the last 16 files), so watch changes can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Service admission limits: 128 files per run, 8 KiB per file, 1 MiB per run, 128 new private leaves per UTC day, 10000 in total, on a 32 MiB / 2048-inode drop. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes.",
+    "x-exit-review-revision": "2026-10-27-r2"
   },
   "servers": [
     {
@@ -61,7 +62,7 @@
             }
           }
         },
-        "description": "Public campaign status. phase OPEN permits existing-key use and does not alone mean registration available. enrollment.available, daily_remaining, campaign_remaining, daily_limit, reason, resets_at (Unix seconds), proof_required, network_daily_limit describe key-registration capacity."
+        "description": "Public campaign status. phase OPEN permits existing-key use and does not alone mean registration available. enrollment.available, daily_remaining, campaign_remaining, daily_limit, reason, resets_at (Unix seconds), proof_required, network_daily_limit describe key-registration capacity. Enrollment includes advisory network_daily_remaining and network_available for the trusted connecting network. Missing trusted address reports null (direct health probes). A network registration limit does not disable an existing key or its research quota. Atomic enrollment remains authoritative; no raw address or network identifier is returned."
       }
     },
     "/v0/early-access/usage": {
@@ -301,7 +302,7 @@
     },
     "/v0/research/solana/mint": {
       "get": {
-        "summary": "Any Solana token mint: mint/freeze/supported Token-2022 authorities and holder accounts (one finalized read, at most three read-only RPC calls). Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "summary": "Any Solana token mint: mint/freeze/supported Token-2022 authorities and holder accounts (one finalized read, at most five read-only RPC calls: three for the mint and its holder accounts, then, only when a holder is a multisig or program-owned, one hop behind it: the kind of each signer account, and the owner program with its upgrade authority or the absence of one; deeper paths and who holds any key are not investigated). Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
         "security": [
           {
             "bearer": []
@@ -330,7 +331,7 @@
         ],
         "responses": {
           "200": {
-            "description": "exit.solana-mint-research/1",
+            "description": "exit.solana-mint-research/2 (a replay of an earlier request returns its stored body, which can be /1)",
             "content": {
               "application/json": {
                 "schema": {
@@ -915,7 +916,7 @@
     },
     "/v0/research/ethereum/contract": {
       "get": {
-        "summary": "Any Ethereum contract: proxy implementation/admin slots, the owner() getter as an observation and whether each named address holds code, at one finalized block (at most eleven read-only calls). Provider failures are recorded as research records (X-EXIT-Research-Record).",
+        "summary": "Any Ethereum contract: proxy implementation/admin slots, the owner() getter as an observation and whether each named address holds code, at one finalized block (at most eleven read-only calls), then, for at most two named addresses that hold code, a second exchange asking the multisig interface getOwners() and getThreshold() at the same block: an interface answer, not proof of who holds keys (at most fifteen calls so far), then a third exchange asking supportsInterface for the AccessControl enumerable interface and, only when it is declared, the DEFAULT_ADMIN_ROLE member count and up to four members: an interface answer at the block; member accounts, other roles and role admins are not read (at most twenty-one calls in all). Provider failures are recorded as research records (X-EXIT-Research-Record).",
         "security": [
           {
             "bearer": []
@@ -944,7 +945,7 @@
         ],
         "responses": {
           "200": {
-            "description": "exit.ethereum-contract-research/1",
+            "description": "exit.ethereum-contract-research/3 (a replay of an earlier request returns its stored body, which can be /1 or /2)",
             "content": {
               "application/json": {
                 "schema": {
@@ -1134,7 +1135,7 @@
     },
     "/v0/research/watch": {
       "get": {
-        "summary": "This key's watched Solana mints with recorded semantic authority/holder changes (no reading happens).",
+        "summary": "This key's watched Solana mints with recorded semantic authority/holder changes and, for answers read one hop deep (schema /2), changes one hop behind an observed authority: the holder kind, its address kind and where the path ends; a multisig's threshold and each signer's address kind, account presence and owner program; an owner program's class, upgrade status, upgrade authority and authority kind. Each recorded change lists the compared keys that differ (changed), for example path.signers.<address>.owner_program when the holder address stays the same. A check that moves between /1 and /2 answers compares only what both carry, so the switch itself is never a change (no reading happens). Ethereum contracts are compared on their code identity, proxy convention, implementation, admin and beacon, the owner() getter, the named holders and their account types and, where the answer reads them, holder paths and AccessControl default-admin members; a section only one of the two answers carries is not compared, and the frontier is the finalized block. Each row carries chain and subject; Ethereum rows say contract and last_block.",
         "security": [
           {
             "bearer": []
@@ -1169,7 +1170,7 @@
         }
       },
       "post": {
-        "summary": "With ?mint=: create a watch (at most 3 per key, 300 total; ends after seven days; reads nothing). With ?id=: explicit re-read (at most every six hours, even after a failed attempt; one research attempt; empty body + X-EXIT-Request-Id). Not continuous monitoring.",
+        "summary": "With ?mint=: watch a Solana mint; with ?contract=: watch an Ethereum contract (EIP-55 checked when mixed case, stored lowercase; 409 WATCH_CHAIN_NOT_AVAILABLE when no Ethereum interpreter is configured). Either creates a watch (at most 3 per key and 300 in total across both chains; ends after seven days; reads nothing). With ?id=: explicit re-read (at most every six hours, even after a failed attempt; one research attempt; empty body + X-EXIT-Request-Id). Not continuous monitoring.",
         "security": [
           {
             "bearer": []
@@ -1184,6 +1185,16 @@
               "type": "string",
               "pattern": "^[1-9A-HJ-NP-Za-km-z]{32,44}$"
             }
+          },
+          {
+            "name": "contract",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{40}$"
+            },
+            "description": "Ethereum contract to watch (mainnet; EIP-55 checked when mixed case)."
           },
           {
             "name": "id",
@@ -1298,7 +1309,8 @@
             }
           }
         }
-      }
+      },
+      "description": " Complete AccessControl memberships compare as unordered sets. Capped member subsets are not compared as complete membership lists; the observed total member count still compares. A change in read scope alone is not a change on chain. Safe-interface owner addresses are compared even when the threshold is unchanged. Interface availability changes are retained with change_kind OBSERVATION_STATUS_CHANGED; they are not presented as evidence of a control change. GET list explicitly reports supported_chains. Clients must not infer watch availability from the contract-research flag."
     },
     "/early-access/challenge": {
       "get": {
@@ -1317,6 +1329,454 @@
           }
         }
       }
+    },
+    "/v0/research/evidence": {
+      "get": {
+        "summary": "Answer-to-source view of one of this key's own answers (schema exit.private-evidence-view/2): question, declared scope, the evidence artifacts with their hashes and acquisition times, the answer within scope, what was not read, followed or interpreted, and the limits. The cached answer (kept 24 h) is re-checked by replaying its evidence through the same interpreter first; nothing is fetched and no research attempt is spent. Another key's request id answers exactly like an unknown id (404 ANSWER_NOT_FOUND). Other codes: ANSWERED_RESULT_REQUIRED, ANSWER_NO_LONGER_CACHED, ANSWER_FROM_EARLIER_INTERPRETER (made before the interpreter was updated), WORKFLOW_ROUTE_NOT_SUPPORTED, RESULT_EVIDENCE_MISMATCH.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "query",
+            "required": true,
+            "description": "The X-EXIT-Request-Id you sent with the original research request.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "evidence view",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/research/compare": {
+      "get": {
+        "summary": "Compare two of this key's own answers of the same kind (schema exit.research-comparison/1), field by field: the same subject at two observations (ordered by finalized slot or block) or two subjects side by side. Each row is SAME_AT_BOTH_OBSERVATIONS, SAME_VALUE, DIFFERENT or NOT_INTERPRETED_ON_ONE_SIDE; same position with different values is flagged as conflicting evidence. Each side is a snapshot at its own known time: same at both observations does not mean unchanged in between, and there is no ranking, risk score or verdict. Nothing is fetched and no research attempt is spent. Other codes: as for /v0/research/evidence, plus COMPARISON_SCHEMA_MISMATCH and TWO_DISTINCT_ANSWERS_REQUIRED.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "a",
+            "in": "query",
+            "required": true,
+            "description": "Request id of the first answer.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            }
+          },
+          {
+            "name": "b",
+            "in": "query",
+            "required": true,
+            "description": "Request id of the second answer.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,64}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "comparison",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/research/graph": {
+      "get": {
+        "summary": "Join one to four of this key's own answers into one typed graph (schema exit.research-graph/1): who holds which declared role over each subject, one hop behind each holder where the answers read it, and for every edge the observations it was seen at (valid time: the finalized slot, or block and hash; known time: when it was read; radar edges differ, see the description). Node identity is chain-scoped and exact; Solana and Ethereum never join. Paths end where the reads end. Answers that disagree at the same valid time, or the same block number with different hashes, are listed as conflicts; no winner is chosen. An edge seen in two answers was observed at both; nothing is said about the time in between. Address relationships never imply personal identity, ownership or intent; no ranking, risk score or verdict. Nothing is fetched and no research attempt is spent. Other codes: as for /v0/research/evidence, plus GRAPH_DUPLICATE_REQUEST and GRAPH_ANSWER_NOT_FINALIZED.",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_id",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "description": "One to four request ids of this key's own answers, as repeated request_id parameters.",
+            "schema": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 4,
+              "items": {
+                "type": "string",
+                "pattern": "^[\\x21-\\x7e]{1,64}$"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "exit.research-graph/1",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Refused: JSON {error}. 0 credits.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": " The graph preserves explicit known-empty role observations and distinguishes partial membership sets when reporting conflicts. Observed total member counts still compare when member lists are capped; cardinality disagreements carry the counts. owner() RETURNED_ZERO_ADDRESS is an explicit getter observation, not an unread getter or proof of a role grant. When the account's radar has scopes about the subjects of the listed answers (a watch with an active receiver; they are hidden while no receiver of the watch is active), the graph also carries radar_coverage and the pending-authority edges those scopes read: NONCE_AUTHORITY_OF (a durable nonce account and its authority), BUFFER_AUTHORITY_OF (a program buffer and its authority), PENDING_PROPOSAL_ON (an open Squads proposal of the multisig, drawn to each vault of it through which the subject is reached; which vault it acts on, if any, and what it would do are not read), PENDING_CALL_ON (a call queued in a timelock, to its target) and PENDING_ROLE_OF (the pendingOwner() getter answer, labelled owner_getter as owner() is in the answers; the pendingAdmin() getter answer, labelled admin_getter (the answers do not read admin(); their proxy_admin is the EIP-1967 admin slot); or a pending default admin; not a role grant and not proof that the transfer will complete). A radar edge observation carries, as request_id, \"radar:\" and the scope_id that the radar's events carry (longer than any request id; also radar_coverage[].scope); its valid_at is only the finalized slot or block of that scope's last complete read (no block hash) and its known_at is null; nothing is said between reads. Radar edges are not on any path: a path end refers only to the answers' reads. radar_coverage lists every scope about these subjects with its path (from the radar's own latest read of the watch, not from the listed answers), what it covers, its read state and the SHA-256 of the raw replies of its last complete read (evidence_sha256; for a timelock scope only the replies of that read's new block range, so calls queued earlier rest on earlier reads); a scope without a complete read (NO_COMPLETE_READ) has no counts, objects that are not drawn (for example a scheduled renouncement) are counted in not_graphed, and a Safe scope reports configuration_read instead of counts. A role or path without a scope says nothing about pending state. Otherwise the graph is unchanged."
+    },
+    "/v0/research/webhook": {
+      "get": {
+        "summary": "List own receiver/event/delivery metadata, or get one own payload part",
+        "description": "No query lists at most 100 recent event/delivery entries. Optional delivery query returns one payload part at most 16 KiB. Retention is up to 7 days, ending sooner on watch/account/campaign expiry or deletion.",
+        "parameters": [
+          {
+            "name": "delivery",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,17}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Own receivers with recent event and delivery metadata, or one own delivery part when delivery= is given. Lists never contain a secret."
+          },
+          "400": {
+            "description": "Unsupported query or body."
+          },
+          "401": {
+            "description": "Current bearer authentication required."
+          },
+          "404": {
+            "description": "No own delivery part with that id."
+          },
+          "409": {
+            "description": "Refused: malformed delivery id, or campaign closed; no charge."
+          },
+          "429": {
+            "description": "Rate gate reached; no charge."
+          },
+          "503": {
+            "description": "Radar not enabled or service unavailable; no charge."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Register, rotate or resume an owned receiver",
+        "description": "Without id: exact JSON {watch_id,url,accept_external_delivery:true}; a successful explicit receiver challenge is required. With id: {action:\"rotate\"} or {action:\"resume\",accept_external_delivery:true}. Rotation overlap 300 seconds. At most 2 hooks per account. No wallet, payment or paid credits.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^hook-[0-9a-f]{24}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "watch_id",
+                      "url",
+                      "accept_external_delivery"
+                    ],
+                    "properties": {
+                      "watch_id": {
+                        "type": "string",
+                        "pattern": "^watch-[0-9a-f]{24}$"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "accept_external_delivery": {
+                        "const": true
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "action"
+                    ],
+                    "properties": {
+                      "action": {
+                        "const": "rotate"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "action",
+                      "accept_external_delivery"
+                    ],
+                    "properties": {
+                      "action": {
+                        "const": "resume"
+                      },
+                      "accept_external_delivery": {
+                        "const": true
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "With id: rotate returns a new secret, shown once, with a 300-second overlap; resume returns the receiver as ACTIVE after a new challenge."
+          },
+          "201": {
+            "description": "Receiver registered after a successful challenge; its secret is shown once in this reply."
+          },
+          "400": {
+            "description": "Invalid fields, or missing explicit external-delivery consent."
+          },
+          "401": {
+            "description": "Current bearer authentication required."
+          },
+          "409": {
+            "description": "Refused: unknown or not-owned watch or receiver, malformed id, failed challenge (a failed resume challenge deletes the paused receiver), wrong receiver state, or campaign closed; no charge."
+          },
+          "429": {
+            "description": "Rate gate or a cap reached: at most 2 receivers per account, the service-wide watch cap, or the registration limits; no charge."
+          },
+          "503": {
+            "description": "Radar not enabled or service unavailable; no charge."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete an owned receiver configuration and queued deliveries",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^hook-[0-9a-f]{24}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Own receiver and its queued deliveries deleted."
+          },
+          "400": {
+            "description": "Unsupported query or body."
+          },
+          "401": {
+            "description": "Current bearer authentication required."
+          },
+          "404": {
+            "description": "No own receiver with that id; nothing was deleted. Body {error: WEBHOOK_NOT_FOUND}."
+          },
+          "409": {
+            "description": "Refused: malformed receiver id, or campaign closed; no charge."
+          },
+          "429": {
+            "description": "Rate gate reached; no charge."
+          },
+          "503": {
+            "description": "Radar not enabled or service unavailable; no charge."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/v0/log/{file}": {
+      "get": {
+        "summary": "EXIT evidence log: published files",
+        "security": [],
+        "description": "The public evidence log, the same bytes as https://exit-protocol.io/log/: every leaf (leaves.json), every root with its RFC 9162 consistency proof (roots.json), every Solana anchor with its memo (anchors.json), the notary keys (notaries.json), which proof bundles are published for each anchored size (proofs.json), the specification (SPEC.txt), a standalone verifier that uses only the Python standard library (exit_log_verify.py) and SHA256SUMS. No key needed. A passing verification shows that EXIT held a record no later than the anchor's block time; it does not prove that the chain state a record describes is true.",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "roots.json",
+                "leaves.json",
+                "anchors.json",
+                "notaries.json",
+                "proofs.json",
+                "SPEC.txt",
+                "exit_log_verify.py",
+                "SHA256SUMS"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The file. JSON files are application/json."
+          },
+          "404": {
+            "description": "Not a published file."
+          }
+        }
+      }
+    },
+    "/v0/log/proofs/{size}/{leaf}.json": {
+      "get": {
+        "summary": "EXIT evidence log: one proof bundle",
+        "security": [],
+        "description": "Format exit.evidence-proof/1: the record, its salt, the leaf index, the tree size, the RFC 9162 audit path, the root and the Solana anchor of that size. Published for every anchored size, for public record kinds only; service answers and records held until their own publication are not published (proofs.json lists which are). Verify with exit_log_verify.py proof <url> --rpc <any Solana RPC> --notaries https://api.exit-protocol.io/v0/log/notaries.json.",
+        "parameters": [
+          {
+            "name": "size",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "leaf",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{8}$"
+            },
+            "description": "8-digit leaf index"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The proof bundle.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not published at that size."
+          }
+        }
+      }
     }
+  },
+  "x-exit-delivery-semantics": {
+    "mode": "at_least_once",
+    "deduplicate_by": [
+      "webhook_id",
+      "event_id",
+      "part"
+    ],
+    "complete_event": "Only after all parts arrive",
+    "signature": "X-EXIT-Signature, HMAC-SHA256(t + dot + exact body)",
+    "timestamp_tolerance_seconds": 300,
+    "exactly_once": false,
+    "no_live_guarantee_from_test": true,
+    "evidence_log_binding": "Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. Radar events keep a reserved share of each daily intake (the last 16 files), so watch changes can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Service admission limits: 128 files per run, 8 KiB per file, 1 MiB per run, 128 new private leaves per UTC day, 10000 in total, on a 32 MiB / 2048-inode drop. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes."
   }
 }

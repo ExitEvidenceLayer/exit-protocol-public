@@ -1,5 +1,110 @@
 # Public documentation changelog
 
+## 28 October 2026 · anchor at tree size 200, bounded private log bindings and a notary-key rule
+
+All times UTC.
+
+**Evidence log**
+- The first scheduled run of the daily job anchored tree size 200 at 00:30:07 (block time; slot 462273926), signed by the server
+  notary key. EXIT then verified the whole log from outside its server with the published verifier against two Solana RPC
+  providers: 200 leaves, roots at sizes 66, 68, 134 and 200, anchors at sizes 68, 134 and 200.
+
+**Release with API document 2026-10-27.13** (00:48:56 to 00:49:03)
+- Private log bindings, as a bounded intake: an account's watch changes and radar events (radar events come only from the limited alert pilot; see 27 October) can now be bound into the evidence log.
+  The record and its salt go only to the account; the log publishes only a salted leaf and its known_at. Public leaves still
+  expose timing and activity, and a hash does not prove possession of the raw evidence bytes. A service binding is not
+  operator-authored public research.
+- Watch rows and radar event metadata carry an admission status as side metadata (for example PENDING_ADMISSION,
+  ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_ADMITTED_EXPIRED, or NOT_BOUND with a reason; the API document lists all values).
+  The bound changes and the delivery bodies never change. ADMITTED_ANCHORED is EXIT's status note; only an inclusion
+  proof checked against the anchor transaction establishes anchoring.
+- Intake limits: 128 files and 1 MiB per run, 8 KiB per file, 128 new private leaves per UTC day and 10,000 in total. Radar events
+  keep a reserved share of each daily intake (the last 16 files), so a watch change can be NOT_BOUND (ADMISSION_CAPACITY) while
+  radar events are still bound. A private submission that is not admitted within seven days expires (NOT_ADMITTED_EXPIRED).
+- Roots made after this release carry ordering=append-sequence/2 (the size-200 root above predates it): a late stated known_at does not backdate insertion or prove earlier knowledge.
+- When this entry was written, no private binding had been admitted; inclusion in the next nightly root is not guaranteed.
+- Notary keys: the evidence-log SPEC now has a key rule. A key is added or retired only by these steps, in this order: (1) a commit to NOTARIES.md in this
+  repository, (2) an anchored EXIT-NOTARY-ADD-v1 or EXIT-NOTARY-RETIRE-v1 memo signed by a key already listed and not retired, and
+  (3) the updated notaries.json. An anchor signed by a key outside this chain is not an EXIT anchor. The verifier's notaries.json
+  check is not an authorization check; check a signer against NOTARIES.md.
+- Verifier: exit_log_verify.py gained a `leaf` mode (`leaf BINDING --log SOURCE`, with `--event` for the full radar event) that
+  checks an account's own binding against the published log. It also takes `--answer BODY` (a file with the exact answer bytes)
+  and a saved X-EXIT-Log-Binding header value. Both are prepared for answer bindings, which are not live: research answers do not
+  carry that header yet.
+
+**Repository documents**
+- NOTARIES.md: the second copy of the notary keys, kept apart from the log, with the key rule above. The initial set is the first
+  anchor key (tree size 68) and the server notary key (134, 200 and later daily anchors).
+- docs/API.md, STATUS.md and openapi.json: updated to the live state on 28 October; openapi.json is now a copy of the live API
+  document 2026-10-27.13.
+- CHANGELOG.md: the 26 October entry on research records, on-request watches and Ethereum contract reads was moved into date
+  order, wording unchanged. In "26 October 2026 · one research console", "the earlier entry below" means "26 October 2026 ·
+  bounded live-token research and public adapters".
+
+## 27 October 2026 · evidence log, Control Map, deeper reads and a limited alert pilot
+
+All times UTC. Every item below was live on 27 October (the case study in this repository, not on the service). Routes that need
+a key were checked from outside only without one. Prepared or held work is listed separately.
+
+**Evidence log**
+- EXIT's evidence log is public at https://exit-protocol.io/log/: an append-only RFC 6962 Merkle log of EXIT's own records, with
+  every leaf and its known_at, every root (each one after the first with an RFC 9162 consistency proof from the previous root),
+  every anchor, the notary keys, proof bundles for public records, SPEC.txt and a standalone verifier (exit_log_verify.py, Python
+  standard library only).
+- First Solana anchor at 12:14:06 (tree size 68, slot 462066497). A daily job on EXIT's server was installed at 16:57: at 00:30 UTC,
+  when the log has grown, it sends one memo transaction signed by the server notary key
+  4QuiVCiYFzBjHFNEzZnHu9WCYBAZPnUxtfHcWX9UkqJH, checks the finalized transaction and publishes the log. At most one anchor per UTC
+  day, no automatic retries; a day without new records sends nothing. Tree size 134 was anchored by that key from a manual start of the installed job.
+- The same files are served by the API without a key since 17:19: GET /v0/log/{file} and GET /v0/log/proofs/{size}/{leaf}.json.
+- An anchor proves only that EXIT held these exact records no later than the transaction's block time. It does not prove that the
+  chain facts are true, that EXIT knew them earlier, or that nothing was left out.
+
+**Control Map** (16:59)
+- https://exit-protocol.io/control-map/ lists the addresses EXIT's readers saw holding the control roles of the 50 largest tokens
+  (CoinGecko market-cap order at 16:26:35) that have an Ethereum contract or a Solana mint (68 deployments), each read once at one
+  finalized block or slot. 66 of 68 were answered; every answered row is a record in the evidence log with a link to its proof. A
+  dated snapshot with no score and no verdict; a NOT_ANSWERED row is not "no admin". The map does not say who an address belongs
+  to.
+
+**Deeper reads** (12:37 and 13:05)
+- Solana mints (exit.solana-mint-research/2): when an authority holder is a multisig or a program-owned account, the answer reads
+  one hop behind it (signer accounts, owner program and its upgrade authority), in at most five read-only RPC calls.
+- Ethereum contracts (exit.ethereum-contract-research/3): for up to two named addresses that hold code, the multisig interface
+  getOwners()/getThreshold(); when a contract declares the AccessControl enumerable interface, the DEFAULT_ADMIN_ROLE member count
+  and up to four members. At most 21 read-only calls at one finalized block. Interface answers, not proof of who holds a key.
+- GET /v0/research/graph joins one to four of your own answers into one typed graph (who holds which role, one hop where read,
+  conflicts listed). It fetches nothing and spends no research attempt. Since 19:49 it also shows pending-authority edges from the
+  radar, only for a watch with an active alert receiver (see the pilot limits below). A pending-role edge is not a role grant;
+  radar edges have no known time and say nothing between reads.
+
+**Watches** (13:28 and 13:38)
+- POST /v0/research/watch also accepts ?contract= for an Ethereum mainnet contract. Watches record changes one hop behind an
+  authority when the answer was read one hop deep. Pull model: you re-read a watch with ?id=, at most every six hours, one research
+  attempt each; at most 3 watches per key and 300 in total; a watch ends after seven days. Creating a watch reads nothing. This is
+  not continuous monitoring; separately, a watch with an active alert receiver is also read hourly by the radar (see Alerts).
+
+**Alerts: limited pilot** (16:19)
+- /v0/research/webhook (GET, POST, DELETE) lets an account attach an HTTPS receiver to one of its own watches. The receiver passes a
+  one-time challenge; deliveries are signed (X-EXIT-Signature, HMAC-SHA256) and sent at least once (not exactly once), retried
+  after 1 min, 5 min, 30 min, 2 h and 6 h; three failed events in a row pause the receiver until its owner resumes it with a new
+  challenge. The radar reads the watch's pending-authority scopes (Solana: durable nonce accounts, upgradeable-loader buffers,
+  Squads v4 proposals; Ethereum: OpenZeppelin/Compound timelock calls, pending owner/admin transfers, default-admin transfers, Safe
+  configuration) once an hour. These are hourly reads, not continuous monitoring; nothing is said between reads.
+- Pilot limits: only one watch across the whole service can have a receiver; once it is taken, registrations for other watches
+  are refused (429). EXIT planned to use that slot for its own rehearsal. At most two receivers per account; a bounded daily RPC
+  budget; data kept for at most seven days (deleted when the radar's maintenance runs). When this entry was written, no end-to-end alert delivery from the live radar to any
+  receiver was claimed; EXIT's own rehearsal with its test receiver did not run on 27 October.
+
+**Research console and documents**
+- Research console: one-hop and AccessControl answers, a "Watch this contract" action, and "Records & watches" moved above "The
+  answer has a trail". English is the main language; the other languages stay selectable.
+- Case study: cases/drift-2026-04-01.md, what the chain showed before the Drift admin takeover on 1 April 2026.
+
+**Prepared, not live on 27 October**
+- Account-private bindings of watch changes and radar events into the evidence log (held for a security review, then reworked;
+  see 28 October).
+- Token-2022 pause and scaled-amount authority interpretation; second-source corroboration of the Control Map's 66 answered rows.
+
 ## 26 October 2026 · one research console
 
 - The browser interface at api.exit-protocol.io is now one research console in 16 languages: one address field that recognises a Solana token mint or an Ethereum contract, an evidence graph with times and limits, records and watches, a developer section and a limits and privacy section.
@@ -7,6 +112,14 @@
 - README and PRODUCT describe the live scope; the outdated sentence about a separate older alpha was removed.
 - OpenAPI: refusal codes are explained, including ENROLLMENT_NETWORK_LIMIT_REACHED (two new free keys per network per UTC day).
 - test_agent_records.py: an internal working label was removed from the module docstring.
+
+## 2026-10-26 — research records, on-request watches and Ethereum contract reads
+
+- Records name the unresolved question and evidence gap. Supported transient Solana provider failures allow explicit bounded follow-ups; a recorded reason is not an answer.
+- Solana authority watches re-read only on request, at most every six hours.
+- Ethereum current-contract reads inspect declared proxy slots, owner() observations, code identities and named holder account types at a provider-reported finalized block.
+- Published client/MCP additions expose these same live routes. Transport and privacy safeguards remain in force.
+- Public-HTTPS operator acceptance: 21 checks passed, 4 attempts / 2 answered / 0 credits, replay exact, test access revoked and denied. Finite acceptance is not a universal coverage or security guarantee.
 
 ## 26 October 2026 · bounded live-token research and public adapters
 
@@ -81,11 +194,3 @@ live API deployment, token mint, financial transaction or completed launch gate.
 - Added a system map connecting the first specialization to the wider research vision.
 - Aligned post-launch quarter numbering and added measurable long-term development boundaries.
 - Preserved recorded case identities, restricted-alpha status and the prototype/production distinction.
-
-## 2026-10-26 — research records, on-request watches and Ethereum contract reads
-
-- Records name the unresolved question and evidence gap. Supported transient Solana provider failures allow explicit bounded follow-ups; a recorded reason is not an answer.
-- Solana authority watches re-read only on request, at most every six hours.
-- Ethereum current-contract reads inspect declared proxy slots, owner() observations, code identities and named holder account types at a provider-reported finalized block.
-- Published client/MCP additions expose these same live routes. Transport and privacy safeguards remain in force.
-- Public-HTTPS operator acceptance: 21 checks passed, 4 attempts / 2 answered / 0 credits, replay exact, test access revoked and denied. Finite acceptance is not a universal coverage or security guarantee.
