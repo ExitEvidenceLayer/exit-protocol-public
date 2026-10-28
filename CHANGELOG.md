@@ -23,6 +23,9 @@ All times UTC.
   radar events are still bound. A private submission that is not admitted within seven days expires (NOT_ADMITTED_EXPIRED).
 - Roots made after this release carry ordering=append-sequence/2 (the size-200 root above predates it): a late stated known_at does not backdate insertion or prove earlier knowledge.
 - When this entry was written, no private binding had been admitted; inclusion in the next nightly root is not guaranteed.
+- Alerts: EXIT's own end-to-end test took the pilot's single watch slot at 04:56; its receiver accepted signed deliveries from the
+  live radar from 04:59, and the radar's first two private event bindings entered the intake at 04:58 (admission is due at the
+  next nightly run, not guaranteed).
 - Notary keys: the evidence-log SPEC now has a key rule. A key is added or retired only by these steps, in this order: (1) a commit to NOTARIES.md in this
   repository, (2) an anchored EXIT-NOTARY-ADD-v1 or EXIT-NOTARY-RETIRE-v1 memo signed by a key already listed and not retired, and
   (3) the updated notaries.json. An anchor signed by a key outside this chain is not an EXIT anchor. The verifier's notaries.json
