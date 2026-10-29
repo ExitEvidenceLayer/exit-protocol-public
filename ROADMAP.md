@@ -34,7 +34,7 @@ Research records, on-request Solana authority watches and Ethereum current-contr
 | Stage | Output | Exit condition |
 |---|---|---|
 | Supported research service | Finite control/history/change scope. | Source/time boundaries and required operating results verified; historical operating checks closed before the free service opened. |
-| 30-day free API opening | Bounded access, quotas, retries, revocation and recovery; no wallet/payment. | Corrected serving layer accepted, actual public access verified and dates/limits published. Opened 25 October 2026 at 12:38:20 UTC; ends 24 November at the same UTC time. |
+| 30-day free API opening | Bounded access, quotas, retries, revocation and recovery; no wallet/payment. | Corrected serving layer accepted, actual public access verified and dates/limits published. Opened 25 October 2026 at 12:38:20 UTC; the initial period ends 24 November at the same UTC time. Continuation deployed 29 October: the same keys then remain valid under the existing quota and lifetime caps, with no fixed end date or automatic payment. |
 | Token creation | EXITP created on Jupiter Studio / Meteora DBC, Solana. | Created before API activation; official identity read back and published in TOKEN.md. Future financial and signing actions stay with the project's key holder. |
 | Later paid API Pass | Exact usage right, commercial terms and receipt-to-credit integration. | Actual final-configuration chain/wallet rehearsal plus separate money/access security and operational acceptance. No automatic paid conversion. |
 

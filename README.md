@@ -60,6 +60,7 @@ acceptance remain open. See [current status](STATUS.md) and [service rights](TOK
 
 The first free campaign opened **25 October 2026 at 12:38:20 UTC**, and ends
 **24 November 2026 at 12:38:20 UTC**. It does not convert automatically to payment.
+The same keys then continue in a quota-limited free tier without a fixed end date. Existing limits, revocations and counters carry over; there is no automatic payment or token requirement. See [current access terms](https://exit-protocol.io/terms.html).
 **EXIT Protocol (EXITP)** has also been created on Solana. Its official mint is
 [`5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups`](https://studio.jup.ag/tokens/5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups).
 Token creation was reported before API activation; the actual sequence is preserved,
@@ -96,7 +97,7 @@ Before running `exit_client.py` or `exit_mcp.py`, check that your copies match t
 | File | SHA-256 |
 |---|---|
 | `exit_client.py` | `30c92ac0f84f504bd9d54b1ed9a146664044706bf3e7424286d5c2029222aa38` |
-| `exit_mcp.py` | `39f0ea1fd3b66ba1c5861d4476e92cbd47604423e8890f7246100fc798ad6108` |
+| `exit_mcp.py` | `bb72d79d3da7e7b9d4b236188035cb6648e37cd71f4c5c5973609efd53ffc378` |
 
 On macOS or Linux, `shasum -a 256 exit_client.py exit_mcp.py` must print these values; on Windows PowerShell,
 `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py`. A copy with any other value is not the published file. When
@@ -114,6 +115,7 @@ the files change, these values change in the same commit.
 | [Roadmap](ROADMAP.md) | First-service criteria and conditional post-launch quarters. |
 | [Token](TOKEN.md) | Verified official mint and planned paid-usage integration. |
 | [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |
+| [Controls](CONTROLS.md) | EXIT's own keys and authorities, from facts anyone can check. |
 | [Security](SECURITY.md) · [Support](SUPPORT.md) | Safe reporting and product enquiries. |
 | [Contributing](CONTRIBUTING.md) | Reproducible public corrections, safe reports and contribution scope. |
 | [API access](docs/API.md) · [Changelog](CHANGELOG.md) | Public revisions. |
@@ -134,3 +136,8 @@ API service remain proprietary and are not part of this repository.
 Inspect a Solana token mint or Ethereum contract, keep an unanswered query as an explicit research record, and re-check supported Solana authority changes on request. The free browser and [API](docs/API.md) share the same quota and evidence boundaries. [Agent tools](AGENT-TOOLS.md) expose the same workflow without a second research engine.
 
 A bounded public-HTTPS acceptance passed: record lifecycle, watch lifecycle and cadence, Ethereum answer and byte-identical replay, exact usage and key revocation. Watches are on request, not a continuous alert service. No wallet, token purchase or email is required for the free campaign.
+
+
+### Keyless evidence checks — 29 October 2026
+
+Use `exit_history`, `exit_cite` and `exit_verify` through the existing stdio MCP server. Public inclusion and actual finalized-chain verification are separate outcomes; unavailable chain evidence cannot become `verified=true`. The keyless tools never forward research access keys. [Download the complete public source package and instructions](https://exit-protocol.io/tools/).

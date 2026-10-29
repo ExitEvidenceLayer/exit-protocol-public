@@ -1,5 +1,43 @@
 # Public documentation changelog
 
+## 29 October 2026 · quota-limited free continuity and verifier correction
+
+- A versioned continuation is deployed before the initial 24 November boundary. Existing keys continue under the same daily, enrollment and lifetime capacity caps; no account, revocation, usage counter or profile is reset. No automatic payment, wallet or token requirement is introduced. A later announced end requires at least 30 days notice.
+- First-period watches/receivers and binding lookups keep their original expiry; new-period ones keep the existing seven-day limit. Request-body and query-detail retention remain 24 hours and seven days.
+- Console status, terms, privacy and OpenAPI 2026-10-29.1 describe the same service contract. HTML structure and styles are unchanged.
+- Installed daily assurance now passes 26 modules / 703 executions; continuation admission/notice guards also passed four deliberate mutation checks. Finite tests are not a blanket security claim.
+- Keyless evidence tools: public-log history, citation and finalized-anchor checks (`exit_history`, `exit_cite`, `exit_verify`) in the
+  existing stdio MCP interface. They reuse the published pinned verifier; fixed-origin transport, no research key, no arbitrary URL
+  and no automatic retry. The source bundle is at https://exit-protocol.io/tools/.
+- 00:30:00: the daily run anchored tree size 204. Its new records include the 28 October re-reads of the USDC and USDG Solana rows.
+  The sentinel's first scheduled run (started by GitHub at 01:37) passed.
+- 09:42:53: the Control Map shows the USDC and USDG Solana rows from those re-reads (records anchored at tree size 204): 68 of 68
+  deployments answered. These two rows have no second-source read yet. The by-address view was rebuilt from the same file.
+- [CONTROLS.md](CONTROLS.md): EXIT's own controls (notary keys and their copies, the single-signer limit of the anchors, the
+  sentinel, the token's authorities) from facts anyone can check. Administrator, registrar and server details are left out by
+  design.
+- Python verifier boundary correction: ASCII memo grammar, exact integer types, malformed notary/message checks and JSON-RPC error classification. The corrected tools/ copy matches the site and API mirror. No new anchor or signature was made for this correction.
+
+
+## 28 October 2026 (afternoon) · in-browser verifier, Control Map by address, revised cases
+
+All times UTC.
+
+- 09:48:57: the 27 October Control Map snapshot is also grouped by the address that holds each role, at
+  /control-map/by-controller/. It is built only from the published control-map.json and adds no new reads.
+- 11:19: both case notes were revised to the full findings, each fact re-read on chain or at its source, with the parties' and
+  the press's statements in their own attributed section.
+- 11:42:31: the log page gained a "Verify in this browser" button. verify.js, served next to the log and listed in its
+  SHA256SUMS, runs the checks of `exit_log_verify.py log` in the reader's browser: every root rebuilt from the leaves, every
+  consistency proof, and every anchor transaction fetched and compared. Log specification 1.4 lists verify.js. The page's
+  Content-Security-Policy lets the browser contact the listed Solana provider only on /log/ and on the API's /v0/log/.
+- 12:12:58: the provider list was reduced to solana-rpc.publicnode.com. In a real browser, api.mainnet-beta.solana.com answered
+  403 to every request that carries a website origin; it was removed from the page and from the /log/ policy. The Python
+  verifier still works with any provider. The button runs code served by EXIT's own site; for a check that does not depend on
+  EXIT, run exit_log_verify.py.
+- PRODUCT.md names the limited hourly radar pilot for owned webhook receivers (general scheduled alerts remain planned).
+
+
 ## 28 October 2026 (later) · answer bindings on request, a daily anchor from 29 October, an off-server sentinel, and two cases
 
 All times UTC.
