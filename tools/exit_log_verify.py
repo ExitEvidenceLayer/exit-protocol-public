@@ -34,7 +34,7 @@ from datetime import datetime, timezone
 
 DOMAIN = b'EXIT-LEAF-v1'
 MEMO_PROGRAMS = ('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr', 'Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo')
-MEMO = re.compile(r'EXIT-ROOT-v1 (\d+) ([0-9a-f]{64}) (\d{4}-\d{2}-\d{2}) (\d+)')
+MEMO = re.compile(r'EXIT-ROOT-v1 ([0-9]+) ([0-9a-f]{64}) ([0-9]{4}-[0-9]{2}-[0-9]{2}) ([0-9]+)')
 PROVES = ('The supplied record matches a leaf committed by the verified anchor no later than its block time, under the fetched chain evidence. This does not establish possession of the raw evidence bytes named in the record.')
 NOT_PROVEN = ['that the chain state described by the evidence is true: check the evidence at its own slot or block',
               'that EXIT knew it earlier than the anchor: known_at is EXIT\'s own statement',
@@ -121,7 +121,7 @@ def audit_path(m, leaves):
 
 def included(index, size, data, path, root):
     """RFC 9162 section 2.1.3.2."""
-    if not 0 <= index < size:
+    if not _nat(index) or not _nat(size) or not 0 <= index < size:
         return False
     fn, sn, r = index, size - 1, _h(b'\x00' + data)
     for p in path:
@@ -184,7 +184,15 @@ def fetch_tx(rpc, signature, attempts=5, sleep=time.sleep):
         req = urllib.request.Request(rpc, data=body, headers={'Content-Type': 'application/json', 'User-Agent': 'exit-log-verify/1'})
         try:
             with urllib.request.urlopen(req, timeout=30) as r:
-                return json.loads(r.read())
+                reply = json.loads(r.read())
+            if not isinstance(reply, dict) or reply.get('error') is not None:
+                # A 200 response may still be a JSON-RPC provider failure. Do not mistake it for a missing transaction.
+                err = reply.get('error') if isinstance(reply, dict) else None
+                code = err.get('code') if isinstance(err, dict) else None
+                last = 'JSON-RPC provider error' + (' %s' % code if type(code) is int else '')
+                delay = min(30.0, 2.0 ** i)
+            else:
+                return reply
         except urllib.error.HTTPError as e:
             last = 'HTTP %d' % e.code
             if e.code != 429 and e.code < 500:
@@ -202,22 +210,58 @@ def fetch_tx(rpc, signature, attempts=5, sleep=time.sleep):
 def check_anchor(tx, anchor, size, root_hex, notaries=None):
     """The anchor transaction must be the named one, succeed, carry exactly one EXIT-ROOT-v1 memo with this size and root, and be
     signed by the named notary key (listed in notaries.json when given)."""
-    res = tx.get('result') if isinstance(tx, dict) else None
-    if isinstance(tx, dict) and tx.get('rpc_error'):
-        return {'anchor_ok': False, 'why': 'RPC unavailable: ' + tx['rpc_error']}
+    fail = lambda why: {'anchor_ok': False, 'why': why}
+    integer = lambda x: type(x) is int and x >= 0
+    if not isinstance(tx, dict):
+        return fail('not a getTransaction result (missing, or not finalized yet)')
+    if tx.get('rpc_error') or tx.get('error') is not None:
+        return fail('RPC unavailable: provider error or request failure')
+    if not isinstance(anchor, dict) or not integer(size):
+        return fail('anchor size must be a non-negative integer (not boolean)')
+    if not isinstance(root_hex, str) or not re.fullmatch('[0-9a-f]{64}', root_hex):
+        return fail('anchor root must be a 32-byte lowercase hexadecimal hash')
+    if ('size' in anchor and (not integer(anchor['size']) or anchor['size'] != size)) or ('root' in anchor and anchor['root'] != root_hex):
+        return fail('published anchor names a different or malformed size or root')
+    if not isinstance(anchor.get('signature'), str) or not anchor['signature']:
+        return fail('published anchor signature is missing or malformed')
+    keys = None
+    if notaries is not None:
+        if (not isinstance(notaries, dict) or not isinstance(notaries.get('notaries'), list)
+                or any(not isinstance(n, dict) or not isinstance(n.get('public_key'), str) or not n['public_key']
+                       for n in notaries['notaries'])):
+            return fail('malformed notaries.json')
+        keys = {n['public_key'] for n in notaries['notaries']}
+    res = tx.get('result')
     if not isinstance(res, dict):
-        return {'anchor_ok': False, 'why': 'not a getTransaction result (missing, or not finalized yet)'}
-    if (res.get('meta') or {}).get('err') is not None:
-        return {'anchor_ok': False, 'why': 'the transaction failed'}
-    txn = res.get('transaction') or {}
-    msg = txn.get('message') or {}
-    signers = [k.get('pubkey') for k in msg.get('accountKeys', []) if isinstance(k, dict) and k.get('signer')]
-    memos = [i.get('parsed') for i in msg.get('instructions', []) if i.get('programId') in MEMO_PROGRAMS]
+        return fail('not a getTransaction result (missing, or not finalized yet)')
+    if any(not integer(x) for x in (res.get('slot'), res.get('blockTime'), anchor.get('slot'), anchor.get('block_time'))):
+        return fail('anchor slot and block time must be non-negative integers (not boolean)')
+    meta = res.get('meta')
+    if not isinstance(meta, dict) or 'err' not in meta:
+        return fail('transaction success metadata is missing or malformed')
+    if meta['err'] is not None:
+        return fail('the transaction failed')
+    txn = res.get('transaction')
+    if (not isinstance(txn, dict) or not isinstance(txn.get('signatures'), list) or not txn['signatures']
+            or any(not isinstance(sig, str) or not sig for sig in txn['signatures'])):
+        return fail('transaction signatures are missing or malformed')
+    msg = txn.get('message')
+    if (not isinstance(msg, dict) or not isinstance(msg.get('accountKeys'), list)
+            or not isinstance(msg.get('instructions'), list)
+            or any(not isinstance(k, dict) or not isinstance(k.get('pubkey'), str)
+                   or type(k.get('signer')) is not bool for k in msg['accountKeys'])
+            or any(not isinstance(i, dict) for i in msg['instructions'])):
+        return fail('transaction message is malformed')
+    signers = [k['pubkey'] for k in msg['accountKeys'] if k['signer'] is True]
+    memos = [i.get('parsed') for i in msg['instructions'] if i.get('programId') in MEMO_PROGRAMS]
     hits = [MEMO.fullmatch(m) for m in memos if isinstance(m, str) and MEMO.fullmatch(m)]
     out = {'anchor_signature': (txn.get('signatures') or [None])[0], 'anchor_slot': res.get('slot'),
            'anchor_block_time_utc': None, 'signers': signers}
     if isinstance(res.get('blockTime'), int):
-        out['anchor_block_time_utc'] = datetime.fromtimestamp(res['blockTime'], timezone.utc).isoformat()
+        try:
+            out['anchor_block_time_utc'] = datetime.fromtimestamp(res['blockTime'], timezone.utc).isoformat()
+        except (ValueError, OverflowError, OSError):
+            return fail('anchor block time is outside the supported UTC range')
     problems = []
     if len(hits) != 1:
         problems.append('not exactly one EXIT-ROOT-v1 memo')
@@ -232,13 +276,47 @@ def check_anchor(tx, anchor, size, root_hex, notaries=None):
         problems.append('this is not the named anchor transaction')
     if anchor.get('notary') not in signers:
         problems.append('the named notary key did not sign it')
-    if notaries is not None and anchor.get('notary') not in {n.get('public_key') for n in notaries.get('notaries', [])}:
+    if keys is not None and anchor.get('notary') not in keys:
         problems.append('the signer is not in notaries.json')
     if anchor.get('slot') != res.get('slot') or anchor.get('block_time') != res.get('blockTime'):
         problems.append('slot or block time differs from the published anchor')
     out['anchor_ok'] = not problems
     out['why'] = '; '.join(problems) or None
     return out
+
+
+
+def _nat(value):
+    return type(value) is int and value >= 0
+
+
+def _hex32(value):
+    return isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value) is not None
+
+
+def _list_document(doc, key):
+    if not isinstance(doc, dict) or not isinstance(doc.get(key), list) or any(not isinstance(x, dict) for x in doc[key]):
+        raise ValueError('malformed ' + key + ' document')
+    return doc[key]
+
+
+def _check_log_documents(leaves_doc, roots_doc, anchors_doc, notaries=None):
+    leaves = _list_document(leaves_doc, 'leaves')
+    roots = _list_document(roots_doc, 'roots')
+    anchors = _list_document(anchors_doc, 'anchors')
+    if any(not _nat(x.get('index')) or not _hex32(x.get('leaf')) for x in leaves):
+        raise ValueError('leaf indexes must be non-negative integers; leaves must be SHA-256 hashes')
+    if any(not _nat(x.get('size')) or not _nat(x.get('prev_size')) or not _hex32(x.get('root'))
+           or not isinstance(x.get('consistency_from_prev'), list)
+           or any(not _hex32(y) for y in x['consistency_from_prev']) for x in roots):
+        raise ValueError('malformed root sizes, hash or consistency proof')
+    if any(not _nat(x.get('size')) or not _nat(x.get('slot')) or not _nat(x.get('block_time'))
+           or not _hex32(x.get('root')) or not isinstance(x.get('signature'), str) or not x['signature']
+           or not isinstance(x.get('notary'), str) or not x['notary'] for x in anchors):
+        raise ValueError('malformed anchor document')
+    if notaries is not None:
+        if any(not isinstance(x.get('public_key'), str) or not x['public_key'] for x in _list_document(notaries, 'notaries')):
+            raise ValueError('malformed notaries document')
 
 
 def cmd_proof(argv):
@@ -266,6 +344,10 @@ def cmd_log(argv):
     base = argv[0] if argv[0].endswith('/') else argv[0] + '/'
     leaves_doc, roots_doc, anchors_doc = load(base + 'leaves.json'), load(base + 'roots.json'), load(base + 'anchors.json')
     notaries = load(base + 'notaries.json')
+    _list_document(notaries, 'notaries')
+    if any(not isinstance(n.get('public_key'), str) or not n['public_key'] for n in notaries['notaries']):
+        raise ValueError('malformed notaries document')
+    _check_log_documents(leaves_doc, roots_doc, anchors_doc)
     leaves = [bytes.fromhex(x['leaf']) for x in leaves_doc['leaves']]
     problems, by_size = [], {}
     if [x['index'] for x in leaves_doc['leaves']] != list(range(len(leaves))):
@@ -340,6 +422,7 @@ def cmd_leaf(argv):
             out.update(verified=False, why='the answer body does not match the committed record (use the exact bytes received)')
             print(json.dumps(out, indent=1, sort_keys=True))
             return 1
+    _check_log_documents(leaves_doc, roots_doc, anchors_doc)
     leaves = [bytes.fromhex(x['leaf']) for x in leaves_doc['leaves']]
     if d not in leaves:
         out.update(verified=False, why='the leaf is not in the published log yet (it is appended at the next daily anchor)')
@@ -397,7 +480,11 @@ def main(argv):
     if len(argv) < 3 or argv[1] not in FLAGS or argv[2].startswith('--') or not arguments_ok(argv[1], argv[3:]):
         print(__doc__, file=sys.stderr)
         return 2
-    return {'proof': cmd_proof, 'log': cmd_log, 'leaf': cmd_leaf}[argv[1]](argv[2:])
+    try:
+        return {'proof': cmd_proof, 'log': cmd_log, 'leaf': cmd_leaf}[argv[1]](argv[2:])
+    except (ValueError, TypeError, KeyError, IndexError, OSError) as e:
+        print(json.dumps({'verified': False, 'why': 'input or provider response is malformed or unavailable: ' + type(e).__name__}, sort_keys=True))
+        return 1
 
 
 if __name__ == '__main__':
