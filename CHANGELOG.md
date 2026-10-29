@@ -16,6 +16,12 @@
 - [CONTROLS.md](CONTROLS.md): EXIT's own controls (notary keys and their copies, the single-signer limit of the anchors, the
   sentinel, the token's authorities) from facts anyone can check. Administrator, registrar and server details are left out by
   design.
+- [EXIT-3.0-SCOPE.md](EXIT-3.0-SCOPE.md): the EXIT 3.0 scope accepted on 26 October, item by item, with each item's status and
+  limits and what it does not include.
+- ROADMAP.md and VISION.md describe what is live today (evidence log and anchors, verifiers, sentinel, keyless tools, Control
+  Map, research graph, radar pilot, free-tier continuation) and the order that follows from it: history that cannot be filled in
+  later comes first; next the SPL Governance (Realms) and LayerZero readers the cases showed are missing; Q3 narrowed to
+  control-setting anomalies with labels to be registered in advance.
 - Python verifier boundary correction: ASCII memo grammar, exact integer types, malformed notary/message checks and JSON-RPC error classification. The corrected tools/ copy matches the site and API mirror. No new anchor or signature was made for this correction.
 
 

@@ -112,6 +112,7 @@ the files change, these values change in the same commit.
 | [Product](PRODUCT.md) | Useful questions, audiences and access paths. |
 | [Technology](TECHNOLOGY.md) | Provenance, two-time reasoning and engineering invariants. |
 | [Status](STATUS.md) | Publicly available, privately tested and open work. |
+| [EXIT 3.0 scope](EXIT-3.0-SCOPE.md) | The accepted first-delivery scope, item by item, with status and limits. |
 | [Roadmap](ROADMAP.md) | First-service criteria and conditional post-launch quarters. |
 | [Token](TOKEN.md) | Verified official mint and planned paid-usage integration. |
 | [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |

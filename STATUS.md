@@ -39,7 +39,7 @@ Earlier dated entries below are historical snapshots.
 
 ## What completion means
 
-The finite EXIT 3.0 technical scope was accepted on 26 October with its stated source, coverage and operating-evidence limits. This is the first delivery milestone in one continuing development program. Future features and paid service rights require their own acceptance; technical completion is not a claim of universal coverage or demonstrated customer utility.
+The finite EXIT 3.0 technical scope was accepted on 26 October with its stated source, coverage and operating-evidence limits; [EXIT-3.0-SCOPE.md](EXIT-3.0-SCOPE.md) lists it item by item, with each item's status and limits. This is the first delivery milestone in one continuing development program. Future features and paid service rights require their own acceptance; technical completion is not a claim of universal coverage or demonstrated customer utility.
 
 EXITP was created through Jupiter Studio / Meteora DBC; the official
 mint was created before free API activation. The API opened at the actual timestamp above; the
