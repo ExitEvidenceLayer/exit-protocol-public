@@ -1,0 +1,925 @@
+{
+ "format": "exit.control-change-settings/1",
+ "as_of": "2026-10-29",
+ "status_values": {
+  "read": "an EXIT reader reads this value today; a change can be recorded from two reads",
+  "reserved": "the name is fixed for a reader that is not live yet; it may be corrected only before its first record"
+ },
+ "value_types": {
+  "solana_address_or_null": "a Solana base58 address of 32 bytes, or null when no key is set; where a setting has zero_key_is_null (Token-2022 extension authorities, stored as a non-zero optional key), the all-zero key is written as null",
+  "evm_address": "0x and 40 lowercase hex digits; the zero address is a value, not an absence",
+  "evm_address_list": "a list of evm_address values, sorted, without duplicates",
+  "uint": "a JSON integer from 0 to 9007199254740991",
+  "u64_string": "a decimal string without leading zeros, from \"0\" to \"18446744073709551615\"",
+  "bytes32": "0x and 64 lowercase hex digits",
+  "bool": "true or false",
+  "enum": "one of the strings listed in values",
+  "vote_threshold": "{\"kind\": \"YesVotePercentage\" | \"QuorumPercentage\" | \"Disabled\", \"percentage\": 1..100, or null exactly when kind is Disabled}"
+ },
+ "settings": [
+  {
+   "name": "access-control:DEFAULT_ADMIN_ROLE.members",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the contract (getter answers)",
+   "scope": {},
+   "value_type": "evm_address_list",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: DEFAULT_ADMIN_ROLE members",
+   "meaning": "The full member set of the default admin role, only when every member was read.",
+   "does_not_mean": "Other roles, role admins, or who holds the keys."
+  },
+  {
+   "name": "bpf-upgradeable-loader:programData.authority",
+   "chain": "solana-mainnet",
+   "stored_in": "the program's programData account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research one-hop read: owner program upgrade authority",
+   "meaning": "The key that may replace the program's code. null: the loader accepts no further upgrade.",
+   "does_not_mean": "What the code does, or who holds the key.",
+   "programs": [
+    "BPFLoaderUpgradeab1e11111111111111111111111"
+   ]
+  },
+  {
+   "name": "evm:eip1967.admin",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the proxy contract (storage slot)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: eip1967.admin",
+   "meaning": "The EIP-1967 admin slot read as an address. The zero address: the slot is empty, not proof that no admin exists.",
+   "does_not_mean": "What the implementation code permits, or who controls the admin."
+  },
+  {
+   "name": "evm:eip1967.beacon",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the proxy contract (storage slot)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: eip1967.beacon",
+   "meaning": "The EIP-1967 beacon slot read as an address. The zero address: the slot is empty.",
+   "does_not_mean": "What the implementation code permits, or who controls the admin."
+  },
+  {
+   "name": "evm:eip1967.implementation",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the proxy contract (storage slot)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: eip1967.implementation",
+   "meaning": "The EIP-1967 implementation slot read as an address. The zero address: the slot is empty.",
+   "does_not_mean": "What the implementation code permits, or who controls the admin."
+  },
+  {
+   "name": "evm:owner()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the contract (getter answer)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: owner_getter",
+   "meaning": "The value the contract's owner() getter returned at the block.",
+   "does_not_mean": "That this address has any power the getter does not state."
+  },
+  {
+   "name": "layerzero-v2:endpoint.delegates",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the EndpointV2 contract named in scope.endpoint, keyed by the OApp (the subject)",
+   "scope": {
+    "endpoint": "evm_address"
+   },
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:endpoint.delegates]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The address the endpoint authorizes, besides the OApp itself, to change the OApp's libraries and verifier configuration and to skip, clear, nilify or burn its inbound messages. The zero address: no delegate.",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged."
+  },
+  {
+   "name": "layerzero-v2:endpoint.getReceiveLibrary.isDefault",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the EndpointV2 contract named in scope.endpoint, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "endpoint": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "bool",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:endpoint.getReceiveLibrary.isDefault]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "true: the OApp has not set its own receive library and follows the endpoint default, which the endpoint owner can change; false: the OApp set a library, even if it equals the current default.",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:endpoint.getReceiveLibrary.lib",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the EndpointV2 contract named in scope.endpoint, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "endpoint": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:endpoint.getReceiveLibrary.lib]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The receive library the endpoint uses for the OApp and remote endpoint id (the endpoint default when the OApp set none).",
+   "does_not_mean": "That it is the only library accepted: during a receive-library grace period the previous library is also accepted until its expiry block. Who controls the verifiers or the delegate.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:endpoint.getSendLibrary",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the EndpointV2 contract named in scope.endpoint, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "endpoint": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:endpoint.getSendLibrary]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The send library the endpoint uses for the OApp and remote endpoint id (the endpoint default when the OApp set none).",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:endpoint.isDefaultSendLibrary",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the EndpointV2 contract named in scope.endpoint, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "endpoint": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "bool",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:endpoint.isDefaultSendLibrary]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "true: the OApp has not set its own send library and follows the endpoint default, which the endpoint owner can change; false: the OApp set a library, even if it equals the current default.",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:oapp.peers",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the OApp contract (the subject), keyed by scope.eid",
+   "scope": {
+    "eid": "uint"
+   },
+   "value_type": "bytes32",
+   "status": "reserved",
+   "source": "LayerZero V2 getter (reserved; no EXIT reader yet): oapp.peers",
+   "meaning": "The peer the OApp trusts on the remote endpoint id.",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:uln.getAppUlnConfig.requiredDVNCount",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the message library named in scope.library, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "library": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:uln.getAppUlnConfig.requiredDVNCount]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The required-verifier count the OApp itself stored: 0 means the library default applies; 255 (NIL_DVN_COUNT) means no required verifiers, overriding the default; any other value is the number of required verifiers the OApp listed.",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   },
+   "maximum": 255,
+   "excluded": [
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151,
+    152,
+    153,
+    154,
+    155,
+    156,
+    157,
+    158,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    190,
+    191,
+    192,
+    193,
+    194,
+    195,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220,
+    221,
+    222,
+    223,
+    224,
+    225,
+    226,
+    227,
+    228,
+    229,
+    230,
+    231,
+    232,
+    233,
+    234,
+    235,
+    236,
+    237,
+    238,
+    239,
+    240,
+    241,
+    242,
+    243,
+    244,
+    245,
+    246,
+    247,
+    248,
+    249,
+    250,
+    251,
+    252,
+    253,
+    254
+   ]
+  },
+  {
+   "name": "layerzero-v2:uln.getUlnConfig.confirmations",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the message library named in scope.library, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "library": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "u64_string",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:uln.getUlnConfig.confirmations]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The block confirmations required on the path (effective value after defaults).",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:uln.getUlnConfig.optionalDVNThreshold",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the message library named in scope.library, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "library": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:uln.getUlnConfig.optionalDVNThreshold]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "How many optional verifiers must verify (effective value).",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   },
+   "maximum": 127
+  },
+  {
+   "name": "layerzero-v2:uln.getUlnConfig.optionalDVNs",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the message library named in scope.library, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "library": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "evm_address_list",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:uln.getUlnConfig.optionalDVNs]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The optional verifiers on the path (effective value).",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "layerzero-v2:uln.getUlnConfig.requiredDVNs",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the message library named in scope.library, keyed by the OApp (the subject) and scope.eid",
+   "scope": {
+    "library": "evm_address",
+    "eid": "uint"
+   },
+   "value_type": "evm_address_list",
+   "status": "read",
+   "source": "exit.layerzero-path-service/1: configuration.settings[layerzero-v2:uln.getUlnConfig.requiredDVNs]; selected EID/direction only (API installed 29 October 2026)",
+   "meaning": "The verifiers that must all verify a message on the path (effective value).",
+   "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
+   "scope_constraints": {
+    "eid": {
+     "minimum": 1,
+     "maximum": 4294967295
+    }
+   }
+  },
+  {
+   "name": "multisig:getOwners()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the multisig contract (getter answer)",
+   "scope": {},
+   "value_type": "evm_address_list",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: getOwners()",
+   "meaning": "The owner set the multisig interface returned at the block.",
+   "does_not_mean": "Who holds the owner keys."
+  },
+  {
+   "name": "multisig:getThreshold()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the multisig contract (getter answer)",
+   "scope": {},
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: getThreshold()",
+   "meaning": "How many owner confirmations the multisig interface reported it requires.",
+   "does_not_mean": "Who holds the owner keys."
+  },
+  {
+   "name": "spl-governance:governance.config.community_veto_vote_threshold",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "vote_threshold",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.community_veto_vote_threshold (kind and percentage only)",
+   "meaning": "The percentage of the total eligible community vote weight (the maximum voter weight, not the votes cast) that community veto votes must reach to veto a council proposal. Disabled: the community cannot veto.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.community_vote_threshold",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "vote_threshold",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.community_vote_threshold (kind and percentage only)",
+   "meaning": "The percentage of the total eligible community vote weight (the maximum voter weight, not the votes cast) that Yes votes must reach for a proposal to pass; Yes must also exceed No. Disabled: the community cannot vote on this governance's proposals.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.community_vote_tipping",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "enum",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.community_vote_tipping",
+   "meaning": "When a community vote may end before its voting period does.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "values": [
+    "Strict",
+    "Early",
+    "Disabled"
+   ],
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.council_veto_vote_threshold",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "vote_threshold",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.council_veto_vote_threshold (kind and percentage only)",
+   "meaning": "The percentage of the total eligible council vote weight (the maximum voter weight, not the votes cast) that council veto votes must reach to veto a community proposal. Disabled: the council cannot veto.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.council_vote_threshold",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "vote_threshold",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.council_vote_threshold (kind and percentage only)",
+   "meaning": "The percentage of the total eligible council vote weight (the maximum voter weight, not the votes cast) that Yes votes must reach for a proposal to pass; Yes must also exceed No. Disabled: the council cannot vote on this governance's proposals.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.council_vote_tipping",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "enum",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.council_vote_tipping",
+   "meaning": "When a council vote may end before its voting period does.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "values": [
+    "Strict",
+    "Early",
+    "Disabled"
+   ],
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.min_community_weight_to_create_proposal_raw",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "u64_string",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.min_community_weight_to_create_proposal_raw",
+   "meaning": "The community voting weight (raw token units) needed to create a proposal.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.min_council_weight_to_create_proposal_raw",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "u64_string",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.min_council_weight_to_create_proposal_raw",
+   "meaning": "The council voting weight (raw token units) needed to create a proposal.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:governance.config.transactions_hold_up_seconds",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.transactions_hold_up_seconds",
+   "meaning": "The minimum wait between a proposal passing and its transactions executing.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ],
+   "maximum": 4294967295
+  },
+  {
+   "name": "spl-governance:governance.config.voting_base_seconds",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.voting_base_seconds",
+   "meaning": "The base voting period.",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ],
+   "maximum": 4294967295
+  },
+  {
+   "name": "spl-governance:governance.config.voting_cool_off_seconds",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.config.voting_cool_off_seconds",
+   "meaning": "The period after the base voting time in which approving votes are no longer accepted (deny, veto and withdrawal still are).",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ],
+   "maximum": 4294967295
+  },
+  {
+   "name": "spl-governance:governance.required_signatories_count",
+   "chain": "solana-mainnet",
+   "stored_in": "the governance account",
+   "scope": {},
+   "value_type": "uint",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): governance.required_signatories_count",
+   "meaning": "How many required signatories every proposal of this governance needs (a count, not their identities).",
+   "does_not_mean": "Who votes, how a vote will go, or whether a proposal is safe.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ],
+   "maximum": 255
+  },
+  {
+   "name": "spl-governance:realm.council_mint",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm.council_mint",
+   "meaning": "The token mint whose holders form the council. null: no council.",
+   "does_not_mean": "Who holds the key or the council tokens.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm.realm_authority",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm.realm_authority",
+   "meaning": "The key that may change the realm configuration (voter-weight and max-voter-weight plugins, token types, the community max-vote-weight source, removing the council, lock authorities), create governances without the minimum weight, and transfer or remove itself. It casts no vote by itself. null: none.",
+   "does_not_mean": "Who holds the key or the council tokens.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm_token_config.community.max_voter_weight_addin",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm configuration account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm_token_config.community.max_voter_weight_addin",
+   "meaning": "The plugin program that computes the maximum community voter weight, the denominator of every community threshold. null: no plugin; the maximum comes from the realm's community max-vote-weight source.",
+   "does_not_mean": "What the plugin code does, or who holds the tokens.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm_token_config.community.token_type",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm configuration account",
+   "scope": {},
+   "value_type": "enum",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm_token_config.community.token_type",
+   "meaning": "Liquid: deposits and withdrawals are allowed. Membership: deposited tokens cannot be withdrawn, and the realm authority can revoke (burn) them. Dormant: the realm does not accept deposits of this token; a voter-weight plugin may still give it voting power.",
+   "does_not_mean": "What the plugin code does, or who holds the tokens.",
+   "values": [
+    "Liquid",
+    "Membership",
+    "Dormant"
+   ],
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm_token_config.community.voter_weight_addin",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm configuration account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm_token_config.community.voter_weight_addin",
+   "meaning": "The plugin program that computes voter weight. null: token deposits count directly.",
+   "does_not_mean": "What the plugin code does, or who holds the tokens.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm_token_config.council.max_voter_weight_addin",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm configuration account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm_token_config.council.max_voter_weight_addin",
+   "meaning": "The plugin program that computes the maximum council voter weight, the denominator of every council threshold. null: no plugin; the maximum is the council mint supply.",
+   "does_not_mean": "What the plugin code does, or who holds the tokens.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm_token_config.council.token_type",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm configuration account",
+   "scope": {},
+   "value_type": "enum",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm_token_config.council.token_type",
+   "meaning": "Liquid: deposits and withdrawals are allowed. Membership: deposited tokens cannot be withdrawn, and the realm authority can revoke (burn) them. Dormant: the realm does not accept deposits of this token; a voter-weight plugin may still give it voting power.",
+   "does_not_mean": "What the plugin code does, or who holds the tokens.",
+   "values": [
+    "Liquid",
+    "Membership",
+    "Dormant"
+   ],
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-governance:realm_token_config.council.voter_weight_addin",
+   "chain": "solana-mainnet",
+   "stored_in": "the realm configuration account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-governance-research/1 (GET /v0/research/solana/governance, live 29 October): realm_token_config.council.voter_weight_addin",
+   "meaning": "The plugin program that computes voter weight. null: token deposits count directly.",
+   "does_not_mean": "What the plugin code does, or who holds the tokens.",
+   "programs": [
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+   ]
+  },
+  {
+   "name": "spl-token:freezeAuthority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = freezeAuthority",
+   "meaning": "The key that may freeze holders' token accounts. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ]
+  },
+  {
+   "name": "spl-token:mintAuthority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = mintAuthority",
+   "meaning": "The key that may create new tokens of this mint. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ]
+  },
+  {
+   "name": "token-2022:confidentialTransferFeeConfig.authority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = confidentialTransferFeeConfig.authority",
+   "meaning": "The key that may change the confidential transfer-fee settings. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:confidentialTransferMint.authority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = confidentialTransferMint.authority",
+   "meaning": "The key that may change the confidential-transfer settings and, when new accounts are not approved automatically, must approve each account before it can use confidential transfers. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:metadataPointer.authority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = metadataPointer.authority",
+   "meaning": "The key that may change where the token metadata is located. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:mintCloseAuthority.closeAuthority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = mintCloseAuthority.closeAuthority",
+   "meaning": "The key that may close the mint account once supply is zero. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:permanentDelegate.delegate",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = permanentDelegate.delegate",
+   "meaning": "The key that may transfer or burn tokens from any holder account of this mint. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:tokenMetadata.updateAuthority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = tokenMetadata.updateAuthority",
+   "meaning": "The key that may change the on-mint token metadata. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:transferFeeConfig.transferFeeConfigAuthority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = transferFeeConfig.transferFeeConfigAuthority",
+   "meaning": "The key that may change the transfer fee. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:transferFeeConfig.withdrawWithheldAuthority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = transferFeeConfig.withdrawWithheldAuthority",
+   "meaning": "The key that may withdraw withheld transfer fees. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  },
+  {
+   "name": "token-2022:transferHook.authority",
+   "chain": "solana-mainnet",
+   "stored_in": "the mint account (Token-2022 extension)",
+   "scope": {},
+   "value_type": "solana_address_or_null",
+   "status": "read",
+   "source": "exit.solana-mint-research: controls[].field = transferHook.authority",
+   "meaning": "The key that may change the transfer-hook program. null: no key can.",
+   "does_not_mean": "Who holds the key, or that it was used.",
+   "programs": [
+    "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+   ],
+   "zero_key_is_null": true
+  }
+ ],
+ "subject_rule": "The subject is the account the setting belongs to: the account that stores it, except for the layerzero-v2 endpoint.* and uln.* names, whose subject is the OApp and whose storing contract is named in scope."
+}
