@@ -1,9 +1,11 @@
 # Free research API · live quick start
 
 **OPEN:** https://api.exit-protocol.io/  
-**Campaign:** 25 October–24 November 2026, **12:38:20 UTC**. One service-wide
+**Initial free period:** 25 October–24 November 2026, **12:38:20 UTC**. One service-wide
 30-day period, not a new 30-day trial for every account. No wallet, token purchase,
 email, signature, payment or automatic paid conversion.
+
+**Continuation deployed on 29 October:** existing keys continue after the initial period in the same quota-limited free service, without a fixed end date or a new registration. Daily, enrollment and lifetime capacity limits are retained without reset. No payment or API Pass is activated. Later offer reductions or a scheduled end require at least 30 days notice. `/v0/early-access` exposes the initial boundary and the continuation separately. First-period watches/receiver registrations and first-period binding lookups retain their earlier expiry; new-period watches and bindings keep their seven-day window. [Current terms](https://exit-protocol.io/terms.html) and [privacy](https://exit-protocol.io/privacy.html) state the boundaries.
 
 ## 1. Use the research interface
 
