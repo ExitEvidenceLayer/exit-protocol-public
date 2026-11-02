@@ -133,7 +133,7 @@ the `DEFAULT_ADMIN_ROLE` member count and up to four members. That is at most tw
 answers at that block, not proof of who holds keys; member accounts, other roles and role admins are not read. An empty admin slot
 is unknown, not "no admin"; what an address may do is not established without the published source; an address without code or an
 EIP-7702 delegated account is refused (422) without spending the answer allowance. Responses use
-`exit.ethereum-contract-research/3` (a replay of an earlier request returns its stored body, which can be `/1` or `/2`).
+`exit.ethereum-contract-research/4` since 1 November 2026 (the clone-aware read; a replay of an earlier request returns its stored body, which can be `/1`, `/2` or `/3`).
 
 ## Ethereum issuer freeze research
 
