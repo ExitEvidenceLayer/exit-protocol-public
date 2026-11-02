@@ -70,10 +70,11 @@ Every item below was re-read from Ethereum mainnet on 28 October 2026.
   - 17:56:23: EOA `0x1c294e1c…` called `pause()` on an unverified contract, `0x6706618c…`. Its relation to the release was not
     established.
   - 18:18:11, 42 minutes after the release: transfers to or from ten addresses, `0x1f4c1c2e…` among them, were blocked in the rsETH
-    contract through the adapter's owner Safe. The receiving address was not among them.
+    contract for 24 hours (until 19 April at 18:18:11) through the adapter's owner Safe. The receiving address was not among them.
   - 18:21:59, 46 minutes after the release: eleven contracts, including the rsETH token contract, were paused in one transaction
     from a second Safe, `0xb6abb489…`, which is not the adapter's owner.
-  - 18:23:11 (block 24,908,522): transfers to or from the receiving address were blocked until 19 April at 00:10:55.
+  - 18:23:11 (block 24,908,522): transfers to or from the receiving address were blocked for 24 hours, until 19 April at
+    18:23:11.
   - A second message, nonce 309, paying 40,000 rsETH to the same address, followed. DVN `0x589dedbd…`'s attestation was submitted
     at 18:25:47 by `0xd3a22772…`, and `0x49662606…` committed it at 18:26:23. Both delivery attempts reverted, at 18:26:35 and
     18:28:11. A simulation of the delivery returns the rsETH error `TransfersBlocked` for the receiving address. In the blocks we
@@ -170,6 +171,13 @@ fact became readable on chain, and how long before the release.
   - the other 23 one-verifier paths' optional defaults;
   - who controls any address.
   Nothing here claims the release could have been stopped.
+
+## Correction
+
+29 October 2026: the 28 October revision of this note said the receiving address was blocked until 19 April at 00:10:55. The
+`UserTransfersBlocked` event in block 24,908,522 sets the end to 19 April at 18:23:11, 24 hours after the block, as the first
+version of this note said ("blocked the same way" as the ten addresses). The wrong time was a decoding error of 65,536 seconds.
+Re-read from the transaction receipt on 29 October 2026. The list of corrections is in [CORRECTIONS.md](../CORRECTIONS.md).
 
 ## Evidence
 
