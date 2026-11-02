@@ -12,6 +12,10 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             must say the service continues
   sitemap_not_behind_pages  every sitemap <lastmod> is not earlier than the HTTP Last-Modified date of the page it names (the file's time on
                             the server: a redeploy that rewrote the file counts as a change), and not in the future
+  status_client_row_version the STATUS.md row "Public script/agent client" names the API description version it describes, and that
+                            version equals the repository's openapi.json info.version (the sentence about the copy, checked against the copy —
+                            added 2 November after that sentence was found a version behind); when exit_mcp.py is in the checkout, the row's
+                            "(N tools, server X)" must also match the MCP server's own tool list and version (skipped, not failed, when absent)
 DIR for --repo is a checkout (or a folder holding STATUS.md and openapi.json). --live-dir replaces every network read with files of the same
 names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json) — used by the tests only."""
 import json, os, re, sys, time, urllib.request
@@ -116,6 +120,25 @@ def main(argv):
             if page_mod and page_mod.date() > lm.date(): miss('sitemap_not_behind_pages', '%s changed %s but the sitemap says %s' % (path, page_mod.date(), lastmod))
     except Exception as e:
         miss('sitemap_not_behind_pages', 'unreadable: ' + type(e).__name__)
+    # 5. the status row about the client/API copy, checked against the copy itself (and the MCP server file when present)
+    try:
+        crow = [(l, st, b) for l, st, b in rows if 'script/agent client' in l.lower()]
+        if not crow: miss('status_client_row_version', 'no STATUS row names the public script/agent client')
+        else:
+            cell = crow[0][2]; m = re.search(r'version (\d{4}-\d{2}-\d{2}\.\d+)', cell)
+            out['client_row'] = {'version_in_row': m.group(1) if m else None, 'repository_openapi_version': repo_v, 'files_checked': False}
+            out['checks']['status_client_row_version'] = True
+            if not m: miss('status_client_row_version', 'the client row names no API description version')
+            elif m.group(1) != repo_v: miss('status_client_row_version', 'the client row says version %s; the repository copy is %s' % (m.group(1), repo_v))
+            mcp = os.path.join(repo, 'exit_mcp.py'); tm = re.search(r'\((\d+) tools, server (\d+\.\d+\.\d+)\)', cell)
+            if os.path.exists(mcp) and tm:
+                src = open(mcp, encoding='utf-8').read(); sv = re.search(r'"serverInfo":\s*\{[^}]*"version":\s*"([^"]+)"', src)
+                n = len(set(re.findall(r'\{\s*"name":\s*"(exit_[a-z0-9_]+)",\s*"description"', src)))   # every tool entry (TOOLS = [...] and TOOLS.extend([...])) starts name, description
+                out['client_row'].update({'files_checked': True, 'mcp_server_version': sv.group(1) if sv else None, 'mcp_tools': n, 'row_tools': int(tm.group(1)), 'row_server': tm.group(2)})
+                if not sv or sv.group(1) != tm.group(2): miss('status_client_row_version', 'the client row says server %s; exit_mcp.py says %s' % (tm.group(2), sv.group(1) if sv else None))
+                if n != int(tm.group(1)): miss('status_client_row_version', 'the client row says %s tools; exit_mcp.py lists %d' % (tm.group(1), n))
+    except Exception as e:
+        miss('status_client_row_version', 'unreadable: ' + type(e).__name__)
     out['ok'] = all(out['checks'].values()) and not out['mismatches']
     print(json.dumps(out, indent=1, sort_keys=True)); return 0 if out['ok'] else 1
 
