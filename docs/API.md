@@ -73,6 +73,10 @@ curl --fail --silent --show-error -X POST \
 unset EXIT_ACCESS_KEY
 ```
 
+Revoking stops the key at once and removes its alert receivers and alert data. It does not erase the key's request details,
+research records, watches or feedback early: they expire on their normal windows (24 hours for answer copies, 7 days for request
+details, record details, watch changes and feedback). Public log leaves are never removed (see below).
+
 ## Live token authority research
 
 `GET /v0/research/solana/mint` accepts a Solana token **mint address**, a bearer key and an `X-EXIT-Request-Id`. It makes one finalized read of at most five read-only RPC calls. Three calls cover current mint/freeze and supported Token-2022 authority fields and the supported holder-account structures. Only when a holder is a multisig or program-owned does the read go one hop behind it: the kind of each signer account, and the owner program with its upgrade authority or the absence of one. Deeper paths are not investigated. It does not scan all wallet activity or infer who owns a private key.
@@ -274,8 +278,10 @@ event against the binding. Without `--event`, a pass proves only that the record
 separately. A watch change made by radar polling (`log_binding_scope=RADAR_EVENT`) binds the complete CHANGED event, not the watch
 row; check it with `--event`. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes.
 
-**Answer bindings (on request).** Since 28 October 2026 09:03 UTC, a 200 ANSWERED response of `/v0/research/solana/mint` or
-`/v0/research/ethereum/contract` carries `X-EXIT-Log-Binding` when the request sends `X-EXIT-Log-Bind: 1`. Without that header
+**Answer bindings (on request).** A 200 ANSWERED response of any of the seven live read routes carries `X-EXIT-Log-Binding` when
+the request sends `X-EXIT-Log-Bind: 1`: `/v0/research/solana/mint` and `/v0/research/ethereum/contract` (since 28 October 2026
+09:03 UTC), `/v0/research/ethereum/freeze`, `/v0/research/solana/governance`, `/v0/research/solana/governance/proposals`,
+`/v0/research/ethereum/layerzero` and `/v0/research/ethereum/layerzero/peer` (each since its own release). Without that header
 nothing is bound and no public leaf appears. Any other header value is refused with `400 LOG_BIND_VALUE_REFUSED` before the
 request is counted. The choice is part of the request: the same `X-EXIT-Request-Id` with a different choice gives
 `409 REQUEST_ID_REUSED_FOR_DIFFERENT_WORK`.
@@ -355,7 +361,10 @@ leaf and its known_at. Public leaves are permanent (the log is append-only): the
 deletion and key revocation do not remove them. Leaf count and known_at reveal activity
 volume and timing, and salting does not guarantee anonymity against correlation. The
 service makes these bindings itself; the API document lists no option to turn them off.
-Pseudonymous account, quota and hashed replay records persist for campaign/recovery;
+The account record (a sequential account number and a SHA-256 hash of the access key, never the key itself), quota counters and
+hashed replay records persist for campaign/recovery. The minimal metrics computed from these records are aggregates only:
+campaign totals of attempts, answers and pending requests, counts of unresolved and failed requests, the number of accounts active
+on two or more UTC days, and feedback counts;
 encrypted operational backups and deploy-time copies of service records have separate
 retention. No deletion-from-all-backups or legal-compliance guarantee.
 
