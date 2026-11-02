@@ -12,6 +12,9 @@
 - 13:12: [tools/claims_check.py](tools/claims_check.py) gained a fifth check, `status_client_row_version`: the status row about the API copy
   must name the version the repository copy carries, and, when exit_mcp.py is in the checkout, the row's tool count and server version must
   match that file. The row above had been a version behind and no check compared the sentence with the copy; now one does.
+- 13:22: correction (documentation): [docs/API.md](docs/API.md) said the repository copy of the API description was version 2026-11-01.3 and
+  that the client and MCP were not checked against the newer routes; both sentences were behind (found by a sweep of every public text for
+  version sentences after the status-row correction). The paragraph now names 2026-11-02.2 and the loopback-stub check.
 
 ## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
 
