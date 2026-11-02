@@ -87,5 +87,5 @@ Compare the same task bank before and after the change: supported-answer accurac
 completion, unsupported conclusions, reproducibility, latency and cost. Keep the
 method if the relevant benefit justifies the operational burden. Otherwise revise
 or stop it. Later, labels and thresholds will be committed to the log before a run
-(this needs a new log record kind), and corrections will be published as a public
-error rate. See [the measurable roadmap](ROADMAP.md) and [current status](STATUS.md).
+(this needs a new log record kind); corrections are already published as a public
+error rate (CORRECTIONS.md, since 29 October). See [the measurable roadmap](ROADMAP.md) and [current status](STATUS.md).

@@ -15,6 +15,9 @@
 - 13:22: correction (documentation): [docs/API.md](docs/API.md) said the repository copy of the API description was version 2026-11-01.3 and
   that the client and MCP were not checked against the newer routes; both sentences were behind (found by a sweep of every public text for
   version sentences after the status-row correction). The paragraph now names 2026-11-02.2 and the loopback-stub check.
+- 16:51: correction (documentation): ROADMAP.md and VISION.md still described three delivered things as pending — the public error rate (live since
+  29 October) as LATER, the BonkDAO and Kelp DAO case-file records as queued (they entered the log at the 2 November 00:30 UTC anchor, tree size 274),
+  and the issuer-freeze read without PYUSD (live since 2 November 01:50:42 UTC). The sentences now state the delivered facts.
 
 ## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
 

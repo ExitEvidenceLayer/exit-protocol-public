@@ -39,9 +39,9 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: Control-Change Record format, setting names and checker, under an open license (no records in this format yet)
   → LIVE: public corrections list and error rate (CORRECTIONS.md), updated monthly
   → SET, NOT YET NEEDED: on a day without new records, the daily job re-anchors the current root
-  → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC) at one finalized block (1 November)
+  → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC; PYUSD since 2 November) at one finalized block (1 November)
   → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
-  → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (records queued for the log)
+  → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
@@ -96,8 +96,8 @@ Planned unless marked LIVE.
 - **Public error rate (LIVE, 29 October):** corrections counted against records, map
   rows and case notes published; unfound errors are not counted (CORRECTIONS.md).
 - **Reproducible case files:** every read, provider, slot or block, raw-reply hash
-  and a re-read script; past-state reads need archive access. The first case file
-  is queued for the log.
+  and a re-read script; past-state reads need archive access. The BonkDAO and Kelp
+  DAO case files entered the log at the 2 November 00:30 UTC anchor (tree size 274).
 - **Keyless cite tools (LIVE, 29 October):** read-only history, cite and verify
   tools for a public record, with its proof and anchor check (/tools/).
 - **EXIT's own control page (LIVE, 29 October):** public facts on the EXITP mint,
@@ -137,8 +137,8 @@ guarantees. Each requires capacity, source access and evidence of usefulness.
 Compare a new method against the existing approach on the same question set.
 Continue when it improves supported-answer accuracy, completion, speed or cost
 enough to justify its operational burden. Revise or stop a method that does not.
-Once pre-registration and a public error rate exist (LATER above), thresholds will
-be pre-registered and corrections will count toward the public error rate.
+Once pre-registration exists (LATER above), thresholds will be pre-registered;
+corrections already count toward the public error rate (CORRECTIONS.md, since 29 October).
 
 Research planning, monitoring and graph analysis are product capabilities to be
 earned with evidence. Neither a larger budget nor a token changes that standard.
