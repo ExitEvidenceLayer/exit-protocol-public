@@ -178,7 +178,7 @@ def main():
             continue
         try:
             msg = json.loads(line)
-        except ValueError:
+        except (ValueError, RecursionError):      # deeply nested JSON within the 64 KB frame is a parse error, not a crash
             sys.stdout.write(json.dumps({"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "parse error"}}) + "\n")
             sys.stdout.flush()
             continue

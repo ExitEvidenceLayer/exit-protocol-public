@@ -38,7 +38,7 @@ downloads and an offline edition. No wallet is required to inspect them.
 
 The **30-day quota-limited free research console and API are open** at
 [api.exit-protocol.io](https://api.exit-protocol.io/). Generate pseudonymous access
-without an email, wallet, token or payment. One key covers live control reads for any Solana token mint (mint/freeze and supported Token-2022 authority fields, with one hop behind a multisig or program holder) and any Ethereum contract (proxy slots, the owner() getter as an observation, Safe owners and threshold, AccessControl default admins where readable, code presence), each at a finalized slot or block with its sources and limits; research records for questions that cannot be answered yet; a research graph over the key's own answers; Solana and Ethereum watches you check on request, with owned webhook receivers and hourly radar reads as a limited pilot; and historical
+without an email, wallet, token or payment. One key covers live control reads for any Solana token mint (mint/freeze and supported Token-2022 authority fields, with one hop behind a multisig or program holder) and any Ethereum contract (proxy slots, the owner() getter as an observation, Safe owners and threshold, AccessControl default admins where readable, code presence), the USDT and USDC issuer-blacklist status and balances of any Ethereum address, the proposals of any supported SPL Governance account (counted by state, open ones decoded) and the peer one LayerZero OApp holds for one remote endpoint id, each at a finalized slot or block with its sources and limits; research records for questions that cannot be answered yet; a research graph over the key's own answers; Solana and Ethereum watches you check on request, with owned webhook receivers and hourly radar reads as a limited pilot; and historical
 and change answers over three recorded Solana reference subjects. See the
 [quick start, live examples and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded control reads, not unrestricted wallet tracing or prose investigation.
 
@@ -117,6 +117,8 @@ the files change, these values change in the same commit.
 | [Token](TOKEN.md) | Verified official mint and planned paid-usage integration. |
 | [Transparency](TRANSPARENCY.md) | Operating disclosures and privacy boundaries. |
 | [Controls](CONTROLS.md) | EXIT's own keys and authorities, from facts anyone can check. |
+| [Control-Change Record](CONTROL-CHANGE-RECORD.md) | An open format for one control-setting change, with stable setting names and a checker. |
+| [Corrections](CORRECTIONS.md) | Every correction note on published research, which ones corrected a fact, and the count per kind of output. |
 | [Security](SECURITY.md) · [Support](SUPPORT.md) | Safe reporting and product enquiries. |
 | [Contributing](CONTRIBUTING.md) | Reproducible public corrections, safe reports and contribution scope. |
 | [API access](docs/API.md) · [Changelog](CHANGELOG.md) | Public revisions. |
@@ -131,6 +133,10 @@ Documentation in this repository is © EXIT Protocol and licensed under
 [CC BY-ND 4.0](LICENSE) (Creative Commons Attribution-NoDerivatives 4.0 International).
 The EXIT Protocol name and marks are not licensed. Public client wrappers are distributed under the same [CC BY-ND 4.0](LICENSE) terms; the research engine, datasets and
 API service remain proprietary and are not part of this repository.
+
+The log verifiers (`tools/exit_log_verify.py` and the in-browser `verify.js`), the evidence-log and Control-Change Record
+formats, and the `control-change/` folder are licensed under the [MIT License](LICENSE-CODE), so that anyone can check the log,
+port the verifier and produce records in the same shape.
 
 ## 26 October — wider live research workflow
 

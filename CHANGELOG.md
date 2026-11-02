@@ -1,7 +1,66 @@
 # Public documentation changelog
 
+## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
+
+- 10:43: `GET /v0/research/ethereum/freeze` went live: whether one Ethereum address is on the USDT or USDC issuer blacklist at one
+  finalized block, with its balances (six read-only calls; the tokens' own getters; a reverted getter is NOT_OBSERVED, never
+  "not frozen"), with the same key, quotas and opt-in log binding (OpenAPI 2026-11-01.1, [openapi.json](openapi.json)). A freeze is
+  not a recovery and the time of a freeze is not read.
+- 12:26: the Control Map daily re-read started as a standing job: every row re-read once a day, a Control-Change Record only when
+  a setting changed, the same settings re-anchored as consecutive daily reads (first scheduled run 23:20 UTC; a page for the daily
+  reads follows once the first runs are anchored).
+- 12:33: radar kind R-FREEZE: for Ethereum watches the subject and its named holders are read against the two blacklists at each
+  research block; a listing is one open object per address and token, closed when a later read answers false. Radar kind
+  R-GOV-PROPOSAL: for Solana governance watches, a newly listed or newly closed proposal is a signal.
+- 12:47: `GET /v0/research/solana/governance/proposals` went live: the proposals of one supported SPL Governance V2 account counted
+  by state (at most 600 listed) and the open ones decoded (at most 100; options with raw weights, deny/abstain/veto weights, times,
+  threshold, name and link), three or four read-only calls (OpenAPI 2026-11-01.2, 12:51). Vote records, voters, transaction
+  contents and outcomes are not read.
+- 13:02: `GET /v0/research/ethereum/layerzero/peer` went live: which peer one LayerZero V2 OApp holds for one remote endpoint id
+  at one finalized block (four read-only calls; a zero-padded 20-byte value is also given as an address, a reverted getter is
+  NOT_OBSERVED, never "unset"; OpenAPI 2026-11-01.3). The Control-Change setting layerzero-v2:oapp.peers is now readable.
+- 13:08: reproducible case files on the site: `case-files/bonkdao-2026-07-06-recorded-v1/` (20 of 21 claims recomputed from the
+  retained replies and matched; one transaction not retained) and `case-files/kelpdao-rseth-2026-04-18-recorded-v1/` (20 of 23;
+  two explorer-read times and one archive wrapper not recomputable). Their case_note records were queued for the daily anchor at
+  00:30 on 2 November.
+- Public tools hardened after an outside review: the evidence client reports publisher identity as a separate result (pass
+  trusted notary keys from outside the log to verify the publisher); the sentinel verifies without write permission from one
+  snapshot of the log documents, judges freshness on the anchor it confirmed and checks the last run's outcome; the MCP server and
+  the Control-Change checker refuse oversized or deeply nested input instead of failing.
+- Repository: public-surface inventory adds the API's `openapi.json`; the engine's creation read requests transaction version 1.
+- 16:45: fix to the proposals route released. Its first keyed read (16:14) answered 503 `RPC_BUDGET_EXHAUSTED`: the shared Solana
+  transport admitted three calls of three methods and the route needs a fourth method. The route now runs on its own session (four
+  calls, `getProgramAccounts` admitted; body identical to the shared transport except the gate line, asserted by a test) and its
+  acquisition is tested through the real transport with a stub connection. Lesson recorded: a route is ready only after a real
+  read through the real transport, not after fixture replays.
+- 18:56: the Ethereum contract reader recognises the canonical EIP-1167 minimal-proxy clone from the code it already reads: the
+  implementation is taken from the clone's PUSH20, admin is reported as not applicable, no extra call; variants stay NOT_OBSERVED.
+  Policy `ethereum-finalized-admin-surface-native-owner/2`; stored /1 answers replay unchanged. Released after a fresh benchmark
+  sample over the new bytes showed no regression (benchmark notes under `docs/`).
+- 20:41: the Solana mint reader interprets two Token-2022 authorities it previously only disclosed by name: the pause authority (can pause and
+  resume transfers, mints and burns) and the scaled-UI-amount authority (can change the displayed multiplier). They appear as controls with
+  their meaning; the state facts behind them (paused, multiplier, pending multiplier and its effective time) are reported, never followed as
+  authorities. Policy `solana-finalized-mint-pair-hop/2`; stored /1 answers replay unchanged; a pre-release benchmark over fresh live mints
+  matched an independent decoder on every compared fact. Engine core commit 24da5740.
+
 ## 29 October 2026 · quota-limited free continuity and verifier correction
 
+- 12:28: `GET /v0/research/ethereum/layerzero` went live: one LayerZero V2 OApp pathway on Ethereum (OApp, remote endpoint id,
+  direction): delegate, message library, raw, default and effective verifier configuration, at most eleven read-only calls, with
+  the same key, quotas and opt-in log binding (OpenAPI 2026-10-29.3, [openapi.json](openapi.json)).
+- [Kelp DAO case note](cases/kelpdao-rseth-2026-04-18.md): correction of the time the receiving address was blocked until
+  (19 April 18:23:11, 24 hours after the block, not 00:10:55); dated correction section added. Counted in CORRECTIONS.md.
+- 11:11 to 11:13: `GET /v0/research/solana/governance` went live: one supported SPL Governance V2 account and its paired realm
+  and configuration, at most three read-only calls, with the same key, quotas and opt-in log binding (OpenAPI 2026-10-29.2). It reads configuration only: no proposals, votes, holdings or plugin logic.
+- [CONTROL-CHANGE-RECORD.md](CONTROL-CHANGE-RECORD.md): an open format (`exit.control-change/1`) for one control-setting change,
+  with 50 stable setting names (49 read by EXIT today, 1 reserved), a standard-library checker with source-bound value ranges and
+  three synthetic examples in `control-change/`; meanings checked against program sources, ranges against the readers' decoders. A record enters the evidence log as an ordinary record. No records in
+  this format are published yet.
+- [CORRECTIONS.md](CORRECTIONS.md): every correction of a published fact in log records, Control Map rows and case notes, with
+  the count per kind of output: 0 in 200 records with public proof bundles, 0 in 68 rows, 7 corrections in 6 case outputs; all
+  13 correction notes are listed with whether each corrected a fact. Updated monthly.
+- [LICENSE-CODE](LICENSE-CODE): the log verifiers, the evidence-log and Control-Change Record formats and the `control-change/`
+  folder are now under the MIT License. Documentation stays under CC BY-ND 4.0.
 - A versioned continuation is deployed before the initial 24 November boundary. Existing keys continue under the same daily, enrollment and lifetime capacity caps; no account, revocation, usage counter or profile is reset. No automatic payment, wallet or token requirement is introduced. A later announced end requires at least 30 days notice.
 - First-period watches/receivers and binding lookups keep their original expiry; new-period ones keep the existing seven-day limit. Request-body and query-detail retention remain 24 hours and seven days.
 - Console status, terms, privacy and OpenAPI 2026-10-29.1 describe the same service contract. HTML structure and styles are unchanged.

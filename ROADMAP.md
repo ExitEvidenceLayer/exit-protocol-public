@@ -22,7 +22,7 @@ anchored daily even without a change, come first. An anchor shows only that EXIT
 held a record by its block time, not that the record is true, known earlier or
 complete.
 
-## Current engineering sequence · 29 October
+## Current engineering sequence · 1 November
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -35,11 +35,15 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: Python and in-browser verifiers; off-server sentinel (daily at 00:45 UTC; first scheduled run passed 29 October); answers bound to the log on request
   → LIVE: keyless history, cite and verify tools for agents (/tools/); EXIT's own control page (CONTROLS.md)
   → LIVE: the same keys continue in a quota-limited free tier after 24 November (continuation deployed 29 October)
+  → LIVE: SPL Governance (Realms) configuration reader, one governance account per request; LayerZero pathway reader (delegate, libraries, verifier configuration), one OApp, endpoint id and direction per request (29 October)
+  → LIVE: Control-Change Record format, setting names and checker, under an open license (no records in this format yet)
+  → LIVE: public corrections list and error rate (CORRECTIONS.md), updated monthly
   → SET, NOT YET NEEDED: on a day without new records, the daily job re-anchors the current root
-  → NEXT: SPL Governance (Realms) reader (in private testing); LayerZero delegate and verifier reader
-  → NEXT: scheduled re-reads with change-only records; reproducible case files (the first is queued for the log)
+  → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC) at one finalized block (1 November)
+  → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
+  → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (records queued for the log)
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
-  → LATER: pre-registration, public error rate, Control-Change Record, threshold notary, outside witnesses
+  → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
 ```
 
@@ -69,6 +73,11 @@ program below remains a measured growth direction.
 | LayerZero OApp delegate and per-path DVN settings (verifiers, confirmations, library default) | Kelp DAO rsETH: one required verifier on the released path for about 381 days; a delegate outside the owner Safe for 235 days. | Reproduces the case's settings at the stated blocks; otherwise revise or stop. |
 | SPL Governance (Realms) rules (threshold, wait, veto, voting times, who may propose) and new proposals | BonkDAO: 1% threshold, zero wait, community veto disabled for years; the deciding vote came from a wallet first funded the day before. | Reproduces the case's values and agrees with the program's logs; otherwise revise or stop. |
 
+Both readers' configuration parts are live since 29 October: one governance account
+and its realm per request; one OApp, remote endpoint id and direction per request
+(delegate, send or receive library, raw and effective verifier configuration).
+Proposals (open ones decoded, history counted by state) and peers (one eid per request) are read since 1 November.
+
 A reader records configuration and changes, not why a setting was chosen, who
 holds a key, or that a loss could have been prevented.
 
@@ -76,13 +85,14 @@ holds a key, or that a loss could have been prevented.
 
 Planned unless marked LIVE.
 
-- **Control-Change Record:** one change per record: chain, subject, setting, old
-  and new value, bracketing reads or transaction, known_at, evidence hashes, leaf.
+- **Control-Change Record (format LIVE, 29 October):** one change per record: chain,
+  subject, setting, old and new value, bracketing reads or transaction, known_at,
+  evidence hashes; it enters the log as an ordinary record (CONTROL-CHANGE-RECORD.md).
 - **Pre-registration:** salted hashes of labels, thresholds and held-out windows
   enter the log before a run (a new log record kind); a hidden commitment does not
   by itself show that no other set was committed.
-- **Public error rate:** corrections counted against records, map rows and case
-  notes published; unfound errors are not counted.
+- **Public error rate (LIVE, 29 October):** corrections counted against records, map
+  rows and case notes published; unfound errors are not counted (CORRECTIONS.md).
 - **Reproducible case files:** every read, provider, slot or block, raw-reply hash
   and a re-read script; past-state reads need archive access. The first case file
   is queued for the log.

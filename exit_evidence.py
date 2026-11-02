@@ -260,9 +260,23 @@ class EvidenceClient:
         s, _, _, out = self._cite(leaf_index, tree_size, expected_root)
         return dict(out, requests=s.calls)
 
-    def verify(self, leaf_index, tree_size, expected_root=None):
+    def verify(self, leaf_index, tree_size, expected_root=None, trusted_notaries=None):
+        """trusted_notaries: public keys the caller obtained OUTSIDE this log (NOTARIES.md, another publication). Without them the
+        signer can only be checked against the log's own notaries.json, which the same publisher writes: that is reported as a
+        separate result, never folded into `verified`."""
         s, notaries, anchor, out = self._cite(leaf_index, tree_size, expected_root)
         out.update(scope='public_record_and_chain_anchor', verified=False, chain_identity_verified=False)
+        if trusted_notaries is not None and (not isinstance(trusted_notaries, (list, tuple, set)) or not trusted_notaries
+                                             or any(not isinstance(k, str) or not re.fullmatch('[1-9A-HJ-NP-Za-km-z]{32,44}', k) for k in trusted_notaries)):
+            refuse('PUBLIC_TRUSTED_NOTARIES_INVALID')
+        signer = anchor.get('notary')
+        if trusted_notaries is None:
+            out['publisher_identity'] = {'status': 'LISTED_BY_THE_LOG_ONLY', 'notary': signer, 'publisher_verified': False,
+                                         'basis': 'the signer is checked only against notaries.json published by the same log; pass trusted_notaries from an outside source to verify the publisher'}
+        else:
+            pinned = signer in set(trusted_notaries)
+            out['publisher_identity'] = {'status': 'PINNED_OUT_OF_BAND' if pinned else 'NOT_IN_TRUSTED_SET', 'notary': signer, 'publisher_verified': pinned,
+                                         'basis': 'the signer was compared with keys the caller supplied from outside this log'}
         if not _SIG.fullmatch(anchor['signature']):
             refuse('PUBLIC_ANCHOR_SIGNATURE_INVALID')
         try:
@@ -273,6 +287,7 @@ class EvidenceClient:
                                                                'maxSupportedTransactionVersion': 0}])
             check = self.v.check_anchor(tx, anchor, out['tree_size'], out['root'], notaries)
             out.update(anchor_check=check, anchor_verified=check['anchor_ok'], verified=check['anchor_ok'])
+            out['publisher_identity']['publisher_verified'] = bool(out['publisher_identity']['publisher_verified'] and check['anchor_ok'])
             out['note'] = self.v.PROVES if out['verified'] else 'Chain anchor check failed; no verified anchor claim.'
         except ExitError as e:
             out.update(anchor_verified=False, verified=False, failure=e.error,
