@@ -364,9 +364,11 @@ service makes these bindings itself; the API document lists no option to turn th
 The account record (a sequential account number and a SHA-256 hash of the access key, never the key itself), quota counters and
 hashed replay records persist for campaign/recovery. The minimal metrics computed from these records are aggregates only:
 campaign totals of attempts, answers and pending requests, counts of unresolved and failed requests, the number of accounts active
-on two or more UTC days, and feedback counts;
-encrypted operational backups and deploy-time copies of service records have separate
-retention. No deletion-from-all-backups or legal-compliance guarantee.
+on two or more UTC days, and feedback counts.
+No scheduled backup of the account records exists; release rollback copies hold program and configuration files only, and snapshots
+that the hosting provider may keep are outside these windows. EXIT's reverse proxy writes no access log; since 2 November its error
+lines carry no client address, request path or headers, and the server's system journal keeps at most about 7 days (older lines age
+out by 9 November). No deletion-from-all-backups or legal-compliance guarantee.
 
 ## Verified real opening
 
