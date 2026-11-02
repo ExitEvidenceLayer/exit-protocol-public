@@ -187,8 +187,8 @@
     "eid": "uint"
    },
    "value_type": "bytes32",
-   "status": "reserved",
-   "source": "LayerZero V2 getter (reserved; no EXIT reader yet): oapp.peers",
+   "status": "read",
+   "source": "LayerZero V2 getter peers(uint32), read by GET /v0/research/ethereum/layerzero/peer since 1 November 2026",
    "meaning": "The peer the OApp trusts on the remote endpoint id.",
    "does_not_mean": "Who controls the verifiers or the delegate, or that a message was forged.",
    "scope_constraints": {

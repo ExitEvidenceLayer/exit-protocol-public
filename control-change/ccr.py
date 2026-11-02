@@ -39,8 +39,12 @@ def canonical(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False, allow_nan=False).encode()
 
 
+MAX_FILE_BYTES = 1 << 20          # a record or registry file; both are small by construction
+MAX_B58_CHARS = 88                # a 64-byte value is at most 88 base58 characters; longer text is refused before any arithmetic
+
+
 def b58decode(text):
-    if not isinstance(text, str) or not text or any(c not in B58 for c in text):
+    if not isinstance(text, str) or not text or len(text) > MAX_B58_CHARS or any(c not in B58 for c in text):
         return None
     n = 0
     for c in text:
@@ -109,9 +113,16 @@ def value_ok(kind, v, entry):
     return False
 
 
-def load_settings(path):
+def read_bounded(path):
     with open(path, 'rb') as fh:
-        reg = json.loads(fh.read())
+        raw = fh.read(MAX_FILE_BYTES + 1)
+    if len(raw) > MAX_FILE_BYTES:
+        raise ValueError('file larger than %d bytes' % MAX_FILE_BYTES)
+    return raw
+
+
+def load_settings(path):
+    reg = json.loads(read_bounded(path))
     if not isinstance(reg, dict) or reg.get('format') != SETTINGS_FORMAT or not isinstance(reg.get('settings'), list):
         raise ValueError('not a %s registry' % SETTINGS_FORMAT)
     out = {}
@@ -229,8 +240,10 @@ def log_record(record):
 
 def read_record(path):
     """(record, errors): the file must parse and hold exactly the record's canonical bytes."""
-    with open(path, 'rb') as fh:
-        raw = fh.read()
+    try:
+        raw = read_bounded(path)
+    except ValueError as e:
+        return None, [str(e)]
     try:
         record = json.loads(raw.decode('utf-8'))
     except (UnicodeDecodeError, ValueError, RecursionError) as e:
