@@ -42,6 +42,9 @@
   their meaning; the state facts behind them (paused, multiplier, pending multiplier and its effective time) are reported, never followed as
   authorities. Policy `solana-finalized-mint-pair-hop/2`; stored /1 answers replay unchanged; a pre-release benchmark over fresh live mints
   matched an independent decoder on every compared fact. Engine core commit 24da5740.
+- 2 November, 01:50: the freeze read covers PYUSD as well as USDT and USDC (eight read-only calls; policy `ethereum-finalized-issuer-freeze/2`;
+  PYUSD's `isFrozen(address)` getter, with the PaxosTokenV2 transfer semantics stated from the published source). The radar's R-FREEZE
+  scope reads the same three tokens. Stored `/1` answers replay unchanged. OpenAPI 2026-11-02.1.
 
 ## 29 October 2026 · quota-limited free continuity and verifier correction
 
