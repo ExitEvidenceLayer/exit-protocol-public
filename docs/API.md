@@ -86,7 +86,11 @@ curl --fail --silent --show-error --get https://api.exit-protocol.io/v0/research
 
 Responses use `exit.solana-mint-research/2` (a replay of an earlier request returns its stored body, which can be `/1`), identify the source and finalized slot/time, and preserve evidence and unsupported-field limits. `X-EXIT-Research-State` distinguishes a completed primary answer from an incomplete read. A null observed authority differs from a value the service could not read. The public chain-data provider sees requested mint addresses.
 
-For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-10-28.1 (28 October 2026, 09:03 UTC); exit_client.py and exit_mcp.py were not checked against the routes added after version 2026-10-26.2. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
+For Token-2022 mints the reader also interprets the pause authority and the scaled-UI-amount authority (policy
+`solana-finalized-mint-pair-hop/2` since 1 November 2026) and reports the state facts behind them (paused, multiplier) without
+following them as authorities; an answer stored under policy `/1` replays unchanged.
+
+For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-01.3 (1 November 2026, 13:02 UTC); exit_client.py and exit_mcp.py were not checked against the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer). The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
 
 ## Research records (unanswered questions)
 
@@ -121,13 +125,25 @@ active owned receiver is also read on the radar's own schedule (see the receiver
 
 `GET /v0/research/ethereum/contract?address=0x…` (bearer + request id) reads, at one provider-reported finalized block, the proxy
 implementation and admin slots, the `owner()` getter as an observation and whether each named address holds code (at most eleven
-read-only calls). For at most two named addresses that hold code, it then asks the multisig interface `getOwners()` and
+read-only calls). When the contract's code is the canonical EIP-1167 minimal-proxy clone, the implementation is read from that
+code itself and the admin is reported as not applicable (no extra call; other clone variants are not recognised and stay
+NOT_OBSERVED). For at most two named addresses that hold code, it then asks the multisig interface `getOwners()` and
 `getThreshold()`. Last, it asks `supportsInterface` for the AccessControl enumerable interface and, only when it is declared, reads
 the `DEFAULT_ADMIN_ROLE` member count and up to four members. That is at most twenty-one read-only calls in all. These are interface
 answers at that block, not proof of who holds keys; member accounts, other roles and role admins are not read. An empty admin slot
 is unknown, not "no admin"; what an address may do is not established without the published source; an address without code or an
 EIP-7702 delegated account is refused (422) without spending the answer allowance. Responses use
 `exit.ethereum-contract-research/3` (a replay of an earlier request returns its stored body, which can be `/1` or `/2`).
+
+## Ethereum issuer freeze research
+
+`GET /v0/research/ethereum/freeze?address=0x…` (bearer + request id) reads, at one provider-reported finalized block, whether the
+address is on the issuer blacklist or freeze list of USDT (`isBlackListed`), USDC (`isBlacklisted`) and, since 2 November 2026, PYUSD
+(`isFrozen`), together with its balance in each token (eight read-only calls). Each answer states what the token's published transfer
+code checks: USDT checks the sender only, USDC and PYUSD check both sides, and the issuer can lift a freeze or (USDT, PYUSD) destroy the
+frozen balance. A reverted or malformed getter is NOT_OBSERVED, never "not frozen"; a frozen balance is a face amount, not a price or a
+loss figure. Responses use `exit.stablecoin-freeze-research/1` with policy `ethereum-finalized-issuer-freeze/2`; answers stored under
+policy `/1` (USDT and USDC only) replay unchanged.
 
 ## Answer views (no new reads)
 
