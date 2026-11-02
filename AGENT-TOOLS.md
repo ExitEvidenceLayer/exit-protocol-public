@@ -39,3 +39,26 @@ Public client source and documentation use this repository's [CC BY-ND 4.0](LICE
 The same stdio server now also exposes keyless exit_history, exit_cite and exit_verify. Download the complete source bundle and instructions at https://exit-protocol.io/tools/. Keep exit_evidence.py and tools/exit_log_verify.py alongside the existing wrappers. Research authorization and quotas are unchanged. Public tools do not forward an API key.
 
 History checks published consistency; cite checks one public record's inclusion; verify additionally fetches and checks the exact finalized chain anchor. A missing or mismatching chain response yields verified=false. None establishes research truth, first knowledge or completeness. Private/held proofs are unavailable. Only fixed public origins are read, with bounded response/call/time budgets and no automatic retries.
+
+## Added in server 1.3.0 (checked against API document 2026-11-02.2; loopback stub, not the live service)
+
+The wrapper now covers every research route the free service serves. New tools, all evidence-bound (sources, finalized position, limits; an
+unresolved answer stays unresolved; no safety, price or identity claim):
+
+| Tool | Route | What it answers | Spends a research attempt |
+|---|---|---|---|
+| `exit_freeze_status` | GET /v0/research/ethereum/freeze | Is one Ethereum address on the USDT, USDC or PYUSD issuer list at one finalized block, and what does it hold (not since when) | yes |
+| `exit_governance` | GET /v0/research/solana/governance | One SPL Governance V2 account and its paired realm/configuration at one finalized slot | yes |
+| `exit_governance_proposals` | GET /v0/research/solana/governance/proposals | Proposals of one governance account by state, open ones decoded | yes |
+| `exit_layerzero_path` | GET /v0/research/ethereum/layerzero | One OApp pathway (delegate, libraries, verifier configuration) for one remote endpoint id and direction | yes |
+| `exit_layerzero_peer` | GET /v0/research/ethereum/layerzero/peer | The peer one OApp holds for one remote endpoint id | yes |
+| `exit_research_graph` | GET /v0/research/graph | One to four of this key's own answers joined into one typed graph; disagreements appear as edges | no |
+| `exit_compare_answers` | GET /v0/research/compare | Two of this key's own answers of the same kind, field by field | no |
+| `exit_evidence_view` | GET /v0/research/evidence | Answer-to-source view of one own answer | no |
+| `exit_log_binding` | GET /v0/research/log-binding | The public evidence-log binding of one own answered request | no |
+| `exit_watch_add_contract` | POST /v0/research/watch?contract= | Watch an Ethereum mainnet contract for administrative-surface changes (shares the watch limits; pull checks remain the general scope) | yes |
+| `exit_webhooks` | GET /v0/research/webhook | Own receiver, event and delivery metadata, or one own delivery payload part | no |
+| `exit_webhook_delete` | DELETE /v0/research/webhook | Delete one owned receiver configuration and its queued deliveries | no |
+
+Registering a receiver needs the receiver challenge and stays outside the wrapper. Inputs are validated before any request (address shapes, endpoint id
+range, direction, one to four request ids, two different ids for a comparison). The wrapper still prints no key.

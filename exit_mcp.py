@@ -4,7 +4,9 @@
 Run it from an agent's MCP configuration with EXIT_API_KEY in the environment (the key is obtained by a human in the browser at
 https://api.exit-protocol.io and is never printed). Public log tools exit_history, exit_cite and exit_verify need no key. Tools: exit_mint_controls, exit_contract_controls, exit_control_state, exit_control_as_of,
 exit_control_change, exit_research_records, exit_research_record, exit_research_record_check, exit_watch_list, exit_watch_add, exit_watch_check,
-exit_watch_stop, exit_freshness, exit_usage, exit_service_status. Answers carry their evidence and limits; an unresolved answer is
+exit_watch_stop, exit_freshness, exit_usage, exit_service_status; since 1.3.0 (API 2026-11-02.2): exit_freeze_status, exit_governance,
+exit_governance_proposals, exit_layerzero_path, exit_layerzero_peer, exit_research_graph, exit_compare_answers, exit_evidence_view, exit_log_binding,
+exit_watch_add_contract, exit_webhooks, exit_webhook_delete. Answers carry their evidence and limits; an unresolved answer is
 returned as unresolved, never as a verdict. No price, safety or identity claims.
 """
 import json
@@ -65,6 +67,41 @@ TOOLS = [
      "inputSchema": {"type": "object", "properties": {"watch_id": WATCH}, "required": ["watch_id"], "additionalProperties": False}},
     {"name": "exit_watch_stop", "description": "Stop a watch and delete its stored changes.",
      "inputSchema": {"type": "object", "properties": {"watch_id": WATCH}, "required": ["watch_id"], "additionalProperties": False}},
+    {"name": "exit_freeze_status", "description": "Is ONE Ethereum address on the USDT, USDC or PYUSD issuer list right now, as of which finalized block, "
+     "and what does it hold — the token's own getter and balance at that block; not since when (listing time is not read)." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"address": {"type": "string", "description": "Ethereum address (0x + 40 hex)"}}, "required": ["address"], "additionalProperties": False}},
+    {"name": "exit_governance", "description": "One SPL Governance V2 account and its paired realm/configuration at one finalized slot: thresholds, waits, veto settings as "
+     "configured; not voter power, not why a value was chosen." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"governance": {"type": "string", "description": "Solana governance account (base58)"}}, "required": ["governance"], "additionalProperties": False}},
+    {"name": "exit_governance_proposals", "description": "Proposals of one SPL Governance V2 account: counts by state, open ones decoded, at one finalized slot." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"governance": {"type": "string", "description": "Solana governance account (base58)"}}, "required": ["governance"], "additionalProperties": False}},
+    {"name": "exit_layerzero_path", "description": "One LayerZero V2 OApp pathway on Ethereum for one remote endpoint id and direction: delegate, message libraries, raw and "
+     "effective verifier configuration at one finalized block." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"oapp": {"type": "string", "description": "OApp contract (0x + 40 hex)"}, "eid": {"type": "integer", "description": "remote LayerZero endpoint id"},
+                                                      "direction": {"type": "string", "enum": ["send", "receive"]}}, "required": ["oapp", "eid", "direction"], "additionalProperties": False}},
+    {"name": "exit_layerzero_peer", "description": "Which peer one LayerZero V2 OApp holds for one remote endpoint id (peers(uint32)) at one finalized block." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"oapp": {"type": "string", "description": "OApp contract (0x + 40 hex)"}, "eid": {"type": "integer", "description": "remote LayerZero endpoint id"}},
+                     "required": ["oapp", "eid"], "additionalProperties": False}},
+    {"name": "exit_research_graph", "description": "Join one to four of THIS key's own answers into one typed graph of who holds which role over which object, with source and time "
+     "on every edge; disagreements between answers appear as edges, never resolved by vote. Spends no research attempt." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"request_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 4, "description": "request ids of this key's own answers"}},
+                     "required": ["request_ids"], "additionalProperties": False}},
+    {"name": "exit_compare_answers", "description": "Compare two of this key's own answers of the same kind field by field (what changed between two reads). Spends no research attempt." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"a": {"type": "string"}, "b": {"type": "string"}}, "required": ["a", "b"], "additionalProperties": False}},
+    {"name": "exit_evidence_view", "description": "Answer-to-source view of one of this key's own answers: every claim with the evidence that supports it, its chain position and acquisition time. "
+     "Spends no research attempt." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"request_id": {"type": "string"}}, "required": ["request_id"], "additionalProperties": False}},
+    {"name": "exit_log_binding", "description": "The public evidence-log binding of one of this key's own answered requests (leaf, index, proof availability); use exit_verify for the public proof. "
+     "Spends no research attempt." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"request_id": {"type": "string"}}, "required": ["request_id"], "additionalProperties": False}},
+    {"name": "exit_watch_add_contract", "description": "Watch an Ethereum mainnet contract for administrative-surface changes (proxy slots, owner); shares the watch limits; pull checks "
+     "(exit_watch_check) remain the general scope — not continuous monitoring." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"contract": {"type": "string", "description": "Ethereum contract (0x + 40 hex)"}}, "required": ["contract"], "additionalProperties": False}},
+    {"name": "exit_webhooks", "description": "This key's owned webhook receivers, events and delivery metadata, or one own delivery payload part (delivery id). Registration needs a "
+     "receiver challenge and is done outside the tool (POST /v0/research/webhook)." + SCOPE,
+     "inputSchema": {"type": "object", "properties": {"delivery": {"type": "string", "description": "optional delivery id"}}, "additionalProperties": False}},
+    {"name": "exit_webhook_delete", "description": "Delete one owned receiver configuration and its queued deliveries.",
+     "inputSchema": {"type": "object", "properties": {"id": {"type": "string"}}, "required": ["id"], "additionalProperties": False}},
     {"name": "exit_freshness", "description": "How recent the recorded evidence is and which periods are not covered. Call this before "
      "relying on a recorded answer.", "inputSchema": {"type": "object", "properties": {}, "additionalProperties": False}},
     {"name": "exit_usage", "description": "Today's attempts and answers for this key (0 credits charged).",
@@ -117,6 +154,30 @@ def call_tool(client, name, args):
         return client.check_watch(args["watch_id"])
     if name == "exit_watch_stop":
         return client.stop_watch(args["watch_id"])
+    if name == "exit_freeze_status":
+        return client.freeze_status(args["address"])
+    if name == "exit_governance":
+        return client.governance(args["governance"])
+    if name == "exit_governance_proposals":
+        return client.governance_proposals(args["governance"])
+    if name == "exit_layerzero_path":
+        return client.layerzero_path(args["oapp"], args["eid"], args["direction"])
+    if name == "exit_layerzero_peer":
+        return client.layerzero_peer(args["oapp"], args["eid"])
+    if name == "exit_research_graph":
+        return client.research_graph(args["request_ids"])
+    if name == "exit_compare_answers":
+        return client.compare_answers(args["a"], args["b"])
+    if name == "exit_evidence_view":
+        return client.evidence_view(args["request_id"])
+    if name == "exit_log_binding":
+        return client.log_binding(args["request_id"])
+    if name == "exit_watch_add_contract":
+        return client.add_contract_watch(args["contract"])
+    if name == "exit_webhooks":
+        return client.webhooks(args.get("delivery"))
+    if name == "exit_webhook_delete":
+        return client.delete_webhook(args["id"])
     if name == "exit_freshness":
         return client.freshness()
     if name == "exit_usage":
@@ -137,7 +198,7 @@ def handle(client, msg):
     if method == "initialize":
         asked = (msg.get("params") or {}).get("protocolVersion")
         result = {"protocolVersion": asked if asked in VERSIONS else VERSIONS[0], "capabilities": {"tools": {}},
-                  "serverInfo": {"name": "exit-research", "version": "1.2.0"}}
+                  "serverInfo": {"name": "exit-research", "version": "1.3.0"}}
     elif method == "ping":
         result = {}
     elif method == "tools/list":
@@ -150,7 +211,12 @@ def handle(client, msg):
             return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32602, "message": "unknown tool"}}
         schema = spec["inputSchema"]
         allowed = schema["properties"]
-        if not isinstance(args, dict) or set(args) - set(allowed) or any(k not in args for k in schema.get("required", [])) or any(not isinstance(v, str) for v in args.values()):
+        def _typed(k, v):                 # 1.3.0: arguments follow the tool's inputSchema types (string, integer, array of strings); booleans are never integers
+            typ = (schema["properties"].get(k) or {}).get("type", "string")
+            if typ == "integer": return isinstance(v, int) and not isinstance(v, bool)
+            if typ == "array": return isinstance(v, list) and all(isinstance(x, str) for x in v)
+            return isinstance(v, str)
+        if not isinstance(args, dict) or set(args) - set(allowed) or any(k not in args for k in schema.get("required", [])) or any(not _typed(k, v) for k, v in args.items()):
             return {"jsonrpc": "2.0", "id": mid, "error": {"code": -32602, "message": "invalid tool arguments"}}
         try:
             out = call_tool(client, name, args)

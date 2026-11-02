@@ -1,5 +1,15 @@
 # Public documentation changelog
 
+## 2 November 2026 (later) · the agent tools caught up with the API; one status row corrected
+
+- 13:04: the script client and MCP wrapper gained the twelve routes added since API version 2026-10-26.2 (freeze status, governance realm and
+  proposals, LayerZero pathway and peer, research graph, compare, evidence view, log binding, contract watches, webhook list and delete):
+  30 MCP tools, server 1.3.0, [AGENT-TOOLS.md](AGENT-TOOLS.md). Checked against a loopback stub of the API description, not against the live
+  service with a key; no autonomous worker, no engine source. ROADMAP.md: the sentence saying the wrapper was not checked against the newer
+  routes is replaced by that checked fact.
+- Correction (documentation): STATUS.md's "Public script/agent client" row said the repository copy of the API description was version
+  2026-11-02.1; the copy and the live document have both been 2026-11-02.2 since 2 November (found by byte comparison). The row now says so.
+
 ## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
 
 - 10:43: `GET /v0/research/ethereum/freeze` went live: whether one Ethereum address is on the USDT or USDC issuer blacklist at one

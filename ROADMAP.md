@@ -55,8 +55,10 @@ watches and Ethereum reads; Ethereum watches and the research graph, live since 
 October, were not part of it. Since 27 October a limited
 radar pilot reads pending-authority scopes once an hour for watches that have an owned webhook
 receiver (one watch service-wide, used by EXIT's own test); it is not continuous
-monitoring, and pull checks remain the general monitoring scope. The MCP wrapper
-was not checked against routes added after API version 2026-10-26.2.
+monitoring, and pull checks remain the general monitoring scope. The script client
+and MCP wrapper cover every route of API version 2026-11-02.2 (server 1.3.0); the
+methods added for the routes newer than 2026-10-26.2 were checked against a loopback
+stub of the API description, not against the live service with a key.
 
 Public, with no key: the evidence log, a standalone verifier, keyless cite tools
 and a browser check running code served by EXIT's site. The daily sentinel, which

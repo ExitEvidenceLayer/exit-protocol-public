@@ -24,6 +24,7 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 DEFAULT_BASE = "https://api.exit-protocol.io"
 SUBJECTS = ("usdc-mint-authorities", "pyusd-mint-authorities", "pump-fun-program-upgrade-authority")
 _MINT = re.compile(r"[1-9A-HJ-NP-Za-km-z]{32,44}")
+_RID = re.compile(r"[A-Za-z0-9._:-]{8,128}")
 _EVM = re.compile(r"0x[0-9a-fA-F]{40}")
 _KEY = re.compile(r"exit_free_[A-Za-z0-9_-]{43}")
 _RECORD = re.compile(r"rr-[0-9a-f]{24}")
@@ -188,6 +189,89 @@ class Client:
             raise ExitError(0, "a watch id (watch- + 24 hex characters) is required")
         self._records_enabled()
         return self._call("DELETE", "/v0/research/watch", {"id": watch_id})
+
+    # --- readers added 2026-10-29 … 2026-11-02 (v4 of the agent tools; all bearer, one X-EXIT-Request-Id each) ---
+    def freeze_status(self, address):
+        """One Ethereum address against the USDT, USDC and PYUSD issuer lists at one finalized block (schema exit.stablecoin-freeze-research/1)."""
+        if not isinstance(address, str) or not _EVM.fullmatch(address):
+            raise ExitError(0, "an Ethereum address (0x + 40 hex characters) is required")
+        return self._call("GET", "/v0/research/ethereum/freeze", {"address": address}, request_id=True)
+
+    def governance(self, governance):
+        """One SPL Governance V2 account and its paired realm/config at one finalized slot (schema exit.solana-governance-research/1)."""
+        if not isinstance(governance, str) or not _MINT.fullmatch(governance):
+            raise ExitError(0, "a Solana governance account address (base58, 32-44 characters) is required")
+        return self._call("GET", "/v0/research/solana/governance", {"governance": governance}, request_id=True)
+
+    def governance_proposals(self, governance):
+        """Proposals of one SPL Governance V2 account: counts by state, open ones decoded (schema exit.solana-governance-proposals-research/1)."""
+        if not isinstance(governance, str) or not _MINT.fullmatch(governance):
+            raise ExitError(0, "a Solana governance account address (base58, 32-44 characters) is required")
+        return self._call("GET", "/v0/research/solana/governance/proposals", {"governance": governance}, request_id=True)
+
+    def layerzero_path(self, oapp, eid, direction):
+        """One LayerZero V2 OApp pathway on Ethereum: delegate, message libraries and verifier configuration for one remote endpoint id and
+        direction (schema exit.layerzero-path-service/1)."""
+        if not isinstance(oapp, str) or not _EVM.fullmatch(oapp):
+            raise ExitError(0, "an OApp contract address (0x + 40 hex characters) is required")
+        if not isinstance(eid, int) or isinstance(eid, bool) or not 0 < eid < 2 ** 32:
+            raise ExitError(0, "a LayerZero endpoint id (positive integer) is required")
+        if direction not in ("send", "receive"):
+            raise ExitError(0, "direction must be 'send' or 'receive'")
+        return self._call("GET", "/v0/research/ethereum/layerzero", {"oapp": oapp, "eid": eid, "direction": direction}, request_id=True)
+
+    def layerzero_peer(self, oapp, eid):
+        """Which peer one LayerZero V2 OApp holds for one remote endpoint id (schema exit.layerzero-peer-research/1)."""
+        if not isinstance(oapp, str) or not _EVM.fullmatch(oapp):
+            raise ExitError(0, "an OApp contract address (0x + 40 hex characters) is required")
+        if not isinstance(eid, int) or isinstance(eid, bool) or not 0 < eid < 2 ** 32:
+            raise ExitError(0, "a LayerZero endpoint id (positive integer) is required")
+        return self._call("GET", "/v0/research/ethereum/layerzero/peer", {"oapp": oapp, "eid": eid}, request_id=True)
+
+    # --- this key's own answers: graph, comparison, evidence view, log binding (no research attempt is spent) ---
+    def research_graph(self, request_ids):
+        """Join one to four of this key's own answers into one typed graph (schema exit.research-graph/1)."""
+        ids = list(request_ids) if isinstance(request_ids, (list, tuple)) else None
+        if not ids or not 1 <= len(ids) <= 4 or not all(isinstance(r, str) and _RID.fullmatch(r) for r in ids):
+            raise ExitError(0, "one to four of this key's own request ids are required")
+        return self._call("GET", "/v0/research/graph", [("request_id", r) for r in ids])
+
+    def compare_answers(self, a, b):
+        """Compare two of this key's own answers of the same kind (schema exit.research-comparison/1)."""
+        if not all(isinstance(x, str) and _RID.fullmatch(x) for x in (a, b)) or a == b:
+            raise ExitError(0, "two different request ids of this key's own answers are required")
+        return self._call("GET", "/v0/research/compare", {"a": a, "b": b})
+
+    def evidence_view(self, request_id):
+        """Answer-to-source view of one of this key's own answers (schema exit.private-evidence-view/2)."""
+        if not isinstance(request_id, str) or not _RID.fullmatch(request_id):
+            raise ExitError(0, "a request id of this key's own answer is required")
+        return self._call("GET", "/v0/research/evidence", {"request_id": request_id})
+
+    def log_binding(self, request_id):
+        """The evidence-log binding (leaf hash, index, proof availability) of one of this key's own answered requests (schema exit.log-binding/1)."""
+        if not isinstance(request_id, str) or not _RID.fullmatch(request_id):
+            raise ExitError(0, "a request id of this key's own answer is required")
+        return self._call("GET", "/v0/research/log-binding", {"request_id": request_id})
+
+    # --- Ethereum contract watches and owned webhook receivers ---
+    def add_contract_watch(self, contract):
+        """Watch an Ethereum mainnet contract for administrative-surface changes (shares the watch limits; pull checks remain the general scope)."""
+        if not isinstance(contract, str) or not _EVM.fullmatch(contract):
+            raise ExitError(0, "an Ethereum contract address (0x + 40 hex characters) is required")
+        return self._call("POST", "/v0/research/watch", {"contract": contract}, request_id=True)
+
+    def webhooks(self, delivery=None):
+        """Own receiver, event and delivery metadata, or one own delivery payload part when a delivery id is given."""
+        if delivery is not None and (not isinstance(delivery, str) or not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", delivery)):
+            raise ExitError(0, "a delivery id is required when given")
+        return self._call("GET", "/v0/research/webhook", {"delivery": delivery} if delivery else None)
+
+    def delete_webhook(self, receiver_id):
+        """Delete an owned receiver configuration and its queued deliveries."""
+        if not isinstance(receiver_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", receiver_id):
+            raise ExitError(0, "a receiver id is required")
+        return self._call("DELETE", "/v0/research/webhook", {"id": receiver_id})
 
     def control_state(self, subject_id, valid_at, known_at, as_of=False):
         """Recorded subjects only (SUBJECTS): who controlled it at valid_at, using only evidence known by known_at."""
