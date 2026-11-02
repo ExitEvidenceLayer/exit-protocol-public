@@ -9,6 +9,9 @@
   routes is replaced by that checked fact.
 - Correction (documentation): STATUS.md's "Public script/agent client" row said the repository copy of the API description was version
   2026-11-02.1; the copy and the live document have both been 2026-11-02.2 since 2 November (found by byte comparison). The row now says so.
+- 13:12: [tools/claims_check.py](tools/claims_check.py) gained a fifth check, `status_client_row_version`: the status row about the API copy
+  must name the version the repository copy carries, and, when exit_mcp.py is in the checkout, the row's tool count and server version must
+  match that file. The row above had been a version behind and no check compared the sentence with the copy; now one does.
 
 ## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
 
