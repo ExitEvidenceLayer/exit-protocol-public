@@ -23,6 +23,10 @@
   revocation removes and what expires on its normal window, describes the account record exactly (a sequential account number and a
   hash of the key) and lists the aggregate minimal metrics. STATUS.md no longer calls research records durable without saying that
   their route, subject and scope are erased after 7 days.
+- 17:45: privacy (service operation and documentation). A check of every retention statement found that the reverse proxy's error lines
+  carried the client's address and the request path into the server's system logs, which kept them longer than the published 7-day window.
+  Since today those lines carry neither, the system journal keeps at most about 7 days, and the copies in the system log files were removed.
+  docs/API.md and the privacy page now state this and correct the backup sentence: no scheduled backup of the account records exists.
 
 ## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
 
