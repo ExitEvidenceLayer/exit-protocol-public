@@ -12,7 +12,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read          # the verifying job reads only; the recording job below holds the write permission
 
 concurrency:
   group: evidence-log-sentinel
@@ -30,62 +30,102 @@ jobs:
         run: |
           set -uo pipefail
           curl -fsSL --retry 3 "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/tools/exit_log_verify.py" -o exit_log_verify.py
+          # One snapshot of the log documents. The verifier and the freshness checks below read these same bytes; nothing is
+          # fetched a second time, so both judgements describe one view of the log (their hashes go into the result).
+          mkdir -p snapshot
+          for doc in leaves.json roots.json anchors.json notaries.json runs.json; do
+            curl -fsSL --retry 3 -H 'User-Agent: exit-log-sentinel/1' "${LOG_URL}${doc}" -o "snapshot/${doc}" || echo "fetch failed: ${doc}" >> snapshot.err
+          done
           used=""
           for rpc in https://api.mainnet-beta.solana.com https://solana-rpc.publicnode.com; do
-            if python3 -I exit_log_verify.py log "$LOG_URL" --rpc "$rpc" > verify.json 2> verify.err; then used="$rpc"; break; fi
+            if python3 -I exit_log_verify.py log ./snapshot/ --rpc "$rpc" > verify.json 2> verify.err; then used="$rpc"; break; fi
             used="$rpc"
           done
           RPC_USED="$used" python3 -I - <<'PY'
-          import hashlib, json, os, sys, time, urllib.request
+          import hashlib, json, os, sys, time
           from datetime import datetime, timezone
           base = os.environ['LOG_URL']
-          now = time.time()
-          def get(name):
-              req = urllib.request.Request(base + name, headers={'User-Agent': 'exit-log-sentinel/1'})
-              with urllib.request.urlopen(req, timeout=30) as r:
-                  return json.load(r)
+          snap = os.environ.get('SNAPSHOT', 'snapshot')
+          now = float(os.environ.get('SENTINEL_NOW') or time.time())      # SENTINEL_NOW is set only by this workflow's own tests
+          DOCS = ('leaves.json', 'roots.json', 'anchors.json', 'notaries.json', 'runs.json')
+          def doc(name):
+              with open(os.path.join(snap, name), 'rb') as fh:
+                  return json.loads(fh.read())
+          def digest(name):
+              try:
+                  with open(os.path.join(snap, name), 'rb') as fh:
+                      return hashlib.sha256(fh.read()).hexdigest()
+              except OSError:
+                  return None
           out = {'format': 'exit.log-sentinel/1', 'run_at': datetime.fromtimestamp(now, timezone.utc).isoformat(), 'log': base,
                  'verifier_sha256': hashlib.sha256(open('exit_log_verify.py', 'rb').read()).hexdigest(),
-                 'commit': os.environ.get('GITHUB_SHA'), 'rpc': os.environ.get('RPC_USED'), 'checks': {}}
+                 'commit': os.environ.get('GITHUB_SHA'), 'rpc': os.environ.get('RPC_USED'),
+                 'snapshot_sha256': {name: digest(name) for name in DOCS}, 'checks': {}}
           try:
               v = json.load(open('verify.json'))
           except (OSError, ValueError):
               v = {'verified': False, 'problems': ['the verifier gave no JSON result']}
           out['verify'] = v
           out['checks']['log_verified'] = v.get('verified') is True
+          # Freshness is judged on the newest anchor the verifier CONFIRMED on chain (anchors_fetched[].anchor_ok), read from the
+          # same snapshot the verifier checked. An anchor the verifier did not confirm, however recent, does not count as fresh.
+          # Bounds compare the unrounded age: 26 h covers one daily run plus slack; -0.25 h tolerates 15 minutes of runner-clock vs
+          # validator block-time skew, and a block time further in the future is not fresh. Both bounds are policy, stated here.
           try:
-              anchors = get('anchors.json')['anchors']
-              newest = max(anchors, key=lambda a: a['block_time'])
+              confirmed = {a['size'] for a in v.get('anchors_fetched', []) if a.get('anchor_ok') is True}
+              newest = max((a for a in doc('anchors.json')['anchors'] if a['size'] in confirmed), key=lambda a: a['block_time'])
               age = (now - newest['block_time']) / 3600
               out['newest_anchor'] = {'size': newest['size'], 'signature': newest['signature'], 'block_time_utc': newest.get('block_time_utc'),
-                                      'age_hours': round(age, 2)}
-              out['checks']['anchor_within_26h'] = age <= 26
+                                      'age_hours': round(age, 2), 'confirmed_on_chain': True}
+              out['checks']['anchor_within_26h'] = -0.25 <= age <= 26
           except Exception as e:
-              out['newest_anchor'] = {'error': type(e).__name__}
+              out['newest_anchor'] = {'error': type(e).__name__, 'confirmed_on_chain': False}
               out['checks']['anchor_within_26h'] = False
           try:
-              runs = get('runs.json')['runs']
-              last = runs[-1]
+              last = doc('runs.json')['runs'][-1]
               age = (now - datetime.fromisoformat(last['at']).timestamp()) / 3600
               out['newest_run'] = {'at': last['at'], 'outcome': last['outcome'], 'age_hours': round(age, 2)}
-              out['checks']['run_within_26h'] = age <= 26
+              out['checks']['run_within_26h'] = -0.25 <= age <= 26
+              out['checks']['run_outcome_ok'] = last.get('outcome') in ('ANCHORED', 'NO_NEW_RECORDS', 'PENDING_RECORDED', 'NOT_FINALIZED')   # the daily run's documented OK outcomes; unknown, missing and failed outcomes are not OK
           except Exception as e:
               out['newest_run'] = {'error': type(e).__name__}
               out['checks']['run_within_26h'] = False
+              out['checks']['run_outcome_ok'] = False
           out['ok'] = all(out['checks'].values())
           json.dump(out, open('result.json', 'w'), indent=1, sort_keys=True)
           print(json.dumps(out, indent=1, sort_keys=True))
           sys.exit(0 if out['ok'] else 1)
           PY
 
-      - name: Record the result on the sentinel branch
+      - name: Hand the result to the recording job (job output, no third-party action)
         if: always()
+        id: result
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           test -f result.json || exit 0
+          echo "result_b64=$(base64 -w0 result.json)" >> "$GITHUB_OUTPUT"
+    outputs:
+      result_b64: ${{ steps.result.outputs.result_b64 }}
+
+  record:
+    needs: verify
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write        # the only job that writes; it writes only to the `sentinel` branch
+    steps:
+      - name: Record the result on the sentinel branch
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESULT_B64: ${{ needs.verify.outputs.result_b64 }}
+        run: |
+          set -euo pipefail
+          test -n "$RESULT_B64" || exit 0
+          printf '%s' "$RESULT_B64" | base64 -d > result.json
+          python3 -I -c 'import json; json.load(open("result.json"))'     # the result is data; nothing in it is executed
           day=$(date -u +%Y-%m-%d)
           auth="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
           git init -q sentinel-branch
