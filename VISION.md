@@ -21,8 +21,10 @@ Current chain state can be read at any time; a record anchored on a past day
 cannot be produced afterwards. Time-stamped history that cannot be back-filled is
 therefore the asset EXIT builds first: control settings re-read on a schedule, a
 record written when a setting changes, and a daily anchor even on days without
-change. The daily anchor is live (tree size 204 on 29 October), the no-change
-anchor is set and has not been needed yet, and scheduled re-reading comes next. In
+change. The daily anchor is live (tree size 274 on 2 November), the no-change
+anchor has run twice (31 October and 1 November), and the scheduled nightly
+re-read of the 68 Control Map deployments has run since 1 November; since
+2 November a read that obtains no answer is itself recorded (specification 1.5). In
 two published case notes, control settings that the notes record were readable on
 chain more than a year before the release or transfer, in places EXIT does not
 read yet: a cross-chain verifier configuration and a DAO's governance rules.
