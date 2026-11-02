@@ -21,7 +21,7 @@ It is not an automatic live-monitoring feed.
 | Solana and selected Ethereum research | **TECHNICALLY IMPLEMENTED** | Specific reference investigations; not universal cross-chain tracing. |
 | Evidence replay | **LOCALLY TESTED** | Exact material and engine identities; sharing remains permission-scoped. |
 | API Pass adapter | **PRIVATE PROTOTYPE TESTED** | Wallet intent, receipt, credits, retries, isolation and recovery controls; not a public paid product. |
-| Free unanswered-query records | **LIVE / BOUNDED** | No credit charge; durable gap/reason records and explicit supported follow-ups, no general research worker. |
+| Free unanswered-query records | **LIVE / BOUNDED** | No credit charge; gap/reason records (route, subject and scope erased after 7 days; the gap, state and reason stay) and explicit supported follow-ups, no general research worker. |
 | Historical R8 operating scope | **BOUNDED HOST CHECKS COMPLETE** | E1–E9 closed in the internal record; this does not deploy or accept the new free-serving layer. |
 | 30-day free first API | **LIVE / OPEN, CONTINUING** | https://api.exit-protocol.io — first period 25 Oct–24 Nov 2026, 12:38:20 UTC; existing keys then continue in the same quota-limited free service without a fixed end date (30 days' notice before any end). Source-pinned deployment; actual HTTPS enrollment, answer, replay, restart and revocation passed. Quotas and finite reference scope apply. |
 | Paid-flow chain rehearsal and final paid-flow security acceptance | **OPEN** | Local synthetic transaction tests do not close actual chain or wallet acceptance. |

@@ -18,6 +18,11 @@
 - 16:51: correction (documentation): ROADMAP.md and VISION.md still described three delivered things as pending — the public error rate (live since
   29 October) as LATER, the BonkDAO and Kelp DAO case-file records as queued (they entered the log at the 2 November 00:30 UTC anchor, tree size 274),
   and the issuer-freeze read without PYUSD (live since 2 November 01:50:42 UTC). The sentences now state the delivered facts.
+- 17:10: correction (documentation), from a check of every retention statement against the service code: docs/API.md named only the mint
+  and contract routes for answer bindings, while all seven live read routes bind on request; it now lists them. It also now says what
+  revocation removes and what expires on its normal window, describes the account record exactly (a sequential account number and a
+  hash of the key) and lists the aggregate minimal metrics. STATUS.md no longer calls research records durable without saying that
+  their route, subject and scope are erased after 7 days.
 
 ## 1 November 2026 · freeze reads, scheduled re-reads, proposals, peers, reproducible case files
 
