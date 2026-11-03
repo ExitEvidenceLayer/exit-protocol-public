@@ -45,9 +45,16 @@ jobs:
           done
           python3 -I repo/tools/claims_check.py --repo repo > claims.json 2> claims.err || true
           used=""
-          for rpc in https://api.mainnet-beta.solana.com https://solana-rpc.publicnode.com; do
-            if python3 -I exit_log_verify.py log ./snapshot/ --rpc "$rpc" > verify.json 2> verify.err; then used="$rpc"; break; fi
-            used="$rpc"
+          # 2026-11-03 (outside review H1): solana-rpc.publicnode.com keeps only about two days of transactions, so it cannot confirm older
+          # anchors. A second public endpoint of the official Solana cluster (same operator, not an independent provider) is tried before it.
+          # Every attempt is kept (rpc_attempts in the result), so a day on which all fail shows each provider's own first problem.
+          n=0
+          for rpc in https://api.mainnet-beta.solana.com https://api.mainnet.solana.com https://solana-rpc.publicnode.com; do
+            n=$((n+1))
+            python3 -I exit_log_verify.py log ./snapshot/ --rpc "$rpc" > "verify-$n.json" 2> "verify-$n.err"; rc=$?
+            printf '%s\t%s\t%s\n' "$n" "$rpc" "$rc" >> rpc_attempts.tsv
+            cp "verify-$n.json" verify.json; cp "verify-$n.err" verify.err; used="$rpc"
+            if [ "$rc" -eq 0 ]; then break; fi
           done
           RPC_USED="$used" python3 -I - <<'PY'
           import hashlib, json, os, sys, time
@@ -65,7 +72,7 @@ jobs:
                       return hashlib.sha256(fh.read()).hexdigest()
               except OSError:
                   return None
-          out = {'format': 'exit.log-sentinel/2', 'run_at': datetime.fromtimestamp(now, timezone.utc).isoformat(), 'log': base,
+          out = {'format': 'exit.log-sentinel/3', 'run_at': datetime.fromtimestamp(now, timezone.utc).isoformat(), 'log': base,
                  'verifier_sha256': hashlib.sha256(open('exit_log_verify.py', 'rb').read()).hexdigest(),
                  'commit': os.environ.get('GITHUB_SHA'), 'rpc': os.environ.get('RPC_USED'),
                  'snapshot_sha256': {name: digest(name) for name in DOCS}, 'checks': {}}
@@ -75,13 +82,30 @@ jobs:
               v = {'verified': False, 'problems': ['the verifier gave no JSON result']}
           out['verify'] = v
           out['checks']['log_verified'] = v.get('verified') is True
+          attempts = []
+          try:
+              for line in open('rpc_attempts.tsv').read().splitlines():
+                  k, provider, rc = line.split('\t')
+                  try:
+                      d = json.load(open('verify-%s.json' % k)); first = (d.get('problems') or [d.get('why')])[0]
+                  except Exception:
+                      first = 'no JSON result'
+                  attempts.append({'provider': provider, 'exit': int(rc), 'first_problem': first})
+          except OSError:
+              pass                                     # no attempt list (the loop did not run)
+          except Exception as e:
+              attempts.append({'provider': None, 'exit': None, 'first_problem': 'attempt list unreadable: ' + type(e).__name__})
+          out['rpc_attempts'] = attempts
           # Freshness is judged on the newest anchor the verifier CONFIRMED on chain (anchors_fetched[].anchor_ok), read from the
           # same snapshot the verifier checked. An anchor the verifier did not confirm, however recent, does not count as fresh.
           # Bounds compare the unrounded age: 26 h covers one daily run plus slack; -0.25 h tolerates 15 minutes of runner-clock vs
           # validator block-time skew, and a block time further in the future is not fresh. Both bounds are policy, stated here.
           try:
-              confirmed = {a['size'] for a in v.get('anchors_fetched', []) if a.get('anchor_ok') is True}
-              newest = max((a for a in doc('anchors.json')['anchors'] if a['size'] in confirmed), key=lambda a: a['block_time'])
+              # 2026-11-03 review: a heartbeat re-anchors the same root at the same size, so confirmations are matched by position (the
+              # verifier fetches the anchors in document order, one each) and by signature, never by size alone
+              listed = doc('anchors.json')['anchors']; fetched = v.get('anchors_fetched', [])
+              confirmed = {a['signature'] for a, f in zip(listed, fetched) if f.get('anchor_ok') is True} if len(fetched) == len(listed) else set()
+              newest = max((a for a in listed if a['signature'] in confirmed), key=lambda a: a['block_time'])
               age = (now - newest['block_time']) / 3600
               out['newest_anchor'] = {'size': newest['size'], 'signature': newest['signature'], 'block_time_utc': newest.get('block_time_utc'),
                                       'age_hours': round(age, 2), 'confirmed_on_chain': True}
@@ -94,7 +118,7 @@ jobs:
               age = (now - datetime.fromisoformat(last['at']).timestamp()) / 3600
               out['newest_run'] = {'at': last['at'], 'outcome': last['outcome'], 'age_hours': round(age, 2)}
               out['checks']['run_within_26h'] = -0.25 <= age <= 26
-              out['checks']['run_outcome_ok'] = last.get('outcome') in ('ANCHORED', 'NO_NEW_RECORDS', 'PENDING_RECORDED', 'NOT_FINALIZED')   # the daily run's documented OK outcomes; unknown, missing and failed outcomes are not OK
+              out['checks']['run_outcome_ok'] = last.get('outcome') in ('ANCHORED', 'HEARTBEAT_ANCHORED', 'NO_NEW_RECORDS', 'PENDING_RECORDED', 'NOT_FINALIZED')   # HEARTBEAT_ANCHORED: SPEC 1.5 daily heartbeat (31 Oct, 1 Nov)   # the daily run's documented OK outcomes; unknown, missing and failed outcomes are not OK
           except Exception as e:
               out['newest_run'] = {'error': type(e).__name__}
               out['checks']['run_within_26h'] = False
@@ -107,6 +131,10 @@ jobs:
               out['claims'] = {'error': 'claims_check gave no JSON result'}
               out['checks']['public_claims_match_live'] = False
           out['ok'] = all(out['checks'].values())
+          # 2026-11-03 (outside review H2): the log's own checks and the public-claims check are reported apart. FAILED = a log check failed;
+          # DOCS_DRIFT = the log verified and is fresh, but a public text no longer matches the live service; OK = everything holds.
+          out['log_ok'] = all(v for k, v in out['checks'].items() if k != 'public_claims_match_live')
+          out['status'] = 'OK' if out['ok'] else ('DOCS_DRIFT' if out['log_ok'] else 'FAILED')
           json.dump(out, open('result.json', 'w'), indent=1, sort_keys=True)
           print(json.dumps(out, indent=1, sort_keys=True))
           sys.exit(0 if out['ok'] else 1)
@@ -156,7 +184,7 @@ jobs:
           mkdir -p results
           cp ../result.json "results/${day}.json"
           cp ../result.json latest.json
-          status=$(python3 -I -c 'import json; print("OK" if json.load(open("latest.json"))["ok"] else "FAILED")')
+          status=$(python3 -I -c 'import json; d = json.load(open("latest.json")); s = d.get("status"); print(s if s in ("OK", "DOCS_DRIFT", "FAILED") else ("OK" if d.get("ok") is True else "FAILED"))')
           git add results latest.json
           git commit -q -m "Sentinel ${day}: ${status}"
           git -c http.extraheader="$auth" push -q origin HEAD:sentinel
