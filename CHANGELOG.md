@@ -1,5 +1,13 @@
 # Public documentation changelog
 
+## 3 November 2026 (later) · core release, usage fields, consent record, proposals route fixed
+
+- 03:20: core release bb49875c applied (after the Q1 baseline run; every baseline answer that names an engine names 24da5740).
+- 03:43: GET /v0/early-access/usage reports limits, answers_remaining, attempts_remaining and resets_at_utc (exit.free-usage/2).
+- 03:53: console continuation wording; 04:03: recorded consent (hash of the served console and time, no content).
+- 04:12: /v0/research/solana/governance/proposals reads the official Solana endpoint (the shared provider refused its list call); bounded same-id re-send of chained Solana reads.
+- STATUS: the 3 November known issue is marked resolved; the core sentence states when it was applied; the Q1 numbers are explained.
+
 ## 3 November 2026 · a nightly second opinion, the nightly re-read and an off-host state copy
 
 - 00:05: first scheduled second-provider check — 12 rows: 9 agree; 3 differ only in token supply within the read window; the non-agreeing facts are of kind control, getter, supply.raw_units; the 12 records were admitted at the 00:30 UTC anchor (tree size 370); STATUS.md row "Control Map second-provider check".
