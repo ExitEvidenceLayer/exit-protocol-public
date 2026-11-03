@@ -30,7 +30,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: bounded Ethereum current-contract reader
   → LIVE: saved comparisons and answer-to-source navigation
   → LIVE: one-hop authority reads, research graph, Solana and Ethereum watches (bounded)
-  → LIVE: public evidence log with a daily Solana anchor (tree size 204 on 29 October); Control Map snapshot (68 of 68 answered) and by-address view
+  → LIVE: public evidence log with a daily Solana anchor (tree size 370 on 3 November); Control Map snapshot (68 of 68 answered) and by-address view
   → LIVE (limited pilot): owned webhook receivers with hourly radar reads
   → LIVE: Python and in-browser verifiers; off-server sentinel (daily at 00:45 UTC; first scheduled run passed 29 October); answers bound to the log on request
   → LIVE: keyless history, cite and verify tools for agents (/tools/); EXIT's own control page (CONTROLS.md)
@@ -38,7 +38,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: SPL Governance (Realms) configuration reader, one governance account per request; LayerZero pathway reader (delegate, libraries, verifier configuration), one OApp, endpoint id and direction per request (29 October)
   → LIVE: Control-Change Record format, setting names and checker, under an open license (no records in this format yet)
   → LIVE: public corrections list and error rate (CORRECTIONS.md), updated monthly
-  → SET, NOT YET NEEDED: on a day without new records, the daily job re-anchors the current root
+  → LIVE: on a day without new records, the daily job re-anchors the current root (31 October and 1 November)
   → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC; PYUSD since 2 November) at one finalized block (1 November)
   → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
   → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)

@@ -22,7 +22,7 @@ Limits: acceptance used four pinned reference cases (an observed controller, an 
 
 **3. Separate what changed on chain from what EXIT learned or corrected (R3). LIVE for the two time axes.**
 Public form: `control_as_of` takes a valid time and a known time as separate inputs.
-Limits: correction handling was tested only on labelled synthetic cases. No real correction has been documented. No public route shows correction history.
+Limits: correction handling was tested only on labelled synthetic cases. Corrections of published texts and evidence are listed in CORRECTIONS.md; no correction of a recorded chain fact through control_as_of has been needed yet. No public route shows correction history.
 
 **4. Know what monitoring covers and how fresh an answer is (R4). LIVE, on demand.**
 Public form: each live answer names its finalized slot or block and its own acquisition time; `/v0/freshness` reports evidence coverage.

@@ -23,7 +23,7 @@ through the [correction form](https://github.com/ExitEvidenceLayer/exit-protocol
 
 | Output | Published | Corrections counted |
 |---|---|---|
-| Evidence-log records | 200 records with public proof bundles at tree size 205 (anchored 30 October); the other 5 leaves are private service bindings or records held until their own publication and are not in this count | 0 |
+| Evidence-log records | 200 records with public proof bundles at tree size 205 (anchored 30 October); the other 5 leaves are private service bindings or records held until their own publication and are not in this count. Later, not yet counted here: on 3 November the log had 363 published proof bundles at tree size 370 | 0 |
 | Control Map rows | 68 (one per Ethereum contract or Solana mint on the 27 October list); every row has an answer on the published page | 0 |
 | Case outputs | 6: the website's three cases (Solana PYUSD, Ethereum USDC, Ethereum PYUSD) and the Drift, BonkDAO and Kelp DAO case notes; translations are not counted separately | 7, in 5 of the 6 outputs |
 
