@@ -1,5 +1,8 @@
 # Public documentation changelog
 
+## 3 November 2026 · wording correction
+
+- The 3 Nov second-provider sentence (STATUS and the 00:05 entry below) mixed row and fact counts: the control and getter facts it listed were not disagreements but facts without a primary observation; reworded with the fact counts, and the second providers are named.
 ## 3 November 2026 (04:50–04:57 UTC) · sentinel result states, Solana read pause
 
 - About the evidence-log sentinel result of 3 Nov 01:44 UTC (FAILED): every log check passed — the log verified on chain, the newest anchor and the newest daily run were fresh and the run outcome was valid. The only false check was public_claims_match_live: the sitemap date for /log/ was behind the page, which the daily anchor run rewrites at 00:30 UTC. The sitemap entry for /log/ now declares a daily change instead of a fixed date (02:46 UTC).
@@ -15,7 +18,7 @@
 
 ## 3 November 2026 · a nightly second opinion, the nightly re-read and an off-host state copy
 
-- 00:05: first scheduled second-provider check — 12 rows: 9 agree; 3 differ only in token supply within the read window; the non-agreeing facts are of kind control, getter, supply.raw_units; the 12 records were admitted at the 00:30 UTC anchor (tree size 370); STATUS.md row "Control Map second-provider check".
+- 00:05: first scheduled second-provider check — 12 rows: 9 agree on every fact both sources observed; 3 differ only in token supply within the read window (3 facts); 7 further facts (5 control, 2 getter) had no primary observation and were not compared; 74 facts agree; the 12 records were admitted at the 00:30 UTC anchor (tree size 370); STATUS.md row "Control Map second-provider check".
 - 00:35: the evidence log, Control Map state and unit files are copied daily off the host as a verified archive with a restore drill; key material, ledgers and access records are excluded by rule.
 - 2 Nov 23:20 UTC nightly Control Map re-read (worker V12, up to three attempts with backoff): 68 rows, 67 answered, 1 not answered (RPC_RESPONSE_INVALID); 2 retries, 0 rows recovered after a retry. Every row has a record in the evidence log (a read without an answer is recorded with its code).
 
