@@ -1,5 +1,11 @@
 # Public documentation changelog
 
+## 3 November 2026 · a nightly second opinion, the nightly re-read and an off-host state copy
+
+- 00:05: first scheduled second-provider check — 12 rows: 9 agree; 3 differ only in token supply within the read window; the non-agreeing facts are of kind control, getter, supply.raw_units; the 12 records were admitted at the 00:30 UTC anchor (tree size 370); STATUS.md row "Control Map second-provider check".
+- 00:35: the evidence log, Control Map state and unit files are copied daily off the host as a verified archive with a restore drill; key material, ledgers and access records are excluded by rule.
+- 2 Nov 23:20 UTC nightly Control Map re-read (worker V12, up to three attempts with backoff): 68 rows, 67 answered, 1 not answered (RPC_RESPONSE_INVALID); 2 retries, 0 rows recovered after a retry. Every row has a record in the evidence log (a read without an answer is recorded with its code).
+
 ## 2 November 2026 (later) · the agent tools caught up with the API; one status row corrected
 
 - 13:04: the script client and MCP wrapper gained the twelve routes added since API version 2026-10-26.2 (freeze status, governance realm and
