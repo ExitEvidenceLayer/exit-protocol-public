@@ -1,0 +1,53 @@
+{
+ "format": "exit.q1-bank-erratum/1",
+ "from_version": "1",
+ "to_version": "1.1",
+ "to_bank_sha256": "b2f4ee1776aa1336fc053f9c26d302a2cd669fd75cb587f7608dd21726bf576d",
+ "changed_questions": {
+  "Q1-06": [
+   ".oracle.schema"
+  ],
+  "Q1-07": [
+   ".oracle.schema"
+  ],
+  "Q1-08": [
+   ".oracle.schema"
+  ],
+  "Q1-09": [
+   ".oracle.schema"
+  ],
+  "Q1-10": [
+   ".oracle.schema"
+  ],
+  "Q1-11": [
+   ".oracle.schema"
+  ],
+  "Q1-13": [
+   ".oracle.expect.tokens[*].blacklisted",
+   ".oracle.expect.tokens[PYUSD].blacklisted",
+   ".oracle.expect.tokens[USDC].blacklisted",
+   ".oracle.expect.tokens[USDT].blacklisted",
+   ".question"
+  ],
+  "Q1-20": [
+   ".oracle.required"
+  ],
+  "Q1-21": [
+   ".oracle.required"
+  ],
+  "Q1-30": [
+   ".oracle.required"
+  ],
+  "Q1-36": [
+   ".oracle.required"
+  ]
+ },
+ "declared_errata": [
+  "Q1-06..Q1-11: the live contract answer schema is exit.ethereum-contract-research/4 (since the 1 Nov EIP-1167 release); the bank and the public API description still said /3 \u2014 oracle corrected; the public description is corrected separately",
+  "Q1-13: the USDT contract address IS listed by its own blacklist (fact observed in run 1); expectation corrected to USDT true, USDC and PYUSD false",
+  "Q1-20/21/30/36: the evidence view (exit.private-evidence-view/2) carries answer_within_scope, evidence_cards, evidence_refs, observation, question, replay \u2014 the required fields named the wrong keys",
+  "Q1-27..Q1-36: 429 RATE_LIMITED after 26 requests in ~25 s \u2014 the runner now paces requests (EXIT_Q1_PACE seconds, default 3.0) so controls are measured, not rate-limited"
+ ],
+ "what_changed": "only the expected answers (oracle) of the listed questions; what each question asks is unchanged",
+ "consequence": "these questions were corrected after the first run had seen their answers, so their passes are not independent evidence"
+}
