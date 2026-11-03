@@ -16,8 +16,14 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             version equals the repository's openapi.json info.version (the sentence about the copy, checked against the copy —
                             added 2 November after that sentence was found a version behind); when exit_mcp.py is in the checkout, the row's
                             "(N tools, server X)" must also match the MCP server's own tool list and version (skipped, not failed, when absent)
+  spec_version_matches      STATUS.md's "(SPEC.txt) is version X" equals the version in the first line of the live log/SPEC.txt (added 3 Nov
+                            after STATUS still said 1.4 while the specification was 1.5)
+  reanchor_wording          when the live log/runs.json shows a heartbeat run (outcome HEARTBEAT_*), no sentence of STATUS.md (or ROADMAP.md
+                            when present in the checkout) may say that re-anchoring an unchanged root has not been needed yet (added 3 Nov)
+These two are the last rules added for now: a public claim is checked here only when it was found wrong on the live surface.
 DIR for --repo is a checkout (or a folder holding STATUS.md and openapi.json). --live-dir replaces every network read with files of the same
-names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json) — used by the tests only."""
+names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json, SPEC.txt, runs.json) — used by
+the tests only."""
 import json, os, re, sys, time, urllib.request
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -139,6 +145,30 @@ def main(argv):
                 if n != int(tm.group(1)): miss('status_client_row_version', 'the client row says %s tools; exit_mcp.py lists %d' % (tm.group(1), n))
     except Exception as e:
         miss('status_client_row_version', 'unreadable: ' + type(e).__name__)
+    # 6. log specification version
+    try:
+        spec = live.get(SITE + '/log/SPEC.txt', 'SPEC.txt')[0].decode('utf-8', 'replace')
+        sv = re.search(r'specification, version (\d+\.\d+)', spec.split('\n', 1)[0]); st = re.findall(r'\(SPEC\.txt\) is version (\d+\.\d+)', md)
+        out['spec'] = {'live': sv.group(1) if sv else None, 'status_md': st}; out['checks']['spec_version_matches'] = True
+        if not sv: miss('spec_version_matches', 'the live SPEC.txt names no version in its first line')
+        elif not st: miss('spec_version_matches', 'STATUS.md names no log specification version')
+        elif any(v != sv.group(1) for v in st): miss('spec_version_matches', 'STATUS.md says %s; SPEC.txt is %s' % (', '.join(st), sv.group(1)))
+    except Exception as e:
+        miss('spec_version_matches', 'unreadable: ' + type(e).__name__)
+    # 7. re-anchoring wording
+    try:
+        runs = json.loads(live.get(SITE + '/log/runs.json', 'runs.json')[0]).get('runs', [])
+        beats = [r.get('at') for r in runs if str(r.get('outcome') or '').startswith('HEARTBEAT')]
+        out['checks']['reanchor_wording'] = True; out['heartbeat_runs'] = len(beats)
+        if beats:
+            bad = re.compile(r're-anchor\w*[^.|]{0,200}?not (?:yet )?(?:been )?needed|NOT YET NEEDED[^.|\n]{0,160}re-anchor', re.I)
+            texts = {'STATUS.md': md}
+            if os.path.exists(os.path.join(repo, 'ROADMAP.md')): texts['ROADMAP.md'] = open(os.path.join(repo, 'ROADMAP.md'), encoding='utf-8').read()
+            for name, t in texts.items():
+                m = bad.search(t)
+                if m: miss('reanchor_wording', '%s says re-anchoring is not needed yet, but %d heartbeat run(s) exist: "%s"' % (name, len(beats), m.group(0)[:120]))
+    except Exception as e:
+        miss('reanchor_wording', 'unreadable: ' + type(e).__name__)
     out['ok'] = all(out['checks'].values()) and not out['mismatches']
     print(json.dumps(out, indent=1, sort_keys=True)); return 0 if out['ok'] else 1
 
