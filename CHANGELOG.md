@@ -1,5 +1,10 @@
 # Public documentation changelog
 
+## 3 November 2026 (04:50–04:57 UTC) · sentinel result states, Solana read pause
+
+- About the evidence-log sentinel result of 3 Nov 01:44 UTC (FAILED): every log check passed — the log verified on chain, the newest anchor and the newest daily run were fresh and the run outcome was valid. The only false check was public_claims_match_live: the sitemap date for /log/ was behind the page, which the daily anchor run rewrites at 00:30 UTC. The sitemap entry for /log/ now declares a daily change instead of a fixed date (02:46 UTC).
+- 04:57: sentinel workflow v3 (result format exit.log-sentinel/3). It reports three states: OK, DOCS_DRIFT (the log verified and is fresh, but a public text differs from the live service) and FAILED (a log check failed); the job still fails visibly on DOCS_DRIFT. The heartbeat outcome HEARTBEAT_ANCHORED counts as a valid daily run. Anchor transactions are read from api.mainnet-beta.solana.com, then from api.mainnet.solana.com (another public endpoint of the official cluster, same operator), then from solana-rpc.publicnode.com (it keeps only about two days of transactions); every attempt is recorded. Freshness is matched by anchor signature, not tree size.
+- 04:50: chained Solana reads pause 0.5 s before a read that requires the provider to have reached a given slot; no extra request, the published call limits are unchanged. On the host, the two Control Map mints whose answers need all five reads went from 7 of 8 and 5 of 8 answered to 8 of 8 each.
 ## 3 November 2026 (later) · core release, usage fields, consent record, proposals route fixed
 
 - 03:20: core release bb49875c applied (after the Q1 baseline run; every baseline answer that names an engine names 24da5740).
