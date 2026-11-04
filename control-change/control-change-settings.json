@@ -1,6 +1,6 @@
 {
  "format": "exit.control-change-settings/1",
- "as_of": "2026-10-29",
+ "as_of": "2026-11-04",
  "status_values": {
   "read": "an EXIT reader reads this value today; a change can be recorded from two reads",
   "reserved": "the name is fixed for a reader that is not live yet; it may be corrected only before its first record"
@@ -41,6 +41,50 @@
    "programs": [
     "BPFLoaderUpgradeab1e11111111111111111111111"
    ]
+  },
+  {
+   "name": "circle-fiattoken:blacklister()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the token contract (getter answer)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/5: issuer_roles (model circle-fiattoken-runtime-pair/1), getter blacklister()",
+   "meaning": "The value the token's blacklister() getter returned at the block. Read only when the token's proxy and implementation code equal the reviewed Circle FiatToken runtime pair.",
+   "does_not_mean": "What the role permits, or who controls this address."
+  },
+  {
+   "name": "circle-fiattoken:masterMinter()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the token contract (getter answer)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/5: issuer_roles (model circle-fiattoken-runtime-pair/1), getter masterMinter()",
+   "meaning": "The value the token's masterMinter() getter returned at the block. Read only when the token's proxy and implementation code equal the reviewed Circle FiatToken runtime pair.",
+   "does_not_mean": "What the role permits, or who controls this address."
+  },
+  {
+   "name": "circle-fiattoken:pauser()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the token contract (getter answer)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/5: issuer_roles (model circle-fiattoken-runtime-pair/1), getter pauser()",
+   "meaning": "The value the token's pauser() getter returned at the block. Read only when the token's proxy and implementation code equal the reviewed Circle FiatToken runtime pair.",
+   "does_not_mean": "What the role permits, or who controls this address."
+  },
+  {
+   "name": "circle-fiattoken:rescuer()",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the token contract (getter answer)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/5: issuer_roles (model circle-fiattoken-runtime-pair/1), getter rescuer()",
+   "meaning": "The value the token's rescuer() getter returned at the block. Read only when the token's proxy and implementation code equal the reviewed Circle FiatToken runtime pair.",
+   "does_not_mean": "What the role permits, or who controls this address."
   },
   {
    "name": "evm:eip1967.admin",
@@ -85,6 +129,28 @@
    "source": "exit.ethereum-contract-research/3: owner_getter",
    "meaning": "The value the contract's owner() getter returned at the block.",
    "does_not_mean": "That this address has any power the getter does not state."
+  },
+  {
+   "name": "evm:zos.admin",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the proxy contract (storage slot)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: zos.admin",
+   "meaning": "The ZeppelinOS admin slot (org.zeppelinos.proxy.admin) read as an address. The zero address: the slot is empty, not proof that no admin exists.",
+   "does_not_mean": "What the implementation code permits, or who controls the admin."
+  },
+  {
+   "name": "evm:zos.implementation",
+   "chain": "ethereum-mainnet",
+   "stored_in": "the proxy contract (storage slot)",
+   "scope": {},
+   "value_type": "evm_address",
+   "status": "read",
+   "source": "exit.ethereum-contract-research/3: zos.implementation",
+   "meaning": "The ZeppelinOS implementation slot (org.zeppelinos.proxy.implementation) read as an address. The zero address: the slot is empty.",
+   "does_not_mean": "What the implementation code permits, or who controls the admin."
   },
   {
    "name": "layerzero-v2:endpoint.delegates",
