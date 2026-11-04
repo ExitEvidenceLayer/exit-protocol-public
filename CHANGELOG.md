@@ -19,6 +19,9 @@
   a mismatch instead of a skip (one HEAD request per page), an entry without a date must name the check that covers it (only
   /log/), and the output states what was checked. Before, an undated or unreadable entry was skipped and the rule still passed.
 - [ROADMAP.md](ROADMAP.md): the issuer-role, revert and code-designation item moved from NEXT to LIVE.
+- [ROADMAP.md](ROADMAP.md): the NEXT and LATER lines added on 3 November (evening) are withdrawn until a roadmap decision is made:
+  a declared watch list of upgrade-path contracts on Ethereum, multi-hop control paths (Safe modules and guards, role sets rebuilt
+  from events) and control edges on a second network. The order of the other items is unchanged.
 
 ## 3 November 2026 (evening) · proposals gap records, a known Control Map labelling issue, founder holding, Arbitrum case
 

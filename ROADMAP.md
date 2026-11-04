@@ -50,10 +50,6 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       holders, multisig owners and AccessControl members are not read); from the 4 November 23:20 UTC re-read on, the nightly records
       of the 21 Control Map rows whose owner() reverts are expected to carry CALL_REVERTED; the after-measurement on the fixed question
       bank is planned after that run
-  → NEXT (from the Arbitrum Security Council case, one at a time, measured on a fixed question bank before and after):
-      a declared watch list of upgrade-path contracts on Ethereum (records only, no alerts, no automated action)
-  → LATER (Q2): multi-hop control paths with stated depth and cycle stops, Safe modules and guards, role sets rebuilt from events
-  → LATER: control edges on a second network, only after a versioned roadmap amendment names it
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
