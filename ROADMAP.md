@@ -22,7 +22,7 @@ anchored daily even without a change, come first. An anchor shows only that EXIT
 held a record by its block time, not that the record is true, known earlier or
 complete.
 
-## Current engineering sequence · 3 November (T0 + 9 days)
+## Current engineering sequence · 4 November (T0 + 10 days)
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -44,10 +44,14 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
   → LIVE: a nightly second-provider check of 12 Control Map rows (3 November 00:05 UTC); a daily off-host state copy with a restore drill (00:35 UTC)
   → LIVE: a provider refusal on the governance proposals route is recorded as PROVIDER_UNAVAILABLE, not as a method gap (3 November 13:50 UTC)
+  → LIVE: the contract reader records a reverted owner() or issuer-getter call apart from a provider error, reads the issuer roles
+      (master minter, pauser, blacklister, rescuer) for one reviewed issuer runtime pair (USDC) and gives every code it reads its
+      designation, EIP-7702 included (schema /5, 4 November 01:35 UTC; the account types and EIP-7702 designations of the issuer role
+      holders, multisig owners and AccessControl members are not read); from the 4 November 23:20 UTC re-read on, the nightly records
+      of the 21 Control Map rows whose owner() reverts are expected to carry CALL_REVERTED; the after-measurement on the fixed question
+      bank is planned after that run
   → NEXT (from the Arbitrum Security Council case, one at a time, measured on a fixed question bank before and after):
-      stablecoin issuer roles (master minter, pauser, blacklister, rescuer) and EIP-7702 designation at every hop, with a reverted call
-      recorded apart from a provider error (this also corrects the 21 Control Map owner() labels);
-      then a declared watch list of upgrade-path contracts on Ethereum (records only, no alerts, no automated action)
+      a declared watch list of upgrade-path contracts on Ethereum (records only, no alerts, no automated action)
   → LATER (Q2): multi-hop control paths with stated depth and cycle stops, Safe modules and guards, role sets rebuilt from events
   → LATER: control edges on a second network, only after a versioned roadmap amendment names it
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
@@ -64,7 +68,7 @@ October, were not part of it. Since 27 October a limited
 radar pilot reads pending-authority scopes once an hour for watches that have an owned webhook
 receiver (one watch service-wide, used by EXIT's own test); it is not continuous
 monitoring, and pull checks remain the general monitoring scope. The script client
-and MCP wrapper cover every route of API version 2026-11-02.2 (server 1.3.0); the
+and MCP wrapper cover every route of API version 2026-11-04.1 (server 1.3.0); the
 methods added for the routes newer than 2026-10-26.2 were checked against a loopback
 stub of the API description, not against the live service with a key.
 

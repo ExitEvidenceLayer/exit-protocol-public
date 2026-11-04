@@ -1,5 +1,25 @@
 # Public documentation changelog
 
+## 4 November 2026 · contract reader /5, Arbitrum case on the homepage, claims check v3
+
+- 01:35 UTC: the Ethereum contract reader answers with schema exit.ethereum-contract-research/5: a reverted owner() or issuer-getter
+  call is recorded as CALL_REVERTED (what the call did; it names no holder), an invalid-opcode failure of those calls (two provider
+  wordings) as CALL_FAILED_INVALID_OPCODE, and a provider error that is neither makes the read incomplete; the issuer roles for one
+  reviewed issuer runtime pair (USDC); a designation for every code read, EIP-7702 delegations included. Same budget: at most 26
+  read-only calls within 60 seconds. A replay of an earlier request returns its stored /1 to /4 body unchanged. API description
+  2026-11-04.1; [openapi.json](openapi.json) updated. Two of its sentences are to be corrected in the next description version:
+  the route summary still says twenty-one calls, and the 200 response text says "a reverted getter" where only owner() and the four
+  issuer getters are meant.
+- Not recorded here before: on 30 October 04:31 UTC the contract reader gained schema /4, a native-owner read for one reviewed
+  smart-account runtime pair (ERC1967Proxy with SingleOwnerMSCA: getNativeOwner() compared with its storage slot), which raised the
+  budget to 26 calls / 60 s. [STATUS.md](STATUS.md) and [docs/API.md](docs/API.md) still said "at most twenty-one read-only calls"
+  and docs/API.md dated /4 to 1 November (the date of the clone recognition, entry below); both now describe /4 and /5 with their dates.
+- 01:11 UTC: the homepage coverage table links [the Arbitrum Security Council case note](cases/arbitrum-security-council-2026-10-30.md).
+- [tools/claims_check.py](tools/claims_check.py) v3: the sitemap rule accounts for every entry. A page date that cannot be read is
+  a mismatch instead of a skip (one HEAD request per page), an entry without a date must name the check that covers it (only
+  /log/), and the output states what was checked. Before, an undated or unreadable entry was skipped and the rule still passed.
+- [ROADMAP.md](ROADMAP.md): the issuer-role, revert and code-designation item moved from NEXT to LIVE.
+
 ## 3 November 2026 (evening) · proposals gap records, a known Control Map labelling issue, founder holding, Arbitrum case
 
 - 13:50 UTC: when the provider refuses a read for /v0/research/solana/governance/proposals, the research record now names the gap
