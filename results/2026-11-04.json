@@ -1,0 +1,135 @@
+{
+ "checks": {
+  "anchor_within_26h": true,
+  "log_verified": true,
+  "public_claims_match_live": false,
+  "run_outcome_ok": true,
+  "run_within_26h": true
+ },
+ "claims": {
+  "api_description": {
+   "live": "2026-11-04.1",
+   "repository": "2026-11-02.2"
+  },
+  "checks": {
+   "api_description_version": false,
+   "free_period_wording": true,
+   "live_rows_match_flags": true,
+   "reanchor_wording": true,
+   "sitemap_not_behind_pages": true,
+   "spec_version_matches": true,
+   "status_client_row_version": true
+  },
+  "mismatches": [
+   {
+    "check": "api_description_version",
+    "detail": "repository 2026-11-02.2, live 2026-11-04.1"
+   }
+  ]
+ },
+ "commit": "b6b3f9bb05dff1487da074f61c8eb8dde33e3824",
+ "format": "exit.log-sentinel/3",
+ "log": "https://exit-protocol.io/log/",
+ "log_ok": true,
+ "newest_anchor": {
+  "age_hours": 1.22,
+  "block_time_utc": "2026-11-04T00:30:06+00:00",
+  "confirmed_on_chain": true,
+  "signature": "Y71j6egwa4CLThjRqndkcGmFUmmjKKNR6vF2Bjmrtw6RbyaHn5MoxugYs56FHX19sLheRNchr3xeDMTcUDbyUxj",
+  "size": 462
+ },
+ "newest_run": {
+  "age_hours": 1.22,
+  "at": "2026-11-04T00:30:11.400556+00:00",
+  "outcome": "ANCHORED"
+ },
+ "ok": false,
+ "rpc": "https://api.mainnet-beta.solana.com",
+ "rpc_attempts": [
+  {
+   "exit": 0,
+   "first_problem": null,
+   "provider": "https://api.mainnet-beta.solana.com"
+  }
+ ],
+ "run_at": "2026-11-04T01:43:08.619757+00:00",
+ "snapshot_sha256": {
+  "anchors.json": "652371df483af5b9dabfce3c59219a1f47d049c61686d93a2cc39b32615f107b",
+  "leaves.json": "fe4521621340b7c2dc475e59506c4da7fb5ec5f1fdc66e5bf0be9aea8ffe471e",
+  "notaries.json": "61711145cb216c4b98a2c3da2b1ec011d3fb50ff19ebb29ee807491d1541fd47",
+  "roots.json": "75e2d868d80da4240d8f73fef1985962037a23bfbbaf110c0d633375454bbb4d",
+  "runs.json": "181b105db6efd5512cb6a94fb0e134414be55b2071d8c611186fbefae86a5052"
+ },
+ "status": "DOCS_DRIFT",
+ "verifier_sha256": "9381318713af86ff3be6c83960bf4528b4c218e6f088a31379fd011b830f42a6",
+ "verify": {
+  "anchors_fetched": [
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 68 1659b21b319974c3906f966537f33b183f1ad70014c33e070991017630db5fd8 2026-10-27 66",
+    "size": 68,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 134 6aa122815eafc4f0eaef0e4d638b2c81fa31998741be6c609a8f58e0fec51def 2026-10-27 68",
+    "size": 134,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 200 54e5d8d4e5682a4d971a55865bd001e4a5818a56169ffef5599b90862ef7778b 2026-10-28 134",
+    "size": 200,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 204 6b4caf71d4ff517887414530c3c9e853119cfe64161483982efd2aa04b61ea0a 2026-10-29 200",
+    "size": 204,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-10-30 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-10-31 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-11-01 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 274 607b9a897a0e20da31d0825186851df639dcd7832431e82058a8b4bb6b14f27f 2026-11-02 205",
+    "size": 274,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 370 99c8ee774ee247f6fed05ef02a62efbbab8d4ca582c8d9d09acd329d2fb19ca7 2026-11-03 274",
+    "size": 370,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 462 ed04f87ac6e90a60884f1ac4d4e022335286d0aecba103c4c8d142f1f2e74243 2026-11-04 370",
+    "size": 462,
+    "why": null
+   }
+  ],
+  "anchors_listed": 10,
+  "leaves": 462,
+  "problems": [],
+  "proves": "Every published root is built from the published leaves, and each tree extends the previous one. Every anchor transaction carries its root.",
+  "roots_checked": 9,
+  "verified": true
+ }
+}
