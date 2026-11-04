@@ -1,7 +1,16 @@
 # Public documentation changelog
 
-## 4 November 2026 · contract reader /5, Arbitrum case on the homepage, claims check v3
+## 4 November 2026 · contract reader /5, six Control Map setting names, Arbitrum case on the homepage, claims check v3
 
+- 06:30 UTC: the nightly Control Map comparison can compare six more setting names of the
+  [Control-Change Record list](control-change/control-change-settings.json) (56 names; the list was updated here at 04:47 UTC): the
+  ZeppelinOS proxy implementation and admin slots, and masterMinter(), pauser(), blacklister() and rescuer() of Circle's FiatToken.
+  The contract reader reads these four getters only when a token's proxy and implementation code match the reviewed USDC pair byte
+  for byte; it reads the ZeppelinOS slots on every Ethereum row, and an empty slot is compared as the zero address. The 4 November
+  23:20 UTC run is expected to compare no Ethereum row, because the reader moved to /5 that day (READER_OR_SOURCE_CHANGED). From the
+  first night that compares two /5 reads, expected on 5 November 23:20 UTC, each compared Ethereum row other than row 4 is expected
+  to count two more compared settings than it would without the six names, and row 4 (USDC on Ethereum) six more when both of its
+  reads match the reviewed pair (two otherwise): settings compared, not changes found.
 - 01:35 UTC: the Ethereum contract reader answers with schema exit.ethereum-contract-research/5: a reverted owner() or issuer-getter
   call is recorded as CALL_REVERTED (what the call did; it names no holder), an invalid-opcode failure of those calls (two provider
   wordings) as CALL_FAILED_INVALID_OPCODE, and a provider error that is neither makes the read incomplete; the issuer roles for one
@@ -10,6 +19,10 @@
   2026-11-04.1; [openapi.json](openapi.json) updated. Two of its sentences are to be corrected in the next description version:
   the route summary still says twenty-one calls, and the 200 response text says "a reverted getter" where only owner() and the four
   issuer getters are meant.
+- 01:43 UTC: the sentinel recorded DOCS_DRIFT: this repository's API description was still 2026-11-02.2 while the service already
+  served 2026-11-04.1 ([sentinel result](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/2c6265ada311edb7ddd32854898b9e00f467c67f/results/2026-11-04.json)); the repository copy followed at 02:20:40 UTC. To avoid a repeat, EXIT
+  intends to commit a changed API description here before switching it live; the sentinel's daily api_description_version
+  check records a difference that is present when it runs.
 - Not recorded here before: on 30 October 04:31 UTC the contract reader gained schema /4, a native-owner read for one reviewed
   smart-account runtime pair (ERC1967Proxy with SingleOwnerMSCA: getNativeOwner() compared with its storage slot), which raised the
   budget to 26 calls / 60 s. [STATUS.md](STATUS.md) and [docs/API.md](docs/API.md) still said "at most twenty-one read-only calls"
@@ -22,6 +35,10 @@
 - [ROADMAP.md](ROADMAP.md): the NEXT and LATER lines added on 3 November (evening) are withdrawn until a roadmap decision is made:
   a declared watch list of upgrade-path contracts on Ethereum, multi-hop control paths (Safe modules and guards, role sets rebuilt
   from events) and control edges on a second network. The order of the other items is unchanged.
+- [STATUS.md](STATUS.md): the evidence-log row points to https://exit-protocol.io/log/anchors.json for every anchor (it listed
+  only the first four) and says what the browser check's PARTLY CHECKED result means; the Control Map row says how rows 70-72
+  came to be listed and which six setting names the nightly comparison can compare from 06:30 UTC; the 3 November core release
+  entry says that the Control Map's next run compared none of the 68 rows it had read before.
 
 ## 3 November 2026 (evening) · proposals gap records, a known Control Map labelling issue, founder holding, Arbitrum case
 
