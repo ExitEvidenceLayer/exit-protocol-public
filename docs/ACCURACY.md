@@ -18,6 +18,11 @@ reader does not read.
 
 The four fixed control subjects (USDC and PYUSD on both chains, plus a publicly listed address for the freeze surface) were correct on
 every fact in every run; the table shows the fresh random samples only.
+v6 was pre-registered twice: a first attempt at 02:11 UTC was voided when the operator's machine lost network (the Ethereum and freeze
+halves failed; the Solana half had completed, 66/66 correct), a harness defect it exposed was fixed (a transport failure had been classified
+as out of scope), and the design was re-hashed at 03:54 UTC before the counted run. The voided attempt is kept and not counted; for v6,
+"pre-registered" therefore means before the counted run, not before every read. The Q1 question bank is a separate measurement with its
+own two-column result (docs/Q1-RESULT.md).
 A transport incomplete is a provider failure during the read, counted in coverage, not as an error. Two LABEL_STATE_MOVED subjects
 in v5 (the label and the read saw different states within the window) are excluded by rule.
 

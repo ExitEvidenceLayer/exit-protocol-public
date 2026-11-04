@@ -1,0 +1,123 @@
+{
+ "format": "exit.founder-wallet-report/1",
+ "wallet": "9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7",
+ "mint": "5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups",
+ "token_account": "J6Qmi6Kesrwgc2hWq7bQbcZMgjEksWgVUkxCtCFbh8KV",
+ "observed_slot": 464843897,
+ "known_at": "2026-11-03T09:12:08+00:00",
+ "balance": "14151336.226592",
+ "balance_raw": "14151336226592",
+ "decimals": 6,
+ "previous_report": "2026-11-03T06:55:43+00:00",
+ "delta_vs_previous": "0.000000",
+ "corroboration": "MATCHES (second provider at slot 464843900)",
+ "history": [
+  {
+   "signature": "4ebFBMoCi4jAi7dgkQ8kzPWDMsDXLDKmnqKaMQFTM8vjnhmJ5gxR37HzuRCZ4isRMjMdby1ak8wKFg6W16D3Gzu8",
+   "slot": 461253781,
+   "time": "2026-10-25T12:15:44+00:00",
+   "failed": true,
+   "exitp_raw": 0,
+   "usdc_raw": 0,
+   "counterparties": [],
+   "fee_payer": "9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7",
+   "purpose": "failed transaction; no tokens moved"
+  },
+  {
+   "signature": "3RPNcTmMheEdjkewwugvs1iNQDSRUbCiyVkmSsQ7qbxRnXnmW5GQNE5qD19LYrxUzktzxzeYz2u1qMBLdpdnERoj",
+   "slot": 461253826,
+   "time": "2026-10-25T12:15:53+00:00",
+   "failed": true,
+   "exitp_raw": 0,
+   "usdc_raw": 0,
+   "counterparties": [],
+   "fee_payer": "9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7",
+   "purpose": "failed transaction; no tokens moved"
+  },
+  {
+   "signature": "GWmb53ugxMA5Jkpb59bDz9myBaXSYc21kEWdAuWjyPouP1MQvv2yynSe5eMKHhrvjxGifLMaQBLDQDvt1RcsD4f",
+   "slot": 461253878,
+   "time": "2026-10-25T12:16:05+00:00",
+   "failed": false,
+   "exitp_raw": 8852036224443,
+   "usdc_raw": -50000000,
+   "counterparties": [
+    "FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM"
+   ],
+   "fee_payer": "9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7",
+   "purpose": "purchase: USDC to EXITP swap"
+  },
+  {
+   "signature": "3RQxxhgF2KmLBtHpkevTxj9KR6ekoarSS8wJU4MNp7koR2d7Z6Z3eH7rTU2HMqK4ZXv9xGM2t1WzmiY7GmHZGq7L",
+   "slot": 461706188,
+   "time": "2026-10-26T14:58:03+00:00",
+   "failed": false,
+   "exitp_raw": 2901491283451,
+   "usdc_raw": -15009587,
+   "counterparties": [
+    "FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM"
+   ],
+   "fee_payer": "FHpcNSe6tb2n15bAdq4BkeYWGyZKFD7yLYrH92ng7wCT",
+   "purpose": "purchase: USDC to EXITP swap"
+  },
+  {
+   "signature": "jsQXt8yrQHfnKfLMkjZjASuLw4Tnbbi4n5kdFwzC7TehCDRxZApgZtWJCZLfWqtYCPJm4LbRzdvj4vDYqSHQN2U",
+   "slot": 462039288,
+   "time": "2026-10-27T10:37:40+00:00",
+   "failed": false,
+   "exitp_raw": 1588895309029,
+   "usdc_raw": -8255266,
+   "counterparties": [
+    "FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM"
+   ],
+   "fee_payer": "FHpcNSe6tb2n15bAdq4BkeYWGyZKFD7yLYrH92ng7wCT",
+   "purpose": "purchase: USDC to EXITP swap"
+  },
+  {
+   "signature": "4E7hssgjxvJanxpVsX89peJM4kXbfq8zayBjmBTFi6mZxwMBxhu7XMKeAi1rgnptLdEfnxFvGKrSxZg51ZAhDk9h",
+   "slot": 462880573,
+   "time": "2026-10-29T12:26:43+00:00",
+   "failed": false,
+   "exitp_raw": 808913409669,
+   "usdc_raw": -4540403,
+   "counterparties": [
+    "FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM"
+   ],
+   "fee_payer": "FHpcNSe6tb2n15bAdq4BkeYWGyZKFD7yLYrH92ng7wCT",
+   "purpose": "purchase: USDC to EXITP swap"
+  }
+ ],
+ "new_since_previous": [],
+ "outflows_since_previous": [],
+ "sales_since_previous": [],
+ "creator_role": {
+  "pool": "J3mPv9st8YeBzWHbth4KcRn87BkMrAFniVYWy6xy5YU4",
+  "pool_creator": "dtsvMPr3mNMPfm4TGU9UeCQZkZy7iXjAwhYEz9HMYK7",
+  "proxy": "dtsvMPr3mNMPfm4TGU9UeCQZkZy7iXjAwhYEz9HMYK7",
+  "proxy_recorded_wallet": "9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7",
+  "pool_creator_is_the_proxy": true,
+  "proxy_records_the_founder": true,
+  "unclaimed_creator_fee_usdc": "3.661513",
+  "unclaimed_creator_fee_exitp_raw": "0",
+  "pool_migrated": false
+ },
+ "creator_role_history": [
+  {
+   "signature": "5fdBc94NX75AqavrRD2nQDG3yq6aMSxJouwNn7C5CRDsZhzymme7q3Ki7GjEHHS6YBJ8KpYnGJ5uGgvhF8kbFn4",
+   "time": "2026-10-25T12:14:57+00:00",
+   "failed": false,
+   "steps": [
+    "CreateConfig",
+    "InitializeVirtualPoolWithSplToken",
+    "Initialize",
+    "TransferPoolCreator"
+   ],
+   "claim": false
+  }
+ ],
+ "claims_since_previous": [],
+ "limits": [
+  "covers the wallet's current EXITP token account (every signature on it); a closed earlier token account would not appear",
+  "purpose labels describe the on-chain action; a purpose of an outgoing transfer is stated by the founder and attributed"
+ ]
+}

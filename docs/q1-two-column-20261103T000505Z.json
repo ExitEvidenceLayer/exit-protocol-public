@@ -1,0 +1,661 @@
+{
+ "format": "exit.q1-two-column/1",
+ "run": "20261103T000505Z",
+ "bank_v1_sha256": "524db8d997dcb9955c8506478f6c5fbcdfe5af1879114b209a615e22c189a5ea",
+ "bank_v1_published": "2026-11-02T06:57:02Z (commit 65aed6ff)",
+ "bank_v1_1_sha256": "b2f4ee1776aa1336fc053f9c26d302a2cd669fd75cb587f7608dd21726bf576d",
+ "summary": {
+  "questions": 36,
+  "met_v1": 21,
+  "wilson_v1": [
+   0.422,
+   0.729
+  ],
+  "met_v1_1": 31,
+  "wilson_v1_1": [
+   0.713,
+   0.939
+  ],
+  "never_revised": 25,
+  "never_revised_met": 20,
+  "wilson_never_revised": [
+   0.609,
+   0.911
+  ],
+  "revised_questions_met_v1": 1,
+  "revised_questions_met_v1_1": 11
+ },
+ "regrade_reproduces_recorded_v1_1_result": true,
+ "rows": [
+  {
+   "id": "Q1-01",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-02",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-03",
+   "status": 503,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-mint-research/2'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field policy",
+     "missing field subject",
+     "missing field observation",
+     "missing field controls",
+     "missing field state_facts",
+     "missing field evidence_refs",
+     "missing field result_sha256",
+     "missing field coverage",
+     "missing field limits",
+     "missing field not_interpreted"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-mint-research/2'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field policy",
+     "missing field subject",
+     "missing field observation",
+     "missing field controls",
+     "missing field state_facts",
+     "missing field evidence_refs",
+     "missing field result_sha256",
+     "missing field coverage",
+     "missing field limits",
+     "missing field not_interpreted"
+    ]
+   }
+  },
+  {
+   "id": "Q1-04",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-05",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-06",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.schema"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/4' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-07",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.schema"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/4' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-08",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.schema"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/4' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-09",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.schema"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/4' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-10",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.schema"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/4' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-11",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.schema"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/4' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-12",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-13",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.expect.tokens[*].blacklisted",
+    ".oracle.expect.tokens[PYUSD].blacklisted",
+    ".oracle.expect.tokens[USDC].blacklisted",
+    ".oracle.expect.tokens[USDT].blacklisted",
+    ".question"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "tokens blacklisted [True, False, False] != all False"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-14",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-15",
+   "status": 503,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-governance-proposals-research/1'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field subject",
+     "missing field observation",
+     "missing field proposals",
+     "missing field evidence_refs",
+     "missing field result_sha256"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-governance-proposals-research/1'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field subject",
+     "missing field observation",
+     "missing field proposals",
+     "missing field evidence_refs",
+     "missing field result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-16",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-17",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-18",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-19",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-20",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.required"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "missing field answer",
+     "missing field evidence"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-21",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.required"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "missing field answer",
+     "missing field evidence"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-22",
+   "status": 409,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "schema None != 'exit.research-comparison/1'",
+     "missing field schema"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "schema None != 'exit.research-comparison/1'",
+     "missing field schema"
+    ]
+   }
+  },
+  {
+   "id": "Q1-23",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-24",
+   "status": 409,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "schema None != 'exit.research-graph/1'",
+     "missing field schema"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "schema None != 'exit.research-graph/1'",
+     "missing field schema"
+    ]
+   }
+  },
+  {
+   "id": "Q1-25",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-26",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-27",
+   "status": 409,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "missing field state",
+     "missing field reason"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "missing field state",
+     "missing field reason"
+    ]
+   }
+  },
+  {
+   "id": "Q1-28",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-29",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-30",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.required"
+   ],
+   "v1": {
+    "met": false,
+    "differences": [
+     "missing field evidence"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-31",
+   "status": 422,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-32",
+   "status": 422,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-33",
+   "status": 422,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-34",
+   "status": 200,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-35",
+   "status": 409,
+   "revised_in_v1_1": false,
+   "revised_fields": [],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  },
+  {
+   "id": "Q1-36",
+   "status": 200,
+   "revised_in_v1_1": true,
+   "revised_fields": [
+    ".oracle.required"
+   ],
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   }
+  }
+ ]
+}
