@@ -71,9 +71,12 @@ the readers' own decoders in a second review.
 - `read`: an EXIT reader reads this value today, so a change can be recorded from two reads.
 - `reserved`: the name is fixed for a value no reader reads yet. A reserved name may be corrected only before its first record.
 
-As of 1 November 2026 the list holds 50 names, all read: the SPL Governance configuration reader and the LayerZero pathway
+As of 4 November 2026 the list holds 56 names, all read: the SPL Governance configuration reader and the LayerZero pathway
 reader went live on 29 October, the LayerZero peer reader (`layerzero-v2:oapp.peers`) on 1 November. A LayerZero pathway read
-exposes the subset that applies to its direction.
+exposes the subset that applies to its direction. Added on 4 November: the ZeppelinOS proxy slots (`evm:zos.implementation`,
+`evm:zos.admin`), which the Ethereum contract reader reads beside the EIP-1967 slots, and the four roles of Circle's FiatToken
+(`circle-fiattoken:masterMinter()`, `circle-fiattoken:pauser()`, `circle-fiattoken:blacklister()`, `circle-fiattoken:rescuer()`),
+which the reader reads only when a token's proxy and implementation code equal the reviewed Circle FiatToken pair.
 
 ## Value types
 
