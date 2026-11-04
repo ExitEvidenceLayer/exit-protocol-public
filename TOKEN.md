@@ -72,12 +72,28 @@ Continue updating actual operational and financial disclosures with verified fac
 
 - Network, exact mint address and token program; decimals and relevant authorities/extensions.
 - Exact initial service right, conversion/quote rules, quotas, expiry and service conditions.
-- Supply and actual distribution mechanics; any founder purchase, its fraction and any verifiable lock.
+- Supply and actual distribution mechanics; any founder purchase, its fraction and any verifiable lock (the founder's
+  holding is disclosed below and reported monthly).
 - Treasury custody and access policies, actual fee mechanics and operating-budget reporting.
 - Final venue and release/whitepaper versions, official links and any material unresolved limitations.
 
 These are future disclosure requirements, not executed transactions or commitments
 to an unselected allocation or lock product.
+
+## Founder holding (disclosed 3 November 2026)
+
+- Wallet: `9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7`, announced on X on 3 November 2026
+  ([post](https://x.com/exitprotocolL/status/2117505721147486643)).
+- Holding: **14,151,336.226592 EXITP**, about 1.415% of the supply of 1,000,000,000 EXITP. Read again on 3 November 2026 at
+  14:49–14:58 UTC from two Solana providers (equal at both).
+- How it was acquired: four purchases on the public pool between 25 and 29 October 2026, paid in USDC. No sales and no outgoing
+  transfers so far.
+- Lock: none. The tokens are in the wallet's own token account, not in a lock program.
+- The wallet also appears, through a Jupiter Studio proxy account, as the pool's creator; the creator trading fees it has not claimed
+  are listed in the report.
+
+The monthly report ([docs/FOUNDER-WALLET.md](docs/FOUNDER-WALLET.md)) lists every signature, and each report is also an evidence-log
+record. If tokens leave the wallet, the founder states the purpose and EXIT records that statement as the founder's statement.
 
 [Release status](STATUS.md) · [Roadmap](ROADMAP.md) · [Transparency](TRANSPARENCY.md)
 

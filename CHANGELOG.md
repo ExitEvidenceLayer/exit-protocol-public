@@ -1,5 +1,29 @@
 # Public documentation changelog
 
+## 3 November 2026 (evening) · proposals gap records, a known Control Map labelling issue, founder holding, Arbitrum case
+
+- 13:50 UTC: when the provider refuses a read for /v0/research/solana/governance/proposals, the research record now names the gap
+  PROVIDER_UNAVAILABLE, as it already did for /v0/research/solana/governance. Before, such a refusal was recorded as METHOD ("the method
+  cannot answer"), which was wrong. Records written before keep their gap; nothing else changed. Health checks passed after the release.
+- STATUS known issue: 21 Ethereum rows of the Control Map show `owner(): NOT_OBSERVED (RPC error; cause not established)`. On those
+  contracts owner() reverts: re-read on 3 November from two providers, at block 26,334,869 and at each row's snapshot block, all 21
+  reverted at both. The label is corrected in the next contract-reader release; the rows' other facts are not affected.
+- [TOKEN.md](TOKEN.md) and [TRANSPARENCY.md](TRANSPARENCY.md): the founder holding, dated 3 November (wallet, 14,151,336.226592 EXITP,
+  four purchases, no sales, no lock), replacing "to be disclosed".
+- [cases/arbitrum-security-council-2026-10-30.md](cases/arbitrum-security-council-2026-10-30.md): the Arbitrum Security Council case,
+  in the same format as the other case notes.
+- Control Map: from the 3 November 23:20 UTC re-read the nightly run covers 72 rows (row 69 is EXITP, listed as EXIT's
+  own token; rows 70-72 are Raydium (RAY), The Black Bull (ANSEM) and STONK, listed as declared rows).
+- [ROADMAP.md](ROADMAP.md): synced with the internal plan of 3 November.
+
+## 3 November 2026 (later) · Q1 result in two columns, sentinel v4, founder wallet report, roadmap page
+
+- Q1 result: the same recorded answers are now graded against both bank versions. Against bank v1, published before the run (2 Nov 06:57 UTC), 21 of 36 questions met their expectation; against bank v1.1, in which 11 expectations were corrected after a first run had been seen, 31 of 36; of the 25 questions never revised, 20. The earlier sentence "31 of 36 questions met their pre-registered expectation" was wrong and is replaced in STATUS ([docs/Q1-RESULT.md](docs/Q1-RESULT.md), per-question table and [two-column file](docs/q1-two-column-20261103T000505Z.json)).
+- [docs/ACCURACY.md](docs/ACCURACY.md): the 2 Nov v6 run was pre-registered twice (a first attempt was voided by a local network outage and a classifier fix followed); stated, with what "pre-registered" then means.
+- Sentinel workflow v4: only a log integrity failure fails the job; DOCS_DRIFT (a public text differs from the live service) is a warning annotation on a passing run and still recorded as its own status.
+- [docs/FOUNDER-WALLET.md](docs/FOUNDER-WALLET.md): the first monthly report on the founder wallet's EXITP — 14,151,336.226592 EXITP, four purchases, no sales or outgoing transfers; the pool-creator role (a Jupiter Studio proxy recording the founder wallet) with 3.661513 USDC of creator fees not yet claimed and no claim so far.
+- Website: the roadmap page's acceptance line for the Solana mint route and its dates were brought up to date (the authenticated acceptance read was recorded on 2 November).
+
 ## 3 November 2026 · wording correction
 
 - The 3 Nov second-provider sentence (STATUS and the 00:05 entry below) mixed row and fact counts: the control and getter facts it listed were not disagreements but facts without a primary observation; reworded with the fact counts, and the second providers are named.

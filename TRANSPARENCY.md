@@ -25,6 +25,15 @@ No revenue amount, allocation percentage, guaranteed fee stream or treasury lock
 invented in this documentation. Those details must follow the accepted launch
 configuration and subsequent real activity.
 
+## Founder holdings
+
+The founder wallet's EXITP is reported on the 1st of every month, read-only from public Solana RPC, with every movement since the
+previous report: [docs/FOUNDER-WALLET.md](docs/FOUNDER-WALLET.md). Each report is also a record in the evidence log.
+
+| Date | Record |
+|---|---|
+| 3 November 2026 | Wallet `9JL2gfGKaGJzJkY2vxjLq9kdiPTGqxHnPixaEfmUiiV7` holds 14,151,336.226592 EXITP from four purchases (25–29 October); no sales, no outgoing transfers, no lock. Announced on [X](https://x.com/exitprotocolL/status/2117505721147486643); details in [TOKEN.md](TOKEN.md#founder-holding-disclosed-3-november-2026). |
+
 ## Research and data permissions
 
 The public website's authored notes and selected source references have a narrower

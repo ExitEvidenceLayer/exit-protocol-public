@@ -22,7 +22,7 @@ anchored daily even without a change, come first. An anchor shows only that EXIT
 held a record by its block time, not that the record is true, known earlier or
 complete.
 
-## Current engineering sequence · 1 November
+## Current engineering sequence · 3 November (T0 + 9 days)
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -42,6 +42,14 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC; PYUSD since 2 November) at one finalized block (1 November)
   → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
   → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
+  → LIVE: a nightly second-provider check of 12 Control Map rows (3 November 00:05 UTC); a daily off-host state copy with a restore drill (00:35 UTC)
+  → LIVE: a provider refusal on the governance proposals route is recorded as PROVIDER_UNAVAILABLE, not as a method gap (3 November 13:50 UTC)
+  → NEXT (from the Arbitrum Security Council case, one at a time, measured on a fixed question bank before and after):
+      stablecoin issuer roles (master minter, pauser, blacklister, rescuer) and EIP-7702 designation at every hop, with a reverted call
+      recorded apart from a provider error (this also corrects the 21 Control Map owner() labels);
+      then a declared watch list of upgrade-path contracts on Ethereum (records only, no alerts, no automated action)
+  → LATER (Q2): multi-hop control paths with stated depth and cycle stops, Safe modules and guards, role sets rebuilt from events
+  → LATER: control edges on a second network, only after a versioned roadmap amendment names it
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance

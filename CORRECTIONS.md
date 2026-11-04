@@ -24,10 +24,10 @@ through the [correction form](https://github.com/ExitEvidenceLayer/exit-protocol
 | Output | Published | Corrections counted |
 |---|---|---|
 | Evidence-log records | 200 records with public proof bundles at tree size 205 (anchored 30 October); the other 5 leaves are private service bindings or records held until their own publication and are not in this count. Later, not yet counted here: on 3 November the log had 363 published proof bundles at tree size 370 | 0 |
-| Control Map rows | 68 (one per Ethereum contract or Solana mint on the 27 October list); every row has an answer on the published page | 0 |
-| Case outputs | 6: the website's three cases (Solana PYUSD, Ethereum USDC, Ethereum PYUSD) and the Drift, BonkDAO and Kelp DAO case notes; translations are not counted separately | 7, in 5 of the 6 outputs |
+| Control Map rows | 68 (one per Ethereum contract or Solana mint on the 27 October list); every row has an answer on the published page. From the 3 November 23:20 UTC re-read the nightly run has 72 rows (declared rows added, see STATUS) | 0 corrected; 1 found on 3 November and not yet corrected: 21 rows label a reverted owner() call as an RPC error (one cause; STATUS known issue) |
+| Case outputs | 7: the website's three cases (Solana PYUSD, Ethereum USDC, Ethereum PYUSD) and the Drift, BonkDAO, Kelp DAO and Arbitrum Security Council case notes; translations are not counted separately | 7, in 5 of the 7 outputs |
 
-A rate per 1,000 is not given for case outputs: six outputs are too few, and one output can carry several corrections. The log
+A rate per 1,000 is not given for case outputs: seven outputs are too few, and one output can carry several corrections. The log
 is append-only: a wrong record is never edited or removed; its correction would be listed here with the record's leaf index.
 
 ## Every correction note
@@ -48,7 +48,8 @@ is append-only: a wrong record is never edited or removed; its correction would 
 | 28 Oct 2026, 11:19 | [BonkDAO case note](cases/bonkdao-2026-07-06.md) | A shared funding wallet and a shared durable-nonce key were listed as history the deciding wallet and the receiving address share, without saying that both behave like an exchange's withdrawal infrastructure. The note said control was not established, but listed this way the two links still suggested common control. Found by an outside review. | Yes | A missing caveat made it misleading. |
 | 29 Oct 2026 | [Kelp DAO case note](cases/kelpdao-rseth-2026-04-18.md) | The 28 October revision said the receiving address was blocked until 19 April at 00:10:55; the `UserTransfersBlocked` event sets 19 April at 18:23:11, 24 hours after the block (a decoding error of 65,536 seconds). Found by EXIT's own review of this page's sources; re-read from the transaction receipt. | Yes | Wrong statement. |
 
-The Drift case note has no correction note.
+The Drift and Arbitrum Security Council case notes have no correction note. The Control Map labelling issue found on 3 November is
+listed in [STATUS.md](STATUS.md); it gets its correction note here when the label is corrected, with the old label kept next to it.
 
 ## Next update
 
