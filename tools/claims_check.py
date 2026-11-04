@@ -11,7 +11,10 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             the service is open "until"/"to" the first period's end without also saying it continues; STATUS.md's free-API row
                             must say the service continues
   sitemap_not_behind_pages  every sitemap <lastmod> is not earlier than the HTTP Last-Modified date of the page it names (the file's time on
-                            the server: a redeploy that rewrote the file counts as a change), and not in the future
+                            the server: a redeploy that rewrote the file counts as a change), and not in the future. v3 (4 Nov): every
+                            <url> entry is accounted for (XML parse, any element order); a page date that cannot be read is a mismatch, never
+                            a skip (one HEAD request per page); an entry without <lastmod> fails unless UNDATED_OK names the check that covers
+                            it (only /log/); no dated entry checked at all fails; sitemap_coverage in the output states what was checked
   status_client_row_version the STATUS.md row "Public script/agent client" names the API description version it describes, and that
                             version equals the repository's openapi.json info.version (the sentence about the copy, checked against the copy —
                             added 2 November after that sentence was found a version behind); when exit_mcp.py is in the checkout, the row's
@@ -25,6 +28,7 @@ DIR for --repo is a checkout (or a folder holding STATUS.md and openapi.json). -
 names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json, SPEC.txt, runs.json) — used by
 the tests only."""
 import json, os, re, sys, time, urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
@@ -33,6 +37,7 @@ ROW_FLAGS = {                     # STATUS.md row label fragment -> live_* flags
     'Any Solana token mint': ('live_mint_research',), 'Ethereum own-contract reader': ('live_contract_research',),
     'Issuer freeze status': ('live_freeze_research',), 'SPL Governance realm and proposals': ('live_governance_research', 'live_governance_proposals'),
     'LayerZero V2 pathway and peer': ('live_layerzero_research', 'live_layerzero_peer')}
+UNDATED_OK = {'/log/': 'anchor_within_26h and run_within_26h of the log sentinel (the daily run rewrites /log/ at 00:30 UTC)'}
 UNTIL = re.compile(r'(open|runs|available)\s+(until|to|through)\s+24\s+November\s+2026', re.I)
 
 
@@ -51,6 +56,14 @@ class Live:
         req = urllib.request.Request(url, headers={'User-Agent': 'exit-claims-check/1', 'Cache-Control': 'no-cache'})
         with urllib.request.urlopen(req, timeout=30) as r:
             return r.read(), {k.lower(): v for k, v in r.headers.items()}
+
+    def head(self, url, name):
+        """Headers only (v3): a page's date needs no body, and a cut-short body must not turn into a skipped check."""
+        if self.dir:
+            return self.headers[name]                             # KeyError when the fixture has no headers for the page: unreadable
+        req = urllib.request.Request(url, method='HEAD', headers={'User-Agent': 'exit-claims-check/1', 'Cache-Control': 'no-cache'})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return {k.lower(): v for k, v in r.headers.items()}
 
 
 def status_rows(md):
@@ -110,20 +123,35 @@ def main(argv):
             if not free_rows or not any('continu' in r.lower() for r in free_rows): miss('free_period_wording', 'STATUS.md free-API row does not say the service continues')
     except Exception as e:
         miss('free_period_wording', 'unreadable: ' + type(e).__name__)
-    # 4. sitemap vs pages
+    # 4. sitemap vs pages (v3: every entry accounted for; an unreadable page date or an uncovered undated entry is a mismatch)
     try:
         sm = live.get(SITE + '/sitemap.xml', 'sitemap.xml')[0].decode(); out['checks']['sitemap_not_behind_pages'] = True; out['sitemap'] = []
-        for loc, lastmod in re.findall(r'<loc>([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>', sm):
-            path = loc.replace(SITE, '') or '/'; name = 'headers:' + path
+        if '<!DOCTYPE' in sm or '<!ENTITY' in sm:
+            raise ValueError('DOCTYPE in sitemap')
+        name_of = lambda e: e.tag.rsplit('}', 1)[-1]  # noqa: E731
+        urls = [u for u in ET.fromstring(sm) if name_of(u) == 'url']
+        cov = out['sitemap_coverage'] = {'entries': len(urls), 'dated_checked': 0, 'undated_allowed': {}}
+        for u in urls:
+            f = {name_of(c): (c.text or '').strip() for c in u}; loc, lastmod = f.get('loc', ''), f.get('lastmod')
+            if not loc.startswith(SITE):
+                miss('sitemap_not_behind_pages', 'an entry without an exit-protocol.io <loc>: %r' % loc[:80]); continue
+            path = loc[len(SITE):] or '/'
+            if not lastmod:
+                if path in UNDATED_OK:
+                    cov['undated_allowed'][path] = UNDATED_OK[path]; out['sitemap'].append({'path': path, 'lastmod': None, 'covered_by': UNDATED_OK[path]})
+                else:
+                    miss('sitemap_not_behind_pages', '%s has no <lastmod> and no other check covers it' % path)
+                continue
             lm = datetime.fromisoformat(lastmod).replace(tzinfo=timezone.utc)
             if lm.timestamp() > now + 86400: miss('sitemap_not_behind_pages', '%s lastmod %s is in the future' % (path, lastmod))
             try:
-                hdr = live.get(loc, name)[1] if live.dir else live.get(loc, name)[1]
-                page_mod = parsedate_to_datetime(hdr.get('last-modified')) if hdr.get('last-modified') else None
-            except Exception:
-                page_mod = None
-            out['sitemap'].append({'path': path, 'lastmod': lastmod, 'page_last_modified': page_mod.isoformat() if page_mod else None})
-            if page_mod and page_mod.date() > lm.date(): miss('sitemap_not_behind_pages', '%s changed %s but the sitemap says %s' % (path, page_mod.date(), lastmod))
+                page_mod = parsedate_to_datetime(live.head(loc, 'headers:' + path)['last-modified'])
+            except Exception as e:
+                miss('sitemap_not_behind_pages', '%s: the page Last-Modified is unreadable (%s)' % (path, type(e).__name__))
+                out['sitemap'].append({'path': path, 'lastmod': lastmod, 'page_last_modified': None}); continue
+            cov['dated_checked'] += 1; out['sitemap'].append({'path': path, 'lastmod': lastmod, 'page_last_modified': page_mod.isoformat()})
+            if page_mod.date() > lm.date(): miss('sitemap_not_behind_pages', '%s changed %s but the sitemap says %s' % (path, page_mod.date(), lastmod))
+        if not cov['dated_checked']: miss('sitemap_not_behind_pages', 'no dated sitemap entry was checked')
     except Exception as e:
         miss('sitemap_not_behind_pages', 'unreadable: ' + type(e).__name__)
     # 5. the status row about the client/API copy, checked against the copy itself (and the MCP server file when present)
