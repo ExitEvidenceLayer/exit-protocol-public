@@ -94,7 +94,7 @@ For Token-2022 mints the reader also interprets the pause authority and the scal
 `solana-finalized-mint-pair-hop/2` since 1 November 2026) and reports the state facts behind them (paused, multiplier) without
 following them as authorities; an answer stored under policy `/1` replays unchanged.
 
-For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-02.2 (2 November 2026); exit_client.py and exit_mcp.py cover every route of that version — the methods for the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer, graph, compare, evidence, log binding, contract watches, webhooks) were checked against a loopback stub of the description, not against the live service with a key. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
+For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-04.1 (4 November 2026); exit_client.py and exit_mcp.py cover every route of that version — the methods for the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer, graph, compare, evidence, log binding, contract watches, webhooks) were checked against a loopback stub of the description, not against the live service with a key. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
 
 ## Research records (unanswered questions)
 
@@ -132,12 +132,21 @@ implementation and admin slots, the `owner()` getter as an observation and wheth
 read-only calls). When the contract's code is the canonical EIP-1167 minimal-proxy clone, the implementation is read from that
 code itself and the admin is reported as not applicable (no extra call; other clone variants are not recognised and stay
 NOT_OBSERVED). For at most two named addresses that hold code, it then asks the multisig interface `getOwners()` and
-`getThreshold()`. Last, it asks `supportsInterface` for the AccessControl enumerable interface and, only when it is declared, reads
-the `DEFAULT_ADMIN_ROLE` member count and up to four members. That is at most twenty-one read-only calls in all. These are interface
+`getThreshold()`. Then it asks `supportsInterface` for the AccessControl enumerable interface and, only when it is declared, reads
+the `DEFAULT_ADMIN_ROLE` member count and up to four members.
+Since 30 October 2026 (schema `/4`), for one reviewed smart-account runtime pair (ERC1967Proxy with SingleOwnerMSCA),
+it compares `getNativeOwner()` with its storage slot. Since 4 November 2026 (schema `/5`), for one reviewed issuer runtime
+pair (USDC's proxy and implementation code, matched byte for byte), it reads `masterMinter()`, `pauser()`, `blacklister()`
+and `rescuer()`; other contracts are `NOT_IN_MODEL` and the role holders' account types are not read. That is at most 26
+read-only calls within 60 seconds in all. These are interface
 answers at that block, not proof of who holds keys; member accounts, other roles and role admins are not read. An empty admin slot
 is unknown, not "no admin"; what an address may do is not established without the published source; an address without code or an
 EIP-7702 delegated account is refused (422) without spending the answer allowance. Responses use
-`exit.ethereum-contract-research/4` since 1 November 2026 (the clone-aware read; a replay of an earlier request returns its stored body, which can be `/1`, `/2` or `/3`).
+`exit.ethereum-contract-research/5` since 4 November 2026: a reverted `owner()` or issuer-getter call is recorded as
+`CALL_REVERTED` (what the call did; it names no holder), an invalid-opcode failure of those calls (two provider wordings) as
+`CALL_FAILED_INVALID_OPCODE`, and a provider error that is neither makes the read incomplete; every code read carries its
+designation (`no_code`, `contract` or `eip7702`). Schema `/4` was used from 30 October (the canonical EIP-1167 clone is
+recognised since 1 November). A replay of an earlier request returns its stored body, which can be `/1` to `/4`.
 
 ## Ethereum issuer freeze research
 
