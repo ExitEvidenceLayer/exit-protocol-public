@@ -1,0 +1,136 @@
+{
+ "checks": {
+  "anchor_within_26h": true,
+  "log_verified": true,
+  "public_claims_match_live": true,
+  "run_outcome_ok": true,
+  "run_within_26h": true
+ },
+ "claims": {
+  "api_description": {
+   "live": "2026-11-04.1",
+   "repository": "2026-11-04.1"
+  },
+  "checks": {
+   "api_description_version": true,
+   "free_period_wording": true,
+   "live_rows_match_flags": true,
+   "reanchor_wording": true,
+   "sitemap_not_behind_pages": true,
+   "spec_version_matches": true,
+   "status_client_row_version": true
+  },
+  "mismatches": []
+ },
+ "commit": "8a8751f5f8b61791adfd1e953250272504b97d53",
+ "format": "exit.log-sentinel/3",
+ "log": "https://exit-protocol.io/log/",
+ "log_ok": true,
+ "newest_anchor": {
+  "age_hours": 1.36,
+  "block_time_utc": "2026-11-05T00:30:08+00:00",
+  "confirmed_on_chain": true,
+  "signature": "3vYY7hCVpbQBn7H4i85atB4Kb2MzGRBsc9VRMhxcjwcSsCfxYWzN3CUBs29N5g9B9p7FeLwMv65SiQb6emuB4B7h",
+  "size": 547
+ },
+ "newest_run": {
+  "age_hours": 1.36,
+  "at": "2026-11-05T00:30:11.067756+00:00",
+  "outcome": "ANCHORED"
+ },
+ "ok": true,
+ "rpc": "https://api.mainnet-beta.solana.com",
+ "rpc_attempts": [
+  {
+   "exit": 0,
+   "first_problem": null,
+   "provider": "https://api.mainnet-beta.solana.com"
+  }
+ ],
+ "run_at": "2026-11-05T01:51:49.009433+00:00",
+ "snapshot_sha256": {
+  "anchors.json": "3efa282384e90523877a452359956cd343afcbe516774d8a0cc22e557870f6d9",
+  "leaves.json": "41f0a34dc0be796814f5c652cf5bc65e722f7208e74c06cf03e1e0e10f3436c2",
+  "notaries.json": "74cf5216110c460bbbf8fcb3c7ae5a5164751b09dbfcf797ed28530eb3e9b73c",
+  "roots.json": "0217f112b3727b2a8480425ddfc342878492c082028bcea7dbb9c709d4378cdd",
+  "runs.json": "15cb42b3237f66008e3ffb5ba94910eb048e40a34700356978403b479c3f0c1b"
+ },
+ "status": "OK",
+ "verifier_sha256": "9381318713af86ff3be6c83960bf4528b4c218e6f088a31379fd011b830f42a6",
+ "verify": {
+  "anchors_fetched": [
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 68 1659b21b319974c3906f966537f33b183f1ad70014c33e070991017630db5fd8 2026-10-27 66",
+    "size": 68,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 134 6aa122815eafc4f0eaef0e4d638b2c81fa31998741be6c609a8f58e0fec51def 2026-10-27 68",
+    "size": 134,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 200 54e5d8d4e5682a4d971a55865bd001e4a5818a56169ffef5599b90862ef7778b 2026-10-28 134",
+    "size": 200,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 204 6b4caf71d4ff517887414530c3c9e853119cfe64161483982efd2aa04b61ea0a 2026-10-29 200",
+    "size": 204,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-10-30 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-10-31 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-11-01 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 274 607b9a897a0e20da31d0825186851df639dcd7832431e82058a8b4bb6b14f27f 2026-11-02 205",
+    "size": 274,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 370 99c8ee774ee247f6fed05ef02a62efbbab8d4ca582c8d9d09acd329d2fb19ca7 2026-11-03 274",
+    "size": 370,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 462 ed04f87ac6e90a60884f1ac4d4e022335286d0aecba103c4c8d142f1f2e74243 2026-11-04 370",
+    "size": 462,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 547 6227e52c647ec50d2afb20304b7b6f5ecb9200514df40e803cfc992b6312adaf 2026-11-05 462",
+    "size": 547,
+    "why": null
+   }
+  ],
+  "anchors_listed": 11,
+  "leaves": 547,
+  "problems": [],
+  "proves": "Every published root is built from the published leaves, and each tree extends the previous one. Every anchor transaction carries its root.",
+  "roots_checked": 10,
+  "verified": true
+ }
+}
