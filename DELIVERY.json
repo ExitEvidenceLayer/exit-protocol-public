@@ -1,0 +1,59 @@
+{
+  "schema": "exit.public-delivery-snapshot/1",
+  "as_of": "2026-11-05",
+  "product": "Evidence-based blockchain research and monitoring infrastructure",
+  "specialization": "Control and change analysis",
+  "network_order": "Solana first; Ethereum is the selected EVM scope; further networks require a bounded scope decision.",
+  "master_roadmap": "https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/ROADMAP.md",
+  "current_status": "https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/STATUS.md",
+  "api_contract": "https://api.exit-protocol.io/openapi.json",
+  "api_version": "2026-11-04.1",
+  "whitepaper": "https://exit-protocol.io/WHITEPAPER-v0.7.html",
+  "claims": [
+    {
+      "id": "research",
+      "label": "Supported research",
+      "state": "LIVE / BOUNDED",
+      "detail": "Solana mint and SPL Governance reads; Ethereum contract, issuer-freeze and LayerZero reads. Explicit parsers, source availability and per-route limits apply."
+    },
+    {
+      "id": "workflow",
+      "label": "Continuing research",
+      "state": "LIVE / BOUNDED",
+      "detail": "Research records, saved comparisons and answer-to-source navigation. Unanswered requests retain a gap or reason; there is no general automatic research worker."
+    },
+    {
+      "id": "graph",
+      "label": "Research graph",
+      "state": "LIVE / BOUNDED",
+      "detail": "Joins one to four of an account's own cached answers. Typed relations and source conflicts remain visible; this is not a global multi-chain graph."
+    },
+    {
+      "id": "watch",
+      "label": "Change checks",
+      "state": "LIVE / ON REQUEST",
+      "detail": "Solana and Ethereum watches re-read on request under published quotas; the single pilot watch is also read hourly (see radar). This is not general continuous monitoring."
+    },
+    {
+      "id": "radar",
+      "label": "Radar and webhook delivery",
+      "state": "LIMITED PILOT",
+      "detail": "Hourly reads for one watched subject across the whole service, currently used by EXIT's test receiver. Broader scheduled alerting is not delivered."
+    },
+    {
+      "id": "log",
+      "label": "Public evidence log",
+      "state": "PUBLIC / SOLANA-ANCHORED",
+      "detail": "Append-only record commitments, daily anchor job and public verifiers. A checked inclusion proof establishes the commitment's presence by the anchor time, not the truth, completeness or earlier knowledge of its content."
+    },
+    {
+      "id": "pass",
+      "label": "Paid API Pass",
+      "state": "PRIVATE PROTOTYPE / NOT LIVE",
+      "detail": "Receipt-to-credit production integration still requires its actual chain/wallet rehearsal and separate security and operating acceptance. Holding EXITP alone does not currently grant credits."
+    }
+  ],
+  "free_access": "The initial period is 25 October-24 November 2026, 12:38:20 UTC. Existing keys then continue under the same quotas and lifetime caps without a fixed end date or automatic payment; at least 30 days' notice precedes any end.",
+  "utility": "Technical tests and operated routes do not establish independent human usefulness or commercial demand. These outcomes remain unmeasured unless a dated result states otherwise.",
+  "publication": "This is a dated documentation snapshot, not an automatic live-status feed or an expansion of access rights."
+}

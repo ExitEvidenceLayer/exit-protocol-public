@@ -12,7 +12,7 @@ Our first specialization is control and change analysis. The larger direction is
 a research environment connecting authority, events and observed fund relationships
 across validated network coverage—usable by individuals, software and organizations.
 
-[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.6.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.6.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Visual roadmap](https://exit-protocol.io/ROADMAP.html) · [Roadmap record](ROADMAP.md)
+[Use free research](https://api.exit-protocol.io/) · [Explore the research desk](https://exit-protocol.io/#start) · [Read the illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.7.html) · [Download PDF](https://exit-protocol.io/WHITEPAPER-v0.7.pdf) · [Whitepaper text & history](WHITEPAPER.md) · [Vision & mechanism](VISION.md) · [Visual roadmap](https://exit-protocol.io/ROADMAP.html) · [Roadmap record](ROADMAP.md)
 
 ## Why this matters
 
@@ -148,3 +148,8 @@ A bounded public-HTTPS acceptance passed: record lifecycle, watch lifecycle and 
 ### Keyless evidence checks — 29 October 2026
 
 Use `exit_history`, `exit_cite` and `exit_verify` through the existing stdio MCP server. Public inclusion and actual finalized-chain verification are separate outcomes; unavailable chain evidence cannot become `verified=true`. The keyless tools never forward research access keys. [Download the complete public source package and instructions](https://exit-protocol.io/tools/).
+
+
+## Document alignment · 5 November 2026
+
+One master direction: Evidence-based blockchain research and monitoring infrastructure. Solana first; control and change analysis is the first specialization. The updated [whitepaper 0.7](https://exit-protocol.io/WHITEPAPER-v0.7.html) explains the same program; [DOCS.md](DOCS.md) distinguishes the method, plan and dated delivery state. The shared [DELIVERY.json](DELIVERY.json) snapshot names live, pilot and prototype boundaries. Broader graphs, general question planning and paid redemption must not be inferred from a diagram or token ownership.

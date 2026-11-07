@@ -1,5 +1,12 @@
 # Public documentation changelog
 
+## 7 November 2026 · Whitepaper 0.7 and delivery-document alignment
+
+- Added the dated whitepaper 0.7 HTML/PDF, its generated text companion, DOCS.md and the shared DELIVERY.json snapshot.
+- Updated document links and delivery-state labels while preserving the North Star, quarter windows, earlier editions and recorded cases.
+- Removed the superseded roadmap sentence: "Whitepaper 0.6 predates the evidence log; where they differ, this page and STATUS.md are current." The current dated status and changelog remain authoritative for later releases.
+- The 4 November withdrawal is retained. This documentation release does not reinstate the withdrawn authority-path roadmap item or activate paid redemption.
+
 ## 6 November 2026 (recorded 7 November) · Ethereum read provider
 
 - 01:40 UTC: the Ethereum reads of EXIT's service moved from ethereum-rpc.publicnode.com to eth.drpc.org in a release that ran

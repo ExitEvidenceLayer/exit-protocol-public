@@ -123,7 +123,7 @@ Planned unless marked LIVE.
 Current delivery labels are in [STATUS.md](STATUS.md). Completion of the first
 release does not require completion of the four growth quarters below.
 
-The roadmap stages and the whitepaper describe the same direction. Document version numbers identify revisions, not competing product plans. Whitepaper 0.6 predates the evidence log; where they differ, this page and STATUS.md are current.
+The roadmap stages and the whitepaper describe the same direction. Document version numbers identify revisions, not competing product plans. Whitepaper 0.7 aligns the delivery snapshot as of 5 November; subsequent releases remain dated in STATUS.md and CHANGELOG.md.
 
 ## After launch: relative quarters
 
@@ -162,5 +162,10 @@ plans, measured monitoring and machine-checkable permitted outputs. Stronger
 formal or cryptographic methods require their own bounded task, assumptions,
 baseline comparison and benefit. This is a direction, not a dated delivery claim.
 
-Read the [illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.6.html)
+Read the [illustrated whitepaper](https://exit-protocol.io/WHITEPAPER-v0.7.html)
 and [vision/mechanism guide](VISION.md) for the larger system.
+
+
+## Document alignment · 5 November 2026
+
+One master direction: Evidence-based blockchain research and monitoring infrastructure. Solana first; control and change analysis is the first specialization. The updated [whitepaper 0.7](https://exit-protocol.io/WHITEPAPER-v0.7.html) explains the same program; [DOCS.md](DOCS.md) distinguishes the method, plan and dated delivery state. The shared [DELIVERY.json](DELIVERY.json) snapshot names live, pilot and prototype boundaries. Broader graphs, general question planning and paid redemption must not be inferred from a diagram or token ownership.

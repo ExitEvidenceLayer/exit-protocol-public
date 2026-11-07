@@ -89,3 +89,8 @@ method if the relevant benefit justifies the operational burden. Otherwise revis
 or stop it. Later, labels and thresholds will be committed to the log before a run
 (this needs a new log record kind); corrections are already published as a public
 error rate (CORRECTIONS.md, since 29 October). See [the measurable roadmap](ROADMAP.md) and [current status](STATUS.md).
+
+
+## Document alignment · 5 November 2026
+
+One master direction: Evidence-based blockchain research and monitoring infrastructure. Solana first; control and change analysis is the first specialization. The updated [whitepaper 0.7](https://exit-protocol.io/WHITEPAPER-v0.7.html) explains the same program; [DOCS.md](DOCS.md) distinguishes the method, plan and dated delivery state. The shared [DELIVERY.json](DELIVERY.json) snapshot names live, pilot and prototype boundaries. Broader graphs, general question planning and paid redemption must not be inferred from a diagram or token ownership.
