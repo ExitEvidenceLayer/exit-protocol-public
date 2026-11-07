@@ -1,5 +1,19 @@
 # Public documentation changelog
 
+## 6 November 2026 (recorded 7 November) · Ethereum read provider
+
+- 01:40 UTC: the Ethereum reads of EXIT's service moved from ethereum-rpc.publicnode.com to eth.drpc.org in a release that ran
+  from 01:33 to 01:40 UTC: the Ethereum research routes of the API, the radar's Ethereum reads and the nightly Control Map reads. Answers recorded
+  in that window may name either provider; answers recorded before it keep the provider they name and still replay. The nightly
+  second-provider check takes its Ethereum second source from eth.api.pocket.network instead of eth.drpc.org from its 7 November 00:05 UTC
+  run, so its second source is never a primary endpoint; it now stops, before any second-provider read, if its second provider is also
+  a primary source or is named by a sampled answer. The first Control Map run after the release (6 November 23:20 UTC) compared none of its
+  48 Ethereum rows: each was recorded as NOT_COMPARED (READER_OR_SOURCE_CHANGED), because the Ethereum reader's code changed with
+  the switch (a new hash of the reader's code, not a change seen in any contract; no Ethereum contract was compared that night).
+  It compared all 24 Solana rows and found no change.
+  The first run expected to compare two reads from the new source is on 7 November 23:20 UTC. Solana reads did not change. This entry was
+  added on 7 November; the release was not recorded here on 6 November.
+
 ## 4 November 2026 · contract reader /5, six Control Map setting names, Arbitrum case on the homepage, claims check v3
 
 - 06:30 UTC: the nightly Control Map comparison can compare six more setting names of the
