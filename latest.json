@@ -29,24 +29,27 @@
    "row_servers_named": [
     "1.3.1"
    ],
+   "row_tool_counts_named": [
+    "30"
+   ],
    "row_tools": 30,
    "version_in_row": "2026-11-04.1"
   },
   "mismatches": []
  },
- "commit": "ef95f6957945f8b9ff367af752d748319c57ce9c",
+ "commit": "ee04e4640fb02d75bb7a335ea81d1efbc97c6b95",
  "format": "exit.log-sentinel/3",
  "log": "https://exit-protocol.io/log/",
  "log_ok": true,
  "newest_anchor": {
-  "age_hours": 15.07,
+  "age_hours": 18.77,
   "block_time_utc": "2026-11-10T00:30:10+00:00",
   "confirmed_on_chain": true,
   "signature": "27Y2nkjWeaMwTSex5XZaxFgC9jEYz7W3HUNf1vcujMjtFwjtkqnzqUoKaSqgdck6PWE2E8okg5nAwwdxv9D8AxVa",
   "size": 967
  },
  "newest_run": {
-  "age_hours": 15.06,
+  "age_hours": 18.77,
   "at": "2026-11-10T00:30:14.277369+00:00",
   "outcome": "ANCHORED"
  },
@@ -59,7 +62,7 @@
    "provider": "https://api.mainnet-beta.solana.com"
   }
  ],
- "run_at": "2026-11-10T15:34:04.820781+00:00",
+ "run_at": "2026-11-10T19:16:19.523195+00:00",
  "snapshot_sha256": {
   "anchors.json": "36f69b074631039f543790d4424e0634c51d571c1fdc1f7b8e7ecaa4c468e9cb",
   "leaves.json": "a9a3eb3f642612b55a4480b31b26b650549b34b5ea601b0029a469ce960144ae",
