@@ -1,6 +1,6 @@
 # Research tools for scripts and agents
 
-These thin public wrappers call the same live EXIT API. They contain no research-engine source, raw evidence archive or access key. Written for Python 3.10 or later and tested on 3.12; standard library only. Download `exit_client.py` and `exit_mcp.py` into the same directory. No package installation or autonomous platform is required.
+These thin public wrappers call the same live EXIT API. They contain no research-engine source, raw evidence archive or access key. Written for Python 3.10 or later and tested on 3.12; standard library only. Download `exit_client.py` and `exit_mcp.py` into the same directory; the keyless tools (exit_history, exit_cite, exit_verify) also need `exit_evidence.py` in that directory and `tools/exit_log_verify.py` in a `tools` folder inside it (see below). No package installation or autonomous platform is required.
 
 1. Open https://api.exit-protocol.io/, read the notices and get free access. Keep that bearer key private.
 2. Supply `EXIT_API_KEY` only through the process environment or your MCP application's private secret store. Never put it in a prompt, issue, screenshot or public configuration. Browser access rotation/revocation remains available.

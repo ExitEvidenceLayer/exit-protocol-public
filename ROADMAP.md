@@ -24,6 +24,8 @@ complete.
 
 ## Current engineering sequence · 4 November (T0 + 10 days)
 
+Written on 4 November, with dated corrections to 10 November.
+
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: durable research records and explicit pull-change checks
@@ -48,8 +50,10 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       (master minter, pauser, blacklister, rescuer) for one reviewed issuer runtime pair (USDC) and gives every code it reads its
       designation, EIP-7702 included (schema /5, 4 November 01:35 UTC; the account types and EIP-7702 designations of the issuer role
       holders, multisig owners and AccessControl members are not read); from the 4 November 23:20 UTC re-read on, the nightly records
-      of the 21 Control Map rows whose owner() reverts are expected to carry CALL_REVERTED; the after-measurement on the fixed question
-      bank is planned after that run
+      of the 21 Control Map rows whose owner() reverts were expected to carry CALL_REVERTED (corrected 10 November: not shown in the
+      public record, which names each record's evidence and result only by SHA-256);
+      an after-measurement on the fixed question bank was planned after that run
+      (corrected 10 November: no result of it is shown in the public record; docs/Q1-RESULT.md reports only the 3 November baseline)
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
@@ -64,9 +68,13 @@ October, were not part of it. Since 27 October a limited
 radar pilot reads pending-authority scopes once an hour for watches that have an owned webhook
 receiver (one watch service-wide, used by EXIT's own test); it is not continuous
 monitoring, and pull checks remain the general monitoring scope. The script client
-and MCP wrapper cover every route of API version 2026-11-04.1 (server 1.3.0); the
-methods added for the routes newer than 2026-10-26.2 were checked against a loopback
-stub of the API description, not against the live service with a key.
+and MCP wrapper (server 1.3.1 in this repository since 10 November 01:04 UTC, hub
+commit 84ed9680) cover the research routes of API version 2026-11-04.1 except
+receiver registration; the account routes under
+/early-access/ (challenge, enrollment, rotation, revocation, feedback), /v0/subjects,
+/v0/corroboration and /v0/contract are not wrapped (AGENT-TOOLS.md lists the wrapped
+tools). The methods added for the routes newer than 2026-10-26.2 were checked against
+a loopback stub of the API description, not against the live service with a key.
 
 Public, with no key: the evidence log, a standalone verifier, keyless cite tools
 and a browser check running code served by EXIT's site. The daily sentinel, which

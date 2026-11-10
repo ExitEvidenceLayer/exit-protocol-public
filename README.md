@@ -42,7 +42,7 @@ without an email, wallet, token or payment. One key covers live control reads fo
 and change answers over three recorded Solana reference subjects. See the
 [quick start, live examples and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded control reads, not unrestricted wallet tracing or prose investigation.
 
-EXIT's own records go into a public, append-only [evidence log](https://exit-protocol.io/log/), anchored on Solana once a day when it grows and checkable with a standalone verifier. The [Control Map](https://exit-protocol.io/control-map/) is a dated snapshot of which addresses hold the control roles of the largest tokens' Ethereum and Solana deployments.
+EXIT's own records go into a public, append-only [evidence log](https://exit-protocol.io/log/), anchored on Solana by a daily job at 00:30 UTC since 28 October; since 29 October the job also anchors the current root again on a day without new records (first on 31 October; corrected 10 November), and checkable with a standalone verifier. The [Control Map](https://exit-protocol.io/control-map/) is a dated snapshot of which addresses hold the control roles of the largest tokens' Ethereum and Solana deployments.
 
 [Connect scripts and agents](AGENT-TOOLS.md) with the public Python client, stdio MCP adapter and [OpenAPI description](openapi.json). No private research-engine code is included.
 
@@ -92,16 +92,20 @@ see [TOKEN.md](TOKEN.md).
 
 ### Verify the client files
 
-Before running `exit_client.py` or `exit_mcp.py`, check that your copies match the files published here.
+Before running `exit_client.py`, `exit_mcp.py` or `exit_evidence.py` (loaded by the keyless tools), check that your copies match the
+files published here.
 
 | File | SHA-256 |
 |---|---|
-| `exit_client.py` | `30c92ac0f84f504bd9d54b1ed9a146664044706bf3e7424286d5c2029222aa38` |
-| `exit_mcp.py` | `bb72d79d3da7e7b9d4b236188035cb6648e37cd71f4c5c5973609efd53ffc378` |
+| `exit_client.py` | `f7b07eaf4e4cc6b096f75d22c8f59e66e69c279c06ad21554c21fa58a85e4e80` |
+| `exit_mcp.py` | `dedeac5e97e4c0265288d6348b327177f296b5640aadc39242f3ef8f688941d5` |
+| `exit_evidence.py` | `238b214ff86a0cb346031ce48a999f9eba5026cc942f7de8b8aeea0897d13d35` |
 
-On macOS or Linux, `shasum -a 256 exit_client.py exit_mcp.py` must print these values; on Windows PowerShell,
-`Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py`. A copy with any other value is not the published file. When
-the files change, these values change in the same commit.
+On macOS or Linux, `shasum -a 256 exit_client.py exit_mcp.py exit_evidence.py` must print these values; on Windows PowerShell,
+`Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py`. A copy with any other value is not the published file.
+exit_evidence.py pins the SHA-256 of `tools/exit_log_verify.py` (`9381318713af86ff3be6c83960bf4528b4c218e6f088a31379fd011b830f42a6`)
+and refuses to use any other copy, so checking exit_evidence.py also covers the verifier. These values are to change in the same
+commit as the files; the commits of 2 and 10 November (caff9534, f16e1d49, 84ed9680) did not update them (corrected 10 November).
 
 ## Project record
 

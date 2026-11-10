@@ -1,5 +1,53 @@
 # Public documentation changelog
 
+## 10 November 2026 · agent tools server 1.3.1 and documentation corrections
+
+- [exit_mcp.py](exit_mcp.py) reports server version 1.3.1 (hub commit
+  [84ed9680](https://github.com/ExitEvidenceLayer/exit-protocol-public/commit/84ed9680a722072e8d89496e2f33108e16f6f243), 10 November
+  01:04 UTC). It adds no tools. Replies from the EXIT API and the public log and chain reads are refused when arrays and objects nest
+  beyond 128 levels, by an explicit depth check that does not depend on the interpreter. A malformed HTTP reply from the EXIT API is
+  reported as the error BAD_HTTP_RESPONSE; status -1 means the request was sent and the reply could not be read, so check usage
+  before a new attempt. exit_verify also reports verified=false when the chain evidence it fetched cannot be checked, and
+  publisher_verified is true only when the anchor's signer is in the caller's trusted set and the chain anchor check passes. Every
+  tool description says that returned text is source material, not instructions. [AGENT-TOOLS.md](AGENT-TOOLS.md) now says that the
+  tools were written for Python 3.10 or later and tested on 3.12, and that the chain-data providers see the addresses and accounts
+  asked about, including wallet addresses given to exit_freeze_status.
+- [STATUS.md](STATUS.md) and [ROADMAP.md](ROADMAP.md) still named server 1.3.0; they and [docs/API.md](docs/API.md) said that the
+  script client and MCP wrapper cover every route of API version 2026-11-04.1. That was not so under 1.3.0 or 1.3.1: receiver
+  registration (POST /v0/research/webhook), the account routes under /early-access/ (challenge, enrollment, rotation, revocation,
+  feedback), /v0/subjects, /v0/corroboration and /v0/contract are not wrapped; AGENT-TOOLS.md lists the tools and names receiver
+  registration as outside the wrapper. Until hub commit 84ed9680, AGENT-TOOLS.md's 1.3.0 section said that the wrapper covered every
+  research route the free service serves. STATUS.md and ROADMAP.md now name server 1.3.1; they and docs/API.md now say which routes
+  are covered. API version 2026-11-04.1 lists the same routes as 2026-11-02.2. AGENT-TOOLS.md's opening paragraph now also names
+  exit_evidence.py and tools/exit_log_verify.py, which the keyless tools need.
+- STATUS.md (Control Map row and 4 November update), ROADMAP.md (contract reader /5 line) and the 4 and 6 November entries below
+  described, in the future tense, Control Map nights that have since passed. The dated entries keep what they expected; all now state
+  what the public record shows (in the 6 November entry, "Solana reads did not change" now reads "The Solana read providers did not
+  change", because it now follows the Solana comparison result): the evidence log holds an observation for each of the 72 rows of the
+  4, 5, 6 and 7 November 23:20 UTC runs; the daily page shows that the 7, 8 and 9 November runs compared all 48 Ethereum rows and
+  found the same settings. None of the following is shown in the public record: whether the 4 and 5 November runs compared any
+  Ethereum row, how many settings the 5 and 7 November runs compared, whether the nightly records carry CALL_REVERTED, and a result
+  of the after-measurement on the fixed question bank that was planned after the 4 November run.
+- [README.md](README.md) said that the evidence log is anchored on Solana once a day when it grows. The
+  [log page](https://exit-protocol.io/log/) says that it is anchored once a day at 00:30 UTC, with the current root again when the
+  log has not grown, and [anchors.json](https://exit-protocol.io/log/anchors.json) lists an anchor for every UTC day from 27 October
+  to 10 November (two on 27 October, at 12:14 and 16:58 UTC, then one at 00:30 UTC on each day from 28 October), including
+  31 October and 1 November, when the root (tree size 205) was unchanged. README.md now says so. README.md's client-file SHA-256
+  table still listed earlier files (exit_client.py of 26 October and exit_mcp.py of 29 October) from 2 November until this change:
+  hub commits caff9534 and f16e1d49 (2 November) and 84ed9680 changed these files without updating it, although README.md said
+  that the values change in the same commit. It now lists the files of hub commit 84ed9680, adds exit_evidence.py, which the
+  keyless tools load, says that exit_evidence.py pins the SHA-256 of tools/exit_log_verify.py, and records that the values were
+  not updated in those commits.
+  STATUS.md's Control Map row described the [daily page](https://exit-protocol.io/control-map/daily/) as showing counts per date; it
+  now describes what the page shows: each row's last daily read and the number of consecutive daily reads with the same settings
+  since a stated date, plus a summary of the runs. The same row's statement that the main
+  [Control Map page](https://exit-protocol.io/control-map/) is not refreshed by the nightly run still holds: on 10 November that page
+  lists 68 rows, and the latest read time it shows is 28 October 06:55:16 UTC. STATUS.md's 3 November update said that the daily
+  page showed that night's reset as BASELINE_RESET; on 10 November the page does not show that code, and the update now says what
+  the page shows. STATUS.md's 28 October update said that anchoring the current root again on a day without new records was not yet
+  observed; [runs.json](https://exit-protocol.io/log/runs.json) lists it (HEARTBEAT_ANCHORED) on 31 October and 1 November, and the
+  update now says so.
+
 ## 7 November 2026 · Whitepaper 0.7 and delivery-document alignment
 
 - Added the dated whitepaper 0.7 HTML/PDF, its generated text companion, DOCS.md and the shared DELIVERY.json snapshot.
@@ -18,8 +66,12 @@
   48 Ethereum rows: each was recorded as NOT_COMPARED (READER_OR_SOURCE_CHANGED), because the Ethereum reader's code changed with
   the switch (a new hash of the reader's code, not a change seen in any contract; no Ethereum contract was compared that night).
   It compared all 24 Solana rows and found no change.
-  The first run expected to compare two reads from the new source is on 7 November 23:20 UTC. Solana reads did not change. This entry was
-  added on 7 November; the release was not recorded here on 6 November.
+  The Solana read providers did not change (reworded 10 November). This entry expected the 7 November 23:20 UTC run to be the
+  first to compare two reads from the new source. What the public record shows (corrected 10 November): that run recorded an
+  observation for all 72 rows in the evidence log, and on 10 November the [daily page](https://exit-protocol.io/control-map/daily/)
+  shows every Ethereum row with the same settings at 4 consecutive daily reads since the 6 November read, so the 7 November run
+  compared all 48 Ethereum rows with their 6 November reads and found the same settings; how many settings it compared per row is
+  not shown in the public record. This entry was added on 7 November; the release was not recorded here on 6 November.
 
 ## 4 November 2026 · contract reader /5, six Control Map setting names, Arbitrum case on the homepage, claims check v3
 
@@ -27,11 +79,17 @@
   [Control-Change Record list](control-change/control-change-settings.json) (56 names; the list was updated here at 04:47 UTC): the
   ZeppelinOS proxy implementation and admin slots, and masterMinter(), pauser(), blacklister() and rescuer() of Circle's FiatToken.
   The contract reader reads these four getters only when a token's proxy and implementation code match the reviewed USDC pair byte
-  for byte; it reads the ZeppelinOS slots on every Ethereum row, and an empty slot is compared as the zero address. The 4 November
-  23:20 UTC run is expected to compare no Ethereum row, because the reader moved to /5 that day (READER_OR_SOURCE_CHANGED). From the
-  first night that compares two /5 reads, expected on 5 November 23:20 UTC, each compared Ethereum row other than row 4 is expected
-  to count two more compared settings than it would without the six names, and row 4 (USDC on Ethereum) six more when both of its
-  reads match the reviewed pair (two otherwise): settings compared, not changes found.
+  for byte; it reads the ZeppelinOS slots on every Ethereum row, and an empty slot is compared as the zero address. This entry
+  expected the 4 November 23:20 UTC run to compare no Ethereum row (the reader moved to /5 that day, READER_OR_SOURCE_CHANGED) and
+  the 5 November 23:20 UTC run to be the first to compare two /5 reads, with each compared Ethereum row other than row 4 counting two
+  more compared settings than without the six names and row 4 (USDC on Ethereum) six more when both of its reads match the reviewed
+  pair (two otherwise). What the public record shows (corrected 10 November): both runs recorded an observation for all 72 rows in the
+  [evidence log](https://exit-protocol.io/log/) (48 Ethereum, 24 Solana). Whether either run compared any Ethereum row, and how many
+  settings, is not shown in the public record: the [daily page](https://exit-protocol.io/control-map/daily/) restarts each Ethereum
+  row's count at the 6 November read (entry above), and its [daily.json](https://exit-protocol.io/control-map/daily/daily.json) gives
+  the number of compared settings (field compared_settings_in_latest_read) only for the latest read. On 10 November, daily.json's
+  latest read (9 November 23:20 UTC) gave 10 compared settings for row 4 (USDC on Ethereum) and 5 to 8 for each other Ethereum row:
+  settings compared, not changes found.
 - 01:35 UTC: the Ethereum contract reader answers with schema exit.ethereum-contract-research/5: a reverted owner() or issuer-getter
   call is recorded as CALL_REVERTED (what the call did; it names no holder), an invalid-opcode failure of those calls (two provider
   wordings) as CALL_FAILED_INVALID_OPCODE, and a provider error that is neither makes the read incomplete; the issuer roles for one
