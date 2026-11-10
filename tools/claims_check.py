@@ -19,7 +19,13 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             version equals the repository's openapi.json info.version (the sentence about the copy, checked against the copy —
                             added 2 November after that sentence was found a version behind); when exit_mcp.py is in the checkout, the row's
                             "(N tools, server X)" must also match the MCP server's own tool list and version; since 10 Nov the server versions the row names are
-                            compared (the row must name only the current server; forms this check does not read fail), and a row naming a
+                            compared. This guards against accidental drift by the row's own author, not against deliberate hiding. The description
+                            cell is lightly normalised (HTML entities decoded, NFKC, and U+00AD, U+200B-U+200D, U+2060, U+FEFF, backslashes,
+                            "*", "_" and backticks removed; inline HTML tags, links and other invisible characters are not removed). In that
+                            text every three-part X.Y.Z number must equal exit_mcp.py's server version, wherever it stands, and every digit
+                            before "tool(s)" with up to three words or an ASCII hyphen between is read as a tool count and must equal it. The
+                            strict "server X" form and the "(N tools, server X.Y.Z)" tuple are read on the raw cell. Only one row whose raw
+                            label contains "script/agent client" is allowed, and a row naming a
                             server fails when exit_mcp.py is absent (the sentinel had skipped it: it fetched only
                             STATUS.md, openapi.json and this file)
   spec_version_matches      STATUS.md's "(SPEC.txt) is version X" equals the version in the first line of the live log/SPEC.txt (added 3 Nov
@@ -30,7 +36,7 @@ These two are the last rules added for now: a public claim is checked here only 
 DIR for --repo is a checkout (or a folder holding STATUS.md, openapi.json and exit_mcp.py). --live-dir replaces every network read with files of the same
 names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json, SPEC.txt, runs.json) — used by
 the tests only."""
-import json, os, re, sys, time, urllib.request
+import html, json, os, re, sys, time, unicodedata, urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -165,24 +171,31 @@ def main(argv):
             cell = crow[0][2]; m = re.search(r'version (\d{4}-\d{2}-\d{2}\.\d+)', cell)
             out['client_row'] = {'version_in_row': m.group(1) if m else None, 'repository_openapi_version': repo_v, 'files_checked': False}
             out['checks']['status_client_row_version'] = True
+            if len(crow) > 1:                           # 10 Nov (L-528): one client row; a second one (a commented-out copy included) is never left unread
+                miss('status_client_row_version', 'STATUS.md has %d rows naming the public script/agent client; only one is allowed' % len(crow))
             if not m: miss('status_client_row_version', 'the client row names no API description version')
             elif m.group(1) != repo_v: miss('status_client_row_version', 'the client row says version %s; the repository copy is %s' % (m.group(1), repo_v))
             mcp = os.path.join(repo, 'exit_mcp.py'); tm = re.search(r'\((\d+) tools?, server v?(\d+\.\d+\.\d+)\)', cell)
-            strict = re.findall(r'(?i)\bserver\b[\s:*`]*(?:version[\s:*`]*)?v?(\d+(?:\.\d+)+(?:-[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)*)?)', cell)
-            broad = re.findall(r'(?i)\bservers?\b\W{0,6}(?:version\W{0,3})?v?\d+\.\d', cell)   # every mention that looks like a server version
-            named = sorted(set(strict)); out['client_row']['row_servers_named'] = named
-            if len(broad) > len(strict):                # 10 Nov (L-524): a mention in a form this check does not read fails, never passes silently
-                miss('status_client_row_version', 'the client row names a server in a form this check does not read')
+            strict_re = r'(?i)\bserver\b[\s:*`]*(?:version[\s:*`]*)?v?(\d+(?:\.\d+)+(?:-[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)*)?)'
+            strict = re.findall(strict_re, cell)
+            # 10 Nov (L-528, round 3, frozen by the loop brake): values, not positions, against accidental drift (not deliberate hiding). Light
+            # normalisation: entities, NFKC, and the listed characters removed (see the docstring). Every three-part X.Y.Z number is a server version
+            # claim wherever it stands, and every digit before "tool(s)" (up to three words between) is a tool count claim; each must equal exit_mcp.py.
+            seen = re.sub('[\u00ad\u200b-\u200d\u2060\ufeff\\\\*_`]', '', unicodedata.normalize('NFKC', html.unescape(cell)))
+            triples = re.findall(r'(?<!\d)(?<!\d\.)(\d+\.\d+\.\d+)(?!\.?\d)', seen)
+            named = sorted(set(strict) | set(triples)); out['client_row']['row_servers_named'] = named
+            tool_claims = [t.group(1) for t in re.finditer(r'(?i)(?<![\w.-])(\d+)(?:[\s-]+[a-z][\w/]*){0,3}?[\s-]*tools?\b', seen)]
             if named and not os.path.exists(mcp):       # a row that names a server is checked against exit_mcp.py, or fails
                 miss('status_client_row_version', 'the client row names server %s, but exit_mcp.py is not in the checkout, so it was not checked' % ', '.join(named))
             elif os.path.exists(mcp) and named:
                 src = open(mcp, encoding='utf-8').read(); sv = re.search(r'"serverInfo":\s*\{[^}]*"version":\s*"([^"]+)"', src)
                 n = len(set(re.findall(r'\{\s*"name":\s*"(exit_[a-z0-9_]+)",\s*"description"', src)))   # every tool entry (TOOLS = [...] and TOOLS.extend([...])) starts name, description
-                out['client_row'].update({'files_checked': True, 'mcp_server_version': sv.group(1) if sv else None, 'mcp_tools': n, 'row_tools': int(tm.group(1)) if tm else None, 'row_server': tm.group(2) if tm else None, 'row_servers_named': named})
+                out['client_row'].update({'files_checked': True, 'mcp_server_version': sv.group(1) if sv else None, 'mcp_tools': n, 'row_tools': int(tm.group(1)) if tm else None, 'row_server': tm.group(2) if tm else None, 'row_servers_named': named, 'row_tool_counts_named': sorted(set(tool_claims))})
                 for v in named:
                     if not sv or v != sv.group(1): miss('status_client_row_version', 'the client row says server %s; exit_mcp.py says %s' % (v, sv.group(1) if sv else None))
+                told = [x for x in tool_claims if int(x) != n]
                 if not tm: miss('status_client_row_version', 'the client row names a server but not as "(N tools, server X.Y.Z)", so its tool count was not checked')
-                elif n != int(tm.group(1)): miss('status_client_row_version', 'the client row says %s tools; exit_mcp.py lists %d' % (tm.group(1), n))
+                elif told: miss('status_client_row_version', 'the client row says %s tools; exit_mcp.py lists %d' % (told[0], n))
     except Exception as e:
         miss('status_client_row_version', 'unreadable: ' + type(e).__name__)
     # 6. log specification version
