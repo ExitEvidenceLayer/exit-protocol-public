@@ -2,7 +2,9 @@
 # Every day at 00:45 UTC (15 minutes after EXIT's daily anchor run) it fetches the verifier from this repository at this commit,
 # verifies the published log at https://exit-protocol.io/log/ against Solana, checks that the newest anchor and the newest
 # daily run are less than 26 hours old, and writes the result to the `sentinel` branch of this repository
-# (results/<date>.json and latest.json). The job fails, visibly, when a log integrity check fails; a public-text drift is a warning
+# (results/<date>.json for the day's first scheduled run on its first attempt, results/<date>-<event>-<run id>-<attempt>.json for any
+# other run or re-run, and
+# latest.json for the newest run). The job fails, visibly, when a log integrity check fails; a public-text drift is a warning
 # annotation on a passing run (status DOCS_DRIFT in the result).
 # No secrets other than the job's own token; it writes only to the `sentinel` branch; no third-party actions.
 name: Evidence log sentinel
@@ -187,7 +189,10 @@ jobs:
             git checkout -q --orphan sentinel
           fi
           mkdir -p results
-          cp ../result.json "results/${day}.json"
+          name="results/${day}.json"   # 10 Nov (Magnolia 122, EVE-20261110-L524P-01): only the day's first scheduled run writes the day's record
+          if [ "${GITHUB_EVENT_NAME:-}" != "schedule" ] || [ "${GITHUB_RUN_ATTEMPT:-1}" != "1" ] || [ -e "$name" ]; then name="results/${day}-${GITHUB_EVENT_NAME:-unknown}-${GITHUB_RUN_ID:-0}-${GITHUB_RUN_ATTEMPT:-1}.json"; fi
+          if [ -e "$name" ]; then echo "refusing to overwrite $name"; exit 1; fi   # a results file is written once
+          cp ../result.json "$name"
           cp ../result.json latest.json
           status=$(python3 -I -c 'import json; d = json.load(open("latest.json")); s = d.get("status"); print(s if s in ("OK", "DOCS_DRIFT", "FAILED") else ("OK" if d.get("ok") is True else "FAILED"))')
           git add results latest.json
