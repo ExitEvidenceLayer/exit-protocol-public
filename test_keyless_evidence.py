@@ -158,6 +158,53 @@ class EvidenceTests(unittest.TestCase):
         for raw in [b'{"x":1,"x":2}', b'{"x":NaN}', b'\xff', b'[' * 2000 + b']' * 2000]:
             with self.assertRaises(c.ExitError): e.strict(raw)
 
+    def test_json_depth_limit_is_explicit_and_ignores_brackets_in_strings(self):
+        limit = c.MAX_JSON_DEPTH
+        def accepted(raw):
+            try:
+                return e.strict(raw)
+            except c.ExitError as x:
+                self.fail('valid document refused: %s' % x)
+        self.assertEqual(accepted(b'[' * limit + b']' * limit)[0:0], [])
+        self.assertEqual(len(accepted(b'[' + b'[],' * 1000 + b'[]]')), 1001)
+        with self.assertRaises(c.ExitError): e.strict(b'[' * (limit + 1) + b']' * (limit + 1))
+        with self.assertRaises(c.ExitError): e.strict(b'{"a":' * (limit + 1) + b'1' + b'}' * (limit + 1))
+        self.assertEqual(accepted(json.dumps({'x': '[' * 5000 + '\\"' + '{' * 5000}).encode())['x'][:1], '[')
+
+    def test_strict_keeps_the_parsers_text_handling(self):
+        for raw, want in (('[1]', [1]), ('[1]'.encode('utf-16'), [1]), (b'"\xed\xa0\x80"', '\ud800')):
+            try:
+                got = e.strict(raw)
+            except Exception as x:
+                self.fail('%r refused or crashed: %r' % (raw, x))
+            self.assertEqual(got, want)
+
+    def test_publisher_is_not_verified_when_the_chain_check_did_not_run(self):
+        f = Fixture(); signer = f.anchor['notary']
+        real = f.rpc
+        def down(method, params):
+            if method == 'getTransaction': raise c.ExitError(0, 'PUBLIC_FETCH_UNAVAILABLE_NO_RETRY')
+            return real(method, params)
+        f.rpc = down
+        out = f.client().verify('0', '2', trusted_notaries=[signer])
+        self.assertFalse(out['verified']); self.assertIs(out['publisher_identity']['publisher_verified'], False)
+        f = Fixture(); out = f.client().verify('0', '2', trusted_notaries=[f.anchor['notary']])
+        self.assertTrue(out['verified']); self.assertIs(out['publisher_identity']['publisher_verified'], True)
+        f = Fixture(); out = f.client().verify('0', '2', trusted_notaries=['C' * 44])
+        self.assertTrue(out['verified']); self.assertIs(out['publisher_identity']['publisher_verified'], False)
+
+    def test_a_value_error_in_the_chain_check_gives_verified_false(self):
+        f = Fixture(); client = f.client(); real = client.v.check_anchor
+        def boom(*a, **k): raise ValueError('too many digits')
+        client.v.check_anchor = boom
+        try:
+            out = client.verify('0', '2')
+        except ValueError as x:
+            self.fail('a chain evidence fault escaped verify: %r' % x)
+        finally:
+            client.v.check_anchor = real
+        self.assertEqual((out['verified'], out['failure']), (False, 'PUBLIC_ANCHOR_EVIDENCE_INVALID'))
+
     def test_missing_or_altered_verifier_refused(self):
         with patch.object(e, 'VERIFIER_SHA256', '0' * 64), self.assertRaisesRegex(c.ExitError, 'PUBLIC_VERIFIER_PIN_MISMATCH'):
             e.EvidenceClient()

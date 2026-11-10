@@ -4,6 +4,7 @@ The access key comes from the EXIT_API_KEY environment variable (get it in a bro
 printed, logged or returned. Account actions (enrol, rotate, revoke) stay in the browser on purpose. Every research call sends a fresh
 X-EXIT-Request-Id; nothing is retried automatically (each attempt counts against the account's daily limits).
 """
+import http.client
 import json
 import os
 import re
@@ -33,13 +34,43 @@ _CODE = re.compile(r"[A-Z][A-Z0-9_]{0,127}")
 _STATES = ("OPEN", "RESULT_READY", "REASON_RECORDED")
 
 
+MAX_JSON_DEPTH = 128
+
+
+def too_deep(text):
+    """True when arrays and objects nest beyond MAX_JSON_DEPTH. Python 3.12 parses far deeper than earlier versions, so the limit is explicit, not left to the interpreter's recursion limit."""
+    depth, inside, escaped = 0, False, False
+    for ch in text:
+        if inside:
+            if escaped:
+                escaped = False
+            elif ch == '\\':
+                escaped = True
+            elif ch == '"':
+                inside = False
+        elif ch == '"':
+            inside = True
+        elif ch in '[{':
+            depth += 1
+            if depth > MAX_JSON_DEPTH:
+                return True
+        elif ch in ']}':
+            depth -= 1
+    return False
+
+
 class ExitError(Exception):
-    """A refusal or failure from the service (status 0 = refused locally before any request). research_record is the research
+    """A refusal or failure from the service (status 0 = refused locally before any request; status -1 = the request was sent and the reply could not be read, so an attempt may have been spent). research_record is the research
     record the service opened for this unresolved request ({id, state, gap}), or None."""
 
     def __init__(self, status, error, research_record=None):
         super().__init__(f"{status} {error}")
         self.status, self.error, self.research_record = status, error, research_record
+
+
+def _shape(value):
+    # a service label, accepted only in its documented shape
+    return value if isinstance(value, str) and _CODE.fullmatch(value) else None
 
 
 def _record(h):
@@ -57,6 +88,8 @@ def _instant(name, value):
         raise ExitError(0, f"{name} must be an ISO-8601 instant") from None
     if dt.tzinfo is None:
         raise ExitError(0, f"{name} needs an explicit timezone, e.g. 2026-08-01T00:00:00+00:00")
+    if not re.fullmatch(r"[0-9TZ:+. -]+", value):
+        raise ExitError(0, f"{name} must be an ISO-8601 instant")
     return value
 
 
@@ -70,7 +103,7 @@ class Client:
             raise ValueError("EXIT_API_BASE must be the official HTTPS origin (loopback HTTP only for local testing)")
         if not isinstance(timeout, (int, float)) or isinstance(timeout, bool) or not 0 < timeout <= 60:
             raise ValueError("timeout must be greater than 0 and at most 60 seconds")
-        self._opener = urllib.request.build_opener(_NoRedirect())
+        self._opener = urllib.request.build_opener(_NoRedirect(), *([urllib.request.ProxyHandler({})] if local else []))
         self._key = key if key is not None else os.environ.get("EXIT_API_KEY", "")
         self.timeout = timeout
 
@@ -92,22 +125,30 @@ class Client:
             with self._opener.open(req, timeout=self.timeout) as r:
                 status, raw, h = r.status, r.read(MAX_RESPONSE + 1), r.headers
         except urllib.error.HTTPError as e:
-            with e:
-                status, raw, h = e.code, e.read(MAX_RESPONSE + 1), e.headers
+            try:
+                with e:
+                    status, raw, h = e.code, e.read(MAX_RESPONSE + 1), e.headers
+            except http.client.HTTPException:
+                raise ExitError(e.code, "BAD_HTTP_RESPONSE", _record(e.headers)) from None
+        except http.client.HTTPException:
+            raise ExitError(-1, "BAD_HTTP_RESPONSE") from None
         if 300 <= status < 400:
             raise ExitError(status, "REDIRECT_REFUSED")
         if len(raw) > MAX_RESPONSE:
             raise ExitError(status, "RESPONSE_TOO_LARGE")
         try:
-            value = json.loads(raw)
-        except ValueError:
-            raise ExitError(status, "NON_JSON_RESPONSE") from None
+            text = raw.decode(json.detect_encoding(raw), "surrogatepass")
+            if too_deep(text):
+                raise ValueError()
+            value = json.loads(text)
+        except (ValueError, RecursionError):      # deeply nested JSON is a refused response, not a crash
+            raise ExitError(status, "NON_JSON_RESPONSE", _record(h)) from None
         if status >= 400:
             code = value.get("error", "ERROR") if isinstance(value, dict) else "ERROR"
             if not isinstance(code, str) or not re.fullmatch(r"[A-Z][A-Z0-9_]{0,127}", code):
                 code = "SERVICE_ERROR"
             raise ExitError(status, code, _record(h))
-        return {"meta": {"http_status": status, "research_state": h.get("X-EXIT-Research-State"),
+        return {"meta": {"http_status": status, "research_state": _shape(h.get("X-EXIT-Research-State")),
                          "replayed": h.get("X-EXIT-Replayed") == "1", "request_id": rid, "research_record": _record(h),
                          "research_intake_full": h.get("X-EXIT-Research-Intake") == "FULL"}, "value": value}
 

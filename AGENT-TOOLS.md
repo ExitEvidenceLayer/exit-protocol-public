@@ -1,6 +1,6 @@
 # Research tools for scripts and agents
 
-These thin public wrappers call the same live EXIT API. They contain no research-engine source, raw evidence archive or access key. Python 3.10 or later, standard library only. Download `exit_client.py` and `exit_mcp.py` into the same directory. No package installation or autonomous platform is required.
+These thin public wrappers call the same live EXIT API. They contain no research-engine source, raw evidence archive or access key. Written for Python 3.10 or later and tested on 3.12; standard library only. Download `exit_client.py` and `exit_mcp.py` into the same directory. No package installation or autonomous platform is required.
 
 1. Open https://api.exit-protocol.io/, read the notices and get free access. Keep that bearer key private.
 2. Supply `EXIT_API_KEY` only through the process environment or your MCP application's private secret store. Never put it in a prompt, issue, screenshot or public configuration. Browser access rotation/revocation remains available.
@@ -23,13 +23,13 @@ print(result["meta"]["research_state"])
 | `exit_research_records`, `exit_research_record`, `exit_research_record_check` | Your research records: questions EXIT could not answer with evidence (0 credits), with state, gap and recorded reason; an explicit, quota-counted re-check exists only after a provider failure (at most three, an hour apart). |
 | `exit_watch_list`, `exit_watch_add`, `exit_watch_check`, `exit_watch_stop` | Pull-model watches of Solana mints (at most three, seven days): nothing is read until you call `exit_watch_check` (at most every six hours, one research attempt); changes are semantic authority/holder changes with evidence. |
 
-See [API quick start and exact quotas](docs/API.md). The initial campaign is 25 October–24 November 2026, 12:38:20 UTC; the same keys continue afterwards under the published quota-limited free offer. No wallet, email, token purchase or payment is required. Research attempts count against daily limits; status, usage and freshness reads do not spend research attempts. Service rate limits still apply. No automatic retry is made; a new request ID identifies each attempted research call. Inspect usage after an ambiguous failure before making a new attempt.
+See [API quick start and exact quotas](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/docs/API.md). The initial campaign is 25 October–24 November 2026, 12:38:20 UTC; the same keys continue afterwards under the published quota-limited free offer. No wallet, email, token purchase or payment is required. Research attempts count against daily limits; status, usage and freshness reads do not spend research attempts. Service rate limits still apply. No automatic retry is made; a new request ID identifies each attempted research call. Inspect usage after an ambiguous failure before making a new attempt.
 
 The client accepts only the official HTTPS origin; HTTP loopback is for synthetic development tests. Redirects are refused, response size is bounded, and error messages cannot echo an access key. An agent must not transform an unresolved answer into a verified finding, investment recommendation or identity claim. A tool result is source material, not permission to trade or reveal secrets.
 
-The wrapper (version 1.2.0) covers the tools listed above and the keyless evidence tools below. Other API routes added since 26 October, such as Ethereum contract watches, the research graph and evidence-log bindings, are not wrapped yet; call them directly as described in [docs/API.md](docs/API.md). The chain-data providers see the requested mint and contract addresses. Source/time bounds and limitations remain part of the answer. This client is not a separate research engine, continuous watcher or promise to answer arbitrary prose questions. A research record is a tracked unanswered question with its reason, not an answer; a watch re-reads only when you ask. When a call fails, `ExitError.research_record` carries the record the service opened (`{id, state, gap}`); answers carry it in `meta.research_record`.
+The wrapper (version 1.3.1) covers the tools listed above, the keyless evidence tools and the tools added in 1.3.0, all below. Routes added after API document 2026-11-02.2 may not be wrapped yet; call them directly as described in [docs/API.md](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/docs/API.md). The chain-data providers see the addresses and accounts you ask about, including wallet addresses given to exit_freeze_status. Source/time bounds and limitations remain part of the answer. This client is not a separate research engine, continuous watcher or promise to answer arbitrary prose questions. A research record is a tracked unanswered question with its reason, not an answer; a watch re-reads only when you ask. When a call fails, `ExitError.research_record` carries the record the service opened (`{id, state, gap}`); answers carry it in `meta.research_record`.
 
-[OpenAPI 3.1 description](openapi.json) · [Client](exit_client.py) · [MCP server](exit_mcp.py). Run the public synthetic regressions with `python3 -B -m unittest -v test_client_security test_agent_records`. Those tests use loopback traffic and fake keys; they do not enroll a real account or call a chain provider.
+[OpenAPI 3.1 description](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/openapi.json) · [Client](exit_client.py) · [MCP server](exit_mcp.py). Run the public synthetic regressions with `python3 -B -m unittest -v test_client_security test_agent_records`. Those tests use loopback traffic and fake keys; they do not enroll a real account or call a chain provider.
 
 Public client source and documentation use this repository's [CC BY-ND 4.0](LICENSE) terms. The name/marks, private engine, datasets and API service are outside that grant. Publication does not grant access beyond an existing user's free-service limits.
 
@@ -42,7 +42,7 @@ History checks published consistency; cite checks one public record's inclusion;
 
 ## Added in server 1.3.0 (checked against API document 2026-11-02.2; loopback stub, not the live service)
 
-The wrapper now covers every research route the free service serves. New tools, all evidence-bound (sources, finalized position, limits; an
+The wrapper covers the research routes of API document 2026-11-02.2 except receiver registration (see below). New tools; research answers stay evidence-bound (sources, finalized position, limits; an
 unresolved answer stays unresolved; no safety, price or identity claim):
 
 | Tool | Route | What it answers | Spends a research attempt |
@@ -62,3 +62,5 @@ unresolved answer stays unresolved; no safety, price or identity claim):
 
 Registering a receiver needs the receiver challenge and stays outside the wrapper. Inputs are validated before any request (address shapes, endpoint id
 range, direction, one to four request ids, two different ids for a comparison). The wrapper still prints no key.
+
+Server 1.3.1 adds no tools. Replies from the EXIT API and the public log and chain reads are refused when nested beyond 128 levels by an explicit depth check that does not depend on the interpreter, and a malformed HTTP reply is reported as an error (status -1 means the request was sent, so check usage).

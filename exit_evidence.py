@@ -13,7 +13,7 @@ import ssl
 import time
 from pathlib import Path
 
-from exit_client import ExitError
+from exit_client import ExitError, too_deep
 
 API_HOST = 'api.exit-protocol.io'
 LOG_PATH = '/v0/log/'
@@ -62,7 +62,10 @@ def strict(raw):
             out[k] = value
         return out
     try:
-        return json.loads(raw, object_pairs_hook=pairs,
+        text = raw if isinstance(raw, str) else raw.decode(json.detect_encoding(raw), 'surrogatepass')
+        if too_deep(text):
+            raise ValueError()
+        return json.loads(text, object_pairs_hook=pairs,
                           parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
     except (ValueError, UnicodeError, RecursionError):
         refuse('PUBLIC_JSON_INVALID')
@@ -270,12 +273,13 @@ class EvidenceClient:
                                              or any(not isinstance(k, str) or not re.fullmatch('[1-9A-HJ-NP-Za-km-z]{32,44}', k) for k in trusted_notaries)):
             refuse('PUBLIC_TRUSTED_NOTARIES_INVALID')
         signer = anchor.get('notary')
+        pinned = False
         if trusted_notaries is None:
             out['publisher_identity'] = {'status': 'LISTED_BY_THE_LOG_ONLY', 'notary': signer, 'publisher_verified': False,
-                                         'basis': 'the signer is checked only against notaries.json published by the same log; pass trusted_notaries from an outside source to verify the publisher'}
+                                         'basis': 'the signer was compared only with notaries.json published by the same log; the Python API can compare it with keys from an outside source'}
         else:
             pinned = signer in set(trusted_notaries)
-            out['publisher_identity'] = {'status': 'PINNED_OUT_OF_BAND' if pinned else 'NOT_IN_TRUSTED_SET', 'notary': signer, 'publisher_verified': pinned,
+            out['publisher_identity'] = {'status': 'PINNED_OUT_OF_BAND' if pinned else 'NOT_IN_TRUSTED_SET', 'notary': signer, 'publisher_verified': False,
                                          'basis': 'the signer was compared with keys the caller supplied from outside this log'}
         if not _SIG.fullmatch(anchor['signature']):
             refuse('PUBLIC_ANCHOR_SIGNATURE_INVALID')
@@ -287,9 +291,9 @@ class EvidenceClient:
                                                                'maxSupportedTransactionVersion': 0}])
             check = self.v.check_anchor(tx, anchor, out['tree_size'], out['root'], notaries)
             out.update(anchor_check=check, anchor_verified=check['anchor_ok'], verified=check['anchor_ok'])
-            out['publisher_identity']['publisher_verified'] = bool(out['publisher_identity']['publisher_verified'] and check['anchor_ok'])
+            out['publisher_identity']['publisher_verified'] = bool(pinned and check['anchor_ok'])
             out['note'] = self.v.PROVES if out['verified'] else 'Chain anchor check failed; no verified anchor claim.'
-        except ExitError as e:
-            out.update(anchor_verified=False, verified=False, failure=e.error,
+        except (ExitError, ValueError) as e:
+            out.update(anchor_verified=False, verified=False, failure=getattr(e, 'error', 'PUBLIC_ANCHOR_EVIDENCE_INVALID'),
                        note='Chain evidence was unavailable or refused. Inclusion alone is not chain verification.')
         return dict(out, requests=s.calls, rpc_url='https://' + RPC_HOST)
