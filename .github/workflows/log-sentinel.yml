@@ -40,7 +40,7 @@ jobs:
           # Public claims vs the live service (tools/claims_check.py, same commit): API description version, STATUS rows marked LIVE vs the
           # status route's live_* flags, free-period wording, sitemap dates vs page Last-Modified. Its result is folded into result.json below.
           mkdir -p repo
-          for f in STATUS.md openapi.json tools/claims_check.py; do
+          for f in STATUS.md openapi.json exit_mcp.py tools/claims_check.py; do   # exit_mcp.py: the client row's server version is checked against it (10 Nov)
             mkdir -p "repo/$(dirname "$f")"
             curl -fsSL --retry 3 "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/${f}" -o "repo/${f}" || echo "fetch failed: ${f}" >> snapshot.err
           done
@@ -126,7 +126,7 @@ jobs:
               out['checks']['run_outcome_ok'] = False
           try:
               c = json.load(open('claims.json'))
-              out['claims'] = {'checks': c.get('checks'), 'mismatches': c.get('mismatches'), 'api_description': c.get('api_description')}
+              out['claims'] = {'checks': c.get('checks'), 'mismatches': c.get('mismatches'), 'api_description': c.get('api_description'), 'client_row': c.get('client_row')}
               out['checks']['public_claims_match_live'] = c.get('ok') is True
           except (OSError, ValueError):
               out['claims'] = {'error': 'claims_check gave no JSON result'}
