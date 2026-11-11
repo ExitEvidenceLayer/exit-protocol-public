@@ -6,6 +6,8 @@ These thin public wrappers call the same live EXIT API. They contain no research
 2. Supply `EXIT_API_KEY` only through the process environment or your MCP application's private secret store. Never put it in a prompt, issue, screenshot or public configuration. Browser access rotation/revocation remains available.
 3. Start `python3 -B exit_mcp.py` as a stdio MCP server in your existing agent client, or import `exit_client.Client` from Python. Configure the script's actual local path in your MCP client; secret inheritance depends on that client. Do not publish the key in example configuration.
 
+Claude Desktop and Cursor settings, step by step, with a real exchange without a key: [Connect an AI agent to EXIT](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/docs/CONNECT-AN-AGENT.md).
+
 ```python
 from exit_client import Client
 client = Client()  # reads EXIT_API_KEY from this process environment

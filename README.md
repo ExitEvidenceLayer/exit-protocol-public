@@ -46,6 +46,8 @@ EXIT's own records go into a public, append-only [evidence log](https://exit-pro
 
 [Connect scripts and agents](AGENT-TOOLS.md) with the public Python client, stdio MCP adapter and [OpenAPI description](openapi.json). No private research-engine code is included.
 
+[Connect an AI agent to EXIT](docs/CONNECT-AN-AGENT.md): Claude Desktop and Cursor settings for the MCP server, step by step, with a real exchange without a key.
+
 ```sh
 curl https://exit-protocol.io/solana-pyusd.json
 ```
