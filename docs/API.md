@@ -95,7 +95,7 @@ For Token-2022 mints the reader also interprets the pause authority and the scal
 `solana-finalized-mint-pair-hop/2` since 1 November 2026) and reports the state facts behind them (paused, multiplier) without
 following them as authorities; an answer stored under policy `/1` replays unchanged.
 
-For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-04.1 (4 November 2026), which lists the same routes as 2026-11-02.2. exit_client.py and exit_mcp.py cover the research routes of that version except receiver registration (POST /v0/research/webhook), and also the recorded-view control reads (control state, as of, change), usage, freshness and status reads; the keyless evidence tools (exit_evidence.py) read the log files and proof bundles they check from the /v0/log/ routes. Not wrapped: the account routes under /early-access/ (challenge, enrollment, rotation, revocation, feedback), GET /v0/subjects, GET /v0/corroboration and GET /v0/contract. The methods for the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer, graph, compare, evidence, log binding, contract watches, webhooks) were checked against a loopback stub of the description, not against the live service with a key. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
+For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-04.1 (4 November 2026), which lists the same routes as 2026-11-02.2. exit_client.py and exit_mcp.py cover the research routes of that version except receiver registration (POST /v0/research/webhook), and also the recorded-view control reads (control state, as of, change), usage, freshness and status reads; the keyless evidence tools (exit_evidence.py) read the log files and proof bundles they check from the /v0/log/ routes. Not wrapped: the account routes under /early-access/ (challenge, enrollment, rotation, revocation, feedback), GET /v0/subjects, GET /v0/corroboration and GET /v0/contract. The client and MCP methods for the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer, graph, compare, evidence, log binding, contract watches, webhooks) were checked against a loopback stub of the description, not against the live service with a key. Some of those routes were also called with a key on the live service by the question-bank run of 3 November 2026, before the 6 November Ethereum provider release: freeze, governance, LayerZero pathway and peer, graph, compare, evidence view and log binding each answered 200 at least once (docs/q1-result-20261103T000505Z.json), and the proposals route answered 503. Contract-watch creation and the webhook routes were not called in that run. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
 
 ## Research records (unanswered questions)
 
@@ -181,8 +181,8 @@ None of them gives a ranking, risk score, verdict or personal identity. Conflict
 ## Owned webhook receivers (limited pilot)
 
 `/v0/research/webhook` (bearer key) lets an account attach an HTTPS receiver to one of its own watches. In this pilot only
-one watch across the whole service can have a receiver. That slot is planned for EXIT's own test run, so other accounts should
-not expect alerts yet.
+one watch across the whole service can have a receiver. When that slot is free, the first account that registers a receiver takes it;
+while it is taken, registrations for another watch are refused (`429`). On 11 November 2026 the slot was free (see the pilot limits below).
 
 - `POST` with the exact JSON `{"watch_id":"watch-<24 hex>","url":"https://…","accept_external_delivery":true}` registers a
   receiver after it passes a challenge. The signing secret is shown once. With `?id=hook-<24 hex>`, `{"action":"rotate"}`
@@ -210,7 +210,7 @@ receiver until you resume it with a new challenge.
 
 Pilot limits: one watch across the whole service can have a receiver (once it is taken, registration is refused with `429`);
 at most two receivers per account; a bounded daily read budget. Refusals charge nothing, and the routes answer `503` when the
-radar is not enabled. No wallet, payment or paid credit. Since 28 Oct 04:56 UTC the single slot is used by EXIT's own end-to-end test; its receiver accepted signed deliveries from the live radar from 04:59 UTC.
+radar is not enabled. No wallet, payment or paid credit. From 28 Oct 04:56 UTC the single slot was used by EXIT's own end-to-end test; its receiver accepted signed deliveries from the live radar from 04:59 UTC. That watch has ended (a watch ends after at most seven days). On 11 November 2026 at 06:04 UTC a read of the service's records found no receiver and no watch: the slot was free. When the slot is free, the first account that registers a receiver takes it.
 
 ## Evidence log and log bindings
 
@@ -227,7 +227,7 @@ and no key, through the API:
 
 A daily job at 00:30 UTC sends at most one Solana memo transaction (`EXIT-ROOT-v1`) per UTC day, signed by the server notary key.
 It anchors the new root when the log has grown. From the 29 October run it is set to anchor the current root again on a day
-without new records; this has not been observed yet. The 28 October 00:30 UTC run anchored tree size 200 in slot 462273926 (block time
+without new records; this was first observed on 31 October and 1 November 2026 (the root of tree size 205, first anchored on 30 October, was anchored again on both days; corrected 11 November 2026). The 28 October 00:30 UTC run anchored tree size 200 in slot 462273926 (block time
 00:30:07 UTC). The whole log (200 leaves; roots at sizes 66, 68, 134 and 200; anchors at 68, 134 and 200) was then verified
 from outside with the published verifier on two Solana providers. Since 28 October 09:06 UTC an outside sentinel, a GitHub
 Actions job in the public repository, runs the same verifier every day at 00:45 UTC and writes its result to the repository's
