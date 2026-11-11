@@ -52,7 +52,7 @@ It is not an automatic live-monitoring feed.
   contracts). This update expected the Ethereum rows to be NOT_COMPARED once on 4 Nov; whether they were is not shown in the public
   record (corrected 10 November), because the daily page (https://exit-protocol.io/control-map/daily/) now counts each Ethereum row's
   reads from the 6 Nov read on. The 6 Nov 23:20 UTC run, the first after the 6 November Ethereum provider release, recorded all 48
-  Ethereum rows as NOT_COMPARED (READER_OR_SOURCE_CHANGED; see CHANGELOG.md), and the 7, 8 and 9 Nov runs compared every Ethereum row
+  Ethereum rows as NOT_COMPARED (READER_OR_SOURCE_CHANGED; EXIT's record, the public log shows hashes only; see CHANGELOG.md), and the 7, 8 and 9 Nov runs compared every Ethereum row
   and found the same settings (corrected 10 November).
 - 01:11 UTC: the homepage coverage table links the Arbitrum Security Council case note.
 
