@@ -20,6 +20,7 @@ inspect freshness, read evidence-linked answers and see usage. Do not enter secr
 The following uses a private shell variable. Do not use `set -x`, print the key,
 put it in a URL, or include it in screenshots and reports. Requires curl and Python 3.
 Reading the notices and running enrollment expresses the two indicated consents.
+Since 3 November 2026, enrollment records these two consents. Each record holds the time of enrollment and a SHA-256 hash. The hash is of the research interface page at api.exit-protocol.io, as the service was serving it at that moment. It covers that page's text as served, not the terms or privacy pages. It shows which version of the page was served, not that the page was loaded. The records hold no copy of the page and stay with the account record. Registering or resuming a webhook receiver records the consent to external delivery in the same way. That record is removed with the receiver.
 
 Enrollment needs a proof of work. `GET /early-access/challenge` returns a signed challenge; solve it
 locally: SHA-256 of `challenge:nonce` (decimal nonce) must begin with 16 zero bits. The challenge

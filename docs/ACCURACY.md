@@ -34,6 +34,9 @@ the Solana OFT contract Paxos publishes. Paxos and Circle publish token addresse
 
 ## Limits
 
-One run per interpreter release so far (a weekly cadence is a separate decision). Labels and reads share the same chain state, so a
+The standing benchmark last ran on 2 November 2026 (v6). It has not yet re-measured the later reader releases, among them the
+reader core release of 3 November, the Ethereum contract reader /5 of 4 November and the new Ethereum read provider of
+6 November (see CHANGELOG.md). A weekly cadence is a separate decision.
+Labels and reads share the same chain state, so a
 fact neither side can see is not compared. Precision intervals for small groups are wide and are printed as such. Nothing here is a
 claim about tomorrow's state or about who operates an address.
