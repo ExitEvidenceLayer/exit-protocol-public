@@ -24,7 +24,7 @@ complete.
 
 ## Current engineering sequence · 4 November (T0 + 10 days)
 
-Written on 4 November, with dated corrections to 10 November.
+Written on 4 November, with dated corrections to 10 November; corrected again, and the PLANNED lines added, on 11 November 2026.
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -43,7 +43,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: on a day without new records, the daily job re-anchors the current root (31 October and 1 November)
   → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC; PYUSD since 2 November) at one finalized block (1 November)
   → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
-  → LIVE: Control Map daily re-read with change-only records (standing job since 1 November); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
+  → LIVE: Control Map daily re-read (standing job since 1 November; corrected 11 November 2026: since log specification 1.5 of 2 November every completed run records one record per row, an observation or a not-answered record, not only changes); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
   → LIVE: a nightly second-provider check of 12 Control Map rows (3 November 00:05 UTC); a daily off-host state copy with a restore drill (00:35 UTC)
   → LIVE: a provider refusal on the governance proposals route is recorded as PROVIDER_UNAVAILABLE, not as a method gap (3 November 13:50 UTC)
   → LIVE: the contract reader records a reverted owner() or issuer-getter call apart from a provider error, reads the issuer roles
@@ -51,9 +51,21 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       designation, EIP-7702 included (schema /5, 4 November 01:35 UTC; the account types and EIP-7702 designations of the issuer role
       holders, multisig owners and AccessControl members are not read); from the 4 November 23:20 UTC re-read on, the nightly records
       of the 21 Control Map rows whose owner() reverts were expected to carry CALL_REVERTED (corrected 10 November: not shown in the
-      public record, which names each record's evidence and result only by SHA-256);
+      public record, which names each record's evidence and result only by SHA-256; EXIT's record, added 11 November 2026: on the 4 and 9
+      November 23:20 UTC re-reads all 21 answered owner() as CALL_REVERTED);
       an after-measurement on the fixed question bank was planned after that run
       (corrected 10 November: no result of it is shown in the public record; docs/Q1-RESULT.md reports only the 3 November baseline)
+  → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
+      by 13 November 2026: higher free limits, with a service-capacity view;
+      by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
+      by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
+      by 17 November 2026: the Control Map page refreshed from the nightly reads;
+      by 19 November 2026: change alerts within minutes, with more than one alert slot;
+      by 21 November 2026: a public page to verify one record in the browser;
+      by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
+      transfer-hook program's authority;
+      by 23 November 2026: beacon implementations and EIP-2535 diamond facets;
+      by 25 November 2026: Safe pending transactions (depends on an external service)
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
@@ -66,15 +78,15 @@ public-HTTPS operator acceptance passed on 26 October for research records, Sola
 watches and Ethereum reads; Ethereum watches and the research graph, live since 27
 October, were not part of it. Since 27 October a limited
 radar pilot reads pending-authority scopes once an hour for watches that have an owned webhook
-receiver (one watch service-wide, used by EXIT's own test); it is not continuous
+receiver (one watch service-wide; EXIT's own test used that slot from 28 October, and on 11 November 2026 the slot was free); it is not continuous
 monitoring, and pull checks remain the general monitoring scope. The script client
 and MCP wrapper (server 1.3.1 in this repository since 10 November 01:04 UTC, hub
 commit 84ed9680) cover the research routes of API version 2026-11-04.1 except
 receiver registration; the account routes under
 /early-access/ (challenge, enrollment, rotation, revocation, feedback), /v0/subjects,
 /v0/corroboration and /v0/contract are not wrapped (AGENT-TOOLS.md lists the wrapped
-tools). The methods added for the routes newer than 2026-10-26.2 were checked against
-a loopback stub of the API description, not against the live service with a key.
+tools). The client and MCP methods added for the routes newer than 2026-10-26.2 were checked against
+a loopback stub of the API description, not against the live service with a key. Some of those routes were also called with a key on the live service by the question-bank run of 3 November 2026, before the 6 November Ethereum provider release: freeze, governance, LayerZero pathway and peer, graph, compare, evidence view and log binding each answered 200 at least once (docs/q1-result-20261103T000505Z.json), and the proposals route answered 503. Contract-watch creation and the webhook routes were not called in that run.
 
 Public, with no key: the evidence log, a standalone verifier, keyless cite tools
 and a browser check running code served by EXIT's site. The daily sentinel, which

@@ -32,13 +32,13 @@
       "id": "watch",
       "label": "Change checks",
       "state": "LIVE / ON REQUEST",
-      "detail": "Solana and Ethereum watches re-read on request under published quotas; the single pilot watch is also read hourly (see radar). This is not general continuous monitoring."
+      "detail": "Solana and Ethereum watches re-read on request under published quotas; a watch with a registered receiver (at most one across the whole service) is also read hourly (see radar). This is not general continuous monitoring."
     },
     {
       "id": "radar",
       "label": "Radar and webhook delivery",
       "state": "LIMITED PILOT",
-      "detail": "Hourly reads for one watched subject across the whole service, currently used by EXIT's test receiver. Broader scheduled alerting is not delivered."
+      "detail": "Hourly reads for one watched subject across the whole service. EXIT's own end-to-end test used the slot from 28 October 2026; on 11 November 2026 the slot was free (no watch had a receiver). Broader scheduled alerting is not delivered."
     },
     {
       "id": "log",
@@ -53,7 +53,7 @@
       "detail": "Receipt-to-credit production integration still requires its actual chain/wallet rehearsal and separate security and operating acceptance. Holding EXITP alone does not currently grant credits."
     }
   ],
-  "free_access": "The initial period is 25 October-24 November 2026, 12:38:20 UTC. Existing keys then continue under the same quotas and lifetime caps without a fixed end date or automatic payment; at least 30 days' notice precedes any end.",
+  "free_access": "The initial period runs from 25 October 2026, 12:38:20 UTC, to 24 November 2026 at the same time. Existing keys then continue in the same quota-limited free service without a fixed end date or automatic payment. Daily quotas reset at 00:00 UTC each day. The service-wide lifetime totals of research attempts and of accounts (published at https://api.exit-protocol.io/v0/early-access) are never reset: once the attempt total is used up, requests that need a research attempt are refused, and once the account total is reached, no new key is issued. A reduction of the offer or an announced end of free access requires at least 30 days' notice; reaching a lifetime total has no notice period.",
   "utility": "Technical tests and operated routes do not establish independent human usefulness or commercial demand. These outcomes remain unmeasured unless a dated result states otherwise.",
-  "publication": "This is a dated documentation snapshot, not an automatic live-status feed or an expansion of access rights."
+  "publication": "This is a dated documentation snapshot (5 November 2026; the watch, radar and free_access texts were corrected on 11 November 2026, and the public CHANGELOG.md quotes the earlier wording), not an automatic live-status feed or an expansion of access rights."
 }

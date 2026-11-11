@@ -36,13 +36,13 @@ The public [research desk](https://exit-protocol.io/#research) provides three
 recorded authored case notes, source links, distinct event/knowledge times,
 downloads and an offline edition. No wallet is required to inspect them.
 
-The **30-day quota-limited free research console and API are open** at
+The **quota-limited free research console and API are open** at
 [api.exit-protocol.io](https://api.exit-protocol.io/). Generate pseudonymous access
 without an email, wallet, token or payment. One key covers live control reads for any Solana token mint (mint/freeze and supported Token-2022 authority fields, with one hop behind a multisig or program holder) and any Ethereum contract (proxy slots, the owner() getter as an observation, Safe owners and threshold, AccessControl default admins where readable, code presence), the USDT, USDC and PYUSD issuer-blacklist status and balances of any Ethereum address, the proposals of any supported SPL Governance account (counted by state, open ones decoded) and the peer one LayerZero OApp holds for one remote endpoint id, each at a finalized slot or block with its sources and limits; research records for questions that cannot be answered yet; a research graph over the key's own answers; Solana and Ethereum watches you check on request, with owned webhook receivers and hourly radar reads as a limited pilot; and historical
 and change answers over three recorded Solana reference subjects. See the
 [quick start, live examples and quotas](docs/API.md). The main-site research desk remains a recorded-case browser. The live API supports bounded control reads, not unrestricted wallet tracing or prose investigation.
 
-EXIT's own records go into a public, append-only [evidence log](https://exit-protocol.io/log/), anchored on Solana by a daily job at 00:30 UTC since 28 October; since 29 October the job also anchors the current root again on a day without new records (first on 31 October; corrected 10 November), and checkable with a standalone verifier. The [Control Map](https://exit-protocol.io/control-map/) is a dated snapshot of which addresses hold the control roles of the largest tokens' Ethereum and Solana deployments.
+EXIT's own records go into a public, append-only [evidence log](https://exit-protocol.io/log/), anchored on Solana by a daily job at 00:30 UTC since 28 October; since 29 October the job also anchors the current root again on a day without new records (first on 31 October; corrected 10 November), and checkable with a standalone verifier. The [Control Map](https://exit-protocol.io/control-map/) is a dated snapshot of which addresses held the control roles of 68 token deployments on Ethereum and Solana: the 50 largest coins that have a contract on Ethereum or a mint on Solana, in the market-cap order of CoinGecko's public list at 2026-10-27T16:26:35Z (their market-cap ranks run from 3 to 83).
 
 [Connect scripts and agents](AGENT-TOOLS.md) with the public Python client, stdio MCP adapter and [OpenAPI description](openapi.json). No private research-engine code is included.
 
@@ -60,9 +60,9 @@ acceptance remain open. See [current status](STATUS.md) and [service rights](TOK
 
 ## A first release. A continuing engineering program.
 
-The first free campaign opened **25 October 2026 at 12:38:20 UTC**, and ends
+The free service opened **25 October 2026 at 12:38:20 UTC**; its first 30-day period ends
 **24 November 2026 at 12:38:20 UTC**. It does not convert automatically to payment.
-The same keys then continue in a quota-limited free tier without a fixed end date. Existing limits, revocations and counters carry over; there is no automatic payment or token requirement. See [current access terms](https://exit-protocol.io/terms.html).
+The same keys then continue in a quota-limited free tier without a fixed end date. Existing limits, revocations and counters carry over; there is no automatic payment or token requirement. A reduction of the offer or an announced end of free access requires at least 30 days' notice; the service-wide lifetime totals of research attempts and of accounts (published at https://api.exit-protocol.io/v0/early-access) are never reset, and reaching one has no notice period. See [current access terms](https://exit-protocol.io/terms.html).
 **EXIT Protocol (EXITP)** has also been created on Solana. Its official mint is
 [`5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups`](https://studio.jup.ag/tokens/5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups).
 Token creation was reported before API activation; the actual sequence is preserved,
