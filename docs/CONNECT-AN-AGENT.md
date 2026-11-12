@@ -222,17 +222,18 @@ The cut parts include `artifacts`: the 3 raw replies of the public Solana RPC no
 
 ## 8. Limits
 
-Free early access: no payment, no wallet and no automatic paid conversion; answers are charged 0 credits. The live limits are at https://api.exit-protocol.io/v0/early-access (no key needed; `exit_service_status` reads the same route). On 11 November 2026 at 05:33 UTC it said:
+Free early access: no payment, no wallet and no automatic paid conversion; answers are charged 0 credits. The live limits are at https://api.exit-protocol.io/v0/early-access (no key needed; `exit_service_status` reads the same route). Since the service release of 12 November 2026 it says:
 
 | Limit | Value | Field |
 |---|---|---|
-| Research attempts per account per UTC day | 60 | `limits.attempts_per_account_day` |
-| Completed answers per account per UTC day | 20 | `limits.answers_per_account_day` |
-| Research attempts across the service per UTC day | 300 | `limits.attempts_global_day` |
-| New keys per UTC day | 40 | `limits.enrollments_day` |
-| New keys per network per UTC day | 2 | `enrollment.network_daily_limit` |
-| Accounts in total; research attempts in total | 600; 9000 | `limits.accounts_total`, `limits.attempts_total` |
+| Research attempts per account per UTC day | 150 | `limits.attempts_per_account_day` |
+| Completed answers per account per UTC day | 50 | `limits.answers_per_account_day` |
+| Research attempts across the service per UTC day | 1500 | `limits.attempts_global_day` |
+| New keys per UTC day | 100 | `limits.enrollments_day` |
+| New keys per network per UTC day | 5 | `enrollment.network_daily_limit` |
+| Accounts in total; research attempts in total (never reset) | 1000; 300000 | `limits.accounts_total`, `limits.attempts_total` |
 
+- Since the same release the route also carries `service_capacity`: service-wide counts of the attempts used and remaining today and in total, and of the keys registered and remaining. Daily limits reset at 00:00 UTC; the totals are never reset.
 - On a shared network, such as an office or a conference, the network limit is shared: a further new key that day is refused with `ENROLLMENT_NETWORK_LIMIT_REACHED`. Existing keys keep working.
 - Status, usage and freshness reads spend no research attempts. The HTTP transport also has a burst limit: up to 20 burst units per account, refilling at 20 units per minute; status and usage reads count toward it.
 - The chain-data providers see the addresses and accounts you ask about.

@@ -5,7 +5,7 @@
 30-day period, not a new 30-day trial for every account. No wallet, token purchase,
 email, signature, payment or automatic paid conversion.
 
-**Continuation deployed on 29 October:** existing keys continue after the initial period in the same quota-limited free service, without a fixed end date or a new registration. Daily, enrollment and lifetime capacity limits are retained without reset. No payment or API Pass is activated. Later offer reductions or a scheduled end require at least 30 days notice. `/v0/early-access` exposes the initial boundary and the continuation separately. First-period watches/receiver registrations and first-period binding lookups retain their earlier expiry; new-period watches and bindings keep their seven-day window. [Current terms](https://exit-protocol.io/terms.html) and [privacy](https://exit-protocol.io/privacy.html) state the boundaries.
+**Continuation deployed on 29 October:** existing keys continue after the initial period in the same quota-limited free service, without a fixed end date or a new registration. Existing keys, counters and the service-wide lifetime totals carry over; daily limits still reset at 00:00 UTC. No payment or API Pass is activated. A reduction of the offer or an announced end of free access requires at least 30 days' notice; reaching a lifetime total has no notice period. `/v0/early-access` exposes the initial boundary and the continuation separately. First-period watches/receiver registrations and first-period binding lookups retain their earlier expiry; new-period watches and bindings keep their seven-day window. [Current terms](https://exit-protocol.io/terms.html) and [privacy](https://exit-protocol.io/privacy.html) state the boundaries.
 
 ## 1. Use the research interface
 
@@ -29,7 +29,13 @@ or an identity attestation. `GET /v0/early-access` shows the remaining registrat
 start. Its per-network figures are advisory and are null when your network cannot be identified; enrollment itself is
 the authoritative check. A missing proof is refused with `428 ENROLLMENT_PROOF_REQUIRED`, a used challenge with
 `409 ENROLLMENT_PROOF_USED`, and a full day or network with `429 ENROLLMENT_CAP_REACHED` or
-`ENROLLMENT_NETWORK_LIMIT_REACHED`.
+`ENROLLMENT_NETWORK_LIMIT_REACHED`. `429 ENROLLMENT_CAP_REACHED` is also the answer when the total number of keys is
+reached and, since the service release of 12 November 2026, when the service's lifetime attempt total is used. The
+`enrollment.reason` field of `GET /v0/early-access` gives the service-wide state: `AVAILABLE`, `CAMPAIGN_NOT_OPEN`,
+`CAMPAIGN_ATTEMPTS_USED` (the lifetime attempt total is used; no key is issued), `CAMPAIGN_CAPACITY_REACHED` (the total number of
+keys is reached) or `DAILY_CAPACITY_REACHED` (the day's new keys are used). It does not cover the per-network limit;
+`enrollment.network_available` shows that. Since the same release, a malformed JSON
+request body answers `400 JSON_REFUSED` and a duplicate JSON key answers `400 DUPLICATE_JSON_KEY`; both answered 409 before.
 
 ```sh
 EXIT_ACCESS_KEY="$(curl --fail --silent --show-error https://api.exit-protocol.io/early-access/challenge \
@@ -95,7 +101,7 @@ For Token-2022 mints the reader also interprets the pause authority and the scal
 `solana-finalized-mint-pair-hop/2` since 1 November 2026) and reports the state facts behind them (paused, multiplier) without
 following them as authorities; an answer stored under policy `/1` replays unchanged.
 
-For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-04.1 (4 November 2026), which lists the same routes as 2026-11-02.2. exit_client.py and exit_mcp.py cover the research routes of that version except receiver registration (POST /v0/research/webhook), and also the recorded-view control reads (control state, as of, change), usage, freshness and status reads; the keyless evidence tools (exit_evidence.py) read the log files and proof bundles they check from the /v0/log/ routes. Not wrapped: the account routes under /early-access/ (challenge, enrollment, rotation, revocation, feedback), GET /v0/subjects, GET /v0/corroboration and GET /v0/contract. The client and MCP methods for the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer, graph, compare, evidence, log binding, contract watches, webhooks) were checked against a loopback stub of the description, not against the live service with a key. Some of those routes were also called with a key on the live service by the question-bank run of 3 November 2026, before the 6 November Ethereum provider release: freeze, governance, LayerZero pathway and peer, graph, compare, evidence view and log binding each answered 200 at least once (docs/q1-result-20261103T000505Z.json), and the proposals route answered 503. Contract-watch creation and the webhook routes were not called in that run. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
+For scripts and agents, use [AGENT-TOOLS.md](../AGENT-TOOLS.md), [exit_client.py](../exit_client.py), [exit_mcp.py](../exit_mcp.py) and [openapi.json](../openapi.json). The repository openapi.json is a copy of the live API document, version 2026-11-12.1 (12 November 2026), which lists the same routes as 2026-11-04.1. exit_client.py and exit_mcp.py cover the research routes of that version except receiver registration (POST /v0/research/webhook), and also the recorded-view control reads (control state, as of, change), usage, freshness and status reads; the keyless evidence tools (exit_evidence.py) read the log files and proof bundles they check from the /v0/log/ routes. Not wrapped: the account routes under /early-access/ (challenge, enrollment, rotation, revocation, feedback), GET /v0/subjects, GET /v0/corroboration and GET /v0/contract. The client and MCP methods for the routes added after version 2026-10-26.2 (governance, layerzero, freeze, proposals, peer, graph, compare, evidence, log binding, contract watches, webhooks) were checked against a loopback stub of the description, not against the live service with a key. Some of those routes were also called with a key on the live service by the question-bank run of 3 November 2026, before the 6 November Ethereum provider release: freeze, governance, LayerZero pathway and peer, graph, compare, evidence view and log binding each answered 200 at least once (docs/q1-result-20261103T000505Z.json), and the proposals route answered 503. Contract-watch creation and the webhook routes were not called in that run. The live API document at https://api.exit-protocol.io/openapi.json is the reference for every route, parameter and limit. Requests are not retried automatically. Status, usage and freshness reads do not spend research attempts; transport rate limits still apply.
 
 ## Research records (unanswered questions)
 
@@ -328,7 +334,7 @@ Example dates above are historical. No arbitrary-wallet, price, prose-investigat
 
 | Route | Access / inputs |
 |---|---|
-| `GET /v0/early-access` | Public campaign status, actual dates, caps and subjects, and remaining registration capacity |
+| `GET /v0/early-access` | Public campaign status, actual dates, caps and subjects, remaining registration capacity and, since 12 November 2026, the service-wide `service_capacity` counts |
 | `GET /early-access/challenge` | Public; one signed proof-of-work challenge (16 bits, 600 seconds, network-bound, one use) |
 | `POST /early-access/enroll` | `accept_terms`, `accept_minimal_metrics` and `proof` (`challenge`, `nonce`) as above; returns one private key |
 | `GET /v0/subjects`, `/v0/contract`, `/v0/freshness`, `/v0/corroboration` | Bearer key; inspect scope and contract |
@@ -351,13 +357,27 @@ Unsupported routes are not research orders. The paid API Pass routes are not exp
 The older `alpha.exit-protocol.io` remains separately restricted and unauthenticated
 calls return 401; a free key is not a credential for that older alpha.
 
+HEAD requests (since the service release of 12 November 2026): of the routes the service itself answers, only the console page `/`
+answers a HEAD request: sent without a query string and without a request body, it gets the GET status and headers and no
+response body. A HEAD request for any other service route answers `405 METHOD_REFUSED`. The files under `/v0/log/` and
+`/openapi.json` are static files served by the web server and answer HEAD like GET.
+
 ## Limits and privacy
 
-20 completed answers/account/UTC day; 60 attempts/account/UTC day; 300 attempts
-across the service/UTC day; 9,000 attempts/campaign; at most 600 enrolled accounts,
-40 new keys/UTC day and 2 new keys per network/UTC day (shared networks share this
+Since the service release of 12 November 2026: 50 completed answers/account/UTC day; 150 attempts/account/UTC day;
+1,500 attempts across the service/UTC day; 300,000 attempts and 1,000 keys in total across the service;
+100 new keys/UTC day and 5 new keys per network/UTC day (shared networks share this
 limit; it does not disable an existing key or its quota). These are protective caps,
-not a guaranteed fair allocation or Sybil resistance. Return later if capacity is exhausted.
+not a guaranteed fair allocation or Sybil resistance. Daily limits reset at 00:00 UTC; the service-wide
+lifetime totals are never reset (`GET /v0/early-access` shows what remains). Once the lifetime attempt total is
+used, requests that need a research attempt are refused with `429 FREE_RESOURCE_LIMIT_REACHED` and no new key is issued.
+The proof of work for a new key stays at 16 bits.
+
+Since the same release `GET /v0/early-access` carries a `service_capacity` block (schema `exit.free-service-capacity/1`):
+`service_day` {`utc_day`, `attempts_used`, `attempts_limit`, `attempts_remaining`, `resets_at` (Unix seconds)} and `lifetime`
+{`attempts_used`, `attempts_limit`, `attempts_remaining`, `accounts_registered` (revoked keys included), `accounts_limit`,
+`accounts_remaining`, `resets`: false}. These are service-wide counts only, never a per-key or per-network figure. A key's
+own usage stays on `GET /v0/early-access/usage`.
 
 All research is free. Incomplete, failed and unsupported requests do not spend the
 completed-answer allowance, although attempt and abuse limits can still apply.
