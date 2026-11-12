@@ -7,7 +7,7 @@
   "master_roadmap": "https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/ROADMAP.md",
   "current_status": "https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/STATUS.md",
   "api_contract": "https://api.exit-protocol.io/openapi.json",
-  "api_version": "2026-11-04.1",
+  "api_version": "2026-11-12.1",
   "whitepaper": "https://exit-protocol.io/WHITEPAPER-v0.7.html",
   "claims": [
     {
@@ -55,5 +55,5 @@
   ],
   "free_access": "The initial period runs from 25 October 2026, 12:38:20 UTC, to 24 November 2026 at the same time. Existing keys then continue in the same quota-limited free service without a fixed end date or automatic payment. Daily quotas reset at 00:00 UTC each day. The service-wide lifetime totals of research attempts and of accounts (published at https://api.exit-protocol.io/v0/early-access) are never reset: once the attempt total is used up, requests that need a research attempt are refused, and once the account total is reached, no new key is issued. A reduction of the offer or an announced end of free access requires at least 30 days' notice; reaching a lifetime total has no notice period.",
   "utility": "Technical tests and operated routes do not establish independent human usefulness or commercial demand. These outcomes remain unmeasured unless a dated result states otherwise.",
-  "publication": "This is a dated documentation snapshot (5 November 2026; the watch, radar and free_access texts were corrected on 11 November 2026, and the public CHANGELOG.md quotes the earlier wording), not an automatic live-status feed or an expansion of access rights."
+  "publication": "This is a dated documentation snapshot (5 November 2026; the watch, radar and free_access texts were corrected on 11 November 2026, and the public CHANGELOG.md quotes the earlier wording; api_version names the API description released on 12 November 2026), not an automatic live-status feed or an expansion of access rights."
 }

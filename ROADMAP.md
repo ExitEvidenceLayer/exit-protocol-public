@@ -55,8 +55,8 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       November 23:20 UTC re-reads all 21 answered owner() as CALL_REVERTED);
       an after-measurement on the fixed question bank was planned after that run
       (corrected 10 November: no result of it is shown in the public record; docs/Q1-RESULT.md reports only the 3 November baseline)
+  → LIVE: higher free limits, with a service-capacity view (GET /v0/early-access, service_capacity; service release of 12 November 2026; planned by 13 November 2026)
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
-      by 13 November 2026: higher free limits, with a service-capacity view;
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
       by 17 November 2026: the Control Map page refreshed from the nightly reads;
@@ -81,7 +81,7 @@ radar pilot reads pending-authority scopes once an hour for watches that have an
 receiver (one watch service-wide; EXIT's own test used that slot from 28 October, and on 11 November 2026 the slot was free); it is not continuous
 monitoring, and pull checks remain the general monitoring scope. The script client
 and MCP wrapper (server 1.3.1 in this repository since 10 November 01:04 UTC, hub
-commit 84ed9680) cover the research routes of API version 2026-11-04.1 except
+commit 84ed9680) cover the research routes of API version 2026-11-12.1 (the same routes as 2026-11-04.1) except
 receiver registration; the account routes under
 /early-access/ (challenge, enrollment, rotation, revocation, feedback), /v0/subjects,
 /v0/corroboration and /v0/contract are not wrapped (AGENT-TOOLS.md lists the wrapped
