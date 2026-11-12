@@ -1,5 +1,17 @@
 # Public documentation changelog
 
+## 12 November 2026 · Control Map page from the nightly reads
+
+- 09:27 UTC: https://exit-protocol.io/control-map/ is built from the nightly read of 11 November 2026 (72 of 72 rows show the read of that night; a row with an older read is dated in the row). Its first line names the night. It was built once and is not yet rebuilt every night.
+- Every row with an accepted read shows the finalized block or slot and the time of its own read and links to its proof at tree size 1135.
+- Rows 69 to 72, which are in EXIT's row list only, carry a fixed line under the name: "EXIT's own token" (row 69) and "declared row: a token EXIT chose to follow on 3 November 2026" (rows 70 to 72). The row list's own label is in control-map-nightly.json.
+- Every status word the table can show is defined once on the page. The builder stops on a word without a definition.
+- The 21 rows whose owner() reverts read CALL_REVERTED (CORRECTIONS.md).
+- The Second source column counts only compared facts, names what agreed and what was not compared, names both providers of an older read, and says "not sampled" where the nightly runs made no second read of the row since the night of 2 November (CORRECTIONS.md). The one-off run of 2 November (08:17 UTC) is not used; its records are in the log.
+- Files under /control-map/: index.html and SHA256SUMS changed; control-map-nightly.json (format exit.control-map-nightly/1) and skipped-before-50th.json are new; by-controller/index.html (four lines: three sentences and the meta description line; it now says that it shows the first snapshot) and by-controller/SHA256SUMS changed. control-map.json (sha256 50822872...), by-controller/by-controller.json and the daily page are unchanged.
+- The previous page (sha256 cd327e87...) is replaced; its data stays in control-map.json.
+- Changed with it on the same day: the home page (its Control Map card), EXIT-OFFLINE.html (the same card), ROADMAP.html (the first card and the planned list), sitemap.xml, and in this repository README.md, STATUS.md, ROADMAP.md, CORRECTIONS.md (two correction notes), VISION.md and this file.
+
 ## 12 November 2026 · higher free limits, a service-capacity view and API behaviour changes
 
 - Free limits. The service release of 12 November 2026 raised the limits of the free service. Per key per UTC day: completed answers from 20 to 50, attempts from 60 to 150. Across the service per UTC day: attempts from 300 to 1,500. Lifetime totals, which are never reset: attempts from 9,000 to 300,000, keys from 600 to 1,000. New keys: from 40 to 100 per UTC day, and from 2 to 5 per network per UTC day. The campaign limits (every figure above except the per-network one) were raised by an increase-only amendment of the running campaign, and the service keeps a record of that amendment. The per-network limit is a separate service setting. No limit was lowered, and no key or counter was reset. The amendment also raised the answer-cache size limit (`limits.cache_bytes`) from 16 MiB to 64 MiB. The campaign's dates and retention windows are unchanged. The proof of work for a new key stays at 16 bits.

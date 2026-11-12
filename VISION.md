@@ -22,8 +22,7 @@ cannot be produced afterwards. Time-stamped history that cannot be back-filled i
 therefore the asset EXIT builds first: control settings re-read on a schedule, a
 record written when a setting changes, and a daily anchor even on days without
 change. The daily anchor is live (tree size 274 on 2 November), the no-change
-anchor has run twice (31 October and 1 November), and the scheduled nightly
-re-read of the 68 Control Map deployments has run since 1 November; since
+anchor has run twice (31 October and 1 November), and the scheduled nightly re-read of the Control Map deployments (68 at first, 72 since 3 November) has run since 1 November; since
 2 November a read that obtains no answer is itself recorded (specification 1.5). In
 two published case notes, control settings that the notes record were readable on
 chain more than a year before the release or transfer, in places EXIT does not

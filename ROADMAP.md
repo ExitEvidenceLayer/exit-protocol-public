@@ -45,6 +45,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
   → LIVE: Control Map daily re-read (standing job since 1 November; corrected 11 November 2026: since log specification 1.5 of 2 November every completed run records one record per row, an observation or a not-answered record, not only changes); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
   → LIVE: a nightly second-provider check of 12 Control Map rows (3 November 00:05 UTC); a daily off-host state copy with a restore drill (00:35 UTC)
+  → LIVE: the Control Map page is built from the nightly reads (once, from the night of 11 November 2026, on 12 November 2026): every row with an accepted read shows its own read, every status word is defined, the second-source column counts only compared facts
   → LIVE: a provider refusal on the governance proposals route is recorded as PROVIDER_UNAVAILABLE, not as a method gap (3 November 13:50 UTC)
   → LIVE: the contract reader records a reverted owner() or issuer-getter call apart from a provider error, reads the issuer roles
       (master minter, pauser, blacklister, rescuer) for one reviewed issuer runtime pair (USDC) and gives every code it reads its
@@ -59,7 +60,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
-      by 17 November 2026: the Control Map page refreshed from the nightly reads;
+      the Control Map page rebuilt every night after the daily anchor;
       by 19 November 2026: change alerts within minutes, with more than one alert slot;
       by 21 November 2026: a public page to verify one record in the browser;
       by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
@@ -91,8 +92,7 @@ a loopback stub of the API description, not against the live service with a key.
 Public, with no key: the evidence log, a standalone verifier, keyless cite tools
 and a browser check running code served by EXIT's site. The daily sentinel, which
 re-runs the verifier, runs on GitHub Actions outside EXIT's server but is
-controlled by EXIT. The Control Map snapshot answers 68 of 68 deployments (two of
-them from a second read on 28 October). The first two private records, radar
+controlled by EXIT. The first Control Map snapshot answered 68 of 68 deployments (two of them from a second read on 28 October); since 12 November 2026 the page is built from the nightly reads of 72 deployments. The first two private records, radar
 events, were admitted at tree size 204 on 29 October. The first-year graph, planning and anomaly
 program below remains a measured growth direction.
 
