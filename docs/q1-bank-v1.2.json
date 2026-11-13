@@ -1,0 +1,922 @@
+{
+ "format": "exit.q1-question-bank/1",
+ "version": "1.1",
+ "fixed_on": "2026-11-02",
+ "q1_window": [
+  "2026-10-25T12:14:57Z",
+  "2027-01-25T12:14:57Z"
+ ],
+ "measure": [
+  "once after fixing (2026-11)",
+  "once at the end of Q1 (2027-01)"
+ ],
+ "metrics": [
+  "task_completion",
+  "unsupported_claims",
+  "latency_ms",
+  "credits_charged"
+ ],
+ "subjects": {
+  "mint_t22": "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh",
+  "mint_pyusd": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+  "mint_usdc": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "mint_usdg": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH",
+  "mint_exitp": "5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups",
+  "sys_program": "11111111111111111111111111111111",
+  "usdt": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  "usdc": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+  "usds": "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+  "aave": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+  "usdy": "0x96f6ef951840721adbf46ac996b59e0235cb985c",
+  "rlusd": "0x8292bb45bf1ee4d140127049757c2e0ff06317ed",
+  "frozen_ctrl": "0x5227f603c1ee34ce3c06efe6477003bdfccb2f8c",
+  "precompile1": "0x0000000000000000000000000000000000000001",
+  "realm_gov": "Uq5BRkVfdBpMknZJHw6huS3dunEgJpUDv3M2DG3BfQg",
+  "oapp": "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+  "usdg_oft": "0x147bde4f997f0d4c7544ed0c55eacf1e5e6bf9c4"
+ },
+ "questions": [
+  {
+   "id": "Q1-01",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh"
+   },
+   "question": "Which authorities (mint, freeze, pause, scaled-UI) does this Token-2022 mint carry, and what are their current states?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted",
+     "state_facts.pausableConfig.paused"
+    ]
+   }
+  },
+  {
+   "id": "Q1-02",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo"
+   },
+   "question": "Who holds the mint and freeze authorities of PYUSD on Solana, and through which holder structure?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   }
+  },
+  {
+   "id": "Q1-03",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+   },
+   "question": "Who holds the mint and freeze authorities of USDC on Solana?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   }
+  },
+  {
+   "id": "Q1-04",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH"
+   },
+   "question": "Which Token-2022 authorities does USDG on Solana carry and who holds them?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   }
+  },
+  {
+   "id": "Q1-05",
+   "group": "primary",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups"
+   },
+   "question": "Does any key still control EXITP (mint and freeze authority null)?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   }
+  },
+  {
+   "id": "Q1-06",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+   },
+   "question": "Does USDT on Ethereum sit behind a proxy, and who is its owner()?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-07",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+   },
+   "question": "Which proxy convention does USDC on Ethereum use and what is its implementation?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-08",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0xdc035d45d973e3ec169d2276ddab16f1e407384f"
+   },
+   "question": "What is the EIP-1967 implementation of USDS and is an admin slot set?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-09",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"
+   },
+   "question": "Who is the proxy admin of the AAVE token contract and is it a Safe?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-10",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x96f6ef951840721adbf46ac996b59e0235cb985c"
+   },
+   "question": "Who holds the AccessControl default admin role of USDY?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-11",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x8292bb45bf1ee4d140127049757c2e0ff06317ed"
+   },
+   "question": "What does the chain show about RLUSD's upgrade control (implementation, admin slot, owner)?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-12",
+   "group": "primary",
+   "axis": "what-happened",
+   "route": "/v0/research/ethereum/freeze",
+   "params": {
+    "address": "0x5227f603c1ee34ce3c06efe6477003bdfccb2f8c"
+   },
+   "question": "Is this address frozen by the USDT, USDC or PYUSD issuer, and what does it hold?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.stablecoin-freeze-research/1",
+    "policy": "ethereum-finalized-issuer-freeze/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "tokens",
+     "frozen_face_amount",
+     "evidence_refs",
+     "result_sha256"
+    ],
+    "tokens": 3,
+    "expect": {
+     "tokens[*].blacklisted": true
+    }
+   }
+  },
+  {
+   "id": "Q1-13",
+   "group": "primary",
+   "axis": "what-happened",
+   "route": "/v0/research/ethereum/freeze",
+   "params": {
+    "address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+   },
+   "question": "Is the USDT contract address itself listed by any of the three issuers? (run 1 observed: by USDT yes, by USDC and PYUSD no)",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.stablecoin-freeze-research/1",
+    "policy": "ethereum-finalized-issuer-freeze/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "tokens",
+     "frozen_face_amount",
+     "evidence_refs",
+     "result_sha256"
+    ],
+    "tokens": 3,
+    "expect": {
+     "tokens[USDT].blacklisted": true,
+     "tokens[USDC].blacklisted": false,
+     "tokens[PYUSD].blacklisted": false
+    }
+   }
+  },
+  {
+   "id": "Q1-14",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/governance",
+   "params": {
+    "governance": "Uq5BRkVfdBpMknZJHw6huS3dunEgJpUDv3M2DG3BfQg"
+   },
+   "question": "What are the governance configuration and the realm of this SPL Governance account?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-governance-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-15",
+   "group": "primary",
+   "axis": "what-happened",
+   "route": "/v0/research/solana/governance/proposals",
+   "params": {
+    "governance": "Uq5BRkVfdBpMknZJHw6huS3dunEgJpUDv3M2DG3BfQg"
+   },
+   "question": "How many proposals does this governance hold by state, and which are open?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-governance-proposals-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "proposals",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-16",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/layerzero",
+   "params": {
+    "oapp": "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+    "eid": "30110",
+    "direction": "send"
+   },
+   "question": "Which delegate and message library govern this OApp's send pathway to endpoint 30110?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.layerzero-path-service/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-17",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/layerzero/peer",
+   "params": {
+    "oapp": "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+    "eid": "30110"
+   },
+   "question": "Which peer does this OApp hold for endpoint 30110?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.layerzero-peer-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "peer",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   }
+  },
+  {
+   "id": "Q1-18",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/layerzero/peer",
+   "params": {
+    "oapp": "0x147bde4f997f0d4c7544ed0c55eacf1e5e6bf9c4",
+    "eid": "30168"
+   },
+   "question": "Which Solana peer does the USDG Ethereum OFT hold for endpoint 30168?",
+   "oracle": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.layerzero-peer-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "peer",
+     "evidence_refs",
+     "result_sha256"
+    ],
+    "expect": {
+     "peer.status": "SET_BYTES32"
+    }
+   }
+  },
+  {
+   "id": "Q1-19",
+   "group": "workflow",
+   "axis": "when-EXIT-learned",
+   "route": "/v0/research/records",
+   "params": {},
+   "question": "Which of my questions were answered, when, and which are still open?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": [
+     "records"
+    ]
+   }
+  },
+  {
+   "id": "Q1-20",
+   "group": "workflow",
+   "axis": "evidence",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "@Q1-01"
+   },
+   "question": "For my Token-2022 answer, which raw replies support each stated fact?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "question",
+     "answer_within_scope",
+     "evidence_cards",
+     "evidence_refs",
+     "observation"
+    ]
+   }
+  },
+  {
+   "id": "Q1-21",
+   "group": "workflow",
+   "axis": "evidence",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "@Q1-12"
+   },
+   "question": "For my freeze answer, which calls support each token row?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "question",
+     "answer_within_scope",
+     "evidence_cards",
+     "evidence_refs",
+     "observation"
+    ]
+   }
+  },
+  {
+   "id": "Q1-22",
+   "group": "workflow",
+   "axis": "what-changed",
+   "route": "/v0/research/compare",
+   "params": {
+    "a": "@Q1-02",
+    "b": "@Q1-03"
+   },
+   "question": "How do PYUSD and USDC on Solana differ in who holds which authority?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-comparison/1",
+    "required": [
+     "schema"
+    ]
+   }
+  },
+  {
+   "id": "Q1-23",
+   "group": "workflow",
+   "axis": "what-changed",
+   "route": "/v0/research/compare",
+   "params": {
+    "a": "@Q1-06",
+    "b": "@Q1-07"
+   },
+   "question": "How do USDT and USDC on Ethereum differ in proxy convention and owner?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-comparison/1",
+    "required": [
+     "schema"
+    ]
+   }
+  },
+  {
+   "id": "Q1-24",
+   "group": "workflow",
+   "axis": "who/role",
+   "route": "/v0/research/graph",
+   "params": {
+    "request_id": [
+     "@Q1-02",
+     "@Q1-03",
+     "@Q1-04"
+    ]
+   },
+   "question": "Across three Solana stablecoins, who holds which role, and is any holder shared?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-graph/1",
+    "required": [
+     "schema"
+    ]
+   }
+  },
+  {
+   "id": "Q1-25",
+   "group": "workflow",
+   "axis": "who/role",
+   "route": "/v0/research/graph",
+   "params": {
+    "request_id": [
+     "@Q1-06",
+     "@Q1-08",
+     "@Q1-09"
+    ]
+   },
+   "question": "Across three Ethereum contracts, which admin/owner addresses recur?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-graph/1",
+    "required": [
+     "schema"
+    ]
+   }
+  },
+  {
+   "id": "Q1-26",
+   "group": "workflow",
+   "axis": "when-EXIT-learned",
+   "route": "/v0/research/log-binding",
+   "params": {
+    "request_id": "@Q1-01"
+   },
+   "question": "Is my Token-2022 answer bound to the public evidence log, and with which known_at?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.answer-log-binding/1",
+    "required": [
+     "schema"
+    ],
+    "note": "Q1-01 is sent with X-EXIT-Log-Bind: 1"
+   }
+  },
+  {
+   "id": "Q1-27",
+   "group": "workflow",
+   "axis": "when-EXIT-learned",
+   "route": "/v0/research/record",
+   "params": {
+    "id": "@record:Q1-33"
+   },
+   "question": "What does the record of my unanswered question say: state, gap, reason, next check?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": [
+     "state",
+     "reason"
+    ]
+   }
+  },
+  {
+   "id": "Q1-28",
+   "group": "workflow",
+   "axis": "what-changed",
+   "route": "/v0/research/watch",
+   "params": {},
+   "question": "Which of my watched subjects have recorded changes?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": []
+   }
+  },
+  {
+   "id": "Q1-29",
+   "group": "workflow",
+   "axis": "when-a-human-decides",
+   "route": "/v0/research/records",
+   "params": {},
+   "question": "Which open records need an explicit, quota-counted re-check by me rather than an automatic retry?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": [
+     "records"
+    ],
+    "expect": {
+     "automatic_followup": false
+    }
+   }
+  },
+  {
+   "id": "Q1-30",
+   "group": "workflow",
+   "axis": "evidence",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "@Q1-17"
+   },
+   "question": "For my peer answer, which call returned the bytes32 and at which block?",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "question",
+     "answer_within_scope",
+     "evidence_cards",
+     "evidence_refs",
+     "observation"
+    ]
+   }
+  },
+  {
+   "id": "Q1-31",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "11111111111111111111111111111111"
+   },
+   "question": "MISSING: the system program is not a mint; the read must say so, never invent authorities.",
+   "oracle": {
+    "status": [
+     200,
+     404,
+     422
+    ],
+    "outcome": null,
+    "schema": null,
+    "expect": {
+     "answer_is_not_a_mint_answer": true
+    }
+   }
+  },
+  {
+   "id": "Q1-32",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x0000000000000000000000000000000000000001"
+   },
+   "question": "MISSING: a precompile address has no code; the read must report that, not a proxy.",
+   "oracle": {
+    "status": [
+     200,
+     404,
+     422
+    ],
+    "outcome": null,
+    "schema": null,
+    "expect": {
+     "no_proxy_claimed": true
+    }
+   }
+  },
+  {
+   "id": "Q1-33",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "notabase58address"
+   },
+   "question": "MISSING (format): an invalid mint string is refused with a named error.",
+   "oracle": {
+    "status": [
+     422
+    ],
+    "outcome": null,
+    "schema": null,
+    "expect": {
+     "error": "SOLANA_MINT_ADDRESS_REQUIRED"
+    }
+   }
+  },
+  {
+   "id": "Q1-34",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/ethereum/freeze",
+   "params": {
+    "address": "0x5227F603C1EE34CE3C06EFE6477003BDFCCB2F8C"
+   },
+   "question": "MISSING (format): an all-upper-case hex address without a valid checksum must be refused, not guessed.",
+   "oracle": {
+    "status": [
+     200,
+     422
+    ],
+    "outcome": null,
+    "schema": null,
+    "note": "all-upper and all-lower are accepted as unchecksummed; the oracle records which"
+   }
+  },
+  {
+   "id": "Q1-35",
+   "group": "control-conflict",
+   "axis": "which-claims-conflicted",
+   "route": "/v0/research/compare",
+   "params": {
+    "a": "@Q1-01",
+    "b": "@Q1-06"
+   },
+   "question": "CONFLICT: comparing a Solana mint answer with an Ethereum contract answer must be refused or labelled cross-kind, never merged.",
+   "oracle": {
+    "status": [
+     200,
+     400,
+     409,
+     422
+    ],
+    "outcome": null,
+    "schema": null,
+    "expect": {
+     "cross_kind_not_merged": true
+    }
+   }
+  },
+  {
+   "id": "Q1-36",
+   "group": "control-stale",
+   "axis": "what-later-changed",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "@Q1-01"
+   },
+   "question": "STALE: the evidence view must state the answer's observation time and cache age, never imply a fresh read.",
+   "oracle": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "observation"
+    ],
+    "expect": {
+     "states_observation_time": true
+    }
+   }
+  }
+ ],
+ "errata_from_run_1": [
+  "Q1-06..Q1-11: the live contract answer schema is exit.ethereum-contract-research/4 (since the 1 Nov EIP-1167 release); the bank and the public API description still said /3 — oracle corrected; the public description is corrected separately",
+  "Q1-13: the USDT contract address IS listed by its own blacklist (fact observed in run 1); expectation corrected to USDT true, USDC and PYUSD false",
+  "Q1-20/21/30/36: the evidence view (exit.private-evidence-view/2) carries answer_within_scope, evidence_cards, evidence_refs, observation, question, replay — the required fields named the wrong keys",
+  "Q1-27..Q1-36: 429 RATE_LIMITED after 26 requests in ~25 s — the runner now paces requests (EXIT_Q1_PACE seconds, default 3.0) so controls are measured, not rate-limited"
+ ]
+}

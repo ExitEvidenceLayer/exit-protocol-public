@@ -1,0 +1,1889 @@
+{
+ "format": "exit.q1-after-result/1",
+ "run": "20261105T000505Z",
+ "base": "https://api.exit-protocol.io",
+ "started_utc": "2026-11-05T00:05:03.064790+00:00",
+ "finished_utc": "2026-11-05T00:08:21.093750+00:00",
+ "single_day": true,
+ "questions": 36,
+ "sent": 36,
+ "not_run": 0,
+ "answered_200": 30,
+ "carried": 0,
+ "bank_used_by_the_run": {
+  "version": "1.2",
+  "sha256": "226d59a5e5305a026e4421fd1f7d9bcc5f55db4a731f25865eb2ef6591227d3b",
+  "file": "q1-bank-v1.2.json"
+ },
+ "banks": {
+  "v1": {
+   "sha256": "524db8d997dcb9955c8506478f6c5fbcdfe5af1879114b209a615e22c189a5ea",
+   "file": "../tools/q1-bank-v1.json",
+   "published": "2026-11-02T06:57:02Z (commit 65aed6ff)"
+  },
+  "v1_1": {
+   "sha256": "b2f4ee1776aa1336fc053f9c26d302a2cd669fd75cb587f7608dd21726bf576d",
+   "file": "q1-bank-v1.1.json",
+   "erratum": "q1-erratum-v1-to-v1.1.json",
+   "hash_first_published": "2026-11-03, after the 3 November run"
+  },
+  "v1_2": {
+   "sha256": "226d59a5e5305a026e4421fd1f7d9bcc5f55db4a731f25865eb2ef6591227d3b",
+   "file": "q1-bank-v1.2.json",
+   "erratum": "q1-erratum-v1.2-20261104.md",
+   "erratum_sha256": "892e067e899b3e56983d50808a91e1ce1b3cb088df47255a28f7b540ff6ba01a",
+   "written": "2026-11-04T02:54:31Z, before this run and after answers in schema exit.ethereum-contract-research/5 had been seen",
+   "hash_first_published": "with this file, after this run",
+   "changed_questions": [
+    "Q1-06",
+    "Q1-07",
+    "Q1-08",
+    "Q1-09",
+    "Q1-10",
+    "Q1-11"
+   ]
+  }
+ },
+ "summary": {
+  "questions": 36,
+  "met_v1": 24,
+  "wilson_v1": [
+   0.503,
+   0.798
+  ],
+  "met_v1_1": 28,
+  "wilson_v1_1": [
+   0.619,
+   0.883
+  ],
+  "met_v1_2": 34,
+  "wilson_v1_2": [
+   0.819,
+   0.985
+  ],
+  "never_revised": 25,
+  "never_revised_met": 23,
+  "wilson_never_revised": [
+   0.75,
+   0.978
+  ],
+  "unchanged_v1_1_to_v1_2": 30,
+  "unchanged_v1_1_to_v1_2_met": 28,
+  "wilson_unchanged_v1_1_to_v1_2": [
+   0.787,
+   0.982
+  ]
+ },
+ "regrade_reproduces_recorded_v1_2_result": true,
+ "before": {
+  "run": "20261103T000505Z",
+  "met_v1": 21,
+  "met_v1_1": 31,
+  "never_revised_met": 20,
+  "wilson_never_revised": [
+   0.609,
+   0.911
+  ],
+  "unchanged_v1_1_to_v1_2_met": 25,
+  "wilson_unchanged_v1_1_to_v1_2": [
+   0.664,
+   0.927
+  ],
+  "result_file": "q1-result-20261103T000505Z.json",
+  "two_column_file": "q1-two-column-20261103T000505Z.json"
+ },
+ "engines_named": [
+  "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5"
+ ],
+ "answers_naming_an_engine": 22,
+ "rows": [
+  {
+   "id": "Q1-01",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "Xsc9qvGR1efVDFGLrVsmkzv3qi45LTBjeUKSPmx9qEh"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted",
+     "state_facts.pausableConfig.paused"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1309,
+   "credits_charged": 0,
+   "answer_sha256": "421c494d89a081416703387f264bd0ef2dedbaa21995cc1f05b1003c272b079a",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-02",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1854,
+   "credits_charged": 0,
+   "answer_sha256": "a77ddce564aa5c8fec930b33b5ad9dbd2d6470bb6d75547d8c2b9325298356de",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-03",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 3231,
+   "credits_charged": 0,
+   "answer_sha256": "032415aa7052c6f15718691783b7f772287d51b4dd26e9b4f73311f6f79e72a4",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 503,
+    "met_v1": false,
+    "met_v1_1": false
+   }
+  },
+  {
+   "id": "Q1-04",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 2003,
+   "credits_charged": 0,
+   "answer_sha256": "f0f326eb48cd48a0efee1374d8e778ca16c823783cc65339c45c8934e5bef5ab",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-05",
+   "group": "primary",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-mint-research/2",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "controls",
+     "state_facts",
+     "evidence_refs",
+     "result_sha256",
+     "coverage",
+     "limits",
+     "not_interpreted"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1175,
+   "credits_charged": 0,
+   "answer_sha256": "374849bb8d03e1b1a4072e81ee6eb23a037325b67d1da7012532a5505e855da3",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-06",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1969,
+   "credits_charged": 0,
+   "answer_sha256": "d9f4cfd82419d90615776560a9a16575ce0303e8fccad5ee78991e62f7b7965d",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": true,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/4'"
+    ]
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-07",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1693,
+   "credits_charged": 0,
+   "answer_sha256": "c5f3589b02b34611b506ea8da0991a00925a20cefd8eefedcfd89ff0f10fe35f",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": true,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/4'"
+    ]
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-08",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0xdc035d45d973e3ec169d2276ddab16f1e407384f"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1649,
+   "credits_charged": 0,
+   "answer_sha256": "88868106d51d9f99416caa21ce33edff06364083e4b16abc7cb87084d716213c",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": true,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/4'"
+    ]
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-09",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 2298,
+   "credits_charged": 0,
+   "answer_sha256": "1e17a9c0918e2bc2d5a40991c02812124e2ee938f7f0a9c1962b0ebc3808c935",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": true,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/4'"
+    ]
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-10",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x96f6ef951840721adbf46ac996b59e0235cb985c"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1701,
+   "credits_charged": 0,
+   "answer_sha256": "2ec68d1051c407333403a9f96bb83e576204f25bf53484d8ed18b87f794855cb",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": true,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/4'"
+    ]
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-11",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x8292bb45bf1ee4d140127049757c2e0ff06317ed"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.ethereum-contract-research/5",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 2922,
+   "credits_charged": 0,
+   "answer_sha256": "562492f4a92573c07dbc08ccdda58e74d2552483848f28727f3b2c630a60a22b",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": true,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/3'"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "schema 'exit.ethereum-contract-research/5' != 'exit.ethereum-contract-research/4'"
+    ]
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-12",
+   "group": "primary",
+   "axis": "what-happened",
+   "route": "/v0/research/ethereum/freeze",
+   "params": {
+    "address": "0x5227f603c1ee34ce3c06efe6477003bdfccb2f8c"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.stablecoin-freeze-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "tokens",
+     "frozen_face_amount",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1455,
+   "credits_charged": 0,
+   "answer_sha256": "14c985c33d77c56e1e9491a9c9848d5444ef03756bba3515cc8f590bb030b326",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-13",
+   "group": "primary",
+   "axis": "what-happened",
+   "route": "/v0/research/ethereum/freeze",
+   "params": {
+    "address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.stablecoin-freeze-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "policy",
+     "subject",
+     "observation",
+     "tokens",
+     "frozen_face_amount",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1637,
+   "credits_charged": 0,
+   "answer_sha256": "29c8aa1433c08ceb951c4565c4aedd41f7e4298841d109cb54e1a07e79e536af",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": false,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "tokens blacklisted [True, False, False] != all False"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-14",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/solana/governance",
+   "params": {
+    "governance": "Uq5BRkVfdBpMknZJHw6huS3dunEgJpUDv3M2DG3BfQg"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-governance-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 503,
+   "latency_ms": 1124,
+   "credits_charged": 0,
+   "answer_sha256": "ad66cbd611734bcbc3b3b957ea91b58188b4d490d9d51229138ad49582856f5c",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-governance-research/1'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field subject",
+     "missing field observation",
+     "missing field evidence_refs",
+     "missing field result_sha256"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-governance-research/1'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field subject",
+     "missing field observation",
+     "missing field evidence_refs",
+     "missing field result_sha256"
+    ]
+   },
+   "v1_2": {
+    "met": false,
+    "differences": [
+     "status 503 not in [200]",
+     "schema None != 'exit.solana-governance-research/1'",
+     "outcome None not in ['ANSWERED_WITHIN_DECLARED_SCOPE']",
+     "missing field schema",
+     "missing field outcome",
+     "missing field subject",
+     "missing field observation",
+     "missing field evidence_refs",
+     "missing field result_sha256"
+    ]
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-15",
+   "group": "primary",
+   "axis": "what-happened",
+   "route": "/v0/research/solana/governance/proposals",
+   "params": {
+    "governance": "Uq5BRkVfdBpMknZJHw6huS3dunEgJpUDv3M2DG3BfQg"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.solana-governance-proposals-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "proposals",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 3528,
+   "credits_charged": 0,
+   "answer_sha256": "62cad00c92488c9ecc337bad85660b62ba1f20631fe98a7168f6d9a5982ca8e5",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 503,
+    "met_v1": false,
+    "met_v1_1": false
+   }
+  },
+  {
+   "id": "Q1-16",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/layerzero",
+   "params": {
+    "oapp": "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+    "eid": "30110",
+    "direction": "send"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.layerzero-path-service/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1488,
+   "credits_charged": 0,
+   "answer_sha256": "e7dbe39dbc953b8f5ea3d024cb397d4910d4724ff488f5a509cc29424d904bd5",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-17",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/layerzero/peer",
+   "params": {
+    "oapp": "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+    "eid": "30110"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.layerzero-peer-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "peer",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1985,
+   "credits_charged": 0,
+   "answer_sha256": "062640412e0798d6875f02a8d200e2c899860705a01659f25e6ed9012f3456ed",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-18",
+   "group": "primary",
+   "axis": "who/role",
+   "route": "/v0/research/ethereum/layerzero/peer",
+   "params": {
+    "oapp": "0x147bde4f997f0d4c7544ed0c55eacf1e5e6bf9c4",
+    "eid": "30168"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": [
+     "ANSWERED_WITHIN_DECLARED_SCOPE"
+    ],
+    "schema": "exit.layerzero-peer-research/1",
+    "required": [
+     "schema",
+     "outcome",
+     "subject",
+     "observation",
+     "peer",
+     "evidence_refs",
+     "result_sha256"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1410,
+   "credits_charged": 0,
+   "answer_sha256": "ee62d5d23de42852068b691129681bd8e4c168078763e658ca4481c3a69c0049",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-19",
+   "group": "workflow",
+   "axis": "when-EXIT-learned",
+   "route": "/v0/research/records",
+   "params": {},
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": [
+     "records"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 526,
+   "credits_charged": 0,
+   "answer_sha256": "44bd5717ecb82304326edbdaeea2023c69c0591370bc61479486580e679abc01",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-20",
+   "group": "workflow",
+   "axis": "evidence",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "q1-226d59a5-20261105T000505Z-Q1-01"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "question",
+     "answer_within_scope",
+     "evidence_cards",
+     "evidence_refs",
+     "observation"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 500,
+   "credits_charged": 0,
+   "answer_sha256": "6efe99f6262b9087199b963108153ea582129f5eee21372e622796598a793c6b",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": false,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "missing field answer",
+     "missing field evidence"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-21",
+   "group": "workflow",
+   "axis": "evidence",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "q1-226d59a5-20261105T000505Z-Q1-12"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "question",
+     "answer_within_scope",
+     "evidence_cards",
+     "evidence_refs",
+     "observation"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 743,
+   "credits_charged": 0,
+   "answer_sha256": "37f8cdcaa43e6fa031c4cf0210c6cdabbd8f1722af940aadc389fba12edd37bf",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": false,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "missing field answer",
+     "missing field evidence"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-22",
+   "group": "workflow",
+   "axis": "what-changed",
+   "route": "/v0/research/compare",
+   "params": {
+    "a": "q1-226d59a5-20261105T000505Z-Q1-02",
+    "b": "q1-226d59a5-20261105T000505Z-Q1-03"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-comparison/1",
+    "required": [
+     "schema"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 610,
+   "credits_charged": 0,
+   "answer_sha256": "6ee1d29053b39574c152497ebb58bba1f93e4d2f19f4f69530f62cd034cf72b2",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 409,
+    "met_v1": false,
+    "met_v1_1": false
+   }
+  },
+  {
+   "id": "Q1-23",
+   "group": "workflow",
+   "axis": "what-changed",
+   "route": "/v0/research/compare",
+   "params": {
+    "a": "q1-226d59a5-20261105T000505Z-Q1-06",
+    "b": "q1-226d59a5-20261105T000505Z-Q1-07"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-comparison/1",
+    "required": [
+     "schema"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 583,
+   "credits_charged": 0,
+   "answer_sha256": "28f7aee30c1d40ee3848abda10b8b2b994acbe105e136f123d9bc98f978a2531",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-24",
+   "group": "workflow",
+   "axis": "who/role",
+   "route": "/v0/research/graph",
+   "params": {
+    "request_id": [
+     "q1-226d59a5-20261105T000505Z-Q1-02",
+     "q1-226d59a5-20261105T000505Z-Q1-03",
+     "q1-226d59a5-20261105T000505Z-Q1-04"
+    ]
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-graph/1",
+    "required": [
+     "schema"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 1124,
+   "credits_charged": 0,
+   "answer_sha256": "356ff5e33ac1685b32f8b9e8cd0da960c482811cc81ad445195ae8aee43e006c",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 409,
+    "met_v1": false,
+    "met_v1_1": false
+   }
+  },
+  {
+   "id": "Q1-25",
+   "group": "workflow",
+   "axis": "who/role",
+   "route": "/v0/research/graph",
+   "params": {
+    "request_id": [
+     "q1-226d59a5-20261105T000505Z-Q1-06",
+     "q1-226d59a5-20261105T000505Z-Q1-08",
+     "q1-226d59a5-20261105T000505Z-Q1-09"
+    ]
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.research-graph/1",
+    "required": [
+     "schema"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 555,
+   "credits_charged": 0,
+   "answer_sha256": "dacb0c4fe827a87f8823c8eb0e9fa1f3d2c401236b1e0a52d49e47085aa8c5c3",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-26",
+   "group": "workflow",
+   "axis": "when-EXIT-learned",
+   "route": "/v0/research/log-binding",
+   "params": {
+    "request_id": "q1-226d59a5-20261105T000505Z-Q1-01"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.answer-log-binding/1",
+    "required": [
+     "schema"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 581,
+   "credits_charged": null,
+   "answer_sha256": "e0f8c2249ced1fc596f3637a99c18575ffd50fdc97de5caadadab3565a000de2",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-27",
+   "group": "workflow",
+   "axis": "when-EXIT-learned",
+   "route": "/v0/research/record",
+   "params": {
+    "id": "MISSING-RECORD"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": [
+     "state",
+     "reason"
+    ]
+   },
+   "status": 409,
+   "latency_ms": 487,
+   "credits_charged": 0,
+   "answer_sha256": "714de32f8ea8274900ec0f739a3e5e8e765e18b71b644879245b178bce1ef927",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "missing field state",
+     "missing field reason"
+    ]
+   },
+   "v1_1": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "missing field state",
+     "missing field reason"
+    ]
+   },
+   "v1_2": {
+    "met": false,
+    "differences": [
+     "status 409 not in [200]",
+     "missing field state",
+     "missing field reason"
+    ]
+   },
+   "before_20261103T000505Z": {
+    "status": 409,
+    "met_v1": false,
+    "met_v1_1": false
+   }
+  },
+  {
+   "id": "Q1-28",
+   "group": "workflow",
+   "axis": "what-changed",
+   "route": "/v0/research/watch",
+   "params": {},
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": []
+   },
+   "status": 200,
+   "latency_ms": 1235,
+   "credits_charged": 0,
+   "answer_sha256": "9919030907dd5811a07acc85b67d3df76f96460656c3c86b5b25eb396f843faf",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-29",
+   "group": "workflow",
+   "axis": "when-a-human-decides",
+   "route": "/v0/research/records",
+   "params": {},
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": null,
+    "required": [
+     "records"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 496,
+   "credits_charged": 0,
+   "answer_sha256": "44bd5717ecb82304326edbdaeea2023c69c0591370bc61479486580e679abc01",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-30",
+   "group": "workflow",
+   "axis": "evidence",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "q1-226d59a5-20261105T000505Z-Q1-17"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "question",
+     "answer_within_scope",
+     "evidence_cards",
+     "evidence_refs",
+     "observation"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 526,
+   "credits_charged": 0,
+   "answer_sha256": "437e1c9fa13a141c6822e16652a30d1608eedf7f9dd73cdcb64c372bd2326688",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": false,
+   "never_revised": false,
+   "v1": {
+    "met": false,
+    "differences": [
+     "missing field evidence"
+    ]
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": false,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-31",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "11111111111111111111111111111111"
+   },
+   "expected_v1_2": {
+    "status": [
+     200,
+     404,
+     422
+    ],
+    "outcome": null,
+    "schema": null
+   },
+   "status": 422,
+   "latency_ms": 1096,
+   "credits_charged": 0,
+   "answer_sha256": "24c4cebbb9a40042f58729ba13f7c9eee85903b007d3b1d877810814be11a75c",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 422,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-32",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/ethereum/contract",
+   "params": {
+    "address": "0x0000000000000000000000000000000000000001"
+   },
+   "expected_v1_2": {
+    "status": [
+     200,
+     404,
+     422
+    ],
+    "outcome": null,
+    "schema": null
+   },
+   "status": 422,
+   "latency_ms": 1315,
+   "credits_charged": 0,
+   "answer_sha256": "e0174dc3a32905eb38986a941adb49982aebe12ffd2f2540577f0551c3000959",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 422,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-33",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/solana/mint",
+   "params": {
+    "mint": "notabase58address"
+   },
+   "expected_v1_2": {
+    "status": [
+     422
+    ],
+    "outcome": null,
+    "schema": null
+   },
+   "status": 422,
+   "latency_ms": 488,
+   "credits_charged": 0,
+   "answer_sha256": "7e5a18e6551d3f0c880e5edfc81e28192ebc9e3c55b8f5f87fcc3d1ec5d20111",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 422,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-34",
+   "group": "control-missing",
+   "axis": "what-remains-unknown",
+   "route": "/v0/research/ethereum/freeze",
+   "params": {
+    "address": "0x5227F603C1EE34CE3C06EFE6477003BDFCCB2F8C"
+   },
+   "expected_v1_2": {
+    "status": [
+     200,
+     422
+    ],
+    "outcome": null,
+    "schema": null
+   },
+   "status": 200,
+   "latency_ms": 984,
+   "credits_charged": 0,
+   "answer_sha256": "cc4b1a39aa035331294439573f0649a46cc80dca1830329cce985f8a8e5ebbdb",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-35",
+   "group": "control-conflict",
+   "axis": "which-claims-conflicted",
+   "route": "/v0/research/compare",
+   "params": {
+    "a": "q1-226d59a5-20261105T000505Z-Q1-01",
+    "b": "q1-226d59a5-20261105T000505Z-Q1-06"
+   },
+   "expected_v1_2": {
+    "status": [
+     200,
+     400,
+     409,
+     422
+    ],
+    "outcome": null,
+    "schema": null
+   },
+   "status": 409,
+   "latency_ms": 535,
+   "credits_charged": 0,
+   "answer_sha256": "958991bb8bc4878c13a74e15fd66ecfe41dd8d55af7c37060d1d86566a46a2e0",
+   "engine": null,
+   "revised_in_v1_1": false,
+   "revised_in_v1_2": false,
+   "never_revised": true,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 409,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  },
+  {
+   "id": "Q1-36",
+   "group": "control-stale",
+   "axis": "what-later-changed",
+   "route": "/v0/research/evidence",
+   "params": {
+    "request_id": "q1-226d59a5-20261105T000505Z-Q1-01"
+   },
+   "expected_v1_2": {
+    "status": 200,
+    "outcome": null,
+    "schema": "exit.private-evidence-view/2",
+    "required": [
+     "schema",
+     "observation"
+    ]
+   },
+   "status": 200,
+   "latency_ms": 991,
+   "credits_charged": 0,
+   "answer_sha256": "6efe99f6262b9087199b963108153ea582129f5eee21372e622796598a793c6b",
+   "engine": "bb49875ca2a8aff1a1cddcdc0dc3e496b82118e5",
+   "revised_in_v1_1": true,
+   "revised_in_v1_2": false,
+   "never_revised": false,
+   "v1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_1": {
+    "met": true,
+    "differences": []
+   },
+   "v1_2": {
+    "met": true,
+    "differences": []
+   },
+   "before_20261103T000505Z": {
+    "status": 200,
+    "met_v1": true,
+    "met_v1_1": true
+   }
+  }
+ ],
+ "not_published": "the answer bodies (their sha256 are listed); they are kept with the run",
+ "caveats": [
+  "36 questions and one run on each side: the intervals overlap and do not separate the two runs.",
+  "v1 (2 November) and v1.1 (hash published 3 November) were publicly dated before this run; v1.2 was not. v1.2 changed the expected schema of Q1-06..Q1-11 from /4 to /5 after /5 answers had been seen, so those six passes are not independent evidence.",
+  "Q1-03 and Q1-15 (Solana) answered 503 on 3 November and 200 on 5 November; Q1-22 and Q1-24 build on the Q1-03 answer (409 on 3 November, 200 on 5 November). Q1-14 (Solana governance) answered 200 on 3 November and 503 on 5 November (error code RPC_RESPONSE_INVALID; no automatic retry; no credit charged; cause not established). These changes are in Solana reads and in questions that build on them; this run does not isolate the effect of any service release.",
+  "Q1-27 is a defect of the question itself (its premise is a record that a refused input never creates); it stays a miss and is not corrected after the fact."
+ ]
+}
