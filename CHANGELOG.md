@@ -1,5 +1,12 @@
 # Public documentation changelog
 
+## 13 November 2026 · verifier option --trust and agent tools 2026-11-13.2
+
+- tools/exit_log_verify.py (sha256 7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed) has a new option, `--trust github,dns,site`, for proof, log and leaf. It first requires the notary keys to be the same in three copies kept apart: the log's notaries.json, [NOTARIES.md](NOTARIES.md) in this repository and the DNS TXT record `_exit-notary.exit-protocol.io`. It refuses (exit 1) before any other check when one copy is missing, malformed or lists other keys. `--dns-txt FILE` takes the record from your own resolver instead of DNS-over-HTTPS; `--hub` takes a saved copy of NOTARIES.md. Agreement shows that the keys were not changed in one copy alone; it does not show who controls the copies.
+- Without `--trust` the checks are unchanged. Two changes in error handling: a file read over https (log, proof, the NOTARIES.md copy, the DNS-over-HTTPS reply) is refused when it is redirected away from https, and the `--rpc` request has no such check; a reply cut short by the network (IncompleteRead), on any of these reads or on the `--rpc` request, ends in the JSON refusal (exit 1, verified false) instead of a Python traceback.
+- exit_evidence.py pins the new verifier hash; README.md lists the new values of both files. test_log_verify_trust.py is new: synthetic tests without network access, run with `python3 -B -m unittest -v test_log_verify_trust`.
+- The same files are in the agent tools package 2026-11-13.2 at https://exit-protocol.io/tools/ (exit-agent-tools-20261113.zip replaces exit-agent-tools-20261108.zip there). The copy at https://exit-protocol.io/log/exit_log_verify.py follows at the log's next daily publication. [docs/CONNECT-AN-AGENT.md](docs/CONNECT-AN-AGENT.md) now names the new archive, the release and its 12 files.
+
 ## 13 November 2026 · Q1 after-run result; an internal identifier removed from two case notes
 
 - [docs/Q1-RESULT.md](docs/Q1-RESULT.md) now also reports the question-bank after-run of 5 November 2026 (00:05 to 00:08 UTC, run

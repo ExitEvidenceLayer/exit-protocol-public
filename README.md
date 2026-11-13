@@ -101,11 +101,11 @@ files published here.
 |---|---|
 | `exit_client.py` | `f7b07eaf4e4cc6b096f75d22c8f59e66e69c279c06ad21554c21fa58a85e4e80` |
 | `exit_mcp.py` | `dedeac5e97e4c0265288d6348b327177f296b5640aadc39242f3ef8f688941d5` |
-| `exit_evidence.py` | `238b214ff86a0cb346031ce48a999f9eba5026cc942f7de8b8aeea0897d13d35` |
+| `exit_evidence.py` | `d22c2a7afd4806731202d6fe7e0ae521832ae5e50a33bc14ae689692e0452dcb` |
 
 On macOS or Linux, `shasum -a 256 exit_client.py exit_mcp.py exit_evidence.py` must print these values; on Windows PowerShell,
 `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py`. A copy with any other value is not the published file.
-exit_evidence.py pins the SHA-256 of `tools/exit_log_verify.py` (`9381318713af86ff3be6c83960bf4528b4c218e6f088a31379fd011b830f42a6`)
+exit_evidence.py pins the SHA-256 of `tools/exit_log_verify.py` (`7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed`)
 and refuses to use any other copy, so checking exit_evidence.py also covers the verifier. These values are to change in the same
 commit as the files; the commits of 2 and 10 November (caff9534, f16e1d49, 84ed9680) did not update them (corrected 10 November).
 
