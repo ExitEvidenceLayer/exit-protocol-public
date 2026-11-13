@@ -2,23 +2,26 @@
 
 `exit_mcp.py` gives AI agents EXIT's research tools as a Model Context Protocol (MCP) server over stdio, using only the Python standard library. Run it from your agent's MCP configuration with `EXIT_API_KEY` in its environment (a person gets the key in a browser at https://api.exit-protocol.io, and it is never printed); the public log tools `exit_history`, `exit_cite` and `exit_verify` need no key. Answers carry their evidence and limits, an unresolved answer is returned as unresolved and never as a verdict, and there are no price, safety or identity claims.
 
-Checked on 11 November 2026: the download and file check, the terminal test and the exchange in section 6 were run with tools release `2026-11-08.1` on Python 3.12.14. The Claude Desktop and Cursor settings follow the official guides as read the same day ([MCP: connect to local servers](https://modelcontextprotocol.io/docs/develop/connect-local-servers), [Claude Help Center: local MCP servers](https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop), [Cursor: MCP](https://cursor.com/docs/mcp), [Cursor help: MCP](https://cursor.com/help/customization/mcp)). They were not run inside the two apps for this page.
+Checked on 11 November 2026: the download and file check, the terminal test and the exchange in section 6 were run with the tools release that was current that day, on Python 3.12.14.
+The Claude Desktop and Cursor settings follow the official guides as read the same day ([MCP: connect to local servers](https://modelcontextprotocol.io/docs/develop/connect-local-servers), [Claude Help Center: local MCP servers](https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop), [Cursor: MCP](https://cursor.com/docs/mcp), [Cursor help: MCP](https://cursor.com/help/customization/mcp)). They were not run inside the two apps for this page.
+
+On 13 November 2026 the file check of section 1 and the terminal test of section 2 were run again on the archive of release `2026-11-13.2`, on Python 3.12.14: 12 files `OK`, 30 tools. That release did not change `exit_mcp.py` or `exit_client.py`.
 
 ## 1. Download and check the files
 
-The tools are published at https://exit-protocol.io/tools/. On 11 November 2026 the release was `2026-11-08.1`, in the archive `exit-agent-tools-20261108.zip`; [RELEASE.json](https://exit-protocol.io/tools/RELEASE.json) lists the archive's SHA-256. The tools are written for Python 3.10 or later, tested on 3.12, and need no package installation.
+The tools are published at https://exit-protocol.io/tools/. Release `2026-11-13.2` is in the archive `exit-agent-tools-20261113.zip`; [RELEASE.json](https://exit-protocol.io/tools/RELEASE.json) names the current release and lists its archive's SHA-256. If RELEASE.json names a newer release, use the archive name it lists in the commands below. The tools are written for Python 3.10 or later, tested on 3.12, and need no package installation.
 
 On macOS or Linux:
 
 ```sh
 mkdir exit-agent-tools && cd exit-agent-tools
-curl -O https://exit-protocol.io/tools/exit-agent-tools-20261108.zip
-shasum -a 256 exit-agent-tools-20261108.zip
-unzip exit-agent-tools-20261108.zip
+curl -O https://exit-protocol.io/tools/exit-agent-tools-20261113.zip
+shasum -a 256 exit-agent-tools-20261113.zip
+unzip exit-agent-tools-20261113.zip
 shasum -a 256 -c SHA256SUMS
 ```
 
-The archive's hash must equal its entry in RELEASE.json, and the last command must print `OK` for each of the 11 files. On Linux without `shasum`, use `sha256sum` instead: `sha256sum exit-agent-tools-20261108.zip` and `sha256sum -c SHA256SUMS`. On Windows, extract the archive and compare `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py` with the table in [the README](../README.md#verify-the-client-files).
+The archive's hash must equal its entry in RELEASE.json, and the last command must print `OK` for each of the 12 files. On Linux without `shasum`, use `sha256sum` instead: `sha256sum exit-agent-tools-20261113.zip` and `sha256sum -c SHA256SUMS`. On Windows, extract the archive and compare `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py` with the table in [the README](../README.md#verify-the-client-files).
 
 Keep these files together. The three public log tools need `exit_evidence.py` and `tools/exit_log_verify.py`, and `exit_evidence.py` pins the SHA-256 of `tools/exit_log_verify.py` and refuses any other copy.
 
@@ -110,7 +113,7 @@ Use the global file `~/.cursor/mcp.json` (the `.cursor` folder in your home dire
 
 ## 6. A real exchange without a key
 
-Recorded on 11 November 2026 at 05:40 UTC with tools release `2026-11-08.1` (`exit_mcp.py` SHA-256 `dedeac5e97e4c0265288d6348b327177f296b5640aadc39242f3ef8f688941d5`), Python 3.12.14 and no `EXIT_API_KEY`. These lines were sent to the server's stdin, one per line:
+Recorded on 11 November 2026 at 05:40 UTC with the tools release that was current that day (`exit_mcp.py` SHA-256 `dedeac5e97e4c0265288d6348b327177f296b5640aadc39242f3ef8f688941d5`, the same file as in release `2026-11-13.2`), Python 3.12.14 and no `EXIT_API_KEY`. These lines were sent to the server's stdin, one per line:
 
 ```text
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"connect-guide-check","version":"1"}}}
