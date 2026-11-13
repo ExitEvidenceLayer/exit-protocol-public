@@ -1,5 +1,23 @@
 # Public documentation changelog
 
+## 13 November 2026 · Q1 after-run result; an internal identifier removed from two case notes
+
+- [docs/Q1-RESULT.md](docs/Q1-RESULT.md) now also reports the question-bank after-run of 5 November 2026 (00:05 to 00:08 UTC, run
+  20261105T000505Z, bank v1.2). Met: 24 of 36 on bank v1, 28 on v1.1, 34 on v1.2; 23 of the 25 questions never revised (20 on 3 November).
+  The intervals of the two runs overlap. New in docs/: [q1-result-20261105T000505Z.json](docs/q1-result-20261105T000505Z.json),
+  [q1-bank-v1.2.json](docs/q1-bank-v1.2.json) and [q1-erratum-v1.2-20261104.md](docs/q1-erratum-v1.2-20261104.md). ROADMAP.md said that
+  docs/Q1-RESULT.md reports only the 3 November baseline; it now says that the after-run is reported.
+- The question-level changes are in Solana reads and in questions that build on them (Q1-03 and Q1-15 answered 200, Q1-14 answered 503);
+  this run does not isolate the effect of any service release. Q1-27 stays a miss: a defect of the question.
+- docs/Q1-RESULT.md (baseline section) and [STATUS.md](STATUS.md) (3 November update) said that the other 15 baseline answers "are
+  refusals or evidence views" without an engine field. That was wrong: the 15 answers without an engine field are 9 refusals and 6
+  workflow answers; the evidence views name the engine. Corrected in place in both files with the date (STATUS.md: dated corrections
+  to 13 November 2026).
+- The website's Ethereum USDC and Ethereum PYUSD case notes carried an internal run identifier in the text of their correction of 25 October
+  2026. It is removed, and each note has a new dated correction that says so; the answer and the evidence are unchanged. Changed with
+  them: data.json (the two files' sha256), EXIT-OFFLINE.html (the same files embedded), sitemap.xml, and here
+  [CORRECTIONS.md](CORRECTIONS.md) (two rows, not counted).
+
 ## 12 November 2026 · Control Map page from the nightly reads
 
 - 09:27 UTC: https://exit-protocol.io/control-map/ is built from the nightly read of 11 November 2026 (72 of 72 rows show the read of that night; a row with an older read is dated in the row). Its first line names the night. It was built once and is not yet rebuilt every night.

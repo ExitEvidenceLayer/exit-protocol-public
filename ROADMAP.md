@@ -55,7 +55,9 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       public record, which names each record's evidence and result only by SHA-256; EXIT's record, added 11 November 2026: on the 4 and 9
       November 23:20 UTC re-reads all 21 answered owner() as CALL_REVERTED);
       an after-measurement on the fixed question bank was planned after that run
-      (corrected 10 November: no result of it is shown in the public record; docs/Q1-RESULT.md reports only the 3 November baseline)
+      (corrected 10 November: no result of it is shown in the public record; docs/Q1-RESULT.md reports only the 3 November baseline;
+      added 13 November 2026: docs/Q1-RESULT.md now also reports that after-run, 5 November 2026 00:05 UTC: 34 of 36 met on bank v1.2,
+      23 of the 25 questions never revised)
   → LIVE: higher free limits, with a service-capacity view (GET /v0/early-access, service_capacity; service release of 12 November 2026; planned by 13 November 2026)
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
