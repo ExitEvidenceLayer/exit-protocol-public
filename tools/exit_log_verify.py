@@ -5,6 +5,7 @@ rule and the RFC 6962 / RFC 9162 Merkle algorithms are restated here, so the che
   python3 exit_log_verify.py proof BUNDLE [--tx TX.json | --rpc URL] [--notaries NOTARIES]
   python3 exit_log_verify.py log SOURCE [--rpc URL]
   python3 exit_log_verify.py leaf BINDING --log SOURCE [--rpc URL] [--event EVENT | --answer BODY]
+  any of the three may add  --trust github,dns,site [--hub NOTARIES] [--dns-txt FILE]
 
 proof  Checks one record: the record and its salt give the leaf, the audit path leads to the stated root, and the anchor transaction
        on Solana carries exactly that tree size and root in an EXIT-ROOT-v1 memo, signed by the stated notary key. TX.json is a
@@ -19,11 +20,20 @@ leaf   Checks a private record you hold (a binding {record, salt} that EXIT gave
        anchor's transaction and signer (notaries.json of the same log). BINDING may also be the saved value of an answer's
        X-EXIT-Log-Binding header. --answer BODY is a local file with the exact response body bytes you received; it must hash to
        the record's result_sha256. --event EVENT is the full watch event (all parts) for a radar binding.
+--trust github,dns,site  First requires the notary keys to be the same in three copies kept apart, and refuses (exit 1) before any
+       other check when one copy is missing, malformed or lists other keys: the log's notaries.json (SOURCE/notaries.json, or --notaries,
+       or https://exit-protocol.io/log/notaries.json for proof without --notaries), NOTARIES.md in the public repository
+       github.com/ExitEvidenceLayer/exit-protocol-public (or --hub, a local or https copy), and the DNS TXT record
+       _exit-notary.exit-protocol.io, read through DNS-over-HTTPS at dns.google, or from --dns-txt FILE holding what your own resolver
+       printed for dig +short TXT _exit-notary.exit-protocol.io. When they agree, anchor signers are checked against that notaries.json.
+       During a key change the copies are updated one after another and may disagree for a while; the check refuses until they agree.
+       Agreement shows that the keys were not changed in one copy alone; it does not show who controls the copies.
 BUNDLE, BINDING, NOTARIES and SOURCE may be local paths or https URLs; SOURCE is the log folder, e.g. https://exit-protocol.io/log/
 
 Exit code 0 only if every check passed. What a passing check proves and does not prove is printed with the result."""
 import base64
 import hashlib
+import http.client
 import json
 import re
 import sys
@@ -47,9 +57,7 @@ def _h(b):
 
 def load(src):
     if src.startswith('https://'):
-        req = urllib.request.Request(src, headers={'User-Agent': 'exit-log-verify/1'})
-        with urllib.request.urlopen(req, timeout=30) as r:
-            return json.loads(r.read())
+        return json.loads(_get(src))
     with open(src, encoding='utf-8') as fh:
         return json.load(fh)
 
@@ -321,8 +329,14 @@ def _check_log_documents(leaves_doc, roots_doc, anchors_doc, notaries=None):
 
 def cmd_proof(argv):
     b = load(argv[0])
-    notaries = load(argv[argv.index('--notaries') + 1]) if '--notaries' in argv else None
+    trusted = trust_gate(argv, argv[argv.index('--notaries') + 1] if '--notaries' in argv else SITE_NOTARIES)
+    if trusted:
+        notaries = trusted[0]
+    else:
+        notaries = load(argv[argv.index('--notaries') + 1]) if '--notaries' in argv else None
     out = {'leaf_index': b['leaf_index'], 'tree_size': b['tree_size'], 'root': b['root'], 'record': b['record']}
+    if trusted:
+        out['trust'] = trusted[1]
     out['inclusion_ok'] = included(b['leaf_index'], b['tree_size'], leaf_data(b['record'], b['salt']),
                                    [bytes.fromhex(x) for x in b['audit_path']], bytes.fromhex(b['root']))
     a = b.get('anchor') or {}
@@ -343,7 +357,8 @@ def cmd_proof(argv):
 def cmd_log(argv):
     base = argv[0] if argv[0].endswith('/') else argv[0] + '/'
     leaves_doc, roots_doc, anchors_doc = load(base + 'leaves.json'), load(base + 'roots.json'), load(base + 'anchors.json')
-    notaries = load(base + 'notaries.json')
+    trusted = trust_gate(argv, base + 'notaries.json')
+    notaries = trusted[0] if trusted else load(base + 'notaries.json')
     _list_document(notaries, 'notaries')
     if any(not isinstance(n.get('public_key'), str) or not n['public_key'] for n in notaries['notaries']):
         raise ValueError('malformed notaries document')
@@ -376,6 +391,8 @@ def cmd_log(argv):
            'proves': 'Every published root is built from the published leaves, and each tree extends the previous one.'
                      + (' Every anchor transaction carries its root.' if '--rpc' in argv else ' Anchors were not fetched.')
            if not problems else 'Nothing: a check failed.'}
+    if trusted:
+        out['trust'] = trusted[1]
     print(json.dumps(out, indent=1, sort_keys=True))
     return 0 if out['verified'] else 1
 
@@ -404,9 +421,12 @@ def cmd_leaf(argv):
         return 1
     base = argv[argv.index('--log') + 1]
     base = base if base.endswith('/') else base + '/'
+    trusted = trust_gate(argv, base + 'notaries.json')
     leaves_doc, roots_doc, anchors_doc = load(base + 'leaves.json'), load(base + 'roots.json'), load(base + 'anchors.json')
     d = leaf_data(b['record'], b['salt'])
     out = {'record': b['record'], 'leaf': d.hex(), 'leaf_matches_binding': d.hex() == b.get('leaf', d.hex())}
+    if trusted:
+        out['trust'] = trusted[1]
     if '--event' in argv:
         try:out['event_matches_binding']=event_digest(load(argv[argv.index('--event')+1]))==b['record'].get('result_sha256')
         except (ValueError,KeyError,TypeError,IndexError):out['event_matches_binding']=False
@@ -452,7 +472,7 @@ def cmd_leaf(argv):
                inclusion_ok=included(i, a['size'], d, path, bytes.fromhex(a['root'])))
     if '--rpc' in argv:
         out.update(check_anchor(fetch_tx(argv[argv.index('--rpc') + 1], a['signature']), a, a['size'], a['root'],
-                                load(base + 'notaries.json')))
+                                trusted[0] if trusted else load(base + 'notaries.json')))
     out['verified'] = bool(out['inclusion_ok'] and out['leaf_matches_binding'] and out.get('anchor_ok', '--rpc' not in argv))
     out['proves'] = PROVES if out['verified'] and '--rpc' in argv else ('Inclusion in an anchored root of the published log; '
                                                                        'the anchor transaction was not fetched.' if out['verified'] else 'Nothing: a check failed.')
@@ -461,7 +481,189 @@ def cmd_leaf(argv):
     return 0 if out['verified'] else 1
 
 
-FLAGS = {'proof': {'--tx', '--rpc', '--notaries'}, 'log': {'--rpc'}, 'leaf': {'--log', '--rpc', '--event', '--answer'}}
+# --trust github,dns,site: the notary keys must be the same in three copies kept apart. Keyless and client-only: three public
+# reads, no account. A missing, malformed or disagreeing copy refuses before any other check.
+TRUST_SOURCES = ('dns', 'github', 'site')
+SITE_NOTARIES = 'https://exit-protocol.io/log/notaries.json'
+HUB_NOTARIES = 'https://raw.githubusercontent.com/ExitEvidenceLayer/exit-protocol-public/main/NOTARIES.md'
+DNS_NAME = '_exit-notary.exit-protocol.io'
+DOH = 'https://dns.google/resolve?name=' + DNS_NAME + '&type=TXT'
+TRUST_LIMIT = 1 << 20
+_KEY = re.compile('[1-9A-HJ-NP-Za-km-z]{32,44}')
+_QUOTED = re.compile(r'"((?:[^"\\]|\\.)*)"')
+
+
+class TrustRefused(Exception):
+    def __init__(self, report):
+        Exception.__init__(self, 'notary keys refused')
+        self.report = report
+
+
+def _get(url, accept=None, limit=None):
+    """HTTPS GET. A redirect away from https and a body over the limit are refused."""
+    headers = {'User-Agent': 'exit-log-verify/1'}
+    if accept:
+        headers['Accept'] = accept
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as r:
+        if not r.geturl().startswith('https://'):
+            raise ValueError('redirected away from https')
+        body = r.read() if limit is None else r.read(limit + 1)
+    if limit is not None and len(body) > limit:
+        raise ValueError('response larger than %d bytes' % limit)
+    return body
+
+
+def _read_file(src):
+    with open(src, 'rb') as fh:
+        body = fh.read(TRUST_LIMIT + 1)
+    if len(body) > TRUST_LIMIT:
+        raise ValueError('file larger than %d bytes' % TRUST_LIMIT)
+    return body
+
+
+def _keyset(keys, what):
+    if not keys:
+        raise ValueError(what + ' lists no key')
+    if any(not isinstance(k, str) or not _KEY.fullmatch(k) for k in keys):
+        raise ValueError(what + ' has a malformed key')
+    if len(set(keys)) != len(keys):
+        raise ValueError(what + ' lists a key twice')
+    return set(keys)
+
+
+def site_keys(doc):
+    """Keys of the log's notaries.json."""
+    if (not isinstance(doc, dict) or not isinstance(doc.get('notaries'), list)
+            or any(not isinstance(n, dict) for n in doc['notaries'])):
+        raise ValueError('notaries.json is malformed')
+    return _keyset([n.get('public_key') for n in doc['notaries']], 'notaries.json')
+
+
+def hub_keys(text):
+    """Keys of the one table in NOTARIES.md whose header starts with 'Solana public key'; each row's first cell is one key in
+    backticks. The table ends at the first line that does not start with '|'."""
+    lines = text.splitlines()
+    heads = [i for i, line in enumerate(lines) if re.match(r'\|\s*Solana public key\s*\|', line)]
+    if len(heads) != 1:
+        raise ValueError('NOTARIES.md has %s key table' % ('no' if not heads else 'more than one'))
+    i = heads[0] + 1
+    if i >= len(lines) or not re.fullmatch(r'\|(\s*:?-+:?\s*\|)+', lines[i].strip()):
+        raise ValueError('NOTARIES.md key table has no header separator')
+    keys = []
+    for line in lines[i + 1:]:
+        if not line.startswith('|'):
+            break
+        m = re.match(r'\|\s*`([^`]*)`\s*\|', line)
+        if not m:
+            raise ValueError('NOTARIES.md has a malformed key row')
+        keys.append(m.group(1))
+    return _keyset(keys, 'NOTARIES.md')
+
+
+def _txt_string(data):
+    """One TXT record as text: quoted character-strings are joined ("a" "b" gives ab); unquoted text is taken as it is."""
+    data = data.strip()
+    if not data.startswith('"'):
+        return data
+    if not re.fullmatch(r'"(?:[^"\\]|\\.)*"(?:\s+"(?:[^"\\]|\\.)*")*', data):
+        raise ValueError('DNS TXT record is malformed')
+    return ''.join(re.sub(r'\\(.)', r'\1', p) for p in _QUOTED.findall(data))
+
+
+def txt_keys(records):
+    """Exactly one TXT record at the name must be v=exit-notary1; its keys field is a comma-separated list."""
+    ours = [r for r in records if r.split(';', 1)[0].strip() == 'v=exit-notary1']
+    if not ours:
+        raise LookupError('no v=exit-notary1 TXT record')
+    if len(ours) > 1:
+        raise ValueError('more than one v=exit-notary1 TXT record')
+    fields = {}
+    for part in ours[0].split(';'):
+        part = part.strip()
+        if not part:
+            continue
+        name, sep, value = part.partition('=')
+        if not sep or name.strip() in fields:
+            raise ValueError('DNS TXT record is malformed')
+        fields[name.strip()] = value.strip()
+    if 'keys' not in fields:
+        raise ValueError('DNS TXT record has no keys field')
+    return _keyset([k.strip() for k in fields['keys'].split(',')], 'DNS TXT record')
+
+
+def doh_records(body):
+    """TXT records at DNS_NAME from a DNS-over-HTTPS JSON answer, and whether the resolver reported DNSSEC validation (AD)."""
+    doc = json.loads(body)
+    if not isinstance(doc, dict) or type(doc.get('Status')) is not int:
+        raise ValueError('DNS answer is malformed')
+    if doc['Status'] == 3:
+        raise LookupError('the name does not exist (NXDOMAIN)')
+    if doc['Status'] != 0:
+        raise ValueError('DNS lookup failed with status %d' % doc['Status'])
+    answers = doc.get('Answer', [])
+    if not isinstance(answers, list) or any(not isinstance(a, dict) for a in answers):
+        raise ValueError('DNS answer is malformed')
+    records = []
+    for a in answers:
+        if a.get('type') == 16 and isinstance(a.get('name'), str) and a['name'].rstrip('.').lower() == DNS_NAME:
+            if not isinstance(a.get('data'), str):
+                raise ValueError('DNS TXT record is malformed')
+            records.append(_txt_string(a['data']))
+    return records, doc.get('AD') is True
+
+
+def trust_gate(argv, site_src):
+    """None without --trust. Otherwise reads the three copies once each and returns (the site's notaries document, report) when
+    their key sets are equal; raises TrustRefused when one is missing, malformed or different. The returned document is the one
+    the caller checks anchor signers against, so the agreed keys and the checked keys are the same bytes."""
+    if '--trust' not in argv:
+        return None
+    hub = argv[argv.index('--hub') + 1] if '--hub' in argv else HUB_NOTARIES
+    dns_file = argv[argv.index('--dns-txt') + 1] if '--dns-txt' in argv else None
+    found, problems, kept = {}, [], {'dnssec': None}
+
+    def site():
+        kept['doc'] = load(site_src)
+        return site_keys(kept['doc'])
+
+    def github():
+        raw = _get(hub, limit=TRUST_LIMIT) if hub.startswith('https://') else _read_file(hub)
+        return hub_keys(raw.decode('utf-8'))
+
+    def dns():
+        if dns_file is not None:
+            return txt_keys([_txt_string(line) for line in _read_file(dns_file).decode('utf-8').splitlines() if line.strip()])
+        records, kept['dnssec'] = doh_records(_get(DOH, accept='application/dns-json', limit=TRUST_LIMIT))
+        return txt_keys(records)
+
+    for name, read in (('site', site), ('github', github), ('dns', dns)):
+        try:
+            found[name] = read()
+        except (LookupError, OSError, http.client.HTTPException) as e:
+            problems.append('%s copy missing or unreachable (%s)' % (name, str(e) or type(e).__name__))
+        except (ValueError, TypeError) as e:
+            problems.append('%s copy malformed (%s)' % (name, str(e) or type(e).__name__))
+    if not problems and not found['site'] == found['github'] == found['dns']:
+        union = found['site'] | found['github'] | found['dns']
+        for name in TRUST_SOURCES:
+            if union - found[name]:
+                problems.append('%s copy lacks %s' % (name, ', '.join(sorted(union - found[name]))))
+    report = {'trust_ok': not problems, 'problems': problems,
+              'sources': {'site': site_src, 'github': hub, 'dns': dns_file if dns_file is not None else DOH},
+              'keys': {name: sorted(keys) for name, keys in found.items()}, 'dns_dnssec_validated': kept['dnssec']}
+    if problems:
+        raise TrustRefused(report)
+    report['proves'] = ('The notary keys are the same in the log\'s notaries.json, NOTARIES.md in the public repository and the DNS TXT '
+                        'record ' + DNS_NAME + ', as read in this run; any anchor signer checked in this run was checked against these keys.')
+    report['does_not_prove'] = ['who controls the three copies: one party able to change all three can change all three',
+                                'that the DNS answer was not altered unless dns_dnssec_validated is true, and then only as far as '
+                                'you trust the resolver that reported it']
+    return kept['doc'], report
+
+
+TRUST_FLAGS = {'--trust', '--hub', '--dns-txt'}
+FLAGS = {'proof': {'--tx', '--rpc', '--notaries'} | TRUST_FLAGS, 'log': {'--rpc'} | TRUST_FLAGS,
+         'leaf': {'--log', '--rpc', '--event', '--answer'} | TRUST_FLAGS}
 
 
 def arguments_ok(mode, rest):
@@ -472,7 +674,11 @@ def arguments_ok(mode, rest):
     for flag, value in zip(rest[::2], rest[1::2]):
         if flag not in FLAGS[mode] or flag in seen or value.startswith('--'):
             return False
+        if flag == '--trust' and tuple(sorted(value.split(','))) != TRUST_SOURCES:
+            return False
         seen.add(flag)
+    if seen & {'--hub', '--dns-txt'} and '--trust' not in seen:
+        return False          # an option that would be ignored
     return (mode != 'leaf' or '--log' in seen) and not {'--tx', '--rpc'} <= seen
 
 
@@ -482,7 +688,11 @@ def main(argv):
         return 2
     try:
         return {'proof': cmd_proof, 'log': cmd_log, 'leaf': cmd_leaf}[argv[1]](argv[2:])
-    except (ValueError, TypeError, KeyError, IndexError, OSError) as e:
+    except TrustRefused as e:
+        print(json.dumps({'verified': False, 'why': 'notary keys refused: ' + '; '.join(e.report['problems']), 'trust': e.report},
+                         indent=1, sort_keys=True))
+        return 1
+    except (ValueError, TypeError, KeyError, IndexError, OSError, http.client.HTTPException) as e:
         print(json.dumps({'verified': False, 'why': 'input or provider response is malformed or unavailable: ' + type(e).__name__}, sort_keys=True))
         return 1
 
