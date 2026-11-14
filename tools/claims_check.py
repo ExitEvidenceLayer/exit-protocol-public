@@ -32,11 +32,18 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             after STATUS still said 1.4 while the specification was 1.5)
   reanchor_wording          when the live log/runs.json shows a heartbeat run (outcome HEARTBEAT_*), no sentence of STATUS.md (or ROADMAP.md
                             when present in the checkout) may say that re-anchoring an unchanged root has not been needed yet (added 3 Nov)
-These two are the last rules added for now: a public claim is checked here only when it was found wrong on the live surface.
-DIR for --repo is a checkout (or a folder holding STATUS.md, openapi.json and exit_mcp.py). --live-dir replaces every network read with files of the same
+  readme_hash_table         every SHA-256 value (64 hexadecimal characters) in README.md equals the sha256 of the file named in backticks
+                            before it on the same line, read from the checkout; a value with no file before it, a file outside the checkout
+                            or missing from it, and a README with no file hash at all are mismatches; every file named in the README's
+                            `shasum -a 256 ...` and `Get-FileHash ...` commands must have a value listed; when README.md pins
+                            tools/exit_log_verify.py, exit_evidence.py's VERIFIER_SHA256 must equal it (added 14 Nov: the table had stayed
+                            stale for three commits, 2-10 Nov). No network read: it compares the README with the files of the same checkout
+                            (the sentinel fetches both from the same commit), not with any other copy, such as the agent tools package
+These three are the last rules added for now: a public claim is checked here only when it was found wrong on the public surface.
+DIR for --repo is a checkout (or a folder holding STATUS.md, openapi.json, exit_mcp.py, README.md and the files README.md lists). --live-dir replaces every network read with files of the same
 names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json, SPEC.txt, runs.json) — used by
 the tests only."""
-import html, json, os, re, sys, time, unicodedata, urllib.request
+import hashlib, html, json, os, re, sys, time, unicodedata, urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -48,6 +55,9 @@ ROW_FLAGS = {                     # STATUS.md row label fragment -> live_* flags
     'LayerZero V2 pathway and peer': ('live_layerzero_research', 'live_layerzero_peer')}
 UNDATED_OK = {'/log/': 'anchor_within_26h and run_within_26h of the log sentinel (the daily run rewrites /log/ at 00:30 UTC)'}
 UNTIL = re.compile(r'(open|runs|available)\s+(until|to|through)\s+24\s+November\s+2026', re.I)
+HEX64 = re.compile(r'(?<![0-9A-Za-z])[0-9A-Fa-f]{64}(?![0-9A-Za-z])')          # a SHA-256 value as README.md writes it
+TICKED_FILE = re.compile(r'`([A-Za-z0-9_./][A-Za-z0-9_./-]*\.[A-Za-z0-9]+)`')     # a file name in backticks: no spaces, has an extension
+HASH_COMMANDS = re.compile(r'`(?:shasum -a 256|Get-FileHash -Algorithm SHA256)\s+([^`]+)`')
 
 
 class Live:
@@ -83,6 +93,48 @@ def status_rows(md):
             if len(cells) >= 2 and cells[0] not in ('Surface',):
                 rows.append((cells[0], cells[1], cells[2] if len(cells) > 2 else ''))
     return rows
+
+
+def readme_hashes(repo):
+    """Check 8: the SHA-256 values README.md lists, against the files of the same checkout. Returns {'rows': [...], 'problems': [...]}."""
+    root = os.path.realpath(repo); rows, problems = [], []
+    with open(os.path.join(root, 'README.md'), encoding='utf-8') as fh:
+        text = fh.read()
+    for no, line in enumerate(text.splitlines(), 1):
+        for m in HEX64.finditer(line):
+            value = m.group(0).lower(); before = list(TICKED_FILE.finditer(line[:m.start()]))
+            if not before:
+                problems.append('README.md line %d: the SHA-256 %s... names no file before it on its line' % (no, value[:8])); continue
+            name = before[-1].group(1); row = {'line': no, 'file': name, 'readme': value, 'actual': None}; rows.append(row)
+            path = os.path.realpath(os.path.join(root, name))
+            if name.startswith('/') or '..' in name.split('/') or not path.startswith(root + os.sep):
+                problems.append('README.md line %d names %s, which is outside the checkout' % (no, name)); continue
+            if not os.path.isfile(path):
+                problems.append('README.md line %d lists %s, which is not in the checkout, so its value was not checked' % (no, name)); continue
+            with open(path, 'rb') as fh:
+                row['actual'] = hashlib.sha256(fh.read()).hexdigest()
+            if row['actual'] != value:
+                problems.append('README.md line %d lists %s as %s...; the file in the checkout is %s...' % (no, name, value[:8], row['actual'][:8]))
+    if not rows:
+        problems.append('README.md lists no file SHA-256')
+    listed = {r['file'] for r in rows}
+    for m in HASH_COMMANDS.finditer(text):                   # a file the reader is told to hash must have a value to compare with
+        for name in re.split(r'[\s,]+', m.group(1).strip()):
+            if name and name not in listed:
+                problems.append('README.md tells readers to hash %s but lists no SHA-256 for it' % name)
+    pins = sorted({r['readme'] for r in rows if r['file'] == 'tools/exit_log_verify.py'})
+    ev = os.path.join(root, 'exit_evidence.py')
+    if pins:
+        if not os.path.isfile(ev):
+            problems.append('README.md pins tools/exit_log_verify.py, but exit_evidence.py is not in the checkout, so its pin was not compared')
+        else:
+            with open(ev, encoding='utf-8') as fh:
+                pin = re.search(r"^VERIFIER_SHA256\s*=\s*['\"]([0-9a-fA-F]{64})['\"]", fh.read(), re.M)
+            if not pin:
+                problems.append('exit_evidence.py has no VERIFIER_SHA256 to compare with the README pin')
+            elif [pin.group(1).lower()] != pins:
+                problems.append('README.md pins tools/exit_log_verify.py as %s; exit_evidence.py VERIFIER_SHA256 is %s...' % (', '.join(p[:8] + '...' for p in pins), pin.group(1)[:8]))
+    return {'rows': rows, 'problems': problems}
 
 
 def main(argv):
@@ -222,6 +274,12 @@ def main(argv):
                 if m: miss('reanchor_wording', '%s says re-anchoring is not needed yet, but %d heartbeat run(s) exist: "%s"' % (name, len(beats), m.group(0)[:120]))
     except Exception as e:
         miss('reanchor_wording', 'unreadable: ' + type(e).__name__)
+    # 8. README file hashes vs the files of the same checkout (13 Nov, outside review: the table stayed stale for three commits)
+    try:
+        rh = readme_hashes(repo); out['readme_hashes'] = rh['rows']; out['checks']['readme_hash_table'] = True
+        for p in rh['problems']: miss('readme_hash_table', p)
+    except Exception as e:
+        miss('readme_hash_table', 'unreadable: ' + type(e).__name__)
     out['ok'] = all(out['checks'].values()) and not out['mismatches']
     print(json.dumps(out, indent=1, sort_keys=True)); return 0 if out['ok'] else 1
 
