@@ -1,0 +1,205 @@
+{
+ "checks": {
+  "anchor_within_26h": true,
+  "log_verified": true,
+  "public_claims_match_live": true,
+  "run_outcome_ok": true,
+  "run_within_26h": true
+ },
+ "claims": {
+  "api_description": {
+   "live": "2026-11-12.1",
+   "repository": "2026-11-12.1"
+  },
+  "checks": {
+   "api_description_version": true,
+   "free_period_wording": true,
+   "live_rows_match_flags": true,
+   "reanchor_wording": true,
+   "sitemap_not_behind_pages": true,
+   "spec_version_matches": true,
+   "status_client_row_version": true
+  },
+  "client_row": {
+   "files_checked": true,
+   "mcp_server_version": "1.3.1",
+   "mcp_tools": 30,
+   "repository_openapi_version": "2026-11-12.1",
+   "row_server": "1.3.1",
+   "row_servers_named": [
+    "1.3.1"
+   ],
+   "row_tool_counts_named": [
+    "30"
+   ],
+   "row_tools": 30,
+   "version_in_row": "2026-11-12.1"
+  },
+  "mismatches": []
+ },
+ "commit": "9dc642f26e3ef1f17b9f28c493beb6959adc095a",
+ "format": "exit.log-sentinel/3",
+ "log": "https://exit-protocol.io/log/",
+ "log_ok": true,
+ "newest_anchor": {
+  "age_hours": 1.26,
+  "block_time_utc": "2026-11-14T00:30:04+00:00",
+  "confirmed_on_chain": true,
+  "signature": "2FCVZNHr43Lbqvig89RAmXvUctRci39oejV5M4V1cDXinbSt5cXamWkegyJJzueRsiGHH4z7yTTSDLV7Mj6GVU6h",
+  "size": 1303
+ },
+ "newest_run": {
+  "age_hours": 1.26,
+  "at": "2026-11-14T00:30:08.248315+00:00",
+  "outcome": "ANCHORED"
+ },
+ "ok": true,
+ "rpc": "https://api.mainnet-beta.solana.com",
+ "rpc_attempts": [
+  {
+   "exit": 0,
+   "first_problem": null,
+   "provider": "https://api.mainnet-beta.solana.com"
+  }
+ ],
+ "run_at": "2026-11-14T01:45:31.184866+00:00",
+ "snapshot_sha256": {
+  "anchors.json": "b0465f4428ce48e9b8d2a636fc1b8fcfa4fb3aab2526d519fc7d78dd6fe59b29",
+  "leaves.json": "0d19285295ec157f4a96a5d8f927065e92c54a67d3f739f86a581375dd115323",
+  "notaries.json": "8c53e3017a4b3d498dbfbdcce6cc8723be79d25fce64778a7c378d587ef09cad",
+  "roots.json": "fa6893215558545f35592ca2ff30b32a94a97b1055466aa735f279ef8b88a44d",
+  "runs.json": "cc772e2ce34b35546463f0c2f5dfb55929b6fdcafd30d42ebac1d5275c9657a1"
+ },
+ "status": "OK",
+ "verifier_sha256": "7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed",
+ "verify": {
+  "anchors_fetched": [
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 68 1659b21b319974c3906f966537f33b183f1ad70014c33e070991017630db5fd8 2026-10-27 66",
+    "size": 68,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 134 6aa122815eafc4f0eaef0e4d638b2c81fa31998741be6c609a8f58e0fec51def 2026-10-27 68",
+    "size": 134,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 200 54e5d8d4e5682a4d971a55865bd001e4a5818a56169ffef5599b90862ef7778b 2026-10-28 134",
+    "size": 200,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 204 6b4caf71d4ff517887414530c3c9e853119cfe64161483982efd2aa04b61ea0a 2026-10-29 200",
+    "size": 204,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-10-30 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-10-31 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 205 e5dda50b3b17208b1c9d3b7f276b216d30f6644c7e983d2d691c7846ab9dea5b 2026-11-01 204",
+    "size": 205,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 274 607b9a897a0e20da31d0825186851df639dcd7832431e82058a8b4bb6b14f27f 2026-11-02 205",
+    "size": 274,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 370 99c8ee774ee247f6fed05ef02a62efbbab8d4ca582c8d9d09acd329d2fb19ca7 2026-11-03 274",
+    "size": 370,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 462 ed04f87ac6e90a60884f1ac4d4e022335286d0aecba103c4c8d142f1f2e74243 2026-11-04 370",
+    "size": 462,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 547 6227e52c647ec50d2afb20304b7b6f5ecb9200514df40e803cfc992b6312adaf 2026-11-05 462",
+    "size": 547,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 631 12a1fb3b7a9eeb3dfcbb977b81eaad5d5d617e2ad45ce761b8f6ca747315c7b6 2026-11-06 547",
+    "size": 631,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 715 ebb5bffd6534a1f0a60d2e993bbb73f62b19e0aa1aa07e86fe4fd689f7ea1209 2026-11-07 631",
+    "size": 715,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 799 90407083e387466069a35ea708cb83b8119b52f723f9e50d8eb901a64ab8d7aa 2026-11-08 715",
+    "size": 799,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 883 ee555da31b502fd88421b4c26976f1126970417da491bfbdf10ab5acb5c4d609 2026-11-09 799",
+    "size": 883,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 967 fb663f5ed4c99447b7ff91bdd33fefeb0c6d2a4c721b84f41d592d8de8c42b2f 2026-11-10 883",
+    "size": 967,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 1051 1b4db8261789b4e20a1060f4f58e3da7e965d1c976e4a606360a476b3fde2503 2026-11-11 967",
+    "size": 1051,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 1135 957c32b88f10bdf5152972419a9568aff50b0c179547cbddc7ffb5f38c4130c7 2026-11-12 1051",
+    "size": 1135,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 1219 e0617874ad5b2130956a08091f7df7afae2fd3b84d63f2749d4fe1d62247d457 2026-11-13 1135",
+    "size": 1219,
+    "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 1303 28ba6440ef8458306cb62cd09d0bff7f8b74cdf5dd8eca3e82b42f45c7aba4e5 2026-11-14 1219",
+    "size": 1303,
+    "why": null
+   }
+  ],
+  "anchors_listed": 20,
+  "leaves": 1303,
+  "problems": [],
+  "proves": "Every published root is built from the published leaves, and each tree extends the previous one. Every anchor transaction carries its root.",
+  "roots_checked": 19,
+  "verified": true
+ }
+}
