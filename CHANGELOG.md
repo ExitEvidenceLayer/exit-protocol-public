@@ -1,5 +1,18 @@
 # Public documentation changelog
 
+## 14 November 2026 · claims check for the README file hashes
+
+- [tools/claims_check.py](tools/claims_check.py) has an eighth check, `readme_hash_table`: every SHA-256 value in [README.md](README.md)
+  must equal the sha256 of the file named before it on the same line, read from the same checkout. A value with no file before it, a
+  listed file that is missing, a README with no value at all, and a file that the README's `shasum` or `Get-FileHash` command names
+  without a listed value are mismatches. When README.md pins tools/exit_log_verify.py, the VERIFIER_SHA256 in exit_evidence.py must
+  equal that pin. The check reads no network and compares the README only with the files of the same commit, not with other copies
+  such as the agent tools package. The README table had stayed stale for three commits (caff9534, f16e1d49, 84ed9680; corrected 10
+  November); an outside review suggested this check.
+- The evidence log sentinel also fetches README.md, exit_client.py, exit_evidence.py and tools/exit_log_verify.py from the same commit,
+  so its public-claims result includes this check. test_claims_check.py is new: tests without network access, run with
+  `python3 -B -m unittest -v test_claims_check`.
+
 ## 13 November 2026 · verifier option --trust and agent tools 2026-11-13.2
 
 - tools/exit_log_verify.py (sha256 7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed) has a new option, `--trust github,dns,site`, for proof, log and leaf. It first requires the notary keys to be the same in three copies kept apart: the log's notaries.json, [NOTARIES.md](NOTARIES.md) in this repository and the DNS TXT record `_exit-notary.exit-protocol.io`. It refuses (exit 1) before any other check when one copy is missing, malformed or lists other keys. `--dns-txt FILE` takes the record from your own resolver instead of DNS-over-HTTPS; `--hub` takes a saved copy of NOTARIES.md. Agreement shows that the keys were not changed in one copy alone; it does not show who controls the copies.
