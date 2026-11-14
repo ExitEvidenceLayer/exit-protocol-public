@@ -39,8 +39,15 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             tools/exit_log_verify.py, exit_evidence.py's VERIFIER_SHA256 must equal it (added 14 Nov: the table had stayed
                             stale for three commits, 2-10 Nov). No network read: it compares the README with the files of the same checkout
                             (the sentinel fetches both from the same commit), not with any other copy, such as the agent tools package
+  api_md_schema_ids         every schema id written in full in docs/API.md (exit.<name>/<number>) is named by the live API description
+                            (https://api.exit-protocol.io/openapi.json, the bytes check 1 read; no second read), and at the newest version
+                            the description names for that schema; a docs/API.md with no such id is a mismatch. Short forms of earlier
+                            versions ("`/4`") and policy ids are not read. It compares the text with the description, not with the answers
+                            the service sends, which need a key (added 14 Nov: on 2 Nov docs/API.md and the description said
+                            contract schema /3 while the service answered /4)
+                            Historical ids must be written in docs/API.md in short form ("`/4`"): written in full, an older id fails
 These three are the last rules added for now: a public claim is checked here only when it was found wrong on the public surface.
-DIR for --repo is a checkout (or a folder holding STATUS.md, openapi.json, exit_mcp.py, README.md and the files README.md lists). --live-dir replaces every network read with files of the same
+DIR for --repo is a checkout (or a folder holding STATUS.md, openapi.json, exit_mcp.py, README.md, the files README.md lists and docs/API.md). --live-dir replaces every network read with files of the same
 names under that folder (early-access.json, openapi.json, index.html, ROADMAP.html, sitemap.xml, headers.json, SPEC.txt, runs.json) — used by
 the tests only."""
 import hashlib, html, json, os, re, sys, time, unicodedata, urllib.request
@@ -58,6 +65,7 @@ UNTIL = re.compile(r'(open|runs|available)\s+(until|to|through)\s+24\s+November\
 HEX64 = re.compile(r'(?<![0-9A-Za-z])[0-9A-Fa-f]{64}(?![0-9A-Za-z])')          # a SHA-256 value as README.md writes it
 TICKED_FILE = re.compile(r'`([A-Za-z0-9_./][A-Za-z0-9_./-]*\.[A-Za-z0-9]+)`')     # a file name in backticks: no spaces, has an extension
 HASH_COMMANDS = re.compile(r'`(?:shasum -a 256|Get-FileHash -Algorithm SHA256)\s+([^`]+)`')
+SCHEMA_ID = re.compile(r'(?<![\w.-])exit\.([a-z0-9]+(?:-[a-z0-9]+)*)/(\d+)(?![\w/]|\.\d)')   # a schema id written in full: exit.<name>/<n>
 
 
 class Live:
@@ -137,6 +145,37 @@ def readme_hashes(repo):
     return {'rows': rows, 'problems': problems}
 
 
+def api_md_schema_ids(repo, live_api):
+    """Check 9: the schema ids docs/API.md writes in full, against every string (keys and values) of the live API description.
+    Returns {'rows': [...], 'live_not_in_docs': [...], 'problems': [...]}."""
+    with open(os.path.join(repo, 'docs', 'API.md'), encoding='utf-8') as fh:
+        text = fh.read()
+    live, todo = {}, [live_api]
+    while todo:
+        o = todo.pop()
+        if isinstance(o, dict):
+            todo.extend(o.keys()); todo.extend(o.values())
+        elif isinstance(o, list):
+            todo.extend(o)
+        elif isinstance(o, str):
+            for m in SCHEMA_ID.finditer(o):
+                live.setdefault(m.group(1), set()).add(int(m.group(2)))
+    rows, problems = [], []
+    for no, line in enumerate(text.splitlines(), 1):
+        for m in SCHEMA_ID.finditer(line):
+            name, version = m.group(1), int(m.group(2)); named = ['exit.%s/%d' % (name, v) for v in sorted(live.get(name, ()))]
+            rows.append({'line': no, 'id': m.group(0), 'live': named})
+            if not named:
+                problems.append('docs/API.md line %d names %s; the live API description names no exit.%s schema' % (no, m.group(0), name))
+            elif version != max(live[name]):
+                problems.append('docs/API.md line %d says %s; the live API description names %s' % (no, m.group(0), ', '.join(named)))
+    if not rows:
+        problems.append('docs/API.md names no schema id in full (exit.<name>/<number>)')
+    in_docs = {r['id'].rsplit('/', 1)[0] for r in rows}
+    return {'rows': rows, 'problems': problems,
+            'live_not_in_docs': sorted('exit.%s/%d' % (n, max(v)) for n, v in live.items() if 'exit.' + n not in in_docs)}
+
+
 def main(argv):
     args = dict(zip(argv[1::2], argv[2::2]))
     repo = args.get('--repo') or '.'; live = Live(args.get('--live-dir')); now = float(args.get('--now') or time.time())
@@ -144,9 +183,11 @@ def main(argv):
     def miss(check, text):
         out['checks'][check] = False; out['mismatches'].append({'check': check, 'detail': text})
     # 1. API description version
+    live_api = None; live_tried = False           # the live description as check 1 read it; check 9 reuses these bytes
     try:
         repo_v = json.load(open(os.path.join(repo, 'openapi.json')))['info']['version']
-        live_v = json.loads(live.get(API + '/openapi.json', 'openapi.json')[0])['info']['version']
+        live_tried = True                         # check 1 reached its live read; check 9 names which of the two cases it was
+        live_api = json.loads(live.get(API + '/openapi.json', 'openapi.json')[0]); live_v = live_api['info']['version']
         out['api_description'] = {'repository': repo_v, 'live': live_v}
         out['checks']['api_description_version'] = repo_v == live_v
         if repo_v != live_v: miss('api_description_version', 'repository %s, live %s' % (repo_v, live_v))
@@ -280,6 +321,17 @@ def main(argv):
         for p in rh['problems']: miss('readme_hash_table', p)
     except Exception as e:
         miss('readme_hash_table', 'unreadable: ' + type(e).__name__)
+    # 9. schema ids in docs/API.md vs the live API description (14 Nov: docs/API.md had said contract schema /3 on 2 Nov)
+    try:
+        if not isinstance(live_api, dict):
+            miss('api_md_schema_ids', 'unreadable: ' + ('the live API description was not read' if live_tried else
+                 'check 1 stopped at the repository openapi.json, before any live read') + ' (see api_description_version)')
+        else:
+            si = api_md_schema_ids(repo, live_api); out['api_md_schema_ids'] = {'rows': si['rows'], 'live_not_in_docs': si['live_not_in_docs']}
+            out['checks']['api_md_schema_ids'] = True
+            for p in si['problems']: miss('api_md_schema_ids', p)
+    except Exception as e:
+        miss('api_md_schema_ids', 'unreadable: ' + type(e).__name__)
     out['ok'] = all(out['checks'].values()) and not out['mismatches']
     print(json.dumps(out, indent=1, sort_keys=True)); return 0 if out['ok'] else 1
 
