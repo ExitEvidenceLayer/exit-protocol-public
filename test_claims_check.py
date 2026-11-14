@@ -1,4 +1,5 @@
-"""Tests of tools/claims_check.py check 8, readme_hash_table (README.md SHA-256 values against the files of the same checkout).
+"""Tests of tools/claims_check.py check 8, readme_hash_table (README.md SHA-256 values against the files of the same checkout), and
+check 9, api_md_schema_ids (the schema ids docs/API.md names against the live API description, here a fixture).
 No network: every socket call raises. Run with `python3 -B -m unittest -v test_claims_check`."""
 import contextlib
 import hashlib
@@ -168,7 +169,7 @@ class ReadmeHashes(unittest.TestCase):
 
 
 class MainReportsTheCheck(unittest.TestCase):
-    """main() with an empty --live-dir: the seven live checks fail without fixtures; only readme_hash_table is asserted."""
+    """main() with an empty --live-dir: the other eight checks (1-7 and 9) fail without fixtures; only readme_hash_table is asserted."""
 
     def run_main(self, repo):
         with tempfile.TemporaryDirectory() as live:
@@ -206,6 +207,201 @@ class ThisCheckout(unittest.TestCase):
         r = cc.readme_hashes(str(HERE))
         self.assertEqual(r['problems'], [])
         self.assertGreaterEqual(len(r['rows']), 4)
+
+
+
+# Check 9 -------------------------------------------------------------------------------------------------------------------------
+
+def described(*texts, version='2026-11-12.1'):
+    """An API description shaped like openapi.json: each text is one route's 200 description."""
+    return {'openapi': '3.1.0', 'info': {'version': version},
+            'paths': {'/r%d' % i: {'get': {'responses': {'200': {'description': t}}}} for i, t in enumerate(texts)}}
+
+
+LIVE = described('exit.solana-mint-research/2 (a replay of an earlier request returns its stored body, which can be /1)',
+                 'exit.ethereum-contract-research/5 since 4 November 2026. A replay can be /1, /2, /3 or /4.',
+                 'Two answers into one graph (schema exit.research-graph/1).', 'exit.solana-governance-research/1')
+API_MD = ('# Free research API\n\nResponses use `exit.solana-mint-research/2` (a replay can be `/1`).\n\n'
+          'Since 30 October 2026 (schema `/4`) ... Responses use\n`exit.ethereum-contract-research/5` since 4 November 2026.\n\n'
+          '- `GET /v0/research/graph?request_id=` (`exit.research-graph/1`): one typed graph.\n')
+
+
+class Docs:
+    """A temporary checkout holding docs/API.md (and, when given, a repository openapi.json)."""
+
+    def __init__(self, text=API_MD, repo_api=None):
+        self.tmp = tempfile.TemporaryDirectory(); self.dir = self.tmp.name
+        os.makedirs(os.path.join(self.dir, 'docs'))
+        if text is not None:
+            with open(os.path.join(self.dir, 'docs', 'API.md'), 'w', encoding='utf-8') as fh:
+                fh.write(text)
+        if repo_api is not None:
+            with open(os.path.join(self.dir, 'openapi.json'), 'w', encoding='utf-8') as fh:
+                json.dump(repo_api, fh)
+
+    def close(self):
+        self.tmp.cleanup()
+
+
+class ApiMdSchemaIds(unittest.TestCase):
+    def check(self, text, live=LIVE):
+        d = Docs(text); self.addCleanup(d.close)
+        return cc.api_md_schema_ids(d.dir, live)
+
+    def test_matching_ids_pass(self):
+        r = self.check(API_MD)
+        self.assertEqual(r['problems'], [])
+        self.assertEqual([(x['line'], x['id']) for x in r['rows']],
+                         [(3, 'exit.solana-mint-research/2'), (6, 'exit.ethereum-contract-research/5'), (8, 'exit.research-graph/1')])
+        self.assertEqual(r['rows'][1]['live'], ['exit.ethereum-contract-research/5'])
+
+    def test_the_2_november_case_fails(self):              # docs/API.md said /3 after the description had moved to /4
+        r = self.check(API_MD.replace('contract-research/5', 'contract-research/3'),
+                       described('exit.ethereum-contract-research/4', 'exit.solana-mint-research/2', 'exit.research-graph/1'))
+        self.assertEqual(r['problems'], ['docs/API.md line 6 says exit.ethereum-contract-research/3; the live API description names '
+                                         'exit.ethereum-contract-research/4'])
+
+    def test_newer_version_in_docs_fails(self):
+        r = self.check(API_MD.replace('contract-research/5', 'contract-research/6'))
+        self.assertEqual(len(r['problems']), 1)
+        self.assertIn('says exit.ethereum-contract-research/6', r['problems'][0])
+
+    def test_schema_the_description_does_not_name_fails(self):
+        r = self.check(API_MD + 'Watches use `exit.watch-list/1`.\n')
+        self.assertEqual(r['problems'], ['docs/API.md line 9 names exit.watch-list/1; the live API description names no exit.watch-list schema'])
+
+    def test_docs_without_a_full_id_fails(self):
+        r = self.check('# API\n\nSchema `/4` was used from 30 October; policy `solana-finalized-mint-pair-hop/2`.\n')
+        self.assertEqual(r['rows'], [])
+        self.assertEqual(r['problems'], ['docs/API.md names no schema id in full (exit.<name>/<number>)'])
+
+    def test_newest_version_the_description_names_is_the_reference(self):
+        live = described('exit.ethereum-contract-research/5 now; stored bodies replay as exit.ethereum-contract-research/4',
+                         'exit.solana-mint-research/2', 'exit.research-graph/1')
+        self.assertEqual(self.check(API_MD, live)['problems'], [])
+        r = self.check(API_MD.replace('contract-research/5', 'contract-research/4'), live)
+        self.assertEqual(r['problems'], ['docs/API.md line 6 says exit.ethereum-contract-research/4; the live API description names '
+                                         'exit.ethereum-contract-research/4, exit.ethereum-contract-research/5'])
+
+    def test_versions_compare_as_numbers(self):
+        live = described('exit.solana-mint-research/9 and exit.solana-mint-research/10', 'exit.ethereum-contract-research/5',
+                         'exit.research-graph/1')
+        self.assertEqual(self.check(API_MD.replace('mint-research/2', 'mint-research/10'), live)['problems'], [])
+        r = self.check(API_MD.replace('mint-research/2', 'mint-research/9'), live)
+        self.assertEqual(len(r['problems']), 1)
+        self.assertIn('says exit.solana-mint-research/9', r['problems'][0])
+
+    def test_every_id_on_a_line_is_read(self):
+        r = self.check(API_MD + 'Both: `exit.solana-mint-research/2` and `exit.ethereum-contract-research/3`.\n')
+        self.assertEqual([x['id'] for x in r['rows'] if x['line'] == 9], ['exit.solana-mint-research/2', 'exit.ethereum-contract-research/3'])
+        self.assertEqual(len(r['problems']), 1)
+        self.assertIn('line 9 says exit.ethereum-contract-research/3', r['problems'][0])
+
+    def test_ids_in_lists_nested_values_and_keys_are_read(self):
+        live = {'info': {'version': 'x'}, 'paths': {'/a': {'get': {'responses': {'200': {'content': {'application/json': {'schema': {
+            'properties': {'schema': {'enum': ['exit.solana-mint-research/2']}}}}}}}}}},
+            'x-index': {'exit.ethereum-contract-research/5': 'contract'}, 'tags': [{'description': ['exit.research-graph/1']}]}
+        self.assertEqual(self.check(API_MD, live)['problems'], [])
+
+    def test_short_forms_policy_ids_and_lookalikes_are_not_read(self):
+        text = API_MD + ('Policy `ethereum-finalized-issuer-freeze/2`, `ordering=append-sequence/2`, `/1` to `/4`, '
+                         'notexit.thing/1, exit.thing/1x, exit.thing/2/3, exit.thing/1.5 and `EXIT-ROOT-v1`.\n')
+        r = self.check(text)
+        self.assertEqual(len(r['rows']), 3)
+        self.assertEqual(r['problems'], [])
+
+    def test_id_at_the_end_of_a_sentence_is_read(self):
+        r = self.check(API_MD + 'The format is exit.made-up/1.\n')
+        self.assertEqual(r['rows'][-1]['id'], 'exit.made-up/1')
+        self.assertEqual(len(r['problems']), 1)
+
+    def test_live_schemas_missing_from_docs_are_listed_not_failed(self):
+        r = self.check(API_MD)
+        self.assertEqual(r['live_not_in_docs'], ['exit.solana-governance-research/1'])
+        self.assertEqual(r['problems'], [])
+
+    def test_missing_api_md_raises(self):
+        d = Docs(text=None); self.addCleanup(d.close)
+        with self.assertRaises(OSError):
+            cc.api_md_schema_ids(d.dir, LIVE)
+
+
+class MainReportsCheck9(unittest.TestCase):
+    """main() with a --live-dir holding only the live openapi.json: only api_md_schema_ids is asserted."""
+
+    def run_main(self, docs, live_api=LIVE):
+        self.addCleanup(docs.close)
+        with tempfile.TemporaryDirectory() as live:
+            if live_api is not None:
+                with open(os.path.join(live, 'openapi.json'), 'w', encoding='utf-8') as fh:
+                    json.dump(live_api, fh)
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = cc.main(['claims_check.py', '--repo', docs.dir, '--live-dir', live, '--now', '1763000000'])
+        return rc, json.loads(buf.getvalue())
+
+    def mine(self, out):
+        return [m['detail'] for m in out['mismatches'] if m['check'] == 'api_md_schema_ids']
+
+    def test_matching_docs_true(self):
+        rc, out = self.run_main(Docs(repo_api=LIVE))
+        self.assertIs(out['checks']['api_md_schema_ids'], True)
+        self.assertEqual(self.mine(out), [])
+        self.assertEqual(len(out['api_md_schema_ids']['rows']), 3)
+        self.assertEqual(out['api_md_schema_ids']['live_not_in_docs'], ['exit.solana-governance-research/1'])
+        self.assertEqual(rc, 1)                               # the other live checks have no fixtures here
+
+    def test_stale_docs_false(self):
+        rc, out = self.run_main(Docs(API_MD.replace('contract-research/5', 'contract-research/3'), repo_api=LIVE))
+        self.assertIs(out['checks']['api_md_schema_ids'], False)
+        self.assertEqual(len(self.mine(out)), 1)
+        self.assertIn('says exit.ethereum-contract-research/3', self.mine(out)[0])
+
+    def test_compared_with_the_live_description_not_the_repository_copy(self):
+        old = described('exit.ethereum-contract-research/3', 'exit.solana-mint-research/2', 'exit.research-graph/1')
+        rc, out = self.run_main(Docs(API_MD.replace('contract-research/5', 'contract-research/3'), repo_api=old))
+        self.assertIs(out['checks']['api_md_schema_ids'], False)
+        self.assertIn('names exit.ethereum-contract-research/5', self.mine(out)[0])
+
+    def test_unread_live_description_is_a_mismatch(self):
+        rc, out = self.run_main(Docs(repo_api=LIVE), live_api=None)
+        self.assertIs(out['checks']['api_md_schema_ids'], False)
+        self.assertEqual(self.mine(out), ['unreadable: the live API description was not read (see api_description_version)'])
+
+    def test_check_1_stopped_before_the_live_read(self):     # no repository openapi.json: check 1 stops before its live read
+        calls = []; real = cc.Live.get
+        def counting(live, url, name):
+            calls.append(url); return real(live, url, name)
+        with patch.object(cc.Live, 'get', counting):
+            rc, out = self.run_main(Docs())
+        self.assertIs(out['checks']['api_md_schema_ids'], False)
+        self.assertEqual(self.mine(out), ['unreadable: check 1 stopped at the repository openapi.json, before any live read '
+                                          '(see api_description_version)'])
+        self.assertEqual(calls.count(cc.API + '/openapi.json'), 0)
+
+    def test_missing_api_md_is_a_mismatch_not_a_skip(self):
+        rc, out = self.run_main(Docs(text=None, repo_api=LIVE))
+        self.assertIs(out['checks']['api_md_schema_ids'], False)
+        self.assertEqual(self.mine(out), ['unreadable: FileNotFoundError'])
+
+    def test_the_live_description_is_read_once(self):
+        calls = []; real = cc.Live.get
+        def counting(live, url, name):
+            calls.append(url); return real(live, url, name)
+        with patch.object(cc.Live, 'get', counting):
+            rc, out = self.run_main(Docs(repo_api=LIVE))
+        self.assertIs(out['checks']['api_md_schema_ids'], True)
+        self.assertEqual(calls.count(cc.API + '/openapi.json'), 1)
+
+
+class ThisCheckoutApiMd(unittest.TestCase):
+    """The checkout this test file is in: docs/API.md names the schema ids of the repository copy of the API description."""
+
+    def test_api_md_matches_the_repository_copy(self):
+        with open(HERE / 'openapi.json', encoding='utf-8') as fh:
+            r = cc.api_md_schema_ids(str(HERE), json.load(fh))
+        self.assertEqual(r['problems'], [])
+        self.assertGreaterEqual(len(r['rows']), 1)
 
 
 if __name__ == '__main__':

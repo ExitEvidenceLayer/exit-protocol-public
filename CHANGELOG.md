@@ -1,5 +1,18 @@
 # Public documentation changelog
 
+## 14 November 2026 · claims check for the schema ids in docs/API.md
+
+- [tools/claims_check.py](tools/claims_check.py) has a ninth check, `api_md_schema_ids`: each schema id that
+  [docs/API.md](docs/API.md) writes in full (`exit.<name>/<number>`) must also be named by the live API description at
+  https://api.exit-protocol.io/openapi.json, at the newest version the description names for it. A docs/API.md with no such id is a
+  mismatch. Short forms of earlier versions (such as `/4`) and policy ids are not checked.
+- The check compares docs/API.md with the API description, not with the answers the service sends; reading those needs an access
+  key. On 2 November 2026 a question-bank run received `exit.ethereum-contract-research/4` while the API description still said `/3`
+  ([docs/q1-erratum-v1-to-v1.1.json](docs/q1-erratum-v1-to-v1.1.json)), and so did docs/API.md. Both were corrected that day
+  (docs/API.md in hub commit 37e13bc2, the description in version 2026-11-02.2).
+- The evidence log sentinel also fetches docs/API.md from the same commit, so its public-claims result includes this check.
+  [test_claims_check.py](test_claims_check.py) has tests for it.
+
 ## 14 November 2026 · claims check for the README file hashes
 
 - [tools/claims_check.py](tools/claims_check.py) has an eighth check, `readme_hash_table`: every SHA-256 value in [README.md](README.md)
