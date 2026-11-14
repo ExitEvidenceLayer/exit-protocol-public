@@ -41,8 +41,9 @@ jobs:
           done
           # Public claims vs the live service (tools/claims_check.py, same commit): API description version, STATUS rows marked LIVE vs the
           # status route's live_* flags, free-period wording, sitemap dates vs page Last-Modified. Its result is folded into result.json below.
+          # 14 Nov: README.md and the files its SHA-256 table names (same commit), so readme_hash_table compares the table with those files.
           mkdir -p repo
-          for f in STATUS.md openapi.json exit_mcp.py tools/claims_check.py; do   # exit_mcp.py: the client row's server version is checked against it (10 Nov)
+          for f in STATUS.md openapi.json exit_mcp.py tools/claims_check.py README.md exit_client.py exit_evidence.py tools/exit_log_verify.py; do   # exit_mcp.py: the client row's server version is checked against it (10 Nov)
             mkdir -p "repo/$(dirname "$f")"
             curl -fsSL --retry 3 "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/${f}" -o "repo/${f}" || echo "fetch failed: ${f}" >> snapshot.err
           done
