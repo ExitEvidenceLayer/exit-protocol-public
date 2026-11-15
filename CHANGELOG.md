@@ -1,5 +1,18 @@
 # Public documentation changelog
 
+## 15 November 2026 · Providers called separate, not independent
+
+- Five more places called providers independent (and docs/ACCURACY.md also the decoding). That is not shown: two endpoints
+  may relay the same upstream provider, and their agreement is then one witness, not two. As in the Control Map
+  second-provider row of [STATUS.md](STATUS.md) earlier today, each place no longer says independent and carries a
+  "corrected 15 November 2026" note; four of them now name the endpoints. No number changed.
+- [STATUS.md](STATUS.md): the issuer freeze row (the 126/126 check of the released bytes was read through rpc.mevblocker.io;
+  at the time of the check the reader read ethereum-rpc.publicnode.com) and the accuracy row (rpc.mevblocker.io for
+  Ethereum and api.mainnet-beta.solana.com for Solana; a Solana label may come from a later slot than the reader's).
+- [docs/ACCURACY.md](docs/ACCURACY.md): separate endpoints and separate decoding code, with the label and reader endpoints of
+  the counted runs.
+- [cases/kava-lend-2026-11-14.md](cases/kava-lend-2026-11-14.md): "a second provider", and the four Kava EVM archives by name.
+
 ## 15 November 2026 · Roadmap: keyed chain-data providers marked live
 
 - [ROADMAP.md](ROADMAP.md): the item planned by 14 November 2026, keyed chain-data providers with the public endpoints as
