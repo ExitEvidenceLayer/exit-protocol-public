@@ -1,4 +1,37 @@
-# Q1 accuracy measurements — baseline of 3 November 2026 and after-run of 5 November 2026
+# Q1 accuracy measurements — baseline of 3 November 2026, after-run of 5 November 2026 and interim rerun of 15 November 2026
+
+## Interim rerun of 15 November 2026 (added 15 November 2026)
+
+**What was measured.** The same 36 questions were sent again to the live API with one free key on 15 November 2026 between 06:03 and 06:05 UTC (run `20261115T060306Z`, one UTC day: 36 sent, none carried over, 31 answered with HTTP 200). The run used bank **v1.2** unchanged (`q1-bank-v1.2.json`, this folder, sha256 `226d59a5e5305a026e4421fd1f7d9bcc5f55db4a731f25865eb2ef6591227d3b`), the bank of the 5 November run. v1.2 was first published in this repository on 13 November 2026 (commit 09094bf8): before this run, and after the 5 November run. Each question is sent once, with no retry; the runner pauses 4 seconds after each answer before the next request (a fixed pause in its code; the run does not record send times). The two earlier runs started at 00:05 UTC; this one started at 06:03 UTC.
+
+The bank's own schedule (the bank was fixed on 2 November 2026) names two measurements: once after fixing (2026-11), the 3 November baseline, and once at the end of Q1 (2027-01); the 5 November run and this rerun are additional measurements outside that schedule.
+
+The recorded answers are graded against v1, v1.1 and v1.2 with the same check as the two earlier runs, without any API call, every body bound to its recorded sha256; the regrade on v1.2 reproduces the run's own recorded result. Per question: `q1-result-20261115T060306Z.json` (this folder; each row carries the sha256 of the answer body, not the body, and the status and grades of the same question in the 3 and 5 November runs).
+
+**Result, next to the two earlier runs.**
+
+| Questions | Graded against | 3 Nov run: met (95% Wilson interval) | 5 Nov run: met (95% Wilson interval) | 15 Nov run: met (95% Wilson interval) |
+|---|---|---|---|---|
+| All 36 | v1 (published before all three runs) | 21 (42.2–72.9%) | 24 (50.3–79.8%) | 25 (53.1–82.0%) |
+| All 36 | v1.1 (published before the 5 Nov and 15 Nov runs) | 31 (71.3–93.9%) | 28 (61.9–88.3%) | 29 (65.0–90.2%) |
+| All 36 | v1.2 (published before the 15 Nov run) | not graded: that run answered in schema /4 | 34 (81.9–98.5%) | 35 (85.8–99.5%) |
+| The 25 never revised (identical in v1, v1.1 and v1.2) | any | 20 (60.9–91.1%) | 23 (75.0–97.8%) | 24 (80.5–99.3%) |
+| The 30 unchanged between v1.1 and v1.2 | v1.1 (3 Nov), v1.2 (5 Nov, 15 Nov) | 25 (66.4–92.7%) | 28 (78.7–98.2%) | 29 (83.3–99.4%) |
+
+On v1.1, all 6 questions whose expectation v1.2 changed (Q1-06 to Q1-11, the expected schema) are missed in this run. v1.2 was written after answers in the new schema had been seen, so passes of those questions on v1.2 are not independent evidence.
+
+**What moved since 5 November** (per question, from the two recorded results):
+- Q1-14 (`/v0/research/solana/governance`): HTTP 503 on 5 Nov, 200 on 15 Nov; on v1.2 missed on 5 Nov, met on 15 Nov.
+
+Missed in all three runs (3 Nov on v1.1, 5 Nov and 15 Nov on v1.2): Q1-27. Q1-27 is the bank defect described in the baseline section below (its premise is a record that a refused input never creates).
+
+With 36 questions and one run on each side, the 95% intervals of the 5 November run and this run overlap on every row: the two runs are not separated. This run does not isolate the effect of any service release between the two runs.
+
+**Provider failures.** No answer came back with a 5xx status.
+
+**One engine.** Every answer that names an engine names bb49875c (23 of 36), the same engine as the 5 November run. The other 13 carry no engine field.
+
+**What these numbers do not show.** A small fixed question bank sent by EXIT itself is not a measure of usefulness to a person or of use by others. The answer bodies are not published here; each row carries the sha256 of the body that was received.
 
 ## After-run of 5 November 2026 (added 13 November 2026)
 
