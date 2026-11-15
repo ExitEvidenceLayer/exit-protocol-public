@@ -67,8 +67,10 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
-      the Control Map page rebuilt every night after the daily anchor;
-      by 19 November 2026: change alerts within minutes, with more than one alert slot;
+      the Control Map page rebuilt every night after the daily anchor (corrected 15 November 2026: neither will be live by
+      16 November 2026; both ship only after their tests and review, and the new date will be written here);
+      by 19 November 2026: change alerts within minutes, with more than one alert slot (corrected 15 November 2026: not
+      built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here);
       by 21 November 2026: a public page to verify one record in the browser;
       by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
       transfer-hook program's authority;

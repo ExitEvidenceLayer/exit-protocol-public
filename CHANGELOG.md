@@ -1,5 +1,12 @@
 # Public documentation changelog
 
+## 15 November 2026 · Roadmap: two planned dates corrected
+
+- [ROADMAP.md](ROADMAP.md): the second-provider read of every Control Map row and the nightly rebuild of the Control Map page,
+  planned by 16 November 2026, will not be live by then. Change alerts within minutes, planned by 19 November 2026, have not
+  been built and will not be live by then. Each item ships only after its tests and review, and its new date will be written in the
+  roadmap. The other planned dates are unchanged.
+
 ## 15 November 2026 · Control Map changes dated by their transaction (Ethereum)
 
 - Since 14 November 2026, 03:01 UTC, the Control Map daily re-read can write an Ethereum change as a Control-Change Record with
