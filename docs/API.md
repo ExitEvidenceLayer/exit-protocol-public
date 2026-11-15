@@ -95,7 +95,7 @@ curl --fail --silent --show-error --get https://api.exit-protocol.io/v0/research
   --data-urlencode 'mint=5vPz2s8NtkasmVRDz5ySz27V1E8UdSpzqc9xN678jups'
 ```
 
-Responses use `exit.solana-mint-research/2` (a replay of an earlier request returns its stored body, which can be `/1`), identify the source and finalized slot/time, and preserve evidence and unsupported-field limits. `X-EXIT-Research-State` distinguishes a completed primary answer from an incomplete read. A null observed authority differs from a value the service could not read. The public chain-data provider sees requested mint addresses.
+Responses use `exit.solana-mint-research/2` (a replay of an earlier request returns its stored body, which can be `/1`), identify the source and finalized slot/time, and preserve evidence and unsupported-field limits. `X-EXIT-Research-State` distinguishes a completed primary answer from an incomplete read. A null observed authority differs from a value the service could not read. The chain-data provider that serves the read sees requested mint addresses: since 13 November 2026, 04:51 UTC (added 15 November 2026), first a keyed provider, mainnet.helius-rpc.com (Helius), and the public solana-rpc.publicnode.com when the key cannot be read or is refused, when a safety check has closed the keyed route, and for at least ten minutes after three failed keyed reads in a row; before that, the public provider only.
 
 For Token-2022 mints the reader also interprets the pause authority and the scaled-UI-amount authority (policy
 `solana-finalized-mint-pair-hop/2` since 1 November 2026) and reports the state facts behind them (paused, multiplier) without
