@@ -1,5 +1,13 @@
 # Public documentation changelog
 
+## 15 November 2026 · Roadmap: keyed chain-data providers marked live
+
+- [ROADMAP.md](ROADMAP.md): the item planned by 14 November 2026, keyed chain-data providers with the public endpoints as
+  fallback, is marked live since 13 November 2026, 04:51 UTC. The service's on-request Ethereum and Solana research reads and
+  the nightly re-read of the Control Map rows go to a keyed provider first. A failed keyed read is answered as a failure; the
+  service moves to the public endpoints after repeated failures or a refused key, and the Control Map re-read retries a failed
+  row on a public endpoint. The hourly radar reads stay on public endpoints. Each answer names the provider that served it.
+
 ## 15 November 2026 · Q1 interim rerun result
 
 - [docs/Q1-RESULT.md](docs/Q1-RESULT.md) now also reports an interim rerun of the question bank on 15 November 2026 (06:03 to 06:05 UTC, run 20261115T060306Z, bank v1.2 unchanged). Met: 25 of 36 on bank v1, 29 on v1.1, 35 on v1.2; 24 of the 25 questions never revised (23 on 5 November, 20 on 3 November).

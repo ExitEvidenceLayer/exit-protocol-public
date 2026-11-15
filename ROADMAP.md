@@ -65,7 +65,9 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       for the blocks between the two reads, naming the new value, and the window ends at the later read's finalized block by
       number and hash; every other change keeps the bracketing reads (CONTROL-CHANGE-RECORD.md)
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
-      by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
+      by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback (added 15 November 2026: live
+      since 13 November 2026, 04:51 UTC, for the service's on-request Ethereum and Solana research reads and the nightly re-read
+      of the Control Map rows; the hourly radar reads stay on public endpoints);
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
       the Control Map page rebuilt every night after the daily anchor (corrected 15 November 2026: neither will be live by
       16 November 2026; both ship only after their tests and review, and the new date will be written here);
