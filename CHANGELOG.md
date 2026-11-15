@@ -1,5 +1,11 @@
 # Public documentation changelog
 
+## 15 November 2026 · Q1 interim rerun result
+
+- [docs/Q1-RESULT.md](docs/Q1-RESULT.md) now also reports an interim rerun of the question bank on 15 November 2026 (06:03 to 06:05 UTC, run 20261115T060306Z, bank v1.2 unchanged). Met: 25 of 36 on bank v1, 29 on v1.1, 35 on v1.2; 24 of the 25 questions never revised (23 on 5 November, 20 on 3 November).
+- New in docs/: [q1-result-20261115T060306Z.json](docs/q1-result-20261115T060306Z.json), the per-question result next to the 3 and 5 November runs; each row carries the sha256 of the answer body, not the body.
+- Since 5 November, 1 question changed its HTTP status or its v1.2 grade: Q1-14. The intervals of the two runs overlap.
+
 ## 15 November 2026 · Roadmap: two planned dates corrected
 
 - [ROADMAP.md](ROADMAP.md): the second-provider read of every Control Map row and the nightly rebuild of the Control Map page,
