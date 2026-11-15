@@ -1,5 +1,25 @@
 # Public documentation changelog
 
+## 15 November 2026 · Control Map changes dated by their transaction (Ethereum)
+
+- Since 14 November 2026, 03:01 UTC, the Control Map daily re-read can write an Ethereum change as a Control-Change Record with
+  `valid_at.basis` `transaction`. The run of 14 November 2026, 23:20 UTC, is the earliest run in this mode. The run of 14 November 2026 recorded no change, so it dated none.
+- [CONTROL-CHANGE-RECORD.md](CONTROL-CHANGE-RECORD.md) has a new section, "How the Control Map daily run dates a change": the six
+  conditions, the nine settings and their events, how to check a dated record against the chain and the evidence log, and what a transaction date
+  does not show. Its status paragraph now says that the daily re-read writes the records in this format, one per change (its
+  daily page showed 0 changes recorded in the 13 runs from 1 to 13 November 2026).
+- The daily page (https://exit-protocol.io/control-map/daily/): the link text of a dated change ends with ", changed in
+  transaction", the first 6 and last 4 characters of the transaction hash, the block number and the block time in UTC. Its
+  section "What this page does not show" then says: "A change shown with a transaction is dated by it: for the blocks between
+  the two reads, two public sources each returned exactly one event of the kind that records that setting, and that event names
+  the new value." Every other change keeps the words that its time is known only to lie between the two read positions. When
+  no shown change is dated, the page keeps its earlier words on the time of a change; daily.json is not changed by this release (it gains no transaction field).
+- The texts claim no independence of the two sources and nothing about who controls an address.
+- Changed with it: [STATUS.md](STATUS.md) (two sentences in the Control Map row, a 15 November update, the header date, and a
+  correction in the second-provider row, which no longer calls the second provider independent),
+  [ROADMAP.md](ROADMAP.md) (one LIVE line, and the Control-Change Record line now states the records so far) and this file.
+  README.md is unchanged; none of these files is in its hash table.
+
 ## 15 November 2026 · Kava Lend case note
 
 - [cases/kava-lend-2026-11-14.md](cases/kava-lend-2026-11-14.md): the Kava Lend case of 14 November 2026, in the same format as the other
@@ -10,6 +30,7 @@
   [cases/kava-lend-2026-11-14-reread.py](cases/kava-lend-2026-11-14-reread.py) a read-only script (Python standard library, no keys) that
   re-reads the main facts, from two public providers per chain where two serve them, and prints the values that can change next to their
   value of 14 November.
+- 03:47 UTC: the homepage coverage table links [the Kava Lend case note](cases/kava-lend-2026-11-14.md).
 
 ## 14 November 2026 · claims check for the schema ids in docs/API.md
 

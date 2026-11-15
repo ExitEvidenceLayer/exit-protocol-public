@@ -38,7 +38,8 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: keyless history, cite and verify tools for agents (/tools/); EXIT's own control page (CONTROLS.md)
   → LIVE: the same keys continue in a quota-limited free tier after 24 November (continuation deployed 29 October)
   → LIVE: SPL Governance (Realms) configuration reader, one governance account per request; LayerZero pathway reader (delegate, libraries, verifier configuration), one OApp, endpoint id and direction per request (29 October)
-  → LIVE: Control-Change Record format, setting names and checker, under an open license (no records in this format yet)
+  → LIVE: Control-Change Record format, setting names and checker, under an open license (updated 15 November 2026: the Control Map
+      daily re-read writes one record in this format per change it records; its 13 runs from 1 to 13 November 2026 recorded 0 changes)
   → LIVE: public corrections list and error rate (CORRECTIONS.md), updated monthly
   → LIVE: on a day without new records, the daily job re-anchors the current root (31 October and 1 November)
   → LIVE: issuer-freeze read for one Ethereum address (USDT, USDC; PYUSD since 2 November) at one finalized block (1 November)
@@ -59,6 +60,10 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       added 13 November 2026: docs/Q1-RESULT.md now also reports that after-run, 5 November 2026 00:05 UTC: 34 of 36 met on bank v1.2,
       23 of the 25 questions never revised)
   → LIVE: higher free limits, with a service-capacity view (GET /v0/early-access, service_capacity; service release of 12 November 2026; planned by 13 November 2026)
+  → LIVE: Ethereum changes on the Control Map daily page dated by their transaction (since 14 November 2026, 03:01 UTC; added
+      15 November 2026): only when two keyless public sources each return exactly one event of the kind that records the setting
+      for the blocks between the two reads, naming the new value, and the window ends at the later read's finalized block by
+      number and hash; every other change keeps the bracketing reads (CONTROL-CHANGE-RECORD.md)
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback;
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
