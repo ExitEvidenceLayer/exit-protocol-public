@@ -1,0 +1,936 @@
+{
+ "format": "exit.case-observation/2",
+ "case": "kava-lend-2026-11-14",
+ "note": "kava-lend-2026-11-14.md",
+ "facts_as_of": {
+  "utc": "2026-11-14T19:47:22Z",
+  "kava_height": 23494664,
+  "rule": "the facts were read on 14 November 2026 between 17:26 and 20:42 UTC (one block time, of height 23,493,663, was looked up at 21:23 UTC); the note gives the state at 19:47 UTC (this time and height) in Status; other current values carry the time they were read; later changes are added to the note as dated updates"
+ },
+ "units": {
+  "ukava": "KAVA base unit, 10^-6 KAVA",
+  "busd": "BUSD base unit on Kava, 10^-8 BUSD",
+  "kava_evm_wei": "10^-18 KAVA (1 ukava = 10^12 wei)",
+  "bsc_kava": "KAVA on BNB Smart Chain, 18 decimals"
+ },
+ "providers": {
+  "kava_rest": [
+   "api2.kava.io",
+   "kava-api.polkachu.com"
+  ],
+  "kava_rpc": [
+   "rpc.kava.io"
+  ],
+  "kava_evm": [
+   "evm.kava-rpc.com",
+   "kava.drpc.org",
+   "rpc.ankr.com/kava_evm",
+   "kava.api.onfinality.io/public"
+  ],
+  "bsc": [
+   "bsc-dataseed1.binance.org",
+   "bsc-rpc.publicnode.com"
+  ],
+  "historical_module_state": [
+   "kava-api.polkachu.com",
+   "kava-rpc.polkachu.com"
+  ]
+ },
+ "one_provider": [
+  {
+   "operator": "polkachu",
+   "serves": "past Kava Lend module state (x/hard, past heights) and past bank supply",
+   "why": "served publicly by one archive operator; the module KAVA cash at past heights is also read on four Kava EVM archives, which agree",
+   "facts": [
+    "busd_market.terms_at_23484805",
+    "busd_market.cash_before",
+    "busd_supply_index.by_height",
+    "a1_busd_deposit",
+    "kava_lend_kava.total_supplied_23484000",
+    "community_pool.deposit_at_23484000",
+    "kava_supply"
+   ]
+  },
+  {
+   "operator": "blastapi (bsc-mainnet.public.blastapi.io)",
+   "serves": "past BNB Smart Chain balances (archive eth_getBalance)",
+   "why": "the one archive provider that served them; the BNB received from the sales is the sum of balance differences at the sale blocks",
+   "facts": [
+    "sale.bnb_received",
+    "sale.per_kava_fall_41_percent (in the note)",
+    "sale: R's KAVA balance of 0 at three archive blocks after 12:07:47 (in the note)"
+   ]
+  }
+ ],
+ "accounts": {
+  "A1": {
+   "kava": "kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255",
+   "evm": "0xe08d42aab80438bc3a3aa76503dad888c7562fe4"
+  },
+  "A2": {
+   "kava": "kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4",
+   "evm": "0x62a0ad6a1ff9f1da18707ea0edc30f7cdce5fb9e"
+  },
+  "A3": {
+   "kava": "kava1r0hghsamv22zt9xzdch0f5ksh5urlxgg788njq",
+   "evm": "0x1bee8bc3bb62942594c26e2ef4d2d0bd383f9908"
+  },
+  "A5": {
+   "kava": "kava1xltn9y20smxxav0gwsv7xpr2ww0szyzzga76lv",
+   "evm": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+   "note": "the same 20 bytes on Kava, Kava EVM and BNB Smart Chain"
+  },
+  "grantee_8nov": "kava1vk22vjkzefusae4fnt229wmnrj0afuy5uu64gl",
+  "B1": "kava1jtjk0384c8n0xcfulqqsksx0dpq3lyfevenfrw",
+  "B2": "kava1pjpp5qvawxq2hrap0etrz9uq4k59pnadsurlg3",
+  "B0": "kava1p5xr0fs48x328qq4h4z8fndd3qj9vlxa6mfwgf"
+ },
+ "modules": {
+  "kava_lend_x_hard": {
+   "kava": "kava1a42xtwfzphuuu9mdp0es6633wu5mm8fhm789v3",
+   "evm": "0xed5465b9220df9ce176d0bf30d6a317729bd9d37"
+  },
+  "community": {
+   "kava": "kava17d2wax0zhjrrecvaszuyxdf5wcu5a0p4qlx3t5",
+   "account_type": "/cosmos.auth.v1beta1.ModuleAccount",
+   "name": "community",
+   "providers": [
+    "kava-api.polkachu.com",
+    "api2.kava.io",
+    "kava-rest.publicnode.com",
+    "rest.cosmos.directory/kava"
+   ]
+  }
+ },
+ "contracts": {
+  "oft_adapter_kava_evm": {
+   "address": "0x964fef44181763f5ee8eddfa124c9ad476570e2a",
+   "owner": "0x39c51795519b50fe6e55e4f50d24b28e02d35fc4",
+   "peer_for_eid_30102": "0x9bafc8d4b487cebff201721702507a3e2c67ad79",
+   "peer_read_utc": "2026-11-14T18:09:55Z",
+   "peer_read_provider": "evm.kava-rpc.com"
+  },
+  "adapter_owner_safe": {
+   "address": "0x39c51795519b50fe6e55e4f50d24b28e02d35fc4",
+   "chain": "Kava EVM",
+   "threshold": 3,
+   "owners": [
+    "0xc7afe63c64a2d25daaf3a999ed4d0a18615544a7",
+    "0x7998f0a56483fd35b5bf97be49f9da3b6d3e8dac",
+    "0xcef96ef1bbf539df11a02eed9363add35112806e",
+    "0xab1fcd3bd158efd40efc07cbeeb5220445862380",
+    "0x76a2637bfaffe36da37fab5e755a141f5ecf6683"
+   ]
+  },
+  "kava_token_bsc": {
+   "address": "0x9bafc8d4b487cebff201721702507a3e2c67ad79",
+   "owner": "0x456640df59ad58a0ec0ee22464ddc6b627e67689",
+   "peer_for_eid_30177": "0x964fef44181763f5ee8eddfa124c9ad476570e2a"
+  },
+  "token_owner_safe": {
+   "address": "0x456640df59ad58a0ec0ee22464ddc6b627e67689",
+   "chain": "BNB Smart Chain",
+   "threshold": 3,
+   "owners": [
+    "0xab1fcd3bd158efd40efc07cbeeb5220445862380",
+    "0xcef96ef1bbf539df11a02eed9363add35112806e",
+    "0x7998f0a56483fd35b5bf97be49f9da3b6d3e8dac",
+    "0xc7afe63c64a2d25daaf3a999ed4d0a18615544a7",
+    "0x8f9b844af5c72ebd13c3ba77511d7afbf86536b8"
+   ],
+   "read_utc": "2026-11-14T17:46:05Z",
+   "provider": "bsc-rpc.publicnode.com"
+  },
+  "layerzero_endpoint_v2": "0x1a44076050125825900e736c501f859c50fe728c",
+  "eids": {
+   "kava": 30177,
+   "bsc": 30102
+  }
+ },
+ "busd_market": {
+  "cash_before": {
+   "23300000": {
+    "raw": "441423571574",
+    "decimals": 8,
+    "value": "4414.23571574",
+    "unit": "BUSD"
+   },
+   "23366000": {
+    "raw": "360800",
+    "decimals": 8,
+    "value": "0.00360800",
+    "unit": "BUSD",
+    "utc": "2026-11-06T07:34:15Z"
+   }
+  },
+  "reserves_23366000": {
+   "raw": "761559171093",
+   "decimals": 8,
+   "value": "7615.59171093",
+   "unit": "BUSD"
+  },
+  "borrows_and_reserves_23470000": {
+   "borrows": {
+    "raw": "507352022103",
+    "decimals": 8,
+    "value": "5073.52022103",
+    "unit": "BUSD"
+   },
+   "reserves": {
+    "raw": "761818776603",
+    "decimals": 8,
+    "value": "7618.18776603",
+    "unit": "BUSD"
+   }
+  },
+  "terms_at_23484805": {
+   "cash": {
+    "raw": "635124161944",
+    "decimals": 8,
+    "value": "6351.24161944",
+    "unit": "BUSD"
+   },
+   "borrows": {
+    "raw": "126720118686",
+    "decimals": 8,
+    "value": "1267.20118686",
+    "unit": "BUSD"
+   },
+   "reserves": {
+    "raw": "761844280628",
+    "decimals": 8,
+    "value": "7618.44280628",
+    "unit": "BUSD"
+   },
+   "cash_plus_borrows_minus_reserves": {
+    "raw": "2",
+    "decimals": 8,
+    "derived": "cash + borrows - reserves"
+   }
+  }
+ },
+ "trigger": {
+  "repay_tx": {
+   "tx": "6C00E9ED86CB8BE0F49040AA8E693C4184BBBDC4A65FF733804AE1C2FB678AE1",
+   "height": 23484801,
+   "utc": "2026-11-14T04:00:49Z",
+   "code": 0,
+   "msg_repay_by_A1": 37,
+   "fee_payer": "kava1r0hghsamv22zt9xzdch0f5ksh5urlxgg788njq",
+   "busd_borrowed_before": {
+    "raw": "508372420312",
+    "decimals": 8,
+    "value": "5083.72420312",
+    "unit": "BUSD"
+   },
+   "providers": [
+    "api2.kava.io",
+    "rpc.kava.io"
+   ]
+  },
+  "set_tx": {
+   "tx": "D5D8F728D9E11569B3FA40744FF1580BA3EF18C504F0382FE590149E683E337F",
+   "height": 23484805,
+   "utc": "2026-11-14T04:01:12Z",
+   "code": 0,
+   "fee_payer": "kava1r0hghsamv22zt9xzdch0f5ksh5urlxgg788njq",
+   "messages": [
+    {
+     "type": "MsgDeposit",
+     "by": "kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255",
+     "amount": {
+      "raw": "380160356061",
+      "decimals": 8,
+      "value": "3801.60356061",
+      "unit": "BUSD"
+     }
+    },
+    {
+     "type": "MsgBorrow",
+     "by": "kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255",
+     "amount": {
+      "raw": "126720118686",
+      "decimals": 8,
+      "value": "1267.20118686",
+      "unit": "BUSD"
+     }
+    },
+    {
+     "type": "MsgWithdraw",
+     "by": "kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255",
+     "amount": {
+      "raw": "126720118686",
+      "decimals": 8,
+      "value": "1267.20118686",
+      "unit": "BUSD"
+     }
+    }
+   ],
+   "providers": [
+    "api2.kava.io",
+    "rpc.kava.io"
+   ]
+  }
+ },
+ "busd_supply_index": {
+  "by_height": {
+   "23484805": "2.761984084150576679",
+   "23484806": "23146.807617223907858360",
+   "23484833": "648041.563680165654908236",
+   "23484834": "671186.990305347487289899"
+  },
+  "first_block_factor": "8380.5",
+  "first_block": 23484806,
+  "first_block_utc": "2026-11-14T04:01:18Z",
+  "height_23484833_utc": "2026-11-14T04:03:52Z"
+ },
+ "a1_busd_deposit": {
+  "23484805": {
+   "raw": "519264743011",
+   "decimals": 8,
+   "value": "5192.64743011",
+   "unit": "BUSD"
+  },
+  "23484833": {
+   "raw": "121834567387927918",
+   "decimals": 8,
+   "value": "1218345673.87927918",
+   "unit": "BUSD"
+  }
+ },
+ "loop": {
+  "transactions": 127,
+  "first": {
+   "tx": "3B32EFCF3937ABE337F10510F2FEB317D22CB660C8F97A0D090026B2F6B32EBE",
+   "height": 23484838,
+   "utc": "2026-11-14T04:04:21Z",
+   "kava_borrowed": {
+    "raw": "31392966444",
+    "decimals": 6,
+    "value": "31392.966444",
+    "unit": "KAVA"
+   }
+  },
+  "last_127th": {
+   "tx": "04140BEFAB591DE9B9A98B89E8613B36D87DC25FB0AC92AB618B69A714E1780E",
+   "height": 23485857,
+   "utc": "2026-11-14T05:42:04Z",
+   "kava_borrowed": {
+    "raw": "356408837990",
+    "decimals": 6,
+    "value": "356408.837990",
+    "unit": "KAVA"
+   }
+  },
+  "fee_payer": "kava1r0hghsamv22zt9xzdch0f5ksh5urlxgg788njq",
+  "signers": [
+   "kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255",
+   "kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4",
+   "kava1r0hghsamv22zt9xzdch0f5ksh5urlxgg788njq"
+  ],
+  "kava_borrowed_by_A2": {
+   "raw": "55205050601443",
+   "decimals": 6,
+   "value": "55205050.601443",
+   "unit": "KAVA"
+  },
+  "kava_borrow_cap": {
+   "raw": "448358000000",
+   "decimals": 6,
+   "value": "448358.000000",
+   "unit": "KAVA"
+  },
+  "largest_borrow": {
+   "raw": "445720053382",
+   "decimals": 6,
+   "value": "445720.053382",
+   "unit": "KAVA"
+  },
+  "providers": [
+   "rpc.kava.io (tx_search)",
+   "api2.kava.io (11 sampled transactions)"
+  ]
+ },
+ "liquidations": {
+  "first_tx": {
+   "tx": "3F79C5AD67A30F8C776E7A9FBB4AB041ACBE334CADAB0E24417C98AFB804F3AB",
+   "height": 23484839,
+   "utc": "2026-11-14T04:04:27Z",
+   "keeper": "kava1uzx5924cqsutcw365ajs8kkc3rr4vtlyzms255",
+   "borrower": "kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4"
+  },
+  "auctions": [
+   25188,
+   25314
+  ],
+  "count": 127,
+  "lots_busd_base_units": {
+   "0": 28,
+   "1": 98,
+   "2": 1
+  },
+  "max_bids_total": {
+   "raw": "55205050752711",
+   "decimals": 6,
+   "value": "55205050.752711",
+   "unit": "KAVA"
+  },
+  "open_with_no_bid_at": "2026-11-14T18:14:44Z",
+  "open_with_no_bid_provider": "kava-api.polkachu.com",
+  "auction_25188_at_1947": {
+   "lot": {
+    "denom": "busd",
+    "amount": "0"
+   },
+   "max_bid": {
+    "denom": "ukava",
+    "amount": "31392966446"
+   },
+   "has_received_bids": false,
+   "end_time": "9000-01-01T00:00:00Z",
+   "lot_returns": {
+    "addresses": [
+     "kava1v2s266sll8ca5xrs06swmsc00nwwt7u77eufk4"
+    ],
+    "weights": [
+     "100"
+    ]
+   },
+   "providers": [
+    "api2.kava.io",
+    "kava-api.polkachu.com"
+   ]
+  }
+ },
+ "kava_lend_kava": {
+  "cash_23484000": {
+   "raw": "55332248178740",
+   "decimals": 6,
+   "value": "55332248.178740",
+   "unit": "KAVA"
+  },
+  "cash_23493000": {
+   "raw": "1100351",
+   "decimals": 6,
+   "value": "1.100351",
+   "unit": "KAVA"
+  },
+  "cash_providers": [
+   "kava-api.polkachu.com",
+   "evm.kava-rpc.com",
+   "kava.drpc.org",
+   "rpc.ankr.com/kava_evm",
+   "kava.api.onfinality.io/public"
+  ],
+  "total_supplied_23484000": {
+   "raw": "55780047147073",
+   "decimals": 6,
+   "value": "55780047.147073",
+   "unit": "KAVA"
+  },
+  "cash_1947": {
+   "raw": "1100351",
+   "decimals": 6,
+   "value": "1.100351",
+   "unit": "KAVA"
+  }
+ },
+ "community_pool": {
+  "deposit_record": {
+   "raw": "55000065916297",
+   "decimals": 6,
+   "value": "55000065.916297",
+   "unit": "KAVA"
+  },
+  "deposit_index": "1.026337996745867279",
+  "deposit_synced_23484000": {
+   "raw": "55000650488074",
+   "decimals": 6,
+   "value": "55000650.488074",
+   "unit": "KAVA"
+  },
+  "deposit_at_23484000": {
+   "raw": "55000065916297",
+   "decimals": 6,
+   "value": "55000065.916297",
+   "unit": "KAVA"
+  },
+  "unchanged_at_1947": true,
+  "providers_1947": [
+   "api2.kava.io",
+   "kava-api.polkachu.com"
+  ]
+ },
+ "to_bsc": {
+  "a2_to_a1": [
+   {
+    "tx": "F06EA32A140E15914F399D80BCCC5959F1F24BCC04384048D6C9546405F3BE76",
+    "height": 23485919,
+    "utc": "2026-11-14T05:48:04Z",
+    "amount": {
+     "raw": "53932564485351",
+     "decimals": 6,
+     "value": "53932564.485351",
+     "unit": "KAVA"
+    }
+   },
+   {
+    "tx": "E4CC1CA915B5D505C6EE7BE7812885E3F8D1DB8F8849EFA3FF62C8F2511431F6",
+    "height": 23489822,
+    "utc": "2026-11-14T12:02:34Z",
+    "amount": {
+     "raw": "849989972079",
+     "decimals": 6,
+     "value": "849989.972079",
+     "unit": "KAVA"
+    }
+   }
+  ],
+  "a1_to_a5": {
+   "transfers": 4,
+   "total": {
+    "raw": "49208677752286",
+    "decimals": 6,
+    "value": "49208677.752286",
+    "unit": "KAVA"
+   }
+  },
+  "oft_sends": [
+   {
+    "tx": "0xb09319ed159a11e9a1c63c5d911d2bef187bee5f3136277822cb16016d08d535",
+    "block": 23488537,
+    "utc": "2026-11-14T09:59:20Z",
+    "from": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+    "to": "0x964fef44181763f5ee8eddfa124c9ad476570e2a",
+    "status": "0x1",
+    "value": {
+     "raw": "149045860266569037884108",
+     "decimals": 18,
+     "value": "149045.860266569037884108",
+     "unit": "KAVA"
+    },
+    "oft_sent_amount": {
+     "raw": "149000000000000000000000",
+     "decimals": 18,
+     "value": "149000.000000000000000000",
+     "unit": "KAVA"
+    },
+    "dst_eid": 30102,
+    "nonce": 2317,
+    "guid": "0xd40a4db8e4634cd596dcf42fffa0a8484614aef74d0568284778053ef21c9c82",
+    "providers": [
+     "evm.kava-rpc.com",
+     "kava.drpc.org"
+    ]
+   },
+   {
+    "tx": "0x062c77201dc1dfd6f07d4186d964538640a4f067f2fd3e5a9f3b36e7ae1ba248",
+    "block": 23488570,
+    "utc": "2026-11-14T10:02:30Z",
+    "from": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+    "to": "0x964fef44181763f5ee8eddfa124c9ad476570e2a",
+    "status": "0x1",
+    "value": {
+     "raw": "48209645860266569037884108",
+     "decimals": 18,
+     "value": "48209645.860266569037884108",
+     "unit": "KAVA"
+    },
+    "oft_sent_amount": {
+     "raw": "48209600000000000000000000",
+     "decimals": 18,
+     "value": "48209600.000000000000000000",
+     "unit": "KAVA"
+    },
+    "dst_eid": 30102,
+    "nonce": 2318,
+    "guid": "0x603862facf67bc0a1b6dcb359e3af1d7c02f17c8bae527ccabad8b011139dd80",
+    "providers": [
+     "evm.kava-rpc.com",
+     "kava.drpc.org"
+    ]
+   },
+   {
+    "tx": "0x24dcef96388d6dcfe204ae0a9815a4c499f1b4b38b79dd530409bd326dc02f21",
+    "block": 23489853,
+    "utc": "2026-11-14T12:05:32Z",
+    "from": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+    "to": "0x964fef44181763f5ee8eddfa124c9ad476570e2a",
+    "status": "0x1",
+    "value": {
+     "raw": "849080965372614852466413",
+     "decimals": 18,
+     "value": "849080.965372614852466413",
+     "unit": "KAVA"
+    },
+    "oft_sent_amount": {
+     "raw": "849000000000000000000000",
+     "decimals": 18,
+     "value": "849000.000000000000000000",
+     "unit": "KAVA"
+    },
+    "dst_eid": 30102,
+    "nonce": 2336,
+    "guid": "0x14a0189d9f4778f46bd5830c98e9a8a0c2b51d9b482c20038d2acda8c65a5919",
+    "providers": [
+     "evm.kava-rpc.com",
+     "kava.drpc.org"
+    ]
+   }
+  ],
+  "bsc_deliveries": [
+   {
+    "tx": "0x365a046f0048fe114ac45febcb0cba8f584f9aaf340735a0b184a2cfd95bf284",
+    "block": 133524086,
+    "status": "0x1",
+    "minted_to": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+    "amount": {
+     "raw": "149000000000000000000000",
+     "decimals": 18,
+     "value": "149000.000000000000000000",
+     "unit": "KAVA"
+    },
+    "src_eid": 30177,
+    "nonce": 2317,
+    "providers": [
+     "bsc-dataseed1.binance.org",
+     "bsc-rpc.publicnode.com"
+    ],
+    "utc": "2026-11-14T10:01:06Z"
+   },
+   {
+    "tx": "0x76c349063269fbf3aad7e4f227e80bda0f62b15ae0a99e309f5462487d5f67c1",
+    "block": 133524497,
+    "status": "0x1",
+    "minted_to": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+    "amount": {
+     "raw": "48209600000000000000000000",
+     "decimals": 18,
+     "value": "48209600.000000000000000000",
+     "unit": "KAVA"
+    },
+    "src_eid": 30177,
+    "nonce": 2318,
+    "providers": [
+     "bsc-dataseed1.binance.org",
+     "bsc-rpc.publicnode.com"
+    ],
+    "utc": "2026-11-14T10:04:10Z"
+   },
+   {
+    "tx": "0x5c10c5061373ab9bedb3425afa932b173892a894ea7d23655cc019ecdd343a05",
+    "block": 133540909,
+    "status": "0x1",
+    "minted_to": "0x37d732914f86cc6eb1e87419e3046a739f011042",
+    "amount": {
+     "raw": "849000000000000000000000",
+     "decimals": 18,
+     "value": "849000.000000000000000000",
+     "unit": "KAVA"
+    },
+    "src_eid": 30177,
+    "nonce": 2336,
+    "providers": [
+     "bsc-dataseed1.binance.org",
+     "bsc-rpc.publicnode.com"
+    ],
+    "utc": "2026-11-14T12:07:20Z"
+   }
+  ],
+  "bridged_total": {
+   "raw": "49207600000000000000000000",
+   "decimals": 18,
+   "derived": "sum of the three OFTSent amounts"
+  }
+ },
+ "sale": {
+  "kava_sold": {
+   "raw": "49207616000000000000000000",
+   "decimals": 18,
+   "value": "49207616.000000000000000000",
+   "unit": "KAVA"
+  },
+  "transactions": 45,
+  "from_utc": "2026-11-14T10:06:57Z",
+  "to_utc": "2026-11-14T10:41:43Z",
+  "last_utc": "2026-11-14T12:07:47Z",
+  "bnb_received": {
+   "raw": "3332432207900202687991",
+   "decimals": 18,
+   "value": "3332.432207900202687991",
+   "unit": "BNB"
+  },
+  "bnb_received_derived": "sum of the 41 BNB inflows to R from 10:06:57, each an archive balance difference (blastapi)",
+  "usdt_order": {
+   "tx": "0xe63992286f48972ac2e5f18c6fa0aa2d476e8e5735eac59842200f81c9084d53",
+   "amount": {
+    "raw": "27825455634839333128170",
+    "decimals": 18,
+    "value": "27825.455634839333128170",
+    "unit": "USDT"
+   }
+  },
+  "r_kava_balance_bsc_latest": "0",
+  "r_balance_providers": [
+   "bsc-dataseed.bnbchain.org",
+   "bsc-rpc.publicnode.com"
+  ]
+ },
+ "proceeds_bsc": {
+  "bnb_sends": [
+   {
+    "tx": "0x1eeaf8453a849f29be8b4c5ad4384d45554c89dde13384f61db66b34fe1d942d",
+    "utc": "2026-11-14T10:47:06Z",
+    "to": "0x764796099b205e625342df7f5402809ee5e71925",
+    "amount": {
+     "raw": "200000000000000000000",
+     "decimals": 18,
+     "value": "200.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0x35f98b24925e4081f89254cccd6505c1b965034d1570544883dd9b3121fe64e8",
+    "utc": "2026-11-14T10:50:01Z",
+    "to": "0x8ff50f64a158b255e4f29cb84a2d54446b181c89",
+    "amount": {
+     "raw": "550000000000000000000",
+     "decimals": 18,
+     "value": "550.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0x438ef10081e804af07ef1cd69819a40fc7d069bbd35606d96e2ed9b4abc1762f",
+    "utc": "2026-11-14T10:50:51Z",
+    "to": "0xaec23140408534b378bf5832defc426df8604b59",
+    "amount": {
+     "raw": "500000000000000000000",
+     "decimals": 18,
+     "value": "500.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0xb844e460490048f6f424f1859c814954586991e1bb854935fb512500781ca79f",
+    "utc": "2026-11-14T10:53:26Z",
+    "to": "0xaec23140408534b378bf5832defc426df8604b59",
+    "amount": {
+     "raw": "1000000000000000000000",
+     "decimals": 18,
+     "value": "1000.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0x785137f1c1aa783bd3fe2b1712a2ccba10c8c2b4352e03817cfb28ca69393fc3",
+    "utc": "2026-11-14T11:00:53Z",
+    "to": "0x448497e9d4f9efc9f9d1518da879a57f039b723d",
+    "amount": {
+     "raw": "200000000000000000000",
+     "decimals": 18,
+     "value": "200.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0xcb0e0a11af46e52e4d2907ae8b1df9cf96c70f2891f9d07a0d7b3a6dfdbe7d65",
+    "utc": "2026-11-14T11:21:28Z",
+    "to": "0x44df35b9fe05b3c1ba05b8e4605e5a093dcd3be8",
+    "amount": {
+     "raw": "400000000000000000000",
+     "decimals": 18,
+     "value": "400.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0x45082d194e1f15ff918e26b94d0b3ba51f39efeaf48c8c29f5e637a3e43a1584",
+    "utc": "2026-11-14T11:43:40Z",
+    "to": "0xa35151b04395ef1ae311a4f623141d17a2041d75",
+    "amount": {
+     "raw": "250000000000000000000",
+     "decimals": 18,
+     "value": "250.000000000000000000",
+     "unit": "BNB"
+    }
+   },
+   {
+    "tx": "0xfd463360d4ca8556350cb41bad7cddacce3c95c125fdd9f87ab921550399e45e",
+    "utc": "2026-11-14T11:49:29Z",
+    "to": "0x47832456112997cf07d95fe98ef5edeb0f9aa690",
+    "amount": {
+     "raw": "232580000000000000000",
+     "decimals": 18,
+     "value": "232.580000000000000000",
+     "unit": "BNB"
+    }
+   }
+  ],
+  "deposit_contracts": [
+   "0x448497e9d4f9efc9f9d1518da879a57f039b723d",
+   "0x44df35b9fe05b3c1ba05b8e4605e5a093dcd3be8",
+   "0xa35151b04395ef1ae311a4f623141d17a2041d75",
+   "0x47832456112997cf07d95fe98ef5edeb0f9aa690"
+  ],
+  "collector": "0x79001a5e762f3befc8e5871b42f6734e00498920",
+  "provider_note": "BNB Smart Chain receipts and archive balances (bsc-dataseed, publicnode, blastapi)"
+ },
+ "side_wallets_on_kava": [
+  {
+   "account": "kava1hcczptm0ens00vwl7wxyyfahc6dnx9y2tl777z",
+   "kava": {
+    "raw": "2613900000000",
+    "decimals": 6,
+    "value": "2613900.000000",
+    "unit": "KAVA"
+   }
+  },
+  {
+   "account": "kava1jgvz9h6desy2wcxxtntw8ykgdh9gqcvrtwvs8m",
+   "kava": {
+    "raw": "1498900000000",
+    "decimals": 6,
+    "value": "1498900.000000",
+    "unit": "KAVA"
+   }
+  },
+  {
+   "account": "kava1hcufgduv4lgdjnfgykkq3g3wzcqzvydmls7jc9",
+   "kava": {
+    "raw": "170000000000",
+    "decimals": 6,
+    "value": "170000.000000",
+    "unit": "KAVA"
+   }
+  },
+  {
+   "account": "kava1p0m9tdpn33wly4794c38m968qnqen3ergcfl3e",
+   "kava": {
+    "raw": "150000000000",
+    "decimals": 6,
+    "value": "150000.000000",
+    "unit": "KAVA"
+   }
+  },
+  {
+   "account": "kava134vun6a7xqcznvcdqa5f88nr2hc5u55l47ezdv",
+   "kava": {
+    "raw": "150000000000",
+    "decimals": 6,
+    "value": "150000.000000",
+    "unit": "KAVA"
+   }
+  }
+ ],
+ "grant_8nov": {
+  "tx": "54FFB136CCC600E99FABAA416999FEBDDB832732885CE6376E3D36E9AC45BBCF",
+  "height": 23404986,
+  "utc": "2026-11-08T21:11:45Z",
+  "grantee": "kava1vk22vjkzefusae4fnt229wmnrj0afuy5uu64gl",
+  "expiration": "2026-11-08T22:31:55.338874693Z",
+  "send_limits": {
+   "ukava": {
+    "raw": "55321532125749",
+    "decimals": 6,
+    "value": "55321532.125749",
+    "unit": "KAVA"
+   },
+   "btcb": {
+    "raw": "1009353988",
+    "decimals": 8,
+    "value": "10.09353988",
+    "unit": "BTCB"
+   },
+   "usdx": {
+    "raw": "1040604355538",
+    "decimals": 6,
+    "value": "1040604.355538",
+    "unit": "USDX"
+   }
+  },
+  "kava_lend_messages_granted": [
+   "/kava.hard.v1beta1.MsgBorrow",
+   "/kava.hard.v1beta1.MsgDeposit",
+   "/kava.hard.v1beta1.MsgRepay",
+   "/kava.hard.v1beta1.MsgWithdraw"
+  ]
+ },
+ "kava_supply": {
+  "23484000": {
+   "raw": "1082846880505585",
+   "decimals": 6,
+   "value": "1082846880.505585",
+   "unit": "KAVA"
+  },
+  "23493000": {
+   "raw": "1082846850799635",
+   "decimals": 6,
+   "value": "1082846850.799635",
+   "unit": "KAVA"
+  }
+ },
+ "status_1947": {
+  "utc": "2026-11-14T19:47:22Z",
+  "kava_height": 23494664,
+  "providers": [
+   "api2.kava.io",
+   "kava-api.polkachu.com"
+  ],
+  "busd_supply_index": "671186.990305347487289899",
+  "kava_lend_kava_cash": {
+   "raw": "1100351",
+   "decimals": 6,
+   "value": "1.100351",
+   "unit": "KAVA"
+  },
+  "community_deposit_record": {
+   "raw": "55000065916297",
+   "decimals": 6,
+   "value": "55000065.916297",
+   "unit": "KAVA"
+  },
+  "b1_busd_deposit_synced": {
+   "raw": "4208318433855020",
+   "decimals": 8,
+   "value": "42083184.33855020",
+   "unit": "BUSD"
+  }
+ },
+ "not_paused": {
+  "other_accounts_hard_txs_up_to_height": 23493535,
+  "utc": "2026-11-14T17:59:20Z",
+  "provider": "rpc.kava.io",
+  "params_byte_identical": {
+   "heights": [
+    23484000,
+    23493663
+   ],
+   "utc_23493663": "2026-11-14T18:11:39Z",
+   "providers": [
+    "kava-rpc.polkachu.com",
+    "rpc.kava.io"
+   ]
+  }
+ },
+ "kava_lend_params_23493000": {
+  "ukava": {
+   "has_max_limit": true,
+   "maximum_limit": "448358000000.000000000000000000",
+   "loan_to_value": "0.500000000000000000"
+  },
+  "busd": {
+   "has_max_limit": true,
+   "maximum_limit": "1963100000000.000000000000000000",
+   "loan_to_value": "0.500000000000000000"
+  }
+ },
+ "derived": [
+  "busd_market.terms_at_23484805.cash_plus_borrows_minus_reserves",
+  "to_bsc.bridged_total",
+  "to_bsc.a1_to_a5.total",
+  "side_wallets_on_kava (sums per account)",
+  "sale.bnb_received (the sum of the 41 BNB inflows to R from 10:06:57, each an archive balance difference on blastapi)",
+  "busd_supply_index.first_block_factor (index at 23,484,806 divided by the index at 23,484,805, rounded)"
+ ]
+}
