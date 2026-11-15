@@ -1,5 +1,16 @@
 # Public documentation changelog
 
+## 15 November 2026 · Kava Lend case note
+
+- [cases/kava-lend-2026-11-14.md](cases/kava-lend-2026-11-14.md): the Kava Lend case of 14 November 2026, in the same format as the other
+  case notes: a BUSD interest index that divided by almost nothing, how 55,205,050.60 KAVA were lent out on Kava, and where they went. The
+  facts were read on 14 November 2026 up to 20:42 UTC (one block time at 21:23 UTC), and the note gives the state at 19:47 UTC; later changes
+  on chain will be added to the note as dated updates.
+- [cases/kava-lend-2026-11-14.json](cases/kava-lend-2026-11-14.json) is its result file (SHA-256 `bd3b67059caab819ba048515df1237278e1bb0a1d37a374018c70cebc2da2785`), and
+  [cases/kava-lend-2026-11-14-reread.py](cases/kava-lend-2026-11-14-reread.py) a read-only script (Python standard library, no keys) that
+  re-reads the main facts, from two public providers per chain where two serve them, and prints the values that can change next to their
+  value of 14 November.
+
 ## 14 November 2026 · claims check for the schema ids in docs/API.md
 
 - [tools/claims_check.py](tools/claims_check.py) has a ninth check, `api_md_schema_ids`: each schema id that
