@@ -1,5 +1,20 @@
 # Public documentation changelog
 
+## 15 November 2026 · Read providers since the keyed providers went live, in STATUS.md and docs/API.md
+
+- Three sentences named the read providers of 6 to 13 November 2026 as current. They became stale when the keyed providers
+  went live on 13 November 2026, 04:51 UTC (the ROADMAP entry of 15 November below). Each now keeps the earlier providers
+  with their dates, adds the current ones and is marked "added 15 November 2026". No number changed.
+- [STATUS.md](STATUS.md), the Control Map second-provider row: the primary reads, made by the nightly Control Map re-read,
+  go first through eth-mainnet.g.alchemy.com (Alchemy) for Ethereum and mainnet.helius-rpc.com (Helius) for Solana since its
+  run of 13 November 2026, 23:20 UTC; a retried row, and every row in the cases the row lists, is read from eth.drpc.org or
+  solana-rpc.publicnode.com. The second providers did not change: eth.api.pocket.network for Ethereum and
+  api.mainnet-beta.solana.com for Solana.
+- [STATUS.md](STATUS.md), the governance row: /proposals reads first through Helius, with the official Solana endpoint as
+  the fallback.
+- [docs/API.md](docs/API.md), the Solana mint section: the provider that serves the read sees the requested mint addresses;
+  since 13 November 2026 that is first Helius, not only a public provider.
+
 ## 15 November 2026 · Providers called separate, not independent
 
 - Five more places called providers independent (and docs/ACCURACY.md also the decoding). That is not shown: two endpoints
