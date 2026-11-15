@@ -1,8 +1,12 @@
 # Accuracy notes
 
 EXIT publishes what it measured, with the rule fixed before the first read. Every run below is pre-registered (the hashes of the design,
-the harness and the reader bytes are recorded before any read), uses labels the reader never sees (independent providers, independent
-decoding), and reports facts compared, facts correct and a 95% Wilson interval per group. A fact is a single field of an answer (an
+the harness and the reader bytes are recorded before any read), uses labels the reader never sees (separate endpoints and separate
+decoding code: in every counted run below the labels were read through rpc.mevblocker.io for Ethereum and
+api.mainnet-beta.solana.com for Solana, while the reader read ethereum-rpc.publicnode.com and solana-rpc.publicnode.com;
+corrected 15 November 2026: this said independent providers and independent decoding; that is not shown, because two
+endpoints may relay the same upstream provider, and the label code, though separate, is
+EXIT's own), and reports facts compared, facts correct and a 95% Wilson interval per group. A fact is a single field of an answer (an
 authority, a slot, a code class, a listed flag, a balance). Precision is about the facts EXIT states; it says nothing about facts a
 reader does not read.
 
