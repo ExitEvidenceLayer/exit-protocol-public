@@ -1,5 +1,15 @@
 # Public documentation changelog
 
+## 16 November 2026 · Verify one record in the browser
+
+- [ROADMAP.md](ROADMAP.md): "a public page to verify one record in the browser" is live since 16 November 2026, 17:35 UTC
+  (planned by 21 November 2026), at https://exit-protocol.io/verify/. Its code is the log's verify.js. It runs the checks of
+  `exit_log_verify.py proof` in the browser (stricter for some inputs), checks that the root and the anchor are the ones in
+  anchors.json and, even without the anchor transaction, that the notary key is listed in notaries.json. A held or private record
+  asked for by its leaf index or pasted with its salt gives NOT PUBLISHED; a pasted proof bundle is checked as it is. When the
+  chosen provider does not return the anchor transaction, the result is not VERIFIED (PARTLY CHECKED or NOT CHECKED, unless
+  another check fails); `exit_log_verify.py proof` checks such an anchor with a provider that keeps older transactions.
+
 ## 16 November 2026 · Control routes: the 1 August 2026 evidence date in the API description
 
 - [openapi.json](openapi.json), version 2026-11-16.1 (2026-11-12.1 before): the summaries and 200 responses of GET

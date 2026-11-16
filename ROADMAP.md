@@ -64,6 +64,12 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       15 November 2026): only when two keyless public sources each return exactly one event of the kind that records the setting
       for the blocks between the two reads, naming the new value, and the window ends at the later read's finalized block by
       number and hash; every other change keeps the bracketing reads (CONTROL-CHANGE-RECORD.md)
+  → LIVE: a public page to verify one record in the browser (exit-protocol.io/verify/; since 16 November 2026, 17:35 UTC;
+      planned by 21 November 2026): from a leaf index, a pasted proof bundle or a pasted record with its salt, it rebuilds the leaf,
+      follows the audit path to the anchored root, checks the root and its anchor against anchors.json and the notary key against
+      notaries.json, and asks a public Solana provider for the anchor transaction; when the provider does not return that
+      transaction the result is not VERIFIED (PARTLY CHECKED or NOT CHECKED, unless another check fails), and exit_log_verify.py
+      proof checks it with a provider that keeps older transactions
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback (added 15 November 2026: live
       since 13 November 2026, 04:51 UTC, for the service's on-request Ethereum and Solana research reads and the nightly re-read
@@ -75,7 +81,6 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       by 19 November 2026: change alerts within minutes, with more than one alert slot (corrected 15 November 2026: not
       built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here;
       added 16 November 2026: no new date yet);
-      by 21 November 2026: a public page to verify one record in the browser;
       by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
       transfer-hook program's authority;
       by 23 November 2026: beacon implementations and EIP-2535 diamond facets;
