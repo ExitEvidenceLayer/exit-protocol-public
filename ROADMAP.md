@@ -70,9 +70,11 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       of the Control Map rows; the hourly radar reads stay on public endpoints);
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
       the Control Map page rebuilt every night after the daily anchor (corrected 15 November 2026: neither will be live by
-      16 November 2026; both ship only after their tests and review, and the new date will be written here);
+      16 November 2026; both ship only after their tests and review, and the new date will be written here;
+      added 16 November 2026: no new date yet);
       by 19 November 2026: change alerts within minutes, with more than one alert slot (corrected 15 November 2026: not
-      built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here);
+      built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here;
+      added 16 November 2026: no new date yet);
       by 21 November 2026: a public page to verify one record in the browser;
       by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
       transfer-hook program's authority;

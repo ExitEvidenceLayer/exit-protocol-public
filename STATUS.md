@@ -1,6 +1,6 @@
 # Delivery status
 
-**Public documentation snapshot: 4 November 2026 (dated corrections and updates to 15 November 2026).** This page distinguishes available
+**Public documentation snapshot: 4 November 2026 (dated corrections and updates to 16 November 2026).** This page distinguishes available
 product surfaces, private engineering results and work still required for release.
 It is not an automatic live-monitoring feed.
 
@@ -108,7 +108,9 @@ It is not an automatic live-monitoring feed.
   on the server (77 modules, 1,170 test executions each), and a dry run of the Control Map with /5 installed answered 72 of 72 rows
   (all 48 Ethereum rows under /5). API description 2026-11-04.1. Two of its sentences are out of date and are to be corrected in the
   next description version: the route summary still gives the call budget as twenty-one (26 calls / 60 s since schema /4, 30
-  October), and the 200 response text says "a reverted getter" where only owner() and the four issuer getters are meant.
+  October), and the 200 response text says "a reverted getter" where only owner() and the four issuer getters are meant
+  (added 16 November 2026: the live API description, version 2026-11-12.1, has neither sentence; it gives at most 26 calls
+  within 60 s per request, and its 200 response text names a reverted owner() or issuer-role getter).
 - The known issue of 3 November is resolved in the reader: /5 records a reverted owner() as CALL_REVERTED (the dry run did so for
   row 59, ARB). This update expected the nightly records of the 21 rows to carry CALL_REVERTED from the 4 Nov 23:20 UTC re-read on.
   Whether they do is not shown in the public record (corrected 10 November): the evidence log names each record's evidence and result

@@ -1,5 +1,16 @@
 # Public documentation changelog
 
+## 16 November 2026 · Roadmap dates, an API sentence note and the BonkDAO correction section
+
+- [ROADMAP.md](ROADMAP.md): the three planned items whose dates were corrected on 15 November 2026 (the second-provider
+  read of every Control Map row, the nightly Control Map page rebuild, and change alerts within minutes) said that a new
+  date would be written there. None is set yet; their two notes now add "added 16 November 2026: no new date yet".
+- [STATUS.md](STATUS.md): the 4 November update said that two sentences of the API description were to be corrected in the
+  next description version (a call budget of twenty-one, and "a reverted getter"). A dated note now says that the live
+  description, version 2026-11-12.1, has neither sentence. The header date is 16 November 2026.
+- [cases/bonkdao-2026-07-06.md](cases/bonkdao-2026-07-06.md): a Correction section describes the correction of 28 October
+  2026 that [CORRECTIONS.md](CORRECTIONS.md) lists; the note had none. No fact changed.
+
 ## 16 November 2026 · Corrections counted to 16 November 2026
 
 - [CORRECTIONS.md](CORRECTIONS.md) counts every correction and the case outputs to 16 November 2026 (it was counted to 30 October
