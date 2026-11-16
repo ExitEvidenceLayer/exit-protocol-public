@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "EXIT free research API (early access)",
-    "version": "2026-11-12.1",
+    "version": "2026-11-16.1",
     "description": "Evidence-bound answers about who can control a token: sources, event time and knowledge time, and limits are kept. The initial 30-day free period is followed by the same quota-limited free service: no payment, no wallet, no automatic paid plan. Existing keys, daily quotas and lifetime capacity limits carry over without a reset; no fixed end date is set. A reduction of the offer or an announced end of free access requires at least 30 days' notice. The service-wide lifetime totals of research attempts and of keys (GET /v0/early-access, service_capacity.lifetime) are never reset: once the attempt total is used, requests that need a research attempt are refused and no new key is issued; daily limits still reset at 00:00 UTC. Get a key in a browser at https://api.exit-protocol.io; keep it private. Daily limits per key apply; unsupported or unresolved questions are never presented as completed answers. Not a safety verdict, price prediction or identification of people. Refusals answer JSON {error} and charge 0 credits. A malformed JSON request body (JSON_REFUSED) or a duplicate JSON key (DUPLICATE_JSON_KEY) answers 400. Of the routes the service itself answers, only the console page / answers a HEAD request: sent without a query string and without a request body, it gets the GET status and headers and no response body. A HEAD request for any other service route answers 405 METHOD_REFUSED. The files under /v0/log/ and /openapi.json are static files served by the web server and answer HEAD like GET. Common codes: TARGET_REFUSED (the method, query or body does not match the route; fix the request), CURRENT_AUTH_REQUIRED (missing, invalid or revoked key), RATE_LIMITED (retry after the Retry-After header), FREE_RESOURCE_LIMIT_REACHED (this key's daily attempts, the service's daily attempts or the service's lifetime attempt total is used; daily limits reset at 00:00 UTC, the lifetime total does not), FREE_ANSWER_LIMIT_REACHED (this key's daily answer limit is reached; it resets at 00:00 UTC), ENROLLMENT_CAP_REACHED (no free key can be issued: the daily or the total registration limit is reached, or the service's lifetime attempt total is used), ENROLLMENT_NETWORK_LIMIT_REACHED (this network has used its free keys for today; try again after 00:00 UTC), SUBJECT_OUTSIDE_SERVICE_SCOPE, EXPLICIT_TIMEZONE_REQUIRED, LIVE_RESEARCH_NOT_ENABLED, and PAYMENTS_DISABLED_DURING_FREE_EARLY_ACCESS (paid routes are off during the free period). Every route listed here is available to a free key. Private evidence submissions start as PENDING_ADMISSION. A service binding is not operator-authored public research. Full-event digests exclude only log and delivery-only webhook_id; multipart baselines must be reassembled first. Watch rows carry log_admissions and radar event metadata carries log_admission, as side metadata only (the bound changes and delivery bodies never change): PENDING_ADMISSION, DEFERRED_RUN_CAP, DEFERRED_DAILY_CAP, NOT_ADMITTED_LIFETIME_CAP, NOT_ADMITTED_EXPIRED, PRIVATE_DROP_DISABLED, ADMISSION_STATUS_UNAVAILABLE, ADMITTED_NOT_ANCHORED, ADMITTED_ANCHORED, NOT_BOUND (no binding was made; the log field gives the reason, for example ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED or BINDING_TOO_LARGE) or INVALID_BINDING. The notary takes radar events first, then watch changes; radar events keep a reserved share of each run's capacity, so a watch change can be NOT_BOUND ADMISSION_CAPACITY while radar events are still bound. ADMITTED_ANCHORED is EXIT's status note; only an inclusion proof checked against the anchor transaction establishes anchoring. New roots carry ordering=append-sequence/2: a late stated known_at does not backdate insertion or prove earlier knowledge. Private bindings share one service-wide intake: at most 128 new private leaves per UTC day, within a fixed lifetime total. Public leaves expose timing and activity; a hash does not prove possession of the raw evidence bytes. Answer bindings (opt-in): a 200 ANSWERED response of any of the seven live read routes (/v0/research/solana/mint, /v0/research/ethereum/contract, /v0/research/ethereum/freeze, /v0/research/solana/governance, /v0/research/solana/governance/proposals, /v0/research/ethereum/layerzero and /v0/research/ethereum/layerzero/peer) carries X-EXIT-Log-Binding only when its request sent X-EXIT-Log-Bind: 1 (never refusals, errors or NEEDS_RESEARCH; research-record re-checks, watch checks, the /v0/control_* routes and the evidence, compare and graph views are not bound). Each key can bind at most 5 answers per UTC day; reads and answers are not limited by this, and an answer over the limit is still delivered with NOT_BOUND {reason: ACCOUNT_DAILY_BINDING_LIMIT, limit, limit_scope, resets_at (Unix seconds)}. NOT_BOUND reasons: ACCOUNT_DAILY_BINDING_LIMIT, ADMISSION_CAPACITY, ADMISSION_STATUS_UNAVAILABLE, PRIVATE_DROP_DISABLED, BINDING_TOO_LARGE, LOGBOX_UNAVAILABLE, ANSWER_NOT_BINDABLE, ANSWER_WITHOUT_EVIDENCE and the record checks RECORD_*, SALT and BINDING_INCONSISTENT; a NOT_BOUND answer is never bound later. A binding is usually admitted by the next 00:30 UTC run when it is at least 10 minutes old, but that is not guaranteed: within the shared intake, the notary takes radar events first, then watch changes, then answers; one not admitted within seven days is discarded. The public log shows each admitted answer's salted leaf, its known_at to the second, its position and the night it was appended; salting does not prevent correlation by time, and that timing is permanent. Verify: save the header value and the exact body bytes, then exit_log_verify.py leaf <header-value-file> --log https://exit-protocol.io/log/ --answer <body-file> --rpc <any Solana RPC> after the anchor that includes the leaf.",
     "x-exit-review-revision": "2026-10-27-r2"
   },
@@ -390,7 +390,7 @@
     },
     "/v0/control_state": {
       "get": {
-        "summary": "Recorded subject: who controls it in the recorded view. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "summary": "Recorded subject: who controls it in the recorded view, not a current read. GET /v0/control_state, /v0/control_as_of and /v0/control_change answer only from EXIT's recorded reference set, whose evidence was read on 1 August 2026; where an answer cites evidence, its evidence_refs[].acquired_at fields give each read time. Evidence recorded later is not applied, whatever valid_at and known_at are; the valid_at and known_at an answer repeats are the times asked about, not evidence times. A holder named here may have changed since then: for example, the PYUSD mint authority has changed on chain since 1 August 2026, and control_state and the controllers list of control_change still name the 1 August holder. For the current authorities of the USDC or PYUSD mint, use GET /v0/research/solana/mint with the mint address (governed_object.address in these answers); no route of this service reads the Pump program's upgrade authority directly. GET /v0/freshness lists every recorded evidence set; these routes use only the first one, p1_protocol_control. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
         "security": [
           {
             "bearer": []
@@ -443,7 +443,7 @@
         ],
         "responses": {
           "200": {
-            "description": "control state",
+            "description": "control state from the reference set read on 1 August 2026 only; not compared with the current chain state",
             "content": {
               "application/json": {
                 "schema": {
@@ -482,7 +482,7 @@
     },
     "/v0/control_as_of": {
       "get": {
-        "summary": "Recorded subject: who controlled it at a past time. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "summary": "Recorded subject: who controlled it at a past time, in the recorded view. GET /v0/control_state, /v0/control_as_of and /v0/control_change answer only from EXIT's recorded reference set, whose evidence was read on 1 August 2026; where an answer cites evidence, its evidence_refs[].acquired_at fields give each read time. Evidence recorded later is not applied, whatever valid_at and known_at are; the valid_at and known_at an answer repeats are the times asked about, not evidence times. A holder named here may have changed since then: for example, the PYUSD mint authority has changed on chain since 1 August 2026, and control_state and the controllers list of control_change still name the 1 August holder. For the current authorities of the USDC or PYUSD mint, use GET /v0/research/solana/mint with the mint address (governed_object.address in these answers); no route of this service reads the Pump program's upgrade authority directly. GET /v0/freshness lists every recorded evidence set; these routes use only the first one, p1_protocol_control. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
         "security": [
           {
             "bearer": []
@@ -535,7 +535,7 @@
         ],
         "responses": {
           "200": {
-            "description": "control as of",
+            "description": "control as of valid_at, from the reference set read on 1 August 2026 only; a change after 1 August 2026 is not shown",
             "content": {
               "application/json": {
                 "schema": {
@@ -574,7 +574,7 @@
     },
     "/v0/control_change": {
       "get": {
-        "summary": "Recorded subject: what changed between two views. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
+        "summary": "Recorded subject: what changed between two valid times in the recorded view. GET /v0/control_state, /v0/control_as_of and /v0/control_change answer only from EXIT's recorded reference set, whose evidence was read on 1 August 2026; where an answer cites evidence, its evidence_refs[].acquired_at fields give each read time. Evidence recorded later is not applied, whatever valid_at and known_at are; the valid_at and known_at an answer repeats are the times asked about, not evidence times. A holder named here may have changed since then: for example, the PYUSD mint authority has changed on chain since 1 August 2026, and control_state and the controllers list of control_change still name the 1 August holder. For the current authorities of the USDC or PYUSD mint, use GET /v0/research/solana/mint with the mint address (governed_object.address in these answers); no route of this service reads the Pump program's upgrade authority directly. GET /v0/freshness lists every recorded evidence set; these routes use only the first one, p1_protocol_control. Response headers: X-EXIT-Research-State (ANSWERED / NEEDS_RESEARCH / ...), X-EXIT-Replayed.",
         "security": [
           {
             "bearer": []
@@ -637,7 +637,7 @@
         ],
         "responses": {
           "200": {
-            "description": "control change",
+            "description": "control change between the two valid times, from the reference set read on 1 August 2026 only; a change after 1 August 2026 is not shown, and an empty changes list does not mean that nothing changed",
             "content": {
               "application/json": {
                 "schema": {

@@ -19,7 +19,7 @@ print(result["meta"]["research_state"])
 | Tool | Available scope |
 |---|---|
 | `exit_mint_controls` | Live any-Solana-token mint/freeze and supported Token-2022 authority fields and holder structures; a finalized observation. |
-| `exit_control_state`, `exit_control_as_of`, `exit_control_change` | Three declared recorded reference subjects with explicit valid/known time cutoffs. |
+| `exit_control_state`, `exit_control_as_of`, `exit_control_change` | Three declared recorded reference subjects with explicit valid/known time cutoffs; the answers come from evidence read on 1 August 2026, not from a current read (added 16 November 2026). |
 | `exit_freshness`, `exit_usage`, `exit_service_status` | Evidence coverage, your usage, and public campaign status. |
 | `exit_contract_controls` | Live any-Ethereum-contract proxy implementation/admin slots, the `owner()` getter as an observation and the named holders' account types at one finalized block (gated on `live_contract_research`). |
 | `exit_research_records`, `exit_research_record`, `exit_research_record_check` | Your research records: questions EXIT could not answer with evidence (0 credits), with state, gap and recorded reason; an explicit, quota-counted re-check exists only after a provider failure (at most three, an hour apart). |

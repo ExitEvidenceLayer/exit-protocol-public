@@ -1,5 +1,20 @@
 # Public documentation changelog
 
+## 16 November 2026 · Control routes: the 1 August 2026 evidence date in the API description
+
+- [openapi.json](openapi.json), version 2026-11-16.1 (2026-11-12.1 before): the summaries and 200 responses of GET
+  /v0/control_state, /v0/control_as_of and /v0/control_change now say that these routes answer only from the reference set read
+  on 1 August 2026, that evidence recorded later is not applied, that a holder they name may have changed since (the PYUSD mint
+  authority has changed on chain since 1 August 2026), and which route reads the current authorities of a Solana mint. No route,
+  parameter or schema changed, and the answers are unchanged.
+- [STATUS.md](STATUS.md): a known issue of 16 November 2026 on these routes; the client row names version 2026-11-16.1;
+  the control research row points to the known issue.
+- [docs/API.md](docs/API.md): the same note after the quick start and in the route table; the copy is version 2026-11-16.1.
+- [AGENT-TOOLS.md](AGENT-TOOLS.md): the row of the three control tools says the same.
+- [EXIT-3.0-SCOPE.md](EXIT-3.0-SCOPE.md), outcome 1, said "Answers are only as recent as the latest recorded evidence cut, which
+  `/v0/freshness` reports". These routes do not apply the later cuts; the sentence now says so (corrected 16 November 2026). This
+  is a documentation correction; [CORRECTIONS.md](CORRECTIONS.md) counts corrections of published research output.
+
 ## 16 November 2026 · Roadmap dates, an API sentence note and the BonkDAO correction section
 
 - [ROADMAP.md](ROADMAP.md): the three planned items whose dates were corrected on 15 November 2026 (the second-provider

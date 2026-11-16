@@ -14,7 +14,7 @@ Status words describe public availability on 29 October 2026:
 
 **1. Answer a control question with its source, time boundary, later change and uncertainty (R1). LIVE.**
 Public form: `control_state`, `control_as_of` and `control_change` for three recorded Solana reference subjects: the USDC and PYUSD mint authorities and the Pump program's upgrade authority.
-Limits: acceptance used one fixed PYUSD question, answered by one isolated language-model consumer in three evidence variants and checked by a deterministic grader. This does not measure usefulness to people. Answers are only as recent as the latest recorded evidence cut, which `/v0/freshness` reports.
+Limits: acceptance used one fixed PYUSD question, answered by one isolated language-model consumer in three evidence variants and checked by a deterministic grader. This does not measure usefulness to people. Answers come only from the reference set whose evidence was read on 1 August 2026; the later evidence cuts that `/v0/freshness` lists are not applied (corrected 16 November 2026: this said that answers are only as recent as the latest recorded evidence cut).
 
 **2. Inspect which account holds which authority over which object, with evidence (R2). LIVE for the recorded subjects.**
 Public form: recorded-subject answers give each authority's controller (or none observed, or unknown) with evidence hashes and acquisition times.
