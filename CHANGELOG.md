@@ -1,5 +1,22 @@
 # Public documentation changelog
 
+## 16 November 2026 · Corrections counted to 16 November 2026
+
+- [CORRECTIONS.md](CORRECTIONS.md) counts every correction and the case outputs to 16 November 2026 (it was counted to 30 October
+  2026); its evidence-log and Control Map rows keep their published figures with their own dates. It adds the Kava Lend
+  and the ANSEM, TJR and LUKE case notes (9 case outputs) and one counted correction, the provider wording of the Kava Lend
+  case note on 15 November 2026 (8 corrections, in 6 of the 9 case outputs). The provider wording corrected the same day in
+  STATUS.md and docs/ACCURACY.md is a documentation correction; it is in this file (the entries of 15 November below).
+- [cases/kava-lend-2026-11-14.md](cases/kava-lend-2026-11-14.md): its Correction section still said "No correction to this note
+  so far" after the two dated notes of 15 November 2026; it now describes them.
+- [CORRECTIONS.md](CORRECTIONS.md) also lists, not counted, the second of the two corrections to EXIT's own records that the
+  [Arbitrum Security Council case note](cases/arbitrum-security-council-2026-10-30.md) names (the USDC row and the blacklister
+  role; a read surface extended on 4 November 2026). Its first, the owner() label, was already listed (12 November 2026).
+- [CORRECTIONS.md](CORRECTIONS.md), What is counted: a read surface extended to a role it did not cover is listed but not
+  counted, when the earlier answer stated its scope.
+- [EXIT-3.0-SCOPE.md](EXIT-3.0-SCOPE.md): corrections of published research output are in CORRECTIONS.md, documentation
+  corrections in this file.
+
 ## 16 November 2026 · ANSEM, TJR and LUKE case note
 
 - [cases/ansem-tjr-luke-2026-06.md](cases/ansem-tjr-luke-2026-06.md): the case of the ANSEM, TJR and LUKE tokens on Solana (June 2026), in the
