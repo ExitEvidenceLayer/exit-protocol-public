@@ -1,5 +1,17 @@
 # Public documentation changelog
 
+## 16 November 2026 · ANSEM, TJR and LUKE case note
+
+- [cases/ansem-tjr-luke-2026-06.md](cases/ansem-tjr-luke-2026-06.md): the case of the ANSEM, TJR and LUKE tokens on Solana (June 2026), in the
+  same format as the other case notes: one address signed the creation of all three, bought most of each supply in the creation transactions,
+  sent large amounts to three wallets that also receive the creator fees, and sold the rest. The facts were read on 15 November 2026 between
+  slots 469,797,591 and 469,842,517. The note names the public accounts that named two of the addresses, with evidence tiers, keeps weaker
+  leads apart without names, and lists what the chain does not show; later changes on chain will be added to the note as dated updates.
+- [cases/ansem-tjr-luke-2026-06.json](cases/ansem-tjr-luke-2026-06.json) is its result file (SHA-256 `c98bcd425f6e2d7f66a177a0dbd4c18aadd8def2b54f9f5fbcd23dc2eada000b`), and
+  [cases/ansem-tjr-luke-2026-06-reread.py](cases/ansem-tjr-luke-2026-06-reread.py) a read-only script (Python standard library, no keys) that
+  re-reads every transaction the note relies on from two public Solana providers and prints the values that can change next to their value
+  of 15 November.
+
 ## 15 November 2026 · Read providers since the keyed providers went live, in STATUS.md and docs/API.md
 
 - Three sentences named the read providers of 6 to 13 November 2026 as current. They became stale when the keyed providers
