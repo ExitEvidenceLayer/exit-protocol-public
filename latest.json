@@ -8,8 +8,8 @@
  },
  "claims": {
   "api_description": {
-   "live": "2026-11-12.1",
-   "repository": "2026-11-12.1"
+   "live": "2026-11-16.1",
+   "repository": "2026-11-16.1"
   },
   "checks": {
    "api_description_version": true,
@@ -26,7 +26,7 @@
    "files_checked": true,
    "mcp_server_version": "1.3.1",
    "mcp_tools": 30,
-   "repository_openapi_version": "2026-11-12.1",
+   "repository_openapi_version": "2026-11-16.1",
    "row_server": "1.3.1",
    "row_servers_named": [
     "1.3.1"
@@ -35,24 +35,24 @@
     "30"
    ],
    "row_tools": 30,
-   "version_in_row": "2026-11-12.1"
+   "version_in_row": "2026-11-16.1"
   },
   "mismatches": []
  },
- "commit": "ae2e97d3148ba4d8845766de27c5404f735e55f8",
+ "commit": "d038d78ff42ee7ef7dc0ad0bb936c033d468caaa",
  "format": "exit.log-sentinel/3",
  "log": "https://exit-protocol.io/log/",
  "log_ok": true,
  "newest_anchor": {
-  "age_hours": 1.64,
-  "block_time_utc": "2026-11-16T00:30:15+00:00",
+  "age_hours": 1.44,
+  "block_time_utc": "2026-11-17T00:30:11+00:00",
   "confirmed_on_chain": true,
-  "signature": "5FwfBeSxUGMMtFfmtqXph4bG4aVfYY9roah4JcTcMdCF2aWZEuTEvq6cCFLvV69QmEPLwMPcB4KgGkZzHS8sHQxF",
-  "size": 1472
+  "signature": "yvs7kpWxnaXwQiYXHnxUSyhVv1eiBUoq62eYSAiMMwGPv2xqgoXheqTLj84sAYGCUGR2bbcu71DH63ppqLGo9ie",
+  "size": 1556
  },
  "newest_run": {
-  "age_hours": 1.64,
-  "at": "2026-11-16T00:30:19.465547+00:00",
+  "age_hours": 1.43,
+  "at": "2026-11-17T00:30:15.317449+00:00",
   "outcome": "ANCHORED"
  },
  "ok": true,
@@ -64,13 +64,13 @@
    "provider": "https://api.mainnet-beta.solana.com"
   }
  ],
- "run_at": "2026-11-16T02:08:49.752724+00:00",
+ "run_at": "2026-11-17T01:56:20.360418+00:00",
  "snapshot_sha256": {
-  "anchors.json": "da4a3ecae48b3b16f47c6fef5d13b20ac328dbc1f4c8437df7b09bf26a8f707e",
-  "leaves.json": "c0ac8f4878d1757cdccb04663d4fa0860a4d55c5991ea525ec02b915f3648640",
-  "notaries.json": "848774c273c34456f4a464b0e43902445176b11ad1ccab27008457598cf8322d",
-  "roots.json": "ba293d90f0d3004082733461a59603e1c81362315c2060723e6274b8815eb06f",
-  "runs.json": "57cd8b58682b861f2a00e6d1832f078c2fb80c39407d073746a27d1d1c2a7ad5"
+  "anchors.json": "75fb3c5441ca92d0a8ac84bbeef6cd53c2948238e61be154adae0b80a23a84b4",
+  "leaves.json": "ec1902119ecc87eff9a459f748e3917a9aaac4f9222280f9a1fa263d622fd1bb",
+  "notaries.json": "7d1cfe97a760ce0e8eecaa4dbb89b81d589d9ca0bed755d8aa1940a0983a66ca",
+  "roots.json": "c02c5ca0a273429d45af8466c5bc28572ddae8c27e31cea3362e7b262c9621ee",
+  "runs.json": "ae9e534d5a5dbc9076009f00426de75cf766712754c37a3207ce25504fbe50f8"
  },
  "status": "OK",
  "verifier_sha256": "7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed",
@@ -207,13 +207,19 @@
     "memo": "EXIT-ROOT-v1 1472 7476ed61d3ba61b37d5cbb4a8459fb09648d5f3ab3dd2a9f998299fb7d4e7e2a 2026-11-16 1387",
     "size": 1472,
     "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 1556 b7503c1c3532b6809c0d821719edbe1537a15df5cb0d950676cb83d815122852 2026-11-17 1472",
+    "size": 1556,
+    "why": null
    }
   ],
-  "anchors_listed": 22,
-  "leaves": 1472,
+  "anchors_listed": 23,
+  "leaves": 1556,
   "problems": [],
   "proves": "Every published root is built from the published leaves, and each tree extends the previous one. Every anchor transaction carries its root.",
-  "roots_checked": 21,
+  "roots_checked": 22,
   "verified": true
  }
 }
