@@ -24,7 +24,7 @@ complete.
 
 ## Current engineering sequence · 4 November (T0 + 10 days)
 
-Written on 4 November, with dated corrections to 10 November; corrected again, and the PLANNED lines added, on 11 November 2026.
+Written on 4 November, with dated corrections to 10 November; corrected again, and the PLANNED lines added, on 11 November 2026; dates corrected and two PLANNED lines added on 18 November 2026.
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -77,14 +77,31 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
       the Control Map page rebuilt every night after the daily anchor (corrected 15 November 2026: neither will be live by
       16 November 2026; both ship only after their tests and review, and the new date will be written here;
-      added 16 November 2026: no new date yet);
+      added 16 November 2026: no new date yet; corrected 18 November 2026: the second-provider read of every row is not
+      built yet; its build needs its own budget and design, which is set with the sampling design due 24 November 2026,
+      so it has no new date yet; the nightly second-provider check of 12 rows stays live since 3 November 2026; the
+      nightly rebuild is planned 19 November 2026, risk 21 November 2026: it depends on a monitoring step that is
+      installed first);
       by 19 November 2026: change alerts within minutes, with more than one alert slot (corrected 15 November 2026: not
       built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here;
-      added 16 November 2026: no new date yet);
+      added 16 November 2026: no new date yet; corrected 18 November 2026: a first step, alerts for two watches in place
+      of one, each with an equal share of the daily call budget and still read once an hour, ships with the launch facts
+      release below, latest 27 November 2026, risk 2 December 2026; change alerts within minutes: no new date yet);
       by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
       transfer-hook program's authority;
       by 23 November 2026: beacon implementations and EIP-2535 diamond facets;
-      by 25 November 2026: Safe pending transactions (depends on an external service)
+      corrected 18 November 2026: the 22 and 23 November items ship in one release after another service release (if
+      that release is not installed by 20 November 2026, the latest date for both is 27 November 2026);
+      by 25 November 2026: Safe pending transactions (depends on an external service; corrected 18 November 2026: not
+      built yet; it will not be live by 25 November 2026; no new date yet);
+      added 18 November 2026: latest 27 November 2026, risk 2 December 2026: pump.fun launch facts in the Solana mint
+      answer, as chain facts for a pump.fun-created mint: the creation transaction, the buys of the creator, the curve
+      and pool creator fields, the fee-sharing settings, the undistributed creator fees and the first 24 movements of the
+      token account of the creator; no identity and no verdict;
+      added 18 November 2026: latest 26 November 2026: a public case note on who can change the contracts that the
+      proposed Ethereum Glamsterdam gas changes (EIP-8037 and EIP-8038) touch: for contracts publicly named as affected,
+      whether each can be upgraded and by whom, with Safe owners, threshold and timelock delay where there are any,
+      read at one stated block; no verdict
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance

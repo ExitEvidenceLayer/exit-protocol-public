@@ -1,5 +1,26 @@
 # Public documentation changelog
 
+## 18 November 2026 · Roadmap dates corrected; launch facts and the fork readiness case note added
+
+- [ROADMAP.md](ROADMAP.md), PLANNED lines (latest dates, not guarantees):
+  - the second-provider read of every Control Map row each night: not built yet; its build needs its own budget and
+    design, which is set with the sampling design due 24 November 2026, so it has no new date yet; the nightly
+    second-provider check of 12 rows stays live since 3 November 2026;
+  - the Control Map page rebuilt every night after the daily anchor: planned 19 November 2026, risk 21 November 2026;
+    it depends on a monitoring step that is installed first;
+  - change alerts: a first step, alerts for two watches in place of one, each with an equal share of the daily call
+    budget and still read once an hour, ships with the launch facts release, latest 27 November 2026, risk 2 December
+    2026; change alerts within minutes: no new date yet;
+  - the Token-2022 paths (22 November 2026) and beacon implementations and diamond facets (23 November 2026) ship in one
+    release after another service release (if that release is not installed by 20 November 2026, the latest date for
+    both is 27 November 2026);
+  - Safe pending transactions (25 November 2026): not built yet; it will not be live by 25 November 2026; no new date yet;
+  - added: pump.fun launch facts in the Solana mint answer, latest 27 November 2026, risk 2 December 2026;
+  - added: a public case note on who can change the contracts that the proposed Ethereum Glamsterdam gas changes
+    (EIP-8037 and EIP-8038) touch, latest 26 November 2026.
+  Each changed line says "corrected 18 November 2026" or "added 18 November 2026". The visual roadmap page,
+  https://exit-protocol.io/ROADMAP.html, carries the same dates once its update is deployed.
+
 ## 16 November 2026 · Verify one record in the browser
 
 - [ROADMAP.md](ROADMAP.md): "a public page to verify one record in the browser" is live since 16 November 2026, 17:35 UTC
