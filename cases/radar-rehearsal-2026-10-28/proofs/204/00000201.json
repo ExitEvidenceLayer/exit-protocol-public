@@ -1,0 +1,33 @@
+{
+ "anchor": {
+  "block_time": 1793233800,
+  "notary": "4QuiVCiYFzBjHFNEzZnHu9WCYBAZPnUxtfHcWX9UkqJH",
+  "root": "6b4caf71d4ff517887414530c3c9e853119cfe64161483982efd2aa04b61ea0a",
+  "signature": "5qWsPQwH5En3ZbVLBZvFMaNb5XYJnb2u6eg16RRSwU5hmHdeHkwzbno1CYL5jxDoApMxzRsWZYvrqmuHJhayWtjx",
+  "size": 204,
+  "slot": 462679324
+ },
+ "audit_path": [
+  "f6eb73cbe58ebb8de0a1ab6b4dca1ffe547406c8e75ddbc0889b5667feca2239",
+  "7ddf25a32661dcb4f6676feb05ef255f52825c0ce04cc065524cf7c1669a9aba",
+  "57536df91090bf16b48e60820fdb4a8153ba7813f55fc33130cb65406800e203",
+  "8c3a70ca7fe957581d7e309656021191b8604f0b72b9d9f64e17bba85ebb71fc",
+  "dde5ddc3f0bc46596159fc2f94563c3820b67ef2c78ac54c71c1f89d849e087c"
+ ],
+ "format": "exit.evidence-proof/1",
+ "leaf_index": 201,
+ "record": {
+  "chain": "solana-mainnet",
+  "evidence": [
+   "36fb032da91cd7ad99d32c8138a3eaa910400352113e28fd50b1e4b4063cbfd9"
+  ],
+  "kind": "service_answer",
+  "known_at": "2026-10-28T04:58:03+00:00",
+  "observed_at": 462349422,
+  "result_sha256": "5fbfb805f55e685b03988728ac2692a26fc4519700e35b2f4f8bb10e75da752c",
+  "subject": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo"
+ },
+ "root": "6b4caf71d4ff517887414530c3c9e853119cfe64161483982efd2aa04b61ea0a",
+ "salt": "5040f1ab9d4e498895b9f46b982fe304",
+ "tree_size": 204
+}
