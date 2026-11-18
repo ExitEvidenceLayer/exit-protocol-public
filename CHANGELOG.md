@@ -1,5 +1,61 @@
 # Public documentation changelog
 
+## 18 November 2026 · Weekly note: what went live from 11 to 17 November 2026
+
+Added 18 November 2026. This note lists only what went live in that week, with the time where one was recorded and the entry of this
+file that describes it. Planned work and its dates are in [ROADMAP.md](ROADMAP.md) and are not repeated here. Times are UTC.
+
+- Free service, 12 November 2026 (entry "higher free limits, a service-capacity view and API behaviour changes"): 50 completed answers
+  and 150 attempts per key per UTC day (20 and 60 before), and a service-wide `service_capacity` block in GET /v0/early-access; a
+  malformed JSON body or a duplicate JSON key answers 400. A read of https://api.exit-protocol.io/v0/early-access on 17 November 2026,
+  22:11 UTC, showed these limits and the block.
+- Read providers, 13 November 2026, 04:51 (entry "Roadmap: keyed chain-data providers marked live"): the on-request Ethereum and
+  Solana research reads and the nightly Control Map re-read go to a keyed provider first, with the public endpoints as fallback; the
+  hourly radar reads stay on public endpoints.
+- Agent tools 2026-11-13.2, 13 November 2026: the verifier option `--trust github,dns,site` and the package
+  exit-agent-tools-20261113.zip at https://exit-protocol.io/tools/.
+- Control Map, 12 November 2026, 09:27: https://exit-protocol.io/control-map/ was built from the nightly read of 11 November 2026. It
+  was built once; read on 17 November 2026, the page still names that night. Since 14 November 2026, 03:01, the daily re-read can date
+  an Ethereum change by its transaction (entry "Control Map changes dated by their transaction").
+- Claims check, 14 November 2026: tools/claims_check.py checks the README hash table and the schema ids in docs/API.md.
+- Q1 question bank: the after-run of 5 November 2026 was published on 13 November 2026 (34 of 36 met on bank v1.2, 28 on v1.1, 24 on
+  v1), and the interim rerun of 15 November 2026 on the day of the run (35 of 36 on bank v1.2, 29 on v1.1, 25 on v1). The intervals of the
+  runs overlap ([docs/Q1-RESULT.md](docs/Q1-RESULT.md)).
+- Case notes: Kava Lend (15 November 2026, 03:08 in this repository; linked from the homepage at 03:47) and ANSEM, TJR and LUKE
+  (16 November 2026, 03:57).
+- Control routes, 16 November 2026, 09:12 (this repository's copies at 09:13): API description 2026-11-16.1 and docs/API.md say that GET /v0/control_state,
+  /v0/control_as_of and /v0/control_change answer only from the reference set read on 1 August 2026.
+- Verify one record, 16 November 2026, 17:35: https://exit-protocol.io/verify/ (it was planned by 21 November 2026).
+- Roadmap: ROADMAP.md was updated on 11, 12, 13, 15 and 16 November 2026, and the roadmap page on the site most recently on 15, 16
+  and 17 November 2026 (on 17 November the verify-one-record item was marked done).
+- Wording and corrections: providers called separate endpoints, not independent (15 November 2026); the privacy page names the keyed
+  providers (15 November 2026); [CORRECTIONS.md](CORRECTIONS.md) counted to 16 November 2026; a correction section in the BonkDAO case
+  note (16 November 2026).
+- Also on 11 November 2026: [docs/CONNECT-AN-AGENT.md](docs/CONNECT-AN-AGENT.md), and a case-file index and a documentation index on
+  the site.
+
+## 18 November 2026 · API notes: role getters, 422 refusals and client formats; Q1 bank versions in STATUS.md
+
+- [docs/API.md](docs/API.md), Ethereum contract research: a note listing every getter the route calls (`owner()`; the AccessControl
+  enumerable interface check and the `DEFAULT_ADMIN_ROLE` member count and members; `getNativeOwner()` of the reviewed smart-account
+  pair; the four issuer getters of the reviewed USDC pair; `getOwners()` and `getThreshold()` on at most two named addresses that
+  hold code), and that no other getter, such as `minter()`, `admin()` or `governance()`, is called, so an answer that names no
+  minter does not show that nobody can mint (added 18 November 2026).
+- [docs/API.md](docs/API.md): the 422 refusal codes of GET /v0/research/solana/mint (`SOLANA_MINT_ADDRESS_REQUIRED`,
+  `MINT_ACCOUNT_NOT_FOUND`, `ACCOUNT_IS_NOT_A_SUPPORTED_MINT`) and of GET /v0/research/ethereum/contract
+  (`ETHEREUM_CONTRACT_ADDRESS_REQUIRED`, `ETHEREUM_ADDRESS_CHECKSUM_INVALID`, `ADDRESS_HAS_NO_CONTRACT_CODE`,
+  `ADDRESS_IS_A_DELEGATED_ACCOUNT`), each with what it means. The API description does not name them for these routes yet; no
+  answer changed (added 18 November 2026).
+- [docs/API.md](docs/API.md): the id formats the service checks (those of the API description) next to the different formats
+  exit_client.py checks before it sends, with their effect (the client refuses a delivery id of fewer than eight digits, and sends
+  request ids of 65 to 128 characters that the service refuses), and that exit_client.py and exit_mcp.py never send
+  `X-EXIT-Log-Bind` (added 18 November 2026). exit_client.py and exit_mcp.py are unchanged.
+- [STATUS.md](STATUS.md), 3 November update: one sentence called bank v1.1 "the expectation written before the run". Bank v1.1
+  corrected 11 expectations after a first run had been seen and its hash was first published after the run; the only bank publicly
+  dated before the run is v1 (21 of 36 met), as [docs/Q1-RESULT.md](docs/Q1-RESULT.md) says. The sentence and the result in brackets
+  now name the bank of each number (corrected 18 November 2026). This is a documentation correction; no number changed.
+- [STATUS.md](STATUS.md): the header date, and a pointer to the weekly note above.
+
 ## 18 November 2026 · Roadmap dates corrected; launch facts and the fork readiness case note added
 
 - [ROADMAP.md](ROADMAP.md), PLANNED lines (latest dates, not guarantees):
