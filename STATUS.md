@@ -1,6 +1,6 @@
 # Delivery status
 
-**Public documentation snapshot: 4 November 2026 (dated corrections and updates to 18 November 2026).** What went live from 11 to 17 November 2026: the weekly note in [CHANGELOG.md](CHANGELOG.md) (added 18 November 2026). This page distinguishes available
+**Public documentation snapshot: 4 November 2026 (dated corrections and updates to 18 November 2026).** What went live from 11 to 17 November 2026: the weekly note in [CHANGELOG.md](CHANGELOG.md) (added 18 November 2026). What you can use today, on one short page: [TODAY.md](TODAY.md) (added 18 November 2026). This page distinguishes available
 product surfaces, private engineering results and work still required for release.
 It is not an automatic live-monitoring feed.
 

@@ -1,5 +1,14 @@
 # Public documentation changelog
 
+## 18 November 2026 · TODAY.md: what you can use today, on one page
+
+- [TODAY.md](TODAY.md) (added 18 November 2026): one short page of what works today without a key (Control Map, case files,
+  evidence log, verify one record, the verifier command), how to get a free key with its limits, the live key routes, the script
+  and agent tools, and what is not available, with a pointer to [ROADMAP.md](ROADMAP.md) for planned work (no dates copied).
+  Each line was checked on 18 November 2026 against the live page, file or the live API description (key routes were not
+  called). No route, limit or answer changed.
+- [README.md](README.md) project record and the [STATUS.md](STATUS.md) header: a link to TODAY.md.
+
 ## 18 November 2026 · Weekly note: what went live from 11 to 17 November 2026
 
 Added 18 November 2026. This note lists only what went live in that week, with the time where one was recorded and the entry of this

@@ -118,6 +118,7 @@ commit as the files; the commits of 2 and 10 November (caff9534, f16e1d49, 84ed9
 | [Product](PRODUCT.md) | Useful questions, audiences and access paths. |
 | [Technology](TECHNOLOGY.md) | Provenance, two-time reasoning and engineering invariants. |
 | [Status](STATUS.md) | Publicly available, privately tested and open work. |
+| [Today](TODAY.md) | What you can use today, on one short page with live links (added 18 November 2026). |
 | [EXIT 3.0 scope](EXIT-3.0-SCOPE.md) | The accepted first-delivery scope, item by item, with status and limits. |
 | [Roadmap](ROADMAP.md) | First-service criteria and conditional post-launch quarters. |
 | [Token](TOKEN.md) | Verified official mint and planned paid-usage integration. |
