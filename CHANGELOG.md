@@ -1,5 +1,19 @@
 # Public documentation changelog
 
+## 18 November 2026 · Record and salt of EXIT's own radar rehearsal (log leaves 200 and 201)
+
+- [cases/radar-rehearsal-2026-10-28.md](cases/radar-rehearsal-2026-10-28.md) (added 18 November 2026): the two private records
+  that EXIT's own end-to-end test of the alert pilot produced on 28 October 2026 (evidence-log leaves 200 and 201, known_at
+  04:58:03, first anchored in the tree of size 204 on 29 October 2026 at 00:30:00), with their salts, and the steps to recompute
+  both leaves and check them with exit_log_verify.py (`proof` and `leaf`). Both records belong to EXIT's own test account; the
+  watched subject is the PYUSD mint on Solana.
+- Their proof bundles are in this repository at cases/radar-rehearsal-2026-10-28/proofs/204/00000200.json and 00000201.json.
+  The log's proofs.json still lists both as held; the log itself was not changed.
+- No user record or salt is published. The radar event bodies are not published either, because they carry the service's
+  internal watch identifier. No route, limit or log rule changed.
+- Only leaves 200 and 201 are covered. Later bindings of the same watch, if any, are not covered and not claimed; whether
+  any later leaf comes from this watch is UNKNOWN by design.
+
 ## 18 November 2026 · TODAY.md: what you can use today, on one page
 
 - [TODAY.md](TODAY.md) (added 18 November 2026): one short page of what works today without a key (Control Map, case files,
