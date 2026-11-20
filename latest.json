@@ -40,7 +40,7 @@
   "mismatches": [
    {
     "check": "sitemap_not_behind_pages",
-    "detail": "/control-map/ changed 2026-11-19 but the sitemap says 2026-11-12"
+    "detail": "/control-map/ changed 2026-11-20 but the sitemap says 2026-11-12"
    }
   ]
  },
@@ -49,15 +49,15 @@
  "log": "https://exit-protocol.io/log/",
  "log_ok": true,
  "newest_anchor": {
-  "age_hours": 7.44,
-  "block_time_utc": "2026-11-19T00:30:08+00:00",
+  "age_hours": 7.25,
+  "block_time_utc": "2026-11-20T00:30:14+00:00",
   "confirmed_on_chain": true,
-  "signature": "2ksaupv21XMSoMxPFXWMKWDtdqhNXip3rn2NjN4xTvKTYnLZxbCJUEZNf6w16te2stFL274Eb5yr2T5LekQuaNPC",
-  "size": 1724
+  "signature": "3vHPpkbizZoktEwESSkb2KA3Ti2mhVXkKeygBj6gumAvn75TnyPT9ZNsEbCTgfmDS6uBgh1wDUj5F568b391Vfyc",
+  "size": 1812
  },
  "newest_run": {
-  "age_hours": 7.44,
-  "at": "2026-11-19T00:30:12.846060+00:00",
+  "age_hours": 7.25,
+  "at": "2026-11-20T00:30:20.503467+00:00",
   "outcome": "ANCHORED"
  },
  "ok": false,
@@ -69,13 +69,13 @@
    "provider": "https://api.mainnet-beta.solana.com"
   }
  ],
- "run_at": "2026-11-19T07:56:45.824207+00:00",
+ "run_at": "2026-11-20T07:45:29.071835+00:00",
  "snapshot_sha256": {
-  "anchors.json": "90f00c96478cca0fdb6d47c2be317fdd8a7197dfad19ca350239b0668a812ba6",
-  "leaves.json": "893e34c477f668c0736d0aae185d149731ecfeda585250b2c72eac3855c402e5",
-  "notaries.json": "c139130a5f81f997a4c49ec3d2220b7b8145b46eddd657e8ef82e936b22d2103",
-  "roots.json": "85f3bb497900ffdcf2a18ba110ffe58b1d7a753b5ba1904ea53eaf73ce363a6f",
-  "runs.json": "6e28f487659e8919836a06550e66dcef289172e1c0fc4beb2d965186f44f7faf"
+  "anchors.json": "a9dc59ea9eb359014b820998cd57201a885036dd56c041e4c4e7bbd592a3f080",
+  "leaves.json": "1f892ba3aa14897b963f16b61ff0986fdad61a6392c1cd22354fa5a017d936d1",
+  "notaries.json": "de8f1ea127a29fd0e6bcff3b3950f2cb915e5d41e81ce41e2b83301ad428b4eb",
+  "roots.json": "f6c9953147bf1a609f73115ed7a94a11f256bd01d00da69a41e1ecf1efd6762a",
+  "runs.json": "550f0b78ddf1a03cdcab1bf3202d55c9e8fe1d843842d8602281ef188b1a942b"
  },
  "status": "DOCS_DRIFT",
  "verifier_sha256": "7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed",
@@ -230,13 +230,19 @@
     "memo": "EXIT-ROOT-v1 1724 9f98c441f483999858928e8e1b385c65ef9558cd51945ce8483f6479281cdd34 2026-11-19 1640",
     "size": 1724,
     "why": null
+   },
+   {
+    "anchor_ok": true,
+    "memo": "EXIT-ROOT-v1 1812 b32988db1c8db5a47339b4a9e653f57b9031e88e35a6c560ecb6b9dd339aa50c 2026-11-20 1724",
+    "size": 1812,
+    "why": null
    }
   ],
-  "anchors_listed": 25,
-  "leaves": 1724,
+  "anchors_listed": 26,
+  "leaves": 1812,
   "problems": [],
   "proves": "Every published root is built from the published leaves, and each tree extends the previous one. Every anchor transaction carries its root.",
-  "roots_checked": 24,
+  "roots_checked": 25,
   "verified": true
  }
 }
