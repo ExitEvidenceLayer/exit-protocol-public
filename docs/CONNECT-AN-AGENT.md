@@ -9,19 +9,19 @@ On 13 November 2026 the file check of section 1 and the terminal test of section
 
 ## 1. Download and check the files
 
-The tools are published at https://exit-protocol.io/tools/. Release `2026-11-13.2` is in the archive `exit-agent-tools-20261113.zip`; [RELEASE.json](https://exit-protocol.io/tools/RELEASE.json) names the current release and lists its archive's SHA-256. If RELEASE.json names a newer release, use the archive name it lists in the commands below. The tools are written for Python 3.10 or later, tested on 3.12, and need no package installation.
+The tools are published at https://exit-protocol.io/tools/. Release `2026-11-13.2` is in the archive `exit-agent-tools-20261113.zip`; [RELEASE.json](https://exit-protocol.io/tools/RELEASE.json) names the current release and lists its archive's SHA-256. If RELEASE.json names a newer release, use the archive name it lists in the commands below. Added 21 November 2026: RELEASE.json now names release `2026-11-18.2` in the archive `exit-agent-tools-20261118.zip`, and since 21 November 2026 the commands below use that archive. Checked on 21 November 2026 with that archive, on Python 3.12.14: the file check prints `OK` for each of 13 files, the terminal test of section 2 prints `30`, and `initialize` answers server version 1.3.2. The table in the README lists the hashes of that release; the files of the 13 November archive do not match that table. The 13 November archive stays available with its original bytes; the checks of 11 and 13 November 2026 on this page were made with the earlier files. The tools are written for Python 3.10 or later, tested on 3.12, and need no package installation.
 
 On macOS or Linux:
 
 ```sh
 mkdir exit-agent-tools && cd exit-agent-tools
-curl -O https://exit-protocol.io/tools/exit-agent-tools-20261113.zip
-shasum -a 256 exit-agent-tools-20261113.zip
-unzip exit-agent-tools-20261113.zip
+curl -O https://exit-protocol.io/tools/exit-agent-tools-20261118.zip
+shasum -a 256 exit-agent-tools-20261118.zip
+unzip exit-agent-tools-20261118.zip
 shasum -a 256 -c SHA256SUMS
 ```
 
-The archive's hash must equal its entry in RELEASE.json, and the last command must print `OK` for each of the 12 files. On Linux without `shasum`, use `sha256sum` instead: `sha256sum exit-agent-tools-20261113.zip` and `sha256sum -c SHA256SUMS`. On Windows, extract the archive and compare `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py` with the table in [the README](../README.md#verify-the-client-files).
+The archive's hash must equal its entry in RELEASE.json, and the last command must print `OK` for each of the 13 files. On Linux without `shasum`, use `sha256sum` instead: `sha256sum exit-agent-tools-20261118.zip` and `sha256sum -c SHA256SUMS`. On Windows, extract the archive and compare `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py` with the table in [the README](../README.md#verify-the-client-files).
 
 Keep these files together. The three public log tools need `exit_evidence.py` and `tools/exit_log_verify.py`, and `exit_evidence.py` pins the SHA-256 of `tools/exit_log_verify.py` and refuses any other copy.
 
@@ -130,7 +130,7 @@ The server answered with one line for each request that has an `id`; the notific
 {"jsonrpc": "2.0", "id": 3, "result": {"content": [{"type": "text", "text": "{\"scope\": \"published_log_consistency_only\", \"consistency_ok\": true, \"anchor_verified\": false, \"leaves\": 1051, \"roots\": […], \"anchors_listed\": […], \"log_url\": \"https://api.exit-protocol.io/v0/log/\", \"requests\": 4, \"does_not_prove\": [\"that the chain state described by the evidence is true: check the evidence at its own slot or block\", …], \"note\": \"Published roots match these leaves and consistency paths. Chain transactions were not fetched.\"}"}], "isError": false}}
 ```
 
-- `initialize`: the server is `exit-research` 1.3.1 and answers protocol version `2025-06-18`.
+- `initialize`: the server is `exit-research` 1.3.1 and answers protocol version `2025-06-18` (added 21 November 2026: this is the record of 11 November 2026; release `2026-11-18.2` answers 1.3.2).
 - `tools/list` returned 30 tools: `exit_mint_controls`, `exit_contract_controls`, `exit_control_state`, `exit_control_as_of`, `exit_control_change`, `exit_research_records`, `exit_research_record`, `exit_research_record_check`, `exit_watch_list`, `exit_watch_add`, `exit_watch_check`, `exit_watch_stop`, `exit_freeze_status`, `exit_governance`, `exit_governance_proposals`, `exit_layerzero_path`, `exit_layerzero_peer`, `exit_research_graph`, `exit_compare_answers`, `exit_evidence_view`, `exit_log_binding`, `exit_watch_add_contract`, `exit_webhooks`, `exit_webhook_delete`, `exit_freshness`, `exit_usage`, `exit_service_status`, `exit_history`, `exit_cite`, `exit_verify`.
 - `exit_history` checked the public log's published roots and append consistency and listed its anchors: `consistency_ok` true, 1051 leaves (tree size 1051), 16 roots, 17 listed anchors, 4 requests to `api.exit-protocol.io`. It fetched no chain transaction, so `anchor_verified` is false; `exit_verify` is the tool that fetches the Solana anchor. The reply also lists what the check does not prove, such as that the chain state described by the evidence is true, or that nothing was left out of the log.
 
