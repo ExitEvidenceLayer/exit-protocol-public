@@ -1,5 +1,29 @@
 # Public documentation changelog
 
+## 21 November 2026 · Note: two mint-authority changes recorded by the Control Map daily re-read on 20 November 2026
+
+- [cases/control-changes-2026-11-20.md](cases/control-changes-2026-11-20.md) (added 21 November 2026): a facts-only note on the two
+  Control-Change Records that the nightly Control Map re-read wrote on 20 November 2026, both for the setting `spl-token:mintAuthority`:
+  row 21, the Solana mint of Global Dollar (USDG), and row 23, the Solana mint of PayPal USD (PYUSD). It states what the records say (old
+  and new value, the two read positions, the SHA-256 of each record file, evidence-log leaves 1832 and 1835 in the tree of size
+  1898, anchored on 21 November 2026, 00:30:08 UTC) and what two public Solana providers returned on
+  21 November 2026 between 01:25:18 and 01:35:20 UTC.
+- The chain facts of the note: each change is one SetAuthority transaction (slots 471,856,298 and 471,856,534, block times
+  20 November 2026, 19:34:39 and 19:35:29 UTC); the old and the new authority of each mint are multisig accounts of the token program
+  (m = 1 with 5 signer addresses before, m = 1 with 6 after); the two transactions are different and were signed by the same address.
+  The note gives no reason for the changes and no judgement of them, names no party, and lists what the reads do not show.
+- [cases/control-changes-2026-11-20.json](cases/control-changes-2026-11-20.json) is its result file (SHA-256
+  `d8e97d0a43923a3041447d40651e8fae75fd967a362f87fff0a060ef8d366be8`), and
+  [cases/control-changes-2026-11-20-reread.py](cases/control-changes-2026-11-20-reread.py) a read-only script (Python standard library, no keys;
+  SHA-256 `0a7cd941cfb3ce4fa190614be53025e3a8a67c18b43a30ca6600059076f9e169`) that re-reads the facts from two public Solana providers.
+  On 21 November 2026 between 03:34 and 03:37 UTC both record files matched, all 20 fixed-fact lines were PASS
+  (18 read at both providers, 2 derived from them) and all 10 values that can change were the same. The script prints
+  ONE_PROVIDER for a fixed fact that one of the two no longer serves, and prints the values that can change next to their value
+  of 21 November 2026.
+- The keyed API route that reads a Solana mint (`GET /v0/research/solana/mint`) was not called for the note; no key was created.
+- The records, the daily page, the Control Map and the evidence log were not changed by this note. No route, limit or answer of
+  the service changed.
+
 ## 21 November 2026 · Glamsterdam gas changes case note (EIP-8037 and EIP-8038)
 
 - [cases/glamsterdam-eip-8037-8038-2026-11-16.md](cases/glamsterdam-eip-8037-8038-2026-11-16.md) (added 21 November 2026): who could
