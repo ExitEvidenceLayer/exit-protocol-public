@@ -1,5 +1,13 @@
 # Public documentation changelog
 
+## 21 November 2026 · Claims check: a freshness rule for the undated Control Map sitemap entry
+
+- [tools/claims_check.py](tools/claims_check.py) (changed 21 November 2026): the sitemap check accepts an entry without
+  `<lastmod>` for `/control-map/` only when the page's HTTP Last-Modified is at most 26 hours old and not in the future; an
+  unreadable date is a mismatch. The Control Map page is rebuilt every night after the daily anchor, so a fixed date in the
+  sitemap is out of date the next day. Before this change the check failed for any undated entry other than `/log/`. Every
+  other rule of the check is unchanged.
+
 ## 21 November 2026 · Note: two mint-authority changes recorded by the Control Map daily re-read on 20 November 2026
 
 - [cases/control-changes-2026-11-20.md](cases/control-changes-2026-11-20.md) (added 21 November 2026): a facts-only note on the two
