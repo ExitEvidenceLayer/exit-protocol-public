@@ -25,7 +25,9 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 DEFAULT_BASE = "https://api.exit-protocol.io"
 SUBJECTS = ("usdc-mint-authorities", "pyusd-mint-authorities", "pump-fun-program-upgrade-authority")
 _MINT = re.compile(r"[1-9A-HJ-NP-Za-km-z]{32,44}")
-_RID = re.compile(r"[A-Za-z0-9._:-]{8,128}")
+_RID = re.compile(r"[\x21-\x7e]{1,64}")
+_DELIVERY = re.compile(r"[1-9][0-9]{0,17}")
+_RECEIVER = re.compile(r"hook-[0-9a-f]{24}")
 _EVM = re.compile(r"0x[0-9a-fA-F]{40}")
 _KEY = re.compile(r"exit_free_[A-Za-z0-9_-]{43}")
 _RECORD = re.compile(r"rr-[0-9a-f]{24}")
@@ -304,14 +306,14 @@ class Client:
 
     def webhooks(self, delivery=None):
         """Own receiver, event and delivery metadata, or one own delivery payload part when a delivery id is given."""
-        if delivery is not None and (not isinstance(delivery, str) or not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", delivery)):
-            raise ExitError(0, "a delivery id is required when given")
+        if delivery is not None and (not isinstance(delivery, str) or not _DELIVERY.fullmatch(delivery)):
+            raise ExitError(0, "a positive decimal delivery id (1-18 digits) is required when given")
         return self._call("GET", "/v0/research/webhook", {"delivery": delivery} if delivery else None)
 
     def delete_webhook(self, receiver_id):
         """Delete an owned receiver configuration and its queued deliveries."""
-        if not isinstance(receiver_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", receiver_id):
-            raise ExitError(0, "a receiver id is required")
+        if not isinstance(receiver_id, str) or not _RECEIVER.fullmatch(receiver_id):
+            raise ExitError(0, "a receiver id (hook- + 24 lowercase hex characters) is required")
         return self._call("DELETE", "/v0/research/webhook", {"id": receiver_id})
 
     def control_state(self, subject_id, valid_at, known_at, as_of=False):

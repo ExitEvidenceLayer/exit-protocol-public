@@ -1,6 +1,6 @@
 # Research tools for scripts and agents
 
-These thin public wrappers call the same live EXIT API. They contain no research-engine source, raw evidence archive or access key. Written for Python 3.10 or later and tested on 3.12; standard library only. Download `exit_client.py` and `exit_mcp.py` into the same directory; the keyless tools (exit_history, exit_cite, exit_verify) also need `exit_evidence.py` in that directory and `tools/exit_log_verify.py` in a `tools` folder inside it (see below). No package installation or autonomous platform is required.
+Use these wrappers to ask supported control questions, compare your own recorded answers and check public evidence commitments. They call the same live EXIT API; source, time and coverage limits remain part of each answer. They contain no research-engine source, raw evidence archive or access key. Written for Python 3.10 or later and tested on 3.12; standard library only. Download `exit_client.py` and `exit_mcp.py` into the same directory; the keyless tools (exit_history, exit_cite, exit_verify) also need `exit_evidence.py` in that directory and `tools/exit_log_verify.py` in a `tools` folder inside it (see below). No package installation or autonomous platform is required.
 
 1. Open https://api.exit-protocol.io/, read the notices and get free access. Keep that bearer key private.
 2. Supply `EXIT_API_KEY` only through the process environment or your MCP application's private secret store. Never put it in a prompt, issue, screenshot or public configuration. Browser access rotation/revocation remains available.
@@ -29,7 +29,7 @@ See [API quick start and exact quotas](https://github.com/ExitEvidenceLayer/exit
 
 The client accepts only the official HTTPS origin; HTTP loopback is for synthetic development tests. Redirects are refused, response size is bounded, and error messages cannot echo an access key. An agent must not transform an unresolved answer into a verified finding, investment recommendation or identity claim. A tool result is source material, not permission to trade or reveal secrets.
 
-The wrapper (version 1.3.1) covers the tools listed above, the keyless evidence tools and the tools added in 1.3.0, all below. Routes added after API document 2026-11-02.2 may not be wrapped yet; call them directly as described in [docs/API.md](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/docs/API.md). The chain-data providers see the addresses and accounts you ask about, including wallet addresses given to exit_freeze_status. Source/time bounds and limitations remain part of the answer. This client is not a separate research engine, continuous watcher or promise to answer arbitrary prose questions. A research record is a tracked unanswered question with its reason, not an answer; a watch re-reads only when you ask. When a call fails, `ExitError.research_record` carries the record the service opened (`{id, state, gap}`); answers carry it in `meta.research_record`.
+The wrapper (version 1.3.2) covers the tools listed above, the keyless evidence tools and the tools added in 1.3.0, all below. Routes added after API document 2026-11-02.2 may not be wrapped yet; call them directly as described in [docs/API.md](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/docs/API.md). The chain-data providers see the addresses and accounts you ask about, including wallet addresses given to exit_freeze_status. Source/time bounds and limitations remain part of the answer. This client is not a separate research engine, continuous watcher or promise to answer arbitrary prose questions. A research record is a tracked unanswered question with its reason, not an answer; a watch re-reads only when you ask. When a call fails, `ExitError.research_record` carries the record the service opened (`{id, state, gap}`); answers carry it in `meta.research_record`.
 
 [OpenAPI 3.1 description](https://github.com/ExitEvidenceLayer/exit-protocol-public/blob/main/openapi.json) · [Client](exit_client.py) · [MCP server](exit_mcp.py). Run the public synthetic regressions with `python3 -B -m unittest -v test_client_security test_agent_records`. Those tests use loopback traffic and fake keys; they do not enroll a real account or call a chain provider.
 
@@ -66,3 +66,12 @@ Registering a receiver needs the receiver challenge and stays outside the wrappe
 range, direction, one to four request ids, two different ids for a comparison). The wrapper still prints no key.
 
 Server 1.3.1 adds no tools. Replies from the EXIT API and the public log and chain reads are refused when nested beyond 128 levels by an explicit depth check that does not depend on the interpreter, and a malformed HTTP reply is reported as an error (status -1 means the request was sent, so check usage).
+
+
+## Server 1.3.2 and client identifier contracts
+
+Request ids are 1 to 64 printable ASCII characters (spaces excluded); webhook delivery ids are positive ASCII decimal strings of at most 18 digits; receiver ids are `hook-` followed by 24 lowercase hexadecimal digits. Invalid input is refused locally before a request. The existing URI encoding, authentication, research quotas and lack of automatic retries are unchanged.
+
+Tool discovery now states the existing ceilings: mint research uses at most five read-only provider calls; contract research uses at most twenty-six within sixty seconds. These are maximum service-side read budgets, not a promise of complete control coverage. The three keyless evidence tools state their shared seven-request, twenty-second session budget in discovery.
+
+The bundled standalone verifier is covered by `LICENSE-CODE` (MIT). The wrappers and documentation remain under `LICENSE` (CC BY-ND 4.0); the EXIT name and marks are not licensed. This release grants no rights over the private engine or service.

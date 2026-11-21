@@ -11,7 +11,9 @@ what the evidence cannot establish.
 
 ![First-service sequence and conditional post-launch growth; conceptual plan, not a delivery measurement](growth-map.svg)
 
-[Open the visual phase-by-phase roadmap](https://exit-protocol.io/ROADMAP.html).
+[Open the visual phase-by-phase roadmap](https://exit-protocol.io/ROADMAP.html). Added 21 November 2026: read on 21 November 2026, that
+page still says the Control Map page was built once and lists the nightly rebuild and the 22 and 23 November 2026 items as planned;
+this file has the corrected text, and the page itself is not corrected yet.
 
 ## What comes first
 
@@ -46,7 +48,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
   → LIVE: proposals of one SPL Governance account (counts by state, open ones decoded); one OApp's peer for one remote endpoint id (1 November)
   → LIVE: Control Map daily re-read (standing job since 1 November; corrected 11 November 2026: since log specification 1.5 of 2 November every completed run records one record per row, an observation or a not-answered record, not only changes); reproducible case files for the BonkDAO and Kelp DAO cases (their records entered the log at the 2 November 00:30 UTC anchor, tree size 274)
   → LIVE: a nightly second-provider check of 12 Control Map rows (3 November 00:05 UTC); a daily off-host state copy with a restore drill (00:35 UTC)
-  → LIVE: the Control Map page is built from the nightly reads (once, from the night of 11 November 2026, on 12 November 2026): every row with an accepted read shows its own read, every status word is defined, the second-source column counts only compared facts
+  → LIVE: the Control Map page is built from the nightly reads (on 12 November 2026, from the night of 11 November 2026; corrected 21 November 2026: since 19 November 2026 it is rebuilt every night, see the LIVE item below): every row with an accepted read shows its own read, every status word is defined, the second-source column counts only compared facts
   → LIVE: a provider refusal on the governance proposals route is recorded as PROVIDER_UNAVAILABLE, not as a method gap (3 November 13:50 UTC)
   → LIVE: the contract reader records a reverted owner() or issuer-getter call apart from a provider error, reads the issuer roles
       (master minter, pauser, blacklister, rescuer) for one reviewed issuer runtime pair (USDC) and gives every code it reads its
@@ -70,6 +72,11 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       notaries.json, and asks a public Solana provider for the anchor transaction; when the provider does not return that
       transaction the result is not VERIFIED (PARTLY CHECKED or NOT CHECKED, unless another check fails), and exit_log_verify.py
       proof checks it with a provider that keeps older transactions
+  → LIVE: the Control Map page rebuilt every night after the daily anchor (exit-protocol.io/control-map/; live since
+      19 November 2026; planned 19 November 2026, risk 21 November 2026; added 21 November 2026): the page's first line names the
+      night it shows, and if a build fails, the page of the last good night stays; read on 20 November 2026, 23:36 UTC, the page was
+      built from the nightly read of 19 November 2026 (Last-Modified 20 November 2026, 00:55:02 GMT);
+      read on 21 November 2026, 00:55 UTC, from the nightly read of 20 November 2026 (Last-Modified 21 November 2026, 00:55:04 GMT)
   → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
       by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback (added 15 November 2026: live
       since 13 November 2026, 04:51 UTC, for the service's on-request Ethereum and Solana research reads and the nightly re-read
@@ -81,7 +88,7 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       built yet; its build needs its own budget and design, which is set with the sampling design due 24 November 2026,
       so it has no new date yet; the nightly second-provider check of 12 rows stays live since 3 November 2026; the
       nightly rebuild is planned 19 November 2026, risk 21 November 2026: it depends on a monitoring step that is
-      installed first);
+      installed first; corrected 21 November 2026: the nightly rebuild is live since 19 November 2026, see LIVE above);
       by 19 November 2026: change alerts within minutes, with more than one alert slot (corrected 15 November 2026: not
       built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here;
       added 16 November 2026: no new date yet; corrected 18 November 2026: a first step, alerts for two watches in place
@@ -92,6 +99,9 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       by 23 November 2026: beacon implementations and EIP-2535 diamond facets;
       corrected 18 November 2026: the 22 and 23 November items ship in one release after another service release (if
       that release is not installed by 20 November 2026, the latest date for both is 27 November 2026);
+      corrected 21 November 2026: by EXIT's own record that service release was not installed by 20 November 2026 (read on
+      20 November 2026, 23:36 UTC, and on 21 November 2026, 00:55 UTC, the live API description is still version 2026-11-16.1;
+      a public read does not show a service release by itself), so the latest date for both items is 27 November 2026;
       by 25 November 2026: Safe pending transactions (depends on an external service; corrected 18 November 2026: not
       built yet; it will not be live by 25 November 2026; no new date yet);
       added 18 November 2026: latest 27 November 2026, risk 2 December 2026: pump.fun launch facts in the Solana mint
@@ -116,8 +126,9 @@ October, were not part of it. Since 27 October a limited
 radar pilot reads pending-authority scopes once an hour for watches that have an owned webhook
 receiver (one watch service-wide; EXIT's own test used that slot from 28 October, and on 11 November 2026 the slot was free); it is not continuous
 monitoring, and pull checks remain the general monitoring scope. The script client
-and MCP wrapper (server 1.3.1 in this repository since 10 November 01:04 UTC, hub
-commit 84ed9680) cover the research routes of API version 2026-11-12.1 (the same routes as 2026-11-04.1) except
+and MCP wrapper (server 1.3.2 in this repository since 21 November 2026, the files of tools release 2026-11-18.2, corrected
+21 November 2026; server 1.3.1 from 10 November 01:04 UTC, hub
+commit 84ed9680) cover the research routes of API version 2026-11-16.1 (the same routes as 2026-11-04.1) except
 receiver registration; the account routes under
 /early-access/ (challenge, enrollment, rotation, revocation, feedback), /v0/subjects,
 /v0/corroboration and /v0/contract are not wrapped (AGENT-TOOLS.md lists the wrapped

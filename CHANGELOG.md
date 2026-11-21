@@ -1,5 +1,40 @@
 # Public documentation changelog
 
+## 21 November 2026 · Corrections: the Control Map page is rebuilt every night; tools release 2026-11-18.2 in this repository; roadmap dates
+
+Corrected 21 November 2026. The reads named below were made on the live site and service on 20 and 21 November 2026; times are UTC.
+
+- Control Map: https://exit-protocol.io/control-map/ is rebuilt every night after the daily anchor, live since 19 November 2026.
+  Read on 20 November 2026, 23:36 UTC, the page was built from the nightly read of 19 November 2026 (Last-Modified 20 November 2026, 00:55:02 GMT);
+  read on 21 November 2026, 00:55 UTC, from the nightly read of 20 November 2026 (Last-Modified 21 November 2026, 00:55:04 GMT).
+  The page says: "This page is rebuilt every night after the daily anchor; if a build fails, the page of the last good night stays, and its first line names that night."
+  [TODAY.md](TODAY.md), the Control Map row and the 4 and 12 November updates of [STATUS.md](STATUS.md) and a LIVE item of
+  [ROADMAP.md](ROADMAP.md) still said that the page was built once, from the night of 11 November 2026, or was not yet rebuilt
+  every night; they are corrected, and the row is now labelled PAGE REBUILT NIGHTLY.
+- Agent tools: exit_client.py, exit_mcp.py, exit_evidence.py and tools/exit_log_verify.py in this repository are now the files of
+  release 2026-11-18.2 (https://exit-protocol.io/tools/ , archive exit-agent-tools-20261118.zip), byte for byte; the MCP server
+  reports version 1.3.2 and lists 30 tools. The tools page is dated 18 November 2026, and until the commits of 21 November 2026
+  this repository held the files of release 2026-11-13.2: the verifier served at https://exit-protocol.io/log/exit_log_verify.py
+  did not match the SHA-256 in [README.md](README.md), so the check that TODAY.md describes failed. The README table now lists
+  the values of the release. In the words of the release's own README: "Release 2026-11-18.2 includes server 1.3.2 and the corrected request/delivery/receiver identifier contracts described in AGENT-TOOLS.md. No route, research allowance, authentication rule or verifier algorithm is added."
+- [AGENT-TOOLS.md](AGENT-TOOLS.md): the opening sentences, the wrapper version (1.3.2) and the section "Server 1.3.2 and client
+  identifier contracts" are taken word for word from the AGENT-TOOLS.md of the release. The three texts this repository adds
+  stay: the files the keyless tools need, the link to docs/CONNECT-AN-AGENT.md and the 1 August 2026 note on the three control tools.
+- [STATUS.md](STATUS.md) client row and [ROADMAP.md](ROADMAP.md): server 1.3.2.
+  [docs/CONNECT-AN-AGENT.md](docs/CONNECT-AN-AGENT.md) names the current release and archive, and its section 1 commands use that archive (checked on 21 November 2026: 13
+  files `OK`, 30 tools, server 1.3.2); its records of 11 and 13 November 2026 stay as recorded.
+- [docs/API.md](docs/API.md), known differences between exit_client.py and the API description: the id-format difference noted on
+  18 November 2026 is gone with the exit_client.py of release 2026-11-18.2, which checks the formats of the API description before
+  it sends; the paragraph now says so. exit_client.py and exit_mcp.py still do not send `X-EXIT-Log-Bind`.
+- [ROADMAP.md](ROADMAP.md): the nightly rebuild of the Control Map page is marked LIVE. For the Token-2022 item (by 22 November
+  2026) and the beacon and diamond item (by 23 November 2026) the roadmap's own condition applies ("if that release is not installed
+  by 20 November 2026, the latest date for both is 27 November 2026"): by EXIT's own record that release was not installed by
+  20 November 2026 (read on 20 November 2026, 23:36 UTC, and on 21 November 2026, 00:55 UTC, the live API description is still
+  version 2026-11-16.1), so the latest date for both is 27 November 2026. No other date changed.
+- https://exit-protocol.io/ROADMAP.html still shows the earlier text (the Control Map page built once, the nightly rebuild and the
+  22 and 23 November 2026 items as planned); the page itself is not corrected yet.
+- No route, limit or answer of the service changed with these commits.
+
 ## 18 November 2026 · Record and salt of EXIT's own radar rehearsal (log leaves 200 and 201)
 
 - [cases/radar-rehearsal-2026-10-28.md](cases/radar-rehearsal-2026-10-28.md) (added 18 November 2026): the two private records

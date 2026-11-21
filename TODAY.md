@@ -1,13 +1,15 @@
 # What you can use today
 
-Checked live on 18 November 2026 (UTC). Each line works now and has its link. Limits and
+Checked live on 21 November 2026 (UTC). Each line works now and has its link. Limits and
 boundaries in full: [STATUS.md](STATUS.md) and [docs/API.md](docs/API.md). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## Without a key
 
 - **Control Map**, https://exit-protocol.io/control-map/ : which addresses hold the control roles of 72 token deployments on
-  Ethereum and Solana, each row at one finalized block or slot. The page was built once, from the nightly read of 11 November
-  2026, and is not yet rebuilt every night; later changes show on the daily re-read page,
+  Ethereum and Solana, each row at one finalized block or slot. The page is rebuilt every night after the daily anchor and
+  its first line names the night it shows; "if a build fails, the page of the last good night stays" (corrected 21 November
+  2026: live since 19 November 2026; read on 21 November 2026, the page named the nightly read of 20 November 2026). What
+  each nightly read found against the read before it is on the daily re-read page,
   https://exit-protocol.io/control-map/daily/ . The 27 and 28 October 2026 snapshot by holder address:
   https://exit-protocol.io/control-map/by-controller/ .
 - **Case files**, https://exit-protocol.io/case-files/ : 3 case files, each with the SHA-256 of the evidence its claims rest on

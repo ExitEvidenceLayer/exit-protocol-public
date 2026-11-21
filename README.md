@@ -99,15 +99,18 @@ files published here.
 
 | File | SHA-256 |
 |---|---|
-| `exit_client.py` | `f7b07eaf4e4cc6b096f75d22c8f59e66e69c279c06ad21554c21fa58a85e4e80` |
-| `exit_mcp.py` | `dedeac5e97e4c0265288d6348b327177f296b5640aadc39242f3ef8f688941d5` |
-| `exit_evidence.py` | `d22c2a7afd4806731202d6fe7e0ae521832ae5e50a33bc14ae689692e0452dcb` |
+| `exit_client.py` | `21ea0dfaf72410a966b26244b8f5261bd926eefd10f172af513d36e0bc8f2fba` |
+| `exit_mcp.py` | `a7b7d49e9b8411801adfb15d2eb31440858ea5526fe23e55e70382311e9ca9f0` |
+| `exit_evidence.py` | `34bdfb3992f94b5c31547aab0d14763c841380b0f0416b323f4af0b08ea3b029` |
 
 On macOS or Linux, `shasum -a 256 exit_client.py exit_mcp.py exit_evidence.py` must print these values; on Windows PowerShell,
 `Get-FileHash -Algorithm SHA256 exit_client.py, exit_mcp.py, exit_evidence.py`. A copy with any other value is not the published file.
-exit_evidence.py pins the SHA-256 of `tools/exit_log_verify.py` (`7805d739a0cb33f5ddaaa6f7a60386ef829a6315bef99a1a249538f850fedeed`)
+exit_evidence.py pins the SHA-256 of `tools/exit_log_verify.py` (`f213e655a72185a6d40263cddad3f0cafdbf637b870835a9d1c234cfc04c4d57`)
 and refuses to use any other copy, so checking exit_evidence.py also covers the verifier. These values are to change in the same
-commit as the files; the commits of 2 and 10 November (caff9534, f16e1d49, 84ed9680) did not update them (corrected 10 November).
+commit as the files; the commits of 2 and 10 November (caff9534, f16e1d49, 84ed9680) did not update them (corrected 10 November). Corrected 21 November 2026: the table and
+the four tool files in this repository (exit_client.py, exit_mcp.py, exit_evidence.py, tools/exit_log_verify.py) are those of tools release 2026-11-18.2 (https://exit-protocol.io/tools/ , dated 18 November 2026
+there; archive exit-agent-tools-20261118.zip). From 18 November 2026 until the commits of 21 November 2026 this repository still
+held the files of release 2026-11-13.2, so a file downloaded from the site did not match this table.
 
 ## Project record
 
