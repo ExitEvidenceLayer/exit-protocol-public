@@ -1,5 +1,25 @@
 # Public documentation changelog
 
+## 21 November 2026 · Glamsterdam gas changes case note (EIP-8037 and EIP-8038)
+
+- [cases/glamsterdam-eip-8037-8038-2026-11-16.md](cases/glamsterdam-eip-8037-8038-2026-11-16.md) (added 21 November 2026): who could
+  change the code of the contracts that public sources name as touched by the proposed Ethereum Glamsterdam gas changes, read at
+  Ethereum block 26,428,440 (16 November 2026, 15:18:47 UTC), in the same format as the other case notes. The run set is 105
+  addresses: 20 publicly named ones, the 48 Ethereum rows of the Control Map and 37 Sushi-labeled addresses from the labeled index
+  of the Ethereum Foundation's repricing-impact tool. The note keeps what was read on chain apart from what the EIP authors, the
+  Ethereum Foundation and auditors report, gives no verdict on any contract, and lists what the chain does not show.
+- The public sources were read again on 18 and 21 November 2026. On 21 November 2026 at 01:24 UTC both EIP texts on master were
+  byte-identical to the texts the note uses. The note's updates of 21 November 2026 record what the published summary of ACDE #249
+  (19 November 2026) reports, and that the public version of ChainSecurity's impact assessment, dated 18 November 2026, names no
+  affected system; later changes will be added to the note as dated updates.
+- [cases/glamsterdam-eip-8037-8038-2026-11-16.json](cases/glamsterdam-eip-8037-8038-2026-11-16.json) is its result file (SHA-256
+  `a1cac38d70dd22eb8a316eed8e2b23ffdb7d854766835b2a6abb4a6cd55a05ce`), and
+  [cases/glamsterdam-eip-8037-8038-2026-11-16-reread.py](cases/glamsterdam-eip-8037-8038-2026-11-16-reread.py) a read-only script
+  (Python standard library, no keys; SHA-256 `5f2726b732a2016597a44689343a6c4da0a893c9fa2ace9df18b83af2485af33`) that re-reads 179
+  facts at that block from two public providers. On 21 November 2026 between 01:27 and 01:30 UTC all 179 checks passed.
+- [ROADMAP.md](ROADMAP.md) listed this case note as planned (added 18 November 2026: latest 26 November 2026); its PLANNED
+  line now says that the note was published on 21 November 2026.
+
 ## 21 November 2026 · Corrections: the Control Map page is rebuilt every night; tools release 2026-11-18.2 in this repository; roadmap dates
 
 Corrected 21 November 2026. The reads named below were made on the live site and service on 20 and 21 November 2026; times are UTC.

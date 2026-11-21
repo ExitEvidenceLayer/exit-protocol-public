@@ -111,7 +111,8 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       added 18 November 2026: latest 26 November 2026: a public case note on who can change the contracts that the
       proposed Ethereum Glamsterdam gas changes (EIP-8037 and EIP-8038) touch: for contracts publicly named as affected,
       whether each can be upgraded and by whom, with Safe owners, threshold and timelock delay where there are any,
-      read at one stated block; no verdict
+      read at one stated block; no verdict (added 21 November 2026: published on 21 November 2026,
+      cases/glamsterdam-eip-8037-8038-2026-11-16.md, read at Ethereum block 26,428,440)
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
