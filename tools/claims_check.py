@@ -14,7 +14,10 @@ Checks (each a named boolean; the exit code is 0 only when all hold):
                             the server: a redeploy that rewrote the file counts as a change), and not in the future. v3 (4 Nov): every
                             <url> entry is accounted for (XML parse, any element order); a page date that cannot be read is a mismatch, never
                             a skip (one HEAD request per page); an entry without <lastmod> fails unless UNDATED_OK names the check that covers
-                            it (only /log/); no dated entry checked at all fails; sitemap_coverage in the output states what was checked
+                            it (only /log/); no dated entry checked at all fails; sitemap_coverage in the output states what was checked.
+                            v4 (21 Nov): an undated entry listed in UNDATED_FRESH (only /control-map/, rebuilt every night after the
+                            00:30 UTC anchor) passes only when its page's HTTP Last-Modified is at most 26 hours old and not in the future;
+                            an unreadable date is a mismatch
   status_client_row_version the STATUS.md row "Public script/agent client" names the API description version it describes, and that
                             version equals the repository's openapi.json info.version (the sentence about the copy, checked against the copy —
                             added 2 November after that sentence was found a version behind); when exit_mcp.py is in the checkout, the row's
@@ -61,6 +64,7 @@ ROW_FLAGS = {                     # STATUS.md row label fragment -> live_* flags
     'Issuer freeze status': ('live_freeze_research',), 'SPL Governance realm and proposals': ('live_governance_research', 'live_governance_proposals'),
     'LayerZero V2 pathway and peer': ('live_layerzero_research', 'live_layerzero_peer')}
 UNDATED_OK = {'/log/': 'anchor_within_26h and run_within_26h of the log sentinel (the daily run rewrites /log/ at 00:30 UTC)'}
+UNDATED_FRESH = {'/control-map/': 26 * 3600}   # v4: rebuilt every night after the daily anchor; its own Last-Modified is checked here
 UNTIL = re.compile(r'(open|runs|available)\s+(until|to|through)\s+24\s+November\s+2026', re.I)
 HEX64 = re.compile(r'(?<![0-9A-Za-z])[0-9A-Fa-f]{64}(?![0-9A-Za-z])')          # a SHA-256 value as README.md writes it
 TICKED_FILE = re.compile(r'`([A-Za-z0-9_./][A-Za-z0-9_./-]*\.[A-Za-z0-9]+)`')     # a file name in backticks: no spaces, has an extension
@@ -232,7 +236,7 @@ def main(argv):
             raise ValueError('DOCTYPE in sitemap')
         name_of = lambda e: e.tag.rsplit('}', 1)[-1]  # noqa: E731
         urls = [u for u in ET.fromstring(sm) if name_of(u) == 'url']
-        cov = out['sitemap_coverage'] = {'entries': len(urls), 'dated_checked': 0, 'undated_allowed': {}}
+        cov = out['sitemap_coverage'] = {'entries': len(urls), 'dated_checked': 0, 'undated_allowed': {}, 'undated_fresh': {}}
         for u in urls:
             f = {name_of(c): (c.text or '').strip() for c in u}; loc, lastmod = f.get('loc', ''), f.get('lastmod')
             if not loc.startswith(SITE):
@@ -241,6 +245,16 @@ def main(argv):
             if not lastmod:
                 if path in UNDATED_OK:
                     cov['undated_allowed'][path] = UNDATED_OK[path]; out['sitemap'].append({'path': path, 'lastmod': None, 'covered_by': UNDATED_OK[path]})
+                elif path in UNDATED_FRESH:
+                    try:
+                        page_mod = parsedate_to_datetime(live.head(loc, 'headers:' + path)['last-modified'])
+                        age = now - page_mod.timestamp()
+                    except Exception as e:
+                        miss('sitemap_not_behind_pages', '%s: undated, and the page Last-Modified is unreadable (%s)' % (path, type(e).__name__)); continue
+                    cov['undated_fresh'][path] = {'page_last_modified': page_mod.isoformat(), 'age_hours': round(age / 3600, 2), 'limit_hours': UNDATED_FRESH[path] / 3600}
+                    out['sitemap'].append({'path': path, 'lastmod': None, 'page_last_modified': page_mod.isoformat()})
+                    if age > UNDATED_FRESH[path] or age < -300:
+                        miss('sitemap_not_behind_pages', '%s is undated and its page Last-Modified %s is %.1f hours old (limit %d)' % (path, page_mod.isoformat(), age / 3600, UNDATED_FRESH[path] // 3600))
                 else:
                     miss('sitemap_not_behind_pages', '%s has no <lastmod> and no other check covers it' % path)
                 continue
