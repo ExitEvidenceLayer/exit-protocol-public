@@ -692,7 +692,7 @@ def main(argv):
         print(json.dumps({'verified': False, 'why': 'notary keys refused: ' + '; '.join(e.report['problems']), 'trust': e.report},
                          indent=1, sort_keys=True))
         return 1
-    except (ValueError, TypeError, KeyError, IndexError, OSError, http.client.HTTPException) as e:
+    except (ValueError, TypeError, KeyError, IndexError, OSError, http.client.HTTPException, RecursionError) as e:
         print(json.dumps({'verified': False, 'why': 'input or provider response is malformed or unavailable: ' + type(e).__name__}, sort_keys=True))
         return 1
 
