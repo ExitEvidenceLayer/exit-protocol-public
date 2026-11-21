@@ -1,0 +1,1295 @@
+{
+ "format": "exit.case-observation/2",
+ "case": "control-changes-2026-11-20",
+ "note": "control-changes-2026-11-20.md",
+ "facts_as_of": {
+  "utc_from": "2026-11-21T01:25:18Z",
+  "utc_to": "2026-11-21T01:35:20Z",
+  "rule": "chain facts were read on 21 November 2026 between the two times above from two public providers without a key; a fact is kept only when both providers returned the same value; current values carry the finalized slot each provider answered at"
+ },
+ "providers": {
+  "solana": [
+   "api.mainnet-beta.solana.com",
+   "solana-rpc.publicnode.com"
+  ],
+  "records_and_log": [
+   "exit-protocol.io"
+  ],
+  "first_available_block": {
+   "api.mainnet-beta.solana.com": 0,
+   "solana-rpc.publicnode.com": 471412567,
+   "read_utc": "2026-11-21T01:35:20Z"
+  },
+  "history_start_of_the_second_provider": [
+   {
+    "read_utc": "2026-11-21T01:35:19Z",
+    "first_available_block": 471411493,
+    "read_from": "the message of error -32001 to a getBlockTime request for an old slot"
+   },
+   {
+    "read_utc": "2026-11-21T01:35:20Z",
+    "first_available_block": 471412567,
+    "read_from": "getFirstAvailableBlock"
+   },
+   {
+    "read_utc": "2026-11-21T02:01:31Z",
+    "first_available_block": 471415848,
+    "read_from": "getFirstAvailableBlock"
+   },
+   {
+    "read_utc": "2026-11-21T03:30:21Z",
+    "first_available_block": 471429696,
+    "read_from": "getFirstAvailableBlock"
+   }
+  ]
+ },
+ "daily_page": {
+  "url": "https://exit-protocol.io/control-map/daily/",
+  "read_utc": "2026-11-21T01:23:31Z",
+  "sha256": "8d089f61a7c2ec455bcec8440f10ea770ae66cada945e84d9efd560e7f2204b2",
+  "bytes": 24282,
+  "runs_line": "20 daily runs from 2026-11-01 to 2026-11-20; 2 changes recorded."
+ },
+ "one_provider": [],
+ "not_called": [
+  {
+   "route": "GET https://api.exit-protocol.io/v0/research/solana/mint",
+   "why": "the route needs an access key; no key was created for this note"
+  }
+ ],
+ "changes": [
+  {
+   "row": 21,
+   "record_number": 1,
+   "symbol": "USDG",
+   "token": "Global Dollar (USDG)",
+   "chain": "solana-mainnet",
+   "mint": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH",
+   "record": {
+    "url": "https://exit-protocol.io/control-map/daily/ccr/2026-11-20/0001.json",
+    "sha256": "4fc18b4ebf8e68845365819cfd718342a3564b1d1b9dc7f1584d72978b69d062",
+    "bytes": 1048,
+    "format": "exit.control-change/1",
+    "chain": "solana-mainnet",
+    "subject": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH",
+    "setting": "spl-token:mintAuthority",
+    "old_value": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4",
+    "new_value": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+    "basis": "bracketing_reads",
+    "old_read_position": 471517625,
+    "new_read_position": 471919352,
+    "known_at": "2026-11-20T23:20:59.699213+00:00",
+    "evidence_digests": 7,
+    "reader": "exit.solana-mint-research/2",
+    "daily_json": {
+     "date": "2026-11-20",
+     "row_status": "CHANGE_OBSERVED",
+     "continuity_reason": "BRACKETING_READ_CHANGE"
+    },
+    "old_read_block_time_utc": "2026-11-19T23:21:02Z",
+    "new_read_block_time_utc": "2026-11-20T23:20:58Z",
+    "log": {
+     "leaf": 1832,
+     "tree_size": 1898,
+     "bundle": "https://exit-protocol.io/log/proofs/1898/00001832.json",
+     "anchor_signature": "3onZqkJMvkiA3XtzxUw1XGzJyzHvYdDPDBYAvDP65xDW9EpqwESwSD5MZBiqFQ4PwC93xdJtALbd9SZohj71aKmW",
+     "anchor_slot": 471938618,
+     "anchor_block_time_utc": "2026-11-21T00:30:08Z"
+    }
+   },
+   "change_transaction": {
+    "signature": "4hks8xmLa7QcaA82U6MSVpDQxcRsxaE6gwDiUrekKcQ4Cgie5WXSsdAMMZo5NqVhk4puk4vNx8YCiSauiKjHC1PF",
+    "slot": 471856298,
+    "block_time": 1795203279,
+    "block_time_utc": "2026-11-20T19:34:39Z",
+    "err": null,
+    "version": "legacy",
+    "signatures": 1,
+    "transaction_signers": [
+     "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+    ],
+    "fee_payer": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+    "instructions": [
+     "system:advanceNonce",
+     "spl-token:setAuthority"
+    ],
+    "inner_instructions": 0,
+    "nonce_account": "5bWLbnmGJZ4mjk5rLAeF2G7Wn2vDMzskgRyJKCzS1i9v",
+    "nonce_authority": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+    "set_authority": [
+     {
+      "authority_type": "mintTokens",
+      "mint": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH",
+      "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4",
+      "authority_is_multisig": true,
+      "new_authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+      "signers": [
+       "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+      ]
+     }
+    ],
+    "in_mint_signature_list": {
+     "before": "5T38PTdrLTwcEVcCNngXE3m43oVZukPYLwPt2hgLW13d7f6ez3KxBoJAz3kVkoi5yjfFA7JrQ5fPw7fGwVJjepns",
+     "before_slot": 471856299,
+     "limit": 10
+    }
+   },
+   "window": {
+    "after_slot": 471517625,
+    "up_to_slot": 471919352,
+    "old_authority": {
+     "address": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4",
+     "until": "4Sar1GY3cbx7XBiYcsSqx7jNfK8oPKgs1GBMBhgcxBZubZPXaZiApfWZM5TLwi53MYen1KQW51MVFZqzyzUUTbsE",
+     "until_slot": 471516946,
+     "transactions": [
+      {
+       "signature": "3B9im2xbd1LoFHUGJYKHTSppgSPm593KuFsFM4TiY92LR7djZ9onprmRuZ23Zv4kb21cUK3TFewEynGGn8xUjYyW",
+       "slot": 471526391,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3ciBPQmFTCRkratD8fBgLn41T9UxyYqTT3ZoS1hBFvaPKuJ11Cye9jgNYSb4VYHkP5PTzk3NAURMEeSSaRcQx7DN",
+       "slot": 471531352,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3km2e7csU2zRU4SwwAugV4hQLeMTe35BG18u8bYxsFWR38tPv58X2SZVZRiWhx8fnhcSrsCPifJCXE328UBTzz9m",
+       "slot": 471603152,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "52GCJ3Wf2NfNrkmfgDtiHMrp4tQVYyMrS7QdFTc92jkGCmaZqeD34S5LaTfBzuYYaqDA7KMsYUbyxMoigNL6HCca",
+       "slot": 471604956,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "59pFZzL5JnpfshAUDrNA15vMBT1C8WDLQNuSSmLjuusy87XTzYMAzJhJRTf4G61qdef3qNscuFrRDe65qVvfMFBi",
+       "slot": 471619247,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5aJEVUMWVVn48rXXj2tfHhA8cA2Z232Jn5ACVxTxMxeqhsMay9TzD2fcivhX3FnuzHrE9QBRavavbKA5yGBzFpMc",
+       "slot": 471633356,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "NYrjr3VZQxSBsrw3FBFXWV5iaP9TLn4A6ydaAjDFzCGGmJW2pvZDxsLwLL5q4woqb9HUYTCr6FmCYJLSWP7243Y",
+       "slot": 471650556,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2RsThKpEhGJf4bYWHX5jxqRWztMGYNeQ6Q79U5vVAJYbaP9YfCr2vJqU4x7ypU5teCKytRwdzL922gqZhSm4T15S",
+       "slot": 471655957,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "21gjtDycGYDkCd8NFcGzMEmARH5YZALpo3QmHewWJFhtpky7mJ4bFP7ZjZyGigqeSfMb9BrZzKV1ZSpLt9k391FY",
+       "slot": 471656757,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4BouobVUNcDLgNahsWeXo5pZAZpwappgvdpNFB3X3rtTJNn9Jx7RvfU714MC6ASJ8mN8xAsCyBY9TFPWXqaA1aF3",
+       "slot": 471675621,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2gipHiDyhAqtGdrtb4pJuzv16jvmoiKC147T3PQr4CW8SYLmffMW1JzAhbbYvSULtmBc4iRWAtEbuuCLdLp3ACkT",
+       "slot": 471714440,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4KTFC57MpdR6Nq8Ka9wTSDoLbixttYqcWPTpbpw9p5yrg3oQsLNJpodWdNuA5dQGDGw1mixfb1AHNWKMVAAPKek1",
+       "slot": 471738322,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "BsmNZ3z6WeL9JNX8VXGSRU1z6eU4cdffADupQYgyM7ymKnP9vvbAgjHZaAYJQRCrZao3VAFZtVULPAY2jrU4nT9",
+       "slot": 471740937,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3HApCmNo5dGMWtHYete6b3uW5TTqsCvWxd4c7YKjPe5TozAyj5kKfB5v6ywjwxepAhoNiPa4bjzrMf55PRZJhY2U",
+       "slot": 471751628,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4Nq2ccYwwTYgG2SG19whP3W3UwAoB1agyarjjDdtvKX6j9H93Tmycf7HGgayeVvCTSG8CgdX43GfnzhvjdBXNPem",
+       "slot": 471752581,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3V5TYdAcsEp51dihykEPH4rjPEuqZ1vwFMYAtBo2N2QZCg1vNNBLL5daCyZd1KsZsXWqYBkicEWb1ohU6zcGjDKc",
+       "slot": 471754319,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2tzSh1j3TSvRPNzFxyGxMxDmpL1SY69WFewiWJE98SHNqb6TceTdBrBSWsRVeoUGQojAmWcku1SiY5Z7SAitwt4v",
+       "slot": 471784956,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4rvJ15JZcy9vCvXtBxg67YJMSfr8AZ4Vh3yPSDPW6kbxkJvcbbhSCdvMu2ExMvKyT1j4X19xkmEoG24c6zcWCS6x",
+       "slot": 471807885,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2rbVkoswZXdF2LVpofCqy7dZ74Rn9fb2VRmuYNGXRoYaeejwnDyfn35YuHMLXtxDVdUEHg7j9c9HCpL2ed5jFZjr",
+       "slot": 471813410,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": [
+        "getAccountDataSize",
+        "initializeAccount3",
+        "initializeImmutableOwner"
+       ]
+      },
+      {
+       "signature": "2HyM9GXqDMGnhjwCg3SY94oConT2yTkmQoK6KNbtZdCkQtLkmUQ8tGXwa6nQUa6N8jZUNT6y6H3Xoj2ERg5FN6kg",
+       "slot": 471823069,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "43LQLXbWQEvnoEv59vVQerr27kuoTtkDkJESjQKUUNjxVvLPKiVEZj6kfwp8VgLFUJht7sQxqucnMw6r9nW2g22Z",
+       "slot": 471831777,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5EWh4JvZgsS7aYJwWnLBEYQVvZiAmzTofrKanmEA2voJwzjMaD85oZsS3MNSTB3KuDFtPyy5HLMqANkikhSvteG8",
+       "slot": 471837030,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5GcyXv3oz5HDF6Tvau6NWMU2jC6zEKdiGxFSczW9GWT1mTY59E4LiyZfPvPoEhyjPEQGPy8Tav3iX91U3gshb72Y",
+       "slot": 471844604,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5U2YFm6DthZGgBdQRJ9yCLM1thun7Njwxurn1jZ8nSx8WRzRazATGE8fxwKDWE6wqdFipiukfxSU9j9agqruFTyg",
+       "slot": 471849205,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4mHqMHsVsQavAuEFnL4oTwA8SWC7D8P2sTSEdH4C6ydffdY3hmRnX3W6iHfgSEFzhq1gJDLZZuFXA3naiCj6QFav",
+       "slot": 471855225,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4hks8xmLa7QcaA82U6MSVpDQxcRsxaE6gwDiUrekKcQ4Cgie5WXSsdAMMZo5NqVhk4puk4vNx8YCiSauiKjHC1PF",
+       "slot": 471856298,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "setAuthority",
+         "target": "2u1tszSeqZ3qBWF3uNGPFc8TzMk2tdiwknnRMWGWjGWH",
+         "authority_type": "mintTokens",
+         "authority": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4",
+         "new_authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy"
+        }
+       ],
+       "other_token_instructions": []
+      }
+     ],
+     "set_authority_transactions": 1,
+     "mint_only_transactions": 25
+    },
+    "new_authority": {
+     "address": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+     "until": "5mtDyjg95kXjJq2xDkGjcJD9oDcpGQL3EzMug5QkU4Em5xLum24e79PRjEjBRzaMHezK1sAt3UMwEPdgVpemPkJS",
+     "until_slot": 471483241,
+     "transactions": [
+      {
+       "signature": "3XBsLU9HmjEPkGwVK8CAuqpn8oGN89QaMH3xs4yGgtts1GadpKCAhF63bZoVF5qZXuhHDPknVtH8WRZzFn1XMn7P",
+       "slot": 471858600,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "7VQdMpSg8Dsm4XAnAhzH8WRXLp1FUNfAnPoqjXhTRY4RNs6tqRRHz7djtcEazJ5xhTF4LBEe4RDvVbHUhT5KdUF",
+       "slot": 471862736,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintToChecked",
+         "authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3Cw3mCnyz5wXbxzjVvJ28HjrugE4BoPgfRZ8drdaMr5NrxuVPT1ho7MuWBowr5qczvtrLxefDhkSY5B3iyQFNSC2",
+       "slot": 471876409,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2nS8gcramp8BaUegDrnAtfuqDmz29pyvgVHUzq2PcZGCrNsHBGzPj7LBKZHmnvY7Vg1hxx3kVPhpvnnUeeQbwyir",
+       "slot": 471916370,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintToChecked",
+         "authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy"
+        }
+       ],
+       "other_token_instructions": []
+      }
+     ],
+     "set_authority_transactions": 0,
+     "mint_only_transactions": 4
+    }
+   },
+   "old_authority": {
+    "address": "2e99QgqSDtiJSi5omGRVeZJuqNFRZdpy2YgG3mBd1AB4",
+    "account": {
+     "exists": true,
+     "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "data_length": 355,
+     "type": "multisig",
+     "m": 1,
+     "n": 5,
+     "signers": [
+      "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+      "GdJywa1Mye4fA7ST5WuJw2eEsxbPPgNc7AsCT8D6Hngg",
+      "CzSG2jccXqr19Xcbr7E1yCPs4nbQj3ggsZtK7BGwe56L",
+      "75sq4xbQ1snnWKmwZ9sDZjzaLxgiZedPcegXwCCQ2bnp",
+      "E6ZSahbyZhgat4f2UCVvErurgJbC2LjKH9jPTcG1FKbv"
+     ]
+    },
+    "read_slots": {
+     "api.mainnet-beta.solana.com": 471955310,
+     "solana-rpc.publicnode.com": 471955313
+    },
+    "read_utc": "2026-11-21T01:29:58Z"
+   },
+   "new_authority": {
+    "address": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+    "account": {
+     "exists": true,
+     "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "data_length": 355,
+     "type": "multisig",
+     "m": 1,
+     "n": 6,
+     "signers": [
+      "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+      "GdJywa1Mye4fA7ST5WuJw2eEsxbPPgNc7AsCT8D6Hngg",
+      "CzSG2jccXqr19Xcbr7E1yCPs4nbQj3ggsZtK7BGwe56L",
+      "75sq4xbQ1snnWKmwZ9sDZjzaLxgiZedPcegXwCCQ2bnp",
+      "E6ZSahbyZhgat4f2UCVvErurgJbC2LjKH9jPTcG1FKbv",
+      "4x9udXzGKa3q8QrhaC3SpKWTrRuWfU9JLxG2jE2yvBxP"
+     ]
+    },
+    "read_slots": {
+     "api.mainnet-beta.solana.com": 471955387,
+     "solana-rpc.publicnode.com": 471955390
+    },
+    "read_utc": "2026-11-21T01:30:15Z",
+    "created": {
+     "signature": "5mtDyjg95kXjJq2xDkGjcJD9oDcpGQL3EzMug5QkU4Em5xLum24e79PRjEjBRzaMHezK1sAt3UMwEPdgVpemPkJS",
+     "slot": 471483241,
+     "block_time": 1795123052,
+     "block_time_utc": "2026-11-19T21:17:32Z",
+     "err": null,
+     "version": "legacy",
+     "transaction_signers": [
+      "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH",
+      "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy"
+     ],
+     "fee_payer": "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH",
+     "create_account": {
+      "new_account": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+      "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "data_length": 355,
+      "funded_by": "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH"
+     },
+     "initialize_multisig": {
+      "multisig": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+      "m": 1,
+      "signers": [
+       "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+       "GdJywa1Mye4fA7ST5WuJw2eEsxbPPgNc7AsCT8D6Hngg",
+       "CzSG2jccXqr19Xcbr7E1yCPs4nbQj3ggsZtK7BGwe56L",
+       "75sq4xbQ1snnWKmwZ9sDZjzaLxgiZedPcegXwCCQ2bnp",
+       "E6ZSahbyZhgat4f2UCVvErurgJbC2LjKH9jPTcG1FKbv",
+       "4x9udXzGKa3q8QrhaC3SpKWTrRuWfU9JLxG2jE2yvBxP"
+      ]
+     }
+    },
+    "signers_not_in_old": [
+     "4x9udXzGKa3q8QrhaC3SpKWTrRuWfU9JLxG2jE2yvBxP"
+    ],
+    "signers_of_old_not_in_new": []
+   },
+   "state_21nov": {
+    "mint": {
+     "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "data_length": 866,
+     "type": "mint",
+     "mint_authority": "8kC6WyMQvcKynL3oXxJdH1aH6sEpuL4KQHX2tY8nDkwy",
+     "freeze_authority": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+    },
+    "read_slots": {
+     "api.mainnet-beta.solana.com": 471954005,
+     "solana-rpc.publicnode.com": 471954006
+    },
+    "read_utc_from": "2026-11-21T01:25:18Z",
+    "read_utc": "2026-11-21T01:25:19Z"
+   }
+  },
+  {
+   "row": 23,
+   "record_number": 2,
+   "symbol": "PYUSD",
+   "token": "PayPal USD (PYUSD)",
+   "chain": "solana-mainnet",
+   "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+   "record": {
+    "url": "https://exit-protocol.io/control-map/daily/ccr/2026-11-20/0002.json",
+    "sha256": "10e06d017ca6caff93f45c57b26963270ae392b3f0e1bebb5db104de1b4332ef",
+    "bytes": 1048,
+    "format": "exit.control-change/1",
+    "chain": "solana-mainnet",
+    "subject": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+    "setting": "spl-token:mintAuthority",
+    "old_value": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu",
+    "new_value": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+    "basis": "bracketing_reads",
+    "old_read_position": 471517652,
+    "new_read_position": 471919381,
+    "known_at": "2026-11-20T23:21:05.485070+00:00",
+    "evidence_digests": 7,
+    "reader": "exit.solana-mint-research/2",
+    "daily_json": {
+     "date": "2026-11-20",
+     "row_status": "CHANGE_OBSERVED",
+     "continuity_reason": "BRACKETING_READ_CHANGE"
+    },
+    "old_read_block_time_utc": "2026-11-19T23:21:08Z",
+    "new_read_block_time_utc": "2026-11-20T23:21:04Z",
+    "log": {
+     "leaf": 1835,
+     "tree_size": 1898,
+     "bundle": "https://exit-protocol.io/log/proofs/1898/00001835.json",
+     "anchor_signature": "3onZqkJMvkiA3XtzxUw1XGzJyzHvYdDPDBYAvDP65xDW9EpqwESwSD5MZBiqFQ4PwC93xdJtALbd9SZohj71aKmW",
+     "anchor_slot": 471938618,
+     "anchor_block_time_utc": "2026-11-21T00:30:08Z"
+    }
+   },
+   "change_transaction": {
+    "signature": "5twa7J6ogXAjX7BKT3pmdE8puqxQxSd58uY5tTnEFskWbZ5vzipY2PgAEsAamd3tnb5PYAtEiEGx3qa8QyRc1ppR",
+    "slot": 471856534,
+    "block_time": 1795203329,
+    "block_time_utc": "2026-11-20T19:35:29Z",
+    "err": null,
+    "version": "legacy",
+    "signatures": 1,
+    "transaction_signers": [
+     "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+    ],
+    "fee_payer": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+    "instructions": [
+     "system:advanceNonce",
+     "spl-token:setAuthority"
+    ],
+    "inner_instructions": 0,
+    "nonce_account": "RTF4qNLh6JRxB2BskjJxzpHGAuZFsDnHiM9Qbcau3r9",
+    "nonce_authority": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+    "set_authority": [
+     {
+      "authority_type": "mintTokens",
+      "mint": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+      "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu",
+      "authority_is_multisig": true,
+      "new_authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+      "signers": [
+       "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+      ]
+     }
+    ],
+    "in_mint_signature_list": {
+     "before": "4kVVy8LDMVh4aXLZr5ZyxXYSCUqtRtne6vWwneyHxngkwmwTVPMXJPQ6XQh5sSYhRw33Ag3a1CMVQJDxxemwL9Fg",
+     "before_slot": 471856546,
+     "limit": 10
+    }
+   },
+   "window": {
+    "after_slot": 471517652,
+    "up_to_slot": 471919381,
+    "old_authority": {
+     "address": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu",
+     "until": "48WZCJTZ8tWLSGV5rpFbumnKeDZ3vzfHRPtMCN1MWWeDrPKnVSWerZwpwA13N57umKSEeD9d7QqTa9n3tNZxiSz9",
+     "until_slot": 471488333,
+     "transactions": [
+      {
+       "signature": "5omTJygdD9V8eMJ4J6ohHsYCDSarKfk4iX2m9dJDMJotMmHqWYiaVSfZHWBdC7BKSPhS6gFmZsEjy3J1QPVXp1BE",
+       "slot": 471527873,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintToChecked",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "44zX69N6AaL6GFeCfzjgRqvxUGtXAbkGeBGjc2S4LzgXgBKDirWA73kgdZUWPsXRkyppv566peY6EiN1DZVN9tSe",
+       "slot": 471528583,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintToChecked",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3pW65UfkfVQ4BMUsmrbx8mJwypu7hEsZ9jkFcAdgbGMKh7jeSVZ8WhwuD1N6E5BT1sFmb2pQKM9bo7ie9cD6v6GK",
+       "slot": 471530242,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5kE5MNpBdXjWzTSnh4mLmpeSWFFmbnNqhTg22Bw3X6tC5NRZhGPVQyuN4SXZ5jMsK4drBvL9kmSKRs7aUs2g54e",
+       "slot": 471531855,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4yVhDsFCHaxwsSnMvRYo6aWdBDwH64rgJjAS2gUfXcum63eGoqwvVndjhbvLgmLZzv6fXTwpnG6Xv96SPkPki54r",
+       "slot": 471532025,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "63f5p2qcRd5xbJvJxDwaYDiuJuNDnmpsPwB3KugBrGsHDoCpFM22oe8Gu4zRS6qi3ye4vhm3LPN6Q4wtdwmhW1EG",
+       "slot": 471532804,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4xeLu89dVXAbVvNJRX6D9KK6u9v4Gur7sGvaB2JhZRB3HbLuuQx7kgT4urhzdJbjn6xNkeRyTxCkQHPtjnvqyHaf",
+       "slot": 471532916,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": [
+        "getAccountDataSize",
+        "initializeAccount3",
+        "initializeImmutableOwner"
+       ]
+      },
+      {
+       "signature": "ibfAUPMm17A66Xsh1c4vvZR7RqZ7gp6ntTzaZnb2dVPDz49xAKLtqT1XZm1QUfnBTsqP5iiieHXcTRKDQw9DyKv",
+       "slot": 471533418,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2a4pFWRd6XzoFnQ2RVqXdpMaZGbhcssSnCXRywzNhjaqWiT549aTej2T1nfEsPgoeYc6FvgmoFHYUoTwrYBNZkcz",
+       "slot": 471533486,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "39VdZb5FUY7PgbZfdB1efafgxq8xwqHjrBYJgeHYCAveJjPWMxTt6UojPM6G5S1pihR9rdR4T4pfPYbsJmxgxVmt",
+       "slot": 471535268,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3SsFft59dctdqJW7zVEWnNooWzpZ3TBxkkTLXos4CvmjUAq4d8WuJRt4Vh2ikVEKZAUzK2QEHAk2M31Tvna2EfKb",
+       "slot": 471537521,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4DWvsZNkqUSXjkJoLuLSESxSwvs1BCoxTTMf1n7dTgbbGs4gRCZ2twd3LgpGK5vT2MyJKq9cabnQku1FtSVptKwU",
+       "slot": 471612263,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3eM2nwSdjpNgxMGCSFdui13Yq7rrMRTnJ2sS4tKstizhQvgsYREVChxq3DeJq5Ud2PLshjVAGh6Zte3tmdboCZpJ",
+       "slot": 471612371,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "tyDVDCRqxZttyrALc9NSdRsHnGa1jyneZK2XyP6ecdWGPvKPXF4CxB3g4QC15rVfn9fg3VeopnkJ2YxE6LSnmH8",
+       "slot": 471647153,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4YtxiUKSvrrSkUjDtM3HuvvABdfcpSWqtyk8nePhMsySHTfAALcgrqB56gWHbbWgpCec1skyMGsMGV7w2AfbwAWX",
+       "slot": 471749720,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3z2dy7nynWYPhLrJzP6CVN46eg5tW33ZxpLeQBXePABUzPeFjaDC1HL42pj2c5XbLGWkPCAPGPt7ZG4tNykXNN7m",
+       "slot": 471753960,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "zRFxENTLufk8DLsqVo3Lyst7zML1vKaU5SPpjLf54GbJswrpEWFM1A1cepBtE26MApHrDuSa1oJPE6xmzBbtYTr",
+       "slot": 471757233,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2GGDK98h27BzFhyqMqWCYoNSxLVWi8d7mTCgyZB71jgd39RY9jpv7a9W9gkqovZR5z6sjeYrEqXKtU58jj3DwgRf",
+       "slot": 471772983,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "284BHfn36oqNsLRYcYnmcKUVwz9Efer4oE1viTLwi3SrQyELrsZ2qyiyWJySbfmp9Dbw9DWnMAJo2yarbYTYM2NM",
+       "slot": 471819056,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3tCiy5W1YC26vkmKfXQL3cqEn4scKKbMQCQ73gsJGeLwAf29xEezF3xXRkB16e4idK6B1PcaTgXchXgUbaAkmkxQ",
+       "slot": 471835643,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "4ufyvN8wmGFSzkR7azF1daJKYonRUqvJ8DQvbdawEKuJviQYTRHLHGiGdXESoXxoaEzyJVwUeHALWAcPBxWsvLmS",
+       "slot": 471847915,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2K5aesLLYzMVVwthix2QrM6CqfLEnjwYjUQ9jeREeigK32Q2gz4VAcK9Jt3NFmnAgxVrxjQeEm4vDSUUzaWJ8Cij",
+       "slot": 471849458,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5twa7J6ogXAjX7BKT3pmdE8puqxQxSd58uY5tTnEFskWbZ5vzipY2PgAEsAamd3tnb5PYAtEiEGx3qa8QyRc1ppR",
+       "slot": 471856534,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "setAuthority",
+         "target": "2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo",
+         "authority_type": "mintTokens",
+         "authority": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu",
+         "new_authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX"
+        }
+       ],
+       "other_token_instructions": []
+      }
+     ],
+     "set_authority_transactions": 1,
+     "mint_only_transactions": 22
+    },
+    "new_authority": {
+     "address": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+     "until": "5LvWgc4yqy3a77h52yUA45xANqtZoYoi6rMYb2fwJpzmTDJWNU9FDYMmDMAVuym3ZY6xddrkXJhXgy5N3EjfLV23",
+     "until_slot": 471486515,
+     "transactions": [
+      {
+       "signature": "2bvgUwNYn12iJpBVsnGSGaeiquPfUXJWBNQSogdc9onid9q8FPM8sDBTd6Sp2muyQf6hsKWhnvbsuVtFdZYkUYiW",
+       "slot": 471861488,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintToChecked",
+         "authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "3mR45yrwqJfEAiJszbBnrfrPsQoHX1yH33BUjAh6DXvybujnULjP5wyvwCBzGWN5fy6a5V4fzjYHtCm9maQAcQUB",
+       "slot": 471866760,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "2s3N7omESzK5rAD5tAHRLCnXV3tB6tj2HRTybzYmeUXdXmySqbJyb3Hje99Z2xhr3NhouujYoijaACPRdqmMNihh",
+       "slot": 471868252,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX"
+        }
+       ],
+       "other_token_instructions": []
+      },
+      {
+       "signature": "5WM7Z4WXVp6iV8BbuypFP7UpQ2U8HYiKfhhiwxQsM8PFbWr14FpuKFSa1onPddW5TdmUs1VzagRiUv17TxV6Z1GC",
+       "slot": 471908156,
+       "err": null,
+       "authority_instructions": [
+        {
+         "instruction": "mintTo",
+         "authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX"
+        }
+       ],
+       "other_token_instructions": []
+      }
+     ],
+     "set_authority_transactions": 0,
+     "mint_only_transactions": 4
+    }
+   },
+   "old_authority": {
+    "address": "AxJkHRY3puoofyj7Pn512M1SGBgWroXMkEdNPQypkzbu",
+    "account": {
+     "exists": true,
+     "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "data_length": 355,
+     "type": "multisig",
+     "m": 1,
+     "n": 5,
+     "signers": [
+      "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+      "3QaqDJS5angcPhW1HsMbB74vJbzWNcy1r5bwtATUro7d",
+      "BfWsvypxRvQ4KUhyJ2gLeFEkhRx3LgfkVahXMj6Kz3LN",
+      "AuVW19qwit2bxZqcspGZLsbq2ZiqosvryTNXE8UZSeGh",
+      "HVU44QhbeMGuMvmnqsjsoRmZiSB6iFp1z2rXEiJnpgEU"
+     ]
+    },
+    "read_slots": {
+     "api.mainnet-beta.solana.com": 471955647,
+     "solana-rpc.publicnode.com": 471955650
+    },
+    "read_utc": "2026-11-21T01:31:12Z"
+   },
+   "new_authority": {
+    "address": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+    "account": {
+     "exists": true,
+     "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "data_length": 355,
+     "type": "multisig",
+     "m": 1,
+     "n": 6,
+     "signers": [
+      "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+      "3QaqDJS5angcPhW1HsMbB74vJbzWNcy1r5bwtATUro7d",
+      "BfWsvypxRvQ4KUhyJ2gLeFEkhRx3LgfkVahXMj6Kz3LN",
+      "AuVW19qwit2bxZqcspGZLsbq2ZiqosvryTNXE8UZSeGh",
+      "HVU44QhbeMGuMvmnqsjsoRmZiSB6iFp1z2rXEiJnpgEU",
+      "8rjAiCX71uGK7FQLkfbMLvikLkB6HfNjnX81VnYY2Z3X"
+     ]
+    },
+    "read_slots": {
+     "api.mainnet-beta.solana.com": 471955691,
+     "solana-rpc.publicnode.com": 471955694
+    },
+    "read_utc": "2026-11-21T01:31:21Z",
+    "created": {
+     "signature": "5LvWgc4yqy3a77h52yUA45xANqtZoYoi6rMYb2fwJpzmTDJWNU9FDYMmDMAVuym3ZY6xddrkXJhXgy5N3EjfLV23",
+     "slot": 471486515,
+     "block_time": 1795123757,
+     "block_time_utc": "2026-11-19T21:29:17Z",
+     "err": null,
+     "version": "legacy",
+     "transaction_signers": [
+      "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH",
+      "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX"
+     ],
+     "fee_payer": "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH",
+     "create_account": {
+      "new_account": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+      "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "data_length": 355,
+      "funded_by": "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH"
+     },
+     "initialize_multisig": {
+      "multisig": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+      "m": 1,
+      "signers": [
+       "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+       "3QaqDJS5angcPhW1HsMbB74vJbzWNcy1r5bwtATUro7d",
+       "BfWsvypxRvQ4KUhyJ2gLeFEkhRx3LgfkVahXMj6Kz3LN",
+       "AuVW19qwit2bxZqcspGZLsbq2ZiqosvryTNXE8UZSeGh",
+       "HVU44QhbeMGuMvmnqsjsoRmZiSB6iFp1z2rXEiJnpgEU",
+       "8rjAiCX71uGK7FQLkfbMLvikLkB6HfNjnX81VnYY2Z3X"
+      ]
+     }
+    },
+    "signers_not_in_old": [
+     "8rjAiCX71uGK7FQLkfbMLvikLkB6HfNjnX81VnYY2Z3X"
+    ],
+    "signers_of_old_not_in_new": []
+   },
+   "state_21nov": {
+    "mint": {
+     "owner_program": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+     "executable": false,
+     "data_length": 866,
+     "type": "mint",
+     "mint_authority": "DRXA1H9SjZPyPCEeuAWpfwk8GqVW6dZsKFAtdfpFwApX",
+     "freeze_authority": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+    },
+    "read_slots": {
+     "api.mainnet-beta.solana.com": 471954010,
+     "solana-rpc.publicnode.com": 471954010
+    },
+    "read_utc_from": "2026-11-21T01:25:19Z",
+    "read_utc": "2026-11-21T01:25:20Z"
+   }
+  }
+ ],
+ "signer_accounts": {
+  "addresses": [
+   "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+   "GdJywa1Mye4fA7ST5WuJw2eEsxbPPgNc7AsCT8D6Hngg",
+   "CzSG2jccXqr19Xcbr7E1yCPs4nbQj3ggsZtK7BGwe56L",
+   "75sq4xbQ1snnWKmwZ9sDZjzaLxgiZedPcegXwCCQ2bnp",
+   "E6ZSahbyZhgat4f2UCVvErurgJbC2LjKH9jPTcG1FKbv",
+   "4x9udXzGKa3q8QrhaC3SpKWTrRuWfU9JLxG2jE2yvBxP",
+   "3QaqDJS5angcPhW1HsMbB74vJbzWNcy1r5bwtATUro7d",
+   "BfWsvypxRvQ4KUhyJ2gLeFEkhRx3LgfkVahXMj6Kz3LN",
+   "AuVW19qwit2bxZqcspGZLsbq2ZiqosvryTNXE8UZSeGh",
+   "HVU44QhbeMGuMvmnqsjsoRmZiSB6iFp1z2rXEiJnpgEU",
+   "8rjAiCX71uGK7FQLkfbMLvikLkB6HfNjnX81VnYY2Z3X"
+  ],
+  "accounts": {
+   "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk": {
+    "exists": true,
+    "owned_by_system_program": true,
+    "executable": false,
+    "data_length": 0
+   },
+   "GdJywa1Mye4fA7ST5WuJw2eEsxbPPgNc7AsCT8D6Hngg": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 170
+   },
+   "CzSG2jccXqr19Xcbr7E1yCPs4nbQj3ggsZtK7BGwe56L": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 170
+   },
+   "75sq4xbQ1snnWKmwZ9sDZjzaLxgiZedPcegXwCCQ2bnp": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 223
+   },
+   "E6ZSahbyZhgat4f2UCVvErurgJbC2LjKH9jPTcG1FKbv": {
+    "exists": false
+   },
+   "4x9udXzGKa3q8QrhaC3SpKWTrRuWfU9JLxG2jE2yvBxP": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 170
+   },
+   "3QaqDJS5angcPhW1HsMbB74vJbzWNcy1r5bwtATUro7d": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 170
+   },
+   "BfWsvypxRvQ4KUhyJ2gLeFEkhRx3LgfkVahXMj6Kz3LN": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 170
+   },
+   "AuVW19qwit2bxZqcspGZLsbq2ZiqosvryTNXE8UZSeGh": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 223
+   },
+   "HVU44QhbeMGuMvmnqsjsoRmZiSB6iFp1z2rXEiJnpgEU": {
+    "exists": false
+   },
+   "8rjAiCX71uGK7FQLkfbMLvikLkB6HfNjnX81VnYY2Z3X": {
+    "exists": true,
+    "owned_by_system_program": false,
+    "executable": false,
+    "data_length": 170
+   }
+  },
+  "read_slots": {
+   "part1": {
+    "api.mainnet-beta.solana.com": 471956134,
+    "solana-rpc.publicnode.com": 471956135
+   },
+   "part2": {
+    "api.mainnet-beta.solana.com": 471956140,
+    "solana-rpc.publicnode.com": 471956142
+   }
+  }
+ },
+ "token_program": {
+  "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+  "account": {
+   "exists": true,
+   "owner_program": "BPFLoaderUpgradeab1e11111111111111111111111",
+   "executable": true,
+   "data_length": 36,
+   "type": "program",
+   "program_data": "DoU57AYuPFu2QU514RktNPG22QhApEjnKxnBcu4BHDTY"
+  },
+  "program_data": {
+   "owner_program": "BPFLoaderUpgradeab1e11111111111111111111111",
+   "data_length": 1382061,
+   "last_deployed_slot": 460497271,
+   "upgrade_authority": "AeLmXCbPaQHGWRLr2saFsEVfmMNuKnxRAbWCT9P5twgz"
+  },
+  "read_slots": {
+   "api.mainnet-beta.solana.com": 471955725,
+   "solana-rpc.publicnode.com": 471955727
+  }
+ },
+ "shared": {
+  "same_transaction": false,
+  "slots_apart": 236,
+  "seconds_apart": 50,
+  "same_transaction_signer": true,
+  "transaction_signer": [
+   "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+  ],
+  "same_new_authority": false,
+  "signers_in_both_new_authorities": [
+   "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+  ],
+  "signers_in_both_old_authorities": [
+   "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk"
+  ],
+  "same_freeze_authority": true,
+  "freeze_authority": "2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk",
+  "same_token_program": true,
+  "same_creation_fee_payer": true,
+  "creation_fee_payer": "Ad5YH3AoPHXeHxxWt5uFTZHw9HFGKV9wDfQCV19wN4dH"
+ },
+ "derived": [
+  "changes[].record.old_read_block_time_utc and new_read_block_time_utc (getBlockTime of the record's positions)",
+  "changes[].window.*.set_authority_transactions and mint_only_transactions (counted from the transaction list)",
+  "changes[].new_authority.signers_not_in_old and signers_of_old_not_in_new (list differences)",
+  "shared (comparisons of the two changes)",
+  "every block_time_utc (the block time as UTC)",
+  "signer_accounts.accounts[].owned_by_system_program (whether the account's owner is the System Program; the address of another owner program is not given)"
+ ]
+}
