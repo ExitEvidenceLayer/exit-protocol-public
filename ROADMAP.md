@@ -13,7 +13,8 @@ what the evidence cannot establish.
 
 [Open the visual phase-by-phase roadmap](https://exit-protocol.io/ROADMAP.html). Added 21 November 2026: read on 21 November 2026, that
 page still says the Control Map page was built once and lists the nightly rebuild and the 22 and 23 November 2026 items as planned;
-this file has the corrected text, and the page itself is not corrected yet.
+this file has the corrected text, and the page itself is not corrected yet; corrected 22 November 2026: read on 22
+November 2026, that page has the corrected text too.
 
 ## What comes first
 
@@ -27,6 +28,7 @@ complete.
 ## Current engineering sequence · 4 November (T0 + 10 days)
 
 Written on 4 November, with dated corrections to 10 November; corrected again, and the PLANNED lines added, on 11 November 2026; dates corrected and two PLANNED lines added on 18 November 2026.
+A new date was added to one PLANNED item on 21 November 2026, and its target was corrected on 22 November 2026.
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -93,7 +95,39 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here;
       added 16 November 2026: no new date yet; corrected 18 November 2026: a first step, alerts for two watches in place
       of one, each with an equal share of the daily call budget and still read once an hour, ships with the launch facts
-      release below, latest 27 November 2026, risk 2 December 2026; change alerts within minutes: no new date yet);
+      release below, latest 27 November 2026, risk 2 December 2026; change alerts within minutes: no new date yet;
+      added 21 November 2026: new date 28 November 2026, in production for the Control Map subjects, shown by a
+      control change that raises an alert within minutes, with the measured median and 95th-percentile detection
+      time published and at least two providers per chain;
+      corrected 22 November 2026, because the measurement plan showed that no measured 95th-percentile detection time
+      for the Control Map subjects can exist by 28 November and that the push path has one provider per chain, so the
+      condition of at least two providers per chain is withdrawn: by 28 November 2026 the within-minutes trigger path
+      runs in production in shadow mode: a provider push starts a re-read of the affected subjects within minutes, shown
+      end to end with a replayed recorded control change on Solana and, on Ethereum, with a replayed recorded control
+      event through the receiver and the re-read, which shows the path but not a changed answer, because the only
+      Ethereum control event found on the watched contracts from 27 October to 22 November 2026, in a one-provider
+      search, changes no published setting; no alert is sent to a person yet; alert delivery to a person gets its own
+      date, set when this path is live; this date depends on provider access being in place by 26 November, and the
+      Ethereum replay also on an accepted answer from before that event being on the host, both measurement dates below
+      depend on that access too, and the Ethereum one also on the provider's plan limits, which are read then; measured
+      detection times come from a separately labelled measurement cohort, which watches a subset of the trigger's
+      control-event classes chain-wide, not the Control Map subjects: on Ethereum the Upgraded, AdminChanged,
+      OwnershipTransferred and RoleGranted events of any contract, and on Solana the program loader's Upgrade and
+      SetAuthority instructions on programs and the Token-2022 SetAuthority instruction for mint authorities, with their
+      exact instruction names confirmed at the provider-access step; the cohort leaves out deployment-time events, at
+      contract, program or mint creation, and Ethereum ownership transfers from the zero address, while an initializer
+      run in a later block can still be counted; an Ethereum event whose contract code one block earlier two providers
+      cannot confirm, or a day that reaches the daily delivery cap, holds that chain's figure, which can delay its date,
+      and this is stated; the cohort is never pooled with Control Map claims: the median and the 95th percentile per
+      chain are published once 59 changes per chain are measured, for Ethereum no later than 5 December 2026, and for
+      Solana over a window of at most 30 days from the route start that ends no later than the end of 28 December 2026,
+      published by 29 December 2026; if fewer than 59 Solana changes are measured by then, the count is published
+      without a 95th percentile; both cohort figures run from chain time to EXIT's receipt of the provider's delivery,
+      not to the re-read; the Ethereum cohort comes through its own webhook from the same provider to the same host as
+      the trigger, and the Solana cohort reads a parsed stream that the provider states is slower than its raw webhooks,
+      so its figure is a conservative stand-in for the delivery time on the trigger path; if that stream does not decode
+      the program loader, loader upgrades come through a webhook of the same provider and loader authority changes are
+      not measured, which is then stated here);
       by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
       transfer-hook program's authority;
       by 23 November 2026: beacon implementations and EIP-2535 diamond facets;
