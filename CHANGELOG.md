@@ -1,5 +1,12 @@
 # Public documentation changelog
 
+## 23 November 2026 · Roadmap: planned items reworded as undated direction
+
+- [ROADMAP.md](ROADMAP.md) and the website roadmap (changed 23 November 2026): the planned roadmap items were reworded as undated
+  direction. Earlier dated planned items in this changelog are superseded. A capability is marked when it is done and live.
+  Delivered items keep their real dates; two items that were already delivered are now marked done: keyed chain-data providers
+  (13 November 2026) and the public case note on the Glamsterdam gas changes (21 November 2026).
+
 ## 21 November 2026 · Claims check: a freshness rule for the undated Control Map sitemap entry
 
 - [tools/claims_check.py](tools/claims_check.py) (changed 21 November 2026): the sitemap check accepts an entry without
