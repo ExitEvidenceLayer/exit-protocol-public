@@ -29,6 +29,7 @@ complete.
 
 Written on 4 November, with dated corrections to 10 November; corrected again, and the PLANNED lines added, on 11 November 2026; dates corrected and two PLANNED lines added on 18 November 2026.
 A new date was added to one PLANNED item on 21 November 2026, and its target was corrected on 22 November 2026.
+On 23 November 2026 the PLANNED lines were reworded as undated direction: a capability is announced here when it is done and live.
 
 ```text
 LIVE: recorded research + any-Solana-mint authority read + free API
@@ -79,74 +80,31 @@ LIVE: recorded research + any-Solana-mint authority read + free API
       night it shows, and if a build fails, the page of the last good night stays; read on 20 November 2026, 23:36 UTC, the page was
       built from the nightly read of 19 November 2026 (Last-Modified 20 November 2026, 00:55:02 GMT);
       read on 21 November 2026, 00:55 UTC, from the nightly read of 20 November 2026 (Last-Modified 21 November 2026, 00:55:04 GMT)
-  → PLANNED (added 11 November 2026; latest dates, not guarantees: each item ships only after its own tests and review, and dates may move):
-      by 14 November 2026: keyed chain-data providers, with the public endpoints as fallback (added 15 November 2026: live
-      since 13 November 2026, 04:51 UTC, for the service's on-request Ethereum and Solana research reads and the nightly re-read
-      of the Control Map rows; the hourly radar reads stay on public endpoints);
-      by 16 November 2026: a second-provider read of every Control Map row each night, shown on the daily page;
-      the Control Map page rebuilt every night after the daily anchor (corrected 15 November 2026: neither will be live by
-      16 November 2026; both ship only after their tests and review, and the new date will be written here;
-      added 16 November 2026: no new date yet; corrected 18 November 2026: the second-provider read of every row is not
-      built yet; its build needs its own budget and design, which is set with the sampling design due 24 November 2026,
-      so it has no new date yet; the nightly second-provider check of 12 rows stays live since 3 November 2026; the
-      nightly rebuild is planned 19 November 2026, risk 21 November 2026: it depends on a monitoring step that is
-      installed first; corrected 21 November 2026: the nightly rebuild is live since 19 November 2026, see LIVE above);
-      by 19 November 2026: change alerts within minutes, with more than one alert slot (corrected 15 November 2026: not
-      built yet, only its scope is written; it will not be live by 19 November 2026, and the new date will be written here;
-      added 16 November 2026: no new date yet; corrected 18 November 2026: a first step, alerts for two watches in place
-      of one, each with an equal share of the daily call budget and still read once an hour, ships with the launch facts
-      release below, latest 27 November 2026, risk 2 December 2026; change alerts within minutes: no new date yet;
-      added 21 November 2026: new date 28 November 2026, in production for the Control Map subjects, shown by a
-      control change that raises an alert within minutes, with the measured median and 95th-percentile detection
-      time published and at least two providers per chain;
-      corrected 22 November 2026, because the measurement plan showed that no measured 95th-percentile detection time
-      for the Control Map subjects can exist by 28 November and that the push path has one provider per chain, so the
-      condition of at least two providers per chain is withdrawn: by 28 November 2026 the within-minutes trigger path
-      runs in production in shadow mode: a provider push starts a re-read of the affected subjects within minutes, shown
-      end to end with a replayed recorded control change on Solana and, on Ethereum, with a replayed recorded control
-      event through the receiver and the re-read, which shows the path but not a changed answer, because the only
-      Ethereum control event found on the watched contracts from 27 October to 22 November 2026, in a one-provider
-      search, changes no published setting; no alert is sent to a person yet; alert delivery to a person gets its own
-      date, set when this path is live; this date depends on provider access being in place by 26 November, and the
-      Ethereum replay also on an accepted answer from before that event being on the host, both measurement dates below
-      depend on that access too, and the Ethereum one also on the provider's plan limits, which are read then; measured
-      detection times come from a separately labelled measurement cohort, which watches a subset of the trigger's
-      control-event classes chain-wide, not the Control Map subjects: on Ethereum the Upgraded, AdminChanged,
-      OwnershipTransferred and RoleGranted events of any contract, and on Solana the program loader's Upgrade and
-      SetAuthority instructions on programs and the Token-2022 SetAuthority instruction for mint authorities, with their
-      exact instruction names confirmed at the provider-access step; the cohort leaves out deployment-time events, at
-      contract, program or mint creation, and Ethereum ownership transfers from the zero address, while an initializer
-      run in a later block can still be counted; an Ethereum event whose contract code one block earlier two providers
-      cannot confirm, or a day that reaches the daily delivery cap, holds that chain's figure, which can delay its date,
-      and this is stated; the cohort is never pooled with Control Map claims: the median and the 95th percentile per
-      chain are published once 59 changes per chain are measured, for Ethereum no later than 5 December 2026, and for
-      Solana over a window of at most 30 days from the route start that ends no later than the end of 28 December 2026,
-      published by 29 December 2026; if fewer than 59 Solana changes are measured by then, the count is published
-      without a 95th percentile; both cohort figures run from chain time to EXIT's receipt of the provider's delivery,
-      not to the re-read; the Ethereum cohort comes through its own webhook from the same provider to the same host as
-      the trigger, and the Solana cohort reads a parsed stream that the provider states is slower than its raw webhooks,
-      so its figure is a conservative stand-in for the delivery time on the trigger path; if that stream does not decode
-      the program loader, loader upgrades come through a webhook of the same provider and loader authority changes are
-      not measured, which is then stated here);
-      by 22 November 2026: more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
-      transfer-hook program's authority;
-      by 23 November 2026: beacon implementations and EIP-2535 diamond facets;
-      corrected 18 November 2026: the 22 and 23 November items ship in one release after another service release (if
-      that release is not installed by 20 November 2026, the latest date for both is 27 November 2026);
-      corrected 21 November 2026: by EXIT's own record that service release was not installed by 20 November 2026 (read on
-      20 November 2026, 23:36 UTC, and on 21 November 2026, 00:55 UTC, the live API description is still version 2026-11-16.1;
-      a public read does not show a service release by itself), so the latest date for both items is 27 November 2026;
-      by 25 November 2026: Safe pending transactions (depends on an external service; corrected 18 November 2026: not
-      built yet; it will not be live by 25 November 2026; no new date yet);
-      added 18 November 2026: latest 27 November 2026, risk 2 December 2026: pump.fun launch facts in the Solana mint
-      answer, as chain facts for a pump.fun-created mint: the creation transaction, the buys of the creator, the curve
-      and pool creator fields, the fee-sharing settings, the undistributed creator fees and the first 24 movements of the
-      token account of the creator; no identity and no verdict;
-      added 18 November 2026: latest 26 November 2026: a public case note on who can change the contracts that the
-      proposed Ethereum Glamsterdam gas changes (EIP-8037 and EIP-8038) touch: for contracts publicly named as affected,
-      whether each can be upgraded and by whom, with Safe owners, threshold and timelock delay where there are any,
-      read at one stated block; no verdict (added 21 November 2026: published on 21 November 2026,
-      cases/glamsterdam-eip-8037-8038-2026-11-16.md, read at Ethereum block 26,428,440)
+  → LIVE: keyed chain-data providers, with the public endpoints as fallback (since 13 November 2026, 04:51 UTC), for the
+      service's on-request Ethereum and Solana research reads and the nightly re-read of the Control Map rows; the hourly
+      radar reads stay on public endpoints
+  → DONE: a public case note on who can change the contracts that the proposed Ethereum Glamsterdam gas changes
+      (EIP-8037 and EIP-8038) touch: for contracts publicly named as affected, whether each can be upgraded and by whom,
+      with Safe owners, threshold and timelock delay where there are any, read at one stated block; no verdict (published
+      on 21 November 2026, cases/glamsterdam-eip-8037-8038-2026-11-16.md, read at Ethereum block 26,428,440)
+  → PLANNED (direction, not dates: each item ships only after its own tests and review, and it is moved to LIVE when it is done):
+      a second-provider read of every Control Map row each night, shown on the daily page (the nightly second-provider
+      check of 12 rows is live since 3 November 2026);
+      change alerts within minutes: the first step runs the within-minutes trigger path in production in shadow mode: a
+      provider push starts a re-read of the affected subjects within minutes, shown end to end with a replayed recorded
+      control change; no alert is sent to a person in this step; alert delivery to a person and more than one alert slot
+      follow after it; a step with alerts for two watches in place of one, each with an equal share of the daily call
+      budget, ships with the launch facts release; measured detection times (median and 95th percentile per chain) will
+      come from a separately labelled measurement cohort that watches a subset of the control-event classes chain-wide,
+      not the Control Map subjects, and is never pooled with Control Map claims; they are published once enough changes
+      are measured, and a smaller count is published as a count;
+      more control paths: Token-2022 interest-bearing, group/member and default-account-state settings and the
+      transfer-hook program's authority; beacon implementations and EIP-2535 diamond facets; both ship in one release
+      after another service release;
+      Safe pending transactions (depends on an external service; not built yet);
+      pump.fun launch facts in the Solana mint answer, as chain facts for a pump.fun-created mint: the creation
+      transaction, the buys of the creator, the curve and pool creator fields, the fee-sharing settings, the
+      undistributed creator fees and the first 24 movements of the token account of the creator; no identity and no verdict
   → NEXT: token-holder distribution facts in mint answers (waiting on provider access)
   → LATER: pre-registration, threshold notary, outside witnesses
   → LATER: paid service rights, chain/wallet rehearsal, separate security acceptance
